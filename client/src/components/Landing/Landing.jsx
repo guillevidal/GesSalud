@@ -33,7 +33,7 @@ export default function Landing() {
 
     //axios.post('/paciente/autenticar', { 
 
-
+    /*
      axios.post('/autenticar', { 
 
 
@@ -59,7 +59,7 @@ export default function Landing() {
 
     // })  */
 
-    // dispatch(rol(input.user));
+    dispatch(rol(input.user));
   };
 
   return (
