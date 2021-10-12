@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Nav from '../../../Layout/Nav';
 import './CreateAgenda.scss';
 import "react-datepicker/dist/react-datepicker.css";
-import { crearAgenda, turnosPreCargados } from '../../../../actions/index.js';
+import { crearAgenda } from '../../../../actions/index.js';
 
 function CreateAgenda() {
     const dispatch = useDispatch();
