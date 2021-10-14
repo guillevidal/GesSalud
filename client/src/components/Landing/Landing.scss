@@ -1,0 +1,117 @@
+@use '../../base';
+
+#landing-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 100%;
+    background-image:
+      url("images/medico.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: right center;
+
+    #landing-header{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        background-color: base.$color-principal;
+        height: 100px;
+        
+        #landing-title{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 300px;
+
+            .landing-title-text{
+                color: white;
+                text-align: center;
+                font-size: 2.5em;
+            }
+            .icon-salud{
+                color: white;
+                font-size: 2.5em;
+                margin-right: 10px;
+            }
+        }
+    }
+
+        #landing-login{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 60px 40px;
+            background-color: base.$color-principal;
+            border-radius: 20px;
+            width: 100%;
+            height: 100%;
+            max-height: 300px;
+            max-width: 400px;
+
+            .landing-form{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+
+                .icon-login{
+                    color: rgb(255, 255, 255);
+                    font-size: 3em;
+                }
+                .form-title{
+                    color: white;
+                    font-size: 1.5em;
+                }
+
+                .landing-form-inputs{
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    margin-top: 30px;
+
+                    .label-input{
+                        display: flex;
+                        width: 100%;
+                        max-width: 300px;
+                        margin: 10px auto;
+                        justify-content: space-between;
+                    
+                        .label{
+                            color: white;
+                            font-size: 18px;
+                        }
+
+                        .input{
+                            height: 20px;
+                        }
+
+                    }
+
+                }
+
+                .boton-login{
+                    margin-top: 20px;
+                    border:none;
+                    color:base.$color-principal;
+                    background-color: white;
+                    padding: 8px 10px;
+                    cursor: pointer;
+                    border : 1px solid white;
+
+                    &:hover{
+                        background-color: base.$color-principal;
+                        color: white;
+                    }
+                }
+                
+            }
+        }
+    
+}
