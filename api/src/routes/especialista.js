@@ -1,6 +1,7 @@
 const { Router } = require("express");
-const { Persona } = require("../db");
+const { Persona, Especialista_medico } = require("../db");
 const router = Router();
+const { Op } = require("sequelize");
 // const { v4: uuidv4 } = require("uuid");
 
 router.get("/", async function (req, res, next) {
@@ -14,7 +15,7 @@ module.exports = router;
 router.post("/", async function (req, res) {
   const data = req.body;
   try {
-    const creandoPaciente = await Persona.create(
+    const creandoEspecialista = await Persona.create(
       {
         // id: uuidv4(),
         name: data.name,
@@ -41,24 +42,34 @@ router.post("/", async function (req, res) {
         ],
       }
     );
+    const creandoMaEspecialista = await Especialista_medico.create(
+      {
+        // id: uuidv4(),
+        enrollment: data.enrollment,
+      },
+      {
+        fields: [/* "id", */ "enrollment"],
+      }
+    );
 
-    /*    for (let i = 0; i < breed.temperament.length; i++) {
-      let tempId = await Temperamentos.findOne({
-        where: { name: breed.temperament[i] },
-      });
-      await creandoEspecialista.addTemperamentos(tempId.id);
-    } */
-    // let tempPromise = await Promise.all(
-    //   breed.temperament.map((el) =>
-    //     Temperamentos.findOne({ where: { name: el } })
-    //   )
-    // );
-
-    // createDog.setTemperamentos(tempPromise);
-
-    res.json(creandoPaciente);
+    res.json(creandoEspecialista);
   } catch (e) {
-    res.status(400).send("no se puedo crear al Paciente");
+    res.status(400).send("no se puedo crear al especialista");
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    if (id) {
+      let query = await Persona.findByPk(
+        id /* , {// include: [datafaltante] } */
+      );
+
+      res.send(query);
+    }
+  } catch (error) {
+    res.status(400).json(error);
   }
 });
 
