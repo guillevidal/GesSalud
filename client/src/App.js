@@ -28,6 +28,9 @@ function App() {
       <Route exact path="/patientDetails">
         <PatientDetails/>
       </Route>
+      <Route exact path="/homeRRHH">
+        
+      </Route>
     </div>
   );
 }
