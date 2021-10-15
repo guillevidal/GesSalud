@@ -60,7 +60,6 @@ const {
 Persona.hasOne(Especialista_medico);
 Especialista_medico.belongsTo(Persona);
 
-
 AgendaTotal.hasOne(Especialista_medico);
 Especialista_medico.belongsTo(AgendaTotal);
 
