@@ -1,9 +1,6 @@
 import './CreateSpecialist.scss';
 import React, { useState } from 'react';
-
-import Person from '../Person/Person'
 import Nav from '../../Layout/Nav'
-
 import { useDispatch } from 'react-redux';
 import Person from '../Person/Person';
 import { crearEspecialista } from '../../../actions/index'
@@ -72,12 +69,8 @@ export default function CreateSpecialist() {
 
             <Nav />
             <div>
-            <form>
-                <Person name={input.name} lastName={input.lastName} dni={input.dni} 
-
             <form onSubmit={(event) => handleSubmit(event)}>
-                <Person name={input.name} lastName={input.lastName} dni={input.dni}
-
+                <Person name={input.name} lastName={input.lastName} dni={input.dni} 
                     email={input.email} phone={input.phone} adress={input.adress}
                     birth={input.birth} user={input.user} password={input.password} handle={handleChange}
                 />
