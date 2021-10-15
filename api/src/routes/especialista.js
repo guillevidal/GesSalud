@@ -1,12 +1,29 @@
 const { Router } = require("express");
-const { Persona, Especialista_medico, Tipo_especialidad, AgendaTotal } = require("../db");
+const {
+  Persona,
+  Especialista_medico,
+  Tipo_especialidad,
+  AgendaTotal,
+} = require("../db");
 const router = Router();
-const { Op } = require("sequelize");
-
 
 router.get("/", async function (req, res, next) {
   let especialistas = await Especialista_medico.findAll({
-    include: { model:Persona, attributes : ["name", "lastName", "dni", "email", "phone", "adress", "birth", "user", "password"] }
+    include: {
+      model: Persona,
+      attributes: [
+        "name",
+        "lastName",
+        "dni",
+        "email",
+        "phone",
+        "adress",
+        "birth",
+        "user",
+        "password",
+        "gender",
+      ],
+    },
   });
 
   res.send(especialistas);
@@ -28,7 +45,7 @@ router.post("/", async function (req, res) {
         birth: data.birth,
         user: data.user,
         password: data.password,
-        gender: data.gender
+        gender: data.gender,
       },
       {
         fields: [
@@ -41,30 +58,26 @@ router.post("/", async function (req, res) {
           "birth",
           "user",
           "password",
-          "gender"
+          "gender",
         ],
       }
     );
     const creandoMatriculaEspecialista = await Especialista_medico.create(
       {
-        enrollment: data.enrollment,       
-        specialty: data.specialty
+        enrollment: data.enrollment,
+        specialty: data.specialty,
       },
-       {
-         fields: [
-           "enrollment", 
-           "specialty"
-          ],
-       }
+      {
+        fields: ["enrollment", "specialty"],
+      }
     );
-     
-  
+
     await creandoEspecialista.setEspecialista_medico(
       creandoMatriculaEspecialista
-     );
+    );
     let obj = {
       ...creandoEspecialista.dataValues,
-     ...creandoMatriculaEspecialista.dataValues
+      ...creandoMatriculaEspecialista.dataValues,
     };
     res.send(obj);
   } catch (e) {
@@ -76,7 +89,22 @@ router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     if (id) {
-      let query = await Especialista_medico.findByPk(id, {include : {model : Persona, attributes : ["name", "lastName", "dni", "email", "phone", "adress", "birth", "user", "password"]}});
+      let query = await Especialista_medico.findByPk(id, {
+        include: {
+          model: Persona,
+          attributes: [
+            "name",
+            "lastName",
+            "dni",
+            "email",
+            "phone",
+            "adress",
+            "birth",
+            "user",
+            "password",
+          ],
+        },
+      });
 
       res.send(query);
     }
