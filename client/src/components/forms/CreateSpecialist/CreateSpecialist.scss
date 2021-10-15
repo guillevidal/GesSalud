@@ -1,8 +1,10 @@
-<<<<<<< HEAD
-@use '../../../scss/base'
+@import '../../../scss/base';
 
-=======
-@use '../../../base.scss';
+#createSpecialist-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
 
 #especialist-container{
     display: flex;
@@ -15,4 +17,3 @@
         width: 170px;
     }
 }
->>>>>>> 2f2e8cc19fa31485242b45b3820385dd8e0f596f

@@ -30,22 +30,16 @@ export default function CreateSpecialist() {
     }
 
     return (
-<<<<<<< HEAD
-        <>
 
-            <Nav />
-            <Person />
-            <hr />
-            <div>
-=======
         <div id="createSpecialist-container">
+            <Nav />
+            <div>
             <form>
                 <Person name={input.name} lastName={input.lastName} dni={input.dni} 
                     email={input.email} phone={input.phone} adress={input.adress}
                     birth={input.birth} user={input.user} password={input.password} handle={handleChange}
                 />
                 <hr />
->>>>>>> 2f2e8cc19fa31485242b45b3820385dd8e0f596f
                 <label>TIPO DE ESPECIALDAD</label>
                 <br />
                 <br />
@@ -67,6 +61,7 @@ export default function CreateSpecialist() {
 
                 </div>
             </form>
+            </div>
         </div>
     )
 }
