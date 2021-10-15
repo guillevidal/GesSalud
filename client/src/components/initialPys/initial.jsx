@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import "./initialPys.scss";
 import { useDispatch } from 'react-redux'
 import {obtenerPacientes} from "../../actions/index.js";
-
+import Nav from '../Layout/Nav.jsx';
 const InitialPys = () => {
     const dispatch = useDispatch() 
     useEffect(() => {
@@ -11,7 +11,9 @@ const InitialPys = () => {
     })
 
     return (
+        
         <div id="initialPys-container">
+            <Nav/>
             <Link to="patientPys">
                 <div className="module-container">
                     <h1>Gestion de paciente</h1>
@@ -36,6 +38,7 @@ const InitialPys = () => {
                 </div>
             </Link>
         </div>
+    
     )
 }
 export default InitialPys
