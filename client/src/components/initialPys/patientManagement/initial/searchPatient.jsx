@@ -1,10 +1,18 @@
 import React, { useState} from "react";
+import { useDispatch} from "react-redux"
+import {obtenerPacientePorNombre, obtenerPacientes} from "../../../../actions/index.js"
 
 const SearchPatient = () => {
+    const dispatch = useDispatch()
+    const [input, setInput] =useState("")  
 
-    const [input, setInput] =useState("")
     const handleChange = (e) => {
-        setInput(e.target.value)
+        if(e.target.value.length===0){
+            setInput(e.target.value)
+            dispatch(obtenerPacientes)
+        }else{
+        setInput(e.target.value)}
+        dispatch(obtenerPacientePorNombre(e.target.value))       
     }
     return (
         <>
