@@ -1,8 +1,12 @@
 import './App.scss';
 import { Route } from 'react-router-dom';
 import Landing from './components/Landing/Landing';
-import CreateSpecialist from './components/forms/CreateSpecialist/CreateSpecialist.jsx';
+
+import CreateSpecialist from './components/Forms/CreateSpecialist/CreateSpecialist.jsx'
+
+
 import InitialPys from "./components/initialPys/initial.jsx";
+
 function App() {
   return (
     <div className="App">

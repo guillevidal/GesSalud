@@ -1,1 +1,13 @@
-@use '../../../base.scss'
+@use '../../../base.scss';
+
+#especialist-container{
+    display: flex;
+    flex-flow: wrap;
+    align-items: center;
+    width: 50%;
+
+    .typeSpecialty{
+        margin: 0px 10px;
+        width: 170px;
+    }
+}
