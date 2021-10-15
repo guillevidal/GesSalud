@@ -42,6 +42,9 @@ module.exports = (sequelize) => {
       password: {
         type: DataTypes.STRING,
       },
+      gender: {
+        type: DataTypes.STRING,
+      },
     },
     { timestamps: false }
   );
