@@ -1,24 +1,27 @@
 import React from "react";
+import {Link} from "react-router-dom";
+import PatientCardDetails from "./patietCardDetails";
 
-const PatientCard = ({name, lastName, dni, email, phone, adress, birth , user, password, hc,
-    medicacion, contactos_emergencia, enfermedades }) => {
+const PatientCard = ({id, name, lastName, dni, email, phone, adress, birth , user, password, hc,
+    medicacion, contactos_emergencia, enfermedades, setDetails, details }) => {
     return (
+        <>
         <div>
-            <p>{name}</p>
-            <p>{lastName}</p>
-            <p>{dni}</p>
-            <p>{email}</p>
-            <p>{phone}</p>
-            <p>{adress}</p>
-            <p>{birth}</p>
-            <p>{user}</p>
-            <p>{password}</p>
-            <p>{hc}</p>
-            <p>{medicacion}</p>
-            <p>{contactos_emergencia}</p>
-            <p>{enfermedades}</p>
-        </div>
+            <p>nombre: {name}</p>
+            <p>apellido: {lastName}</p>
+            <p>dni: {dni}</p>
+            <button onClick={() => !details?setDetails(true):setDetails(false)}>{details?"Ver menos":"Ver mas"}</button>         
+        </div>:
+        </>
+
     )
 }
-
+    
 export default PatientCard;
+
+{/* <div>
+<p>nombre: {name}</p>
+<p>apellido: {lastName}</p>
+<p>dni: {dni}</p>
+<button onClick={() => setDetails(true)}>Ver mas</button>
+</div> */}
