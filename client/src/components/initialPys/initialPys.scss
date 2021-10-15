@@ -1,0 +1,24 @@
+@use '../../base';
+
+#initialPys-container {
+    justify-content: center;
+    align-items: center;
+    background-color: aqua;
+    width: 100%;
+
+    a:link, a:visited{
+        text-decoration: none;
+    }
+    .module-container{
+        color: black;
+        background-color: red;
+        text-align: center;
+        margin: 0px 150px;
+    }
+
+    .module-container:hover {
+        background-color: green;
+        color: white;
+        margin: 0px 140px;
+    }
+}
