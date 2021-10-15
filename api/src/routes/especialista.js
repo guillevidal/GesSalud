@@ -2,7 +2,7 @@ const { Router } = require("express");
 const { Persona, Especialista_medico, Tipo_especialidad, AgendaTotal } = require("../db");
 const router = Router();
 const { Op } = require("sequelize");
-// const { v4: uuidv4 } = require("uuid");
+
 
 router.get("/", async function (req, res, next) {
   let especialistas = await Especialista_medico.findAll({
@@ -58,7 +58,7 @@ router.post("/", async function (req, res) {
        }
     );
      
-   
+  
     let queryEn = await creandoEspecialista.setEspecialista_medico(
       creandoMatriculaEspecialista
      );
