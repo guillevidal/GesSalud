@@ -1,6 +1,25 @@
-//@import '../../../scss/base';
+@import '../../../scss/base';
 
 #createPatient-container{
-    
+    display: flex;
+    flex-direction: column;
     width: 100%;
+
+    .createPatient-form{
+        display: flex;
+        margin: 20px auto;
+        width: 100%;
+        max-width: 50%;
+
+        .boton-crear-paciente{
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            .boton-crear{
+                @include boton-primario
+            }
+        }
+    }
+
 }
+

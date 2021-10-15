@@ -13,7 +13,6 @@ const InitialPatient = () => {
     return (
         <div id="initialPatient-contairner">
             <Nav/>
-            <Link to="/initialPys"><button>Volver</button></Link> 
             <SearchPatient/>
             <Link to="/createPatient"><button>Crear Paciente</button></Link>       
             {!busquedaPaciente[0]?pacientes.map(({id, name, lastName, dni, email, phone, adress, birth , user, password, hc,

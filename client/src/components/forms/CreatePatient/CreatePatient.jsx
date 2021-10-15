@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import Person from "../Person/Person";
 import Nav from '../../Layout/Nav'
 import { crearPaciente } from '../../../actions/index'
+import './CreatePatient.scss'
 
 export default function CreatePatient() {
     const [input, setInput] = useState({
@@ -60,15 +61,15 @@ export default function CreatePatient() {
         <div id="createPatient-container">
 
             <Nav />
-            <div>
+            <div className='createPatient-form'>
                 <form onSubmit={(event) => { handleSubmit(event) }}>
                     <Person
                         name={input.name} lastName={input.lastName} dni={input.dni}
                         email={input.email} phone={input.phone} adress={input.adress}
                         birth={input.birth} user={input.user} password={input.password} handle={handleChange}
                     />
-                    <div>
-                        <button type="submit">CREAR</button>
+                    <div className='boton-crear-paciente'>
+                        <button type="submit" className='boton-crear'>CREAR</button>
                     </div>
                 </form>
             </div>
