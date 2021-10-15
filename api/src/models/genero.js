@@ -1,11 +1,11 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes, STRING } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "agendatotal",
+    "genero",
     {
-      count: {
-        type: DataTypes.INTEGER,
+      genere: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },
