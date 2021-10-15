@@ -3,9 +3,9 @@ import { CREAR_ESPECIALISTA, CREAR_PACIENTE, OBTENER_ESPECIALIDADES, OBTENER_ESP
 
 //CREAR ESPECIALISTA
 export const crearEspecialista = (especialista) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         {
-            fetch("http://localhost:3001/especialista",
+            const result = await fetch("http://localhost:3001/especialista",
                 {
                     method: "POST",
                     headers: {
@@ -14,18 +14,17 @@ export const crearEspecialista = (especialista) => {
                     },
                     body: JSON.stringify(especialista),
                 })
-                .then((respuesta) => respuesta.json)
-                .then((data) => dispatch({type: CREAR_ESPECIALISTA, payload: data}))
-                .catch(e => console.log(e))
+                const data = await result.json()
+                return dispatch({type: CREAR_ESPECIALISTA, payload: data})
           
         }
     }
 }
 //CREAR PACIENTE
 export const crearPaciente = (paciente) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         {
-            fetch("http://localhost:3001/paciente",
+            const result = await fetch("http://localhost:3001/paciente",
                 {
                     method: "POST",
                     headers: {
@@ -34,14 +33,12 @@ export const crearPaciente = (paciente) => {
                     },
                     body: JSON.stringify(paciente),
                 })
-                .then((respuesta) => respuesta.json)
-                .then((data) => dispatch({type: CREAR_PACIENTE, payload: data}))
-                .catch(e => console.log(e))
+                const data = await result.json()
+                return dispatch({type: CREAR_PACIENTE, payload: data})
           
         }
     }
 }
-
 //OBTENER TIPOS DE ESPECIALIDADES
 export const obtenerEspecialidades = () => {
     return (dispatch) => {
