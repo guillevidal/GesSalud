@@ -1,7 +1,11 @@
 import './App.scss';
 import { Route } from 'react-router-dom';
 import Landing from './components/Landing/Landing';
+
 import CreateSpecialist from './components/Forms/CreateSpecialist/CreateSpecialist.jsx'
+
+
+import InitialPys from "./components/initialPys/initial.jsx";
 
 function App() {
   return (
@@ -14,7 +18,9 @@ function App() {
      
         <CreateSpecialist />
       </Route>
-
+      <Route exact path="/initialPys">
+        <InitialPys/>
+      </Route>
     </div>
   );
 }
