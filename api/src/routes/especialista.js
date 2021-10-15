@@ -1,11 +1,13 @@
 const { Router } = require("express");
-const { Persona, Especialista_medico } = require("../db");
+const { Persona, Especialista_medico, Tipo_especialidad, AgendaTotal } = require("../db");
 const router = Router();
 const { Op } = require("sequelize");
 // const { v4: uuidv4 } = require("uuid");
 
 router.get("/", async function (req, res, next) {
-  let especialistas = await Persona.findAll();
+  let especialistas = await Especialista_medico.findAll({
+    include: { model:Persona, attributes : ["name", "lastName", "dni", "email", "phone", "adress", "birth", "user", "password"] }
+  });
 
   res.send(especialistas);
 });
@@ -17,7 +19,6 @@ router.post("/", async function (req, res) {
   try {
     const creandoEspecialista = await Persona.create(
       {
-        // id: uuidv4(),
         name: data.name,
         lastName: data.lastName,
         dni: data.dni,
@@ -27,10 +28,11 @@ router.post("/", async function (req, res) {
         birth: data.birth,
         user: data.user,
         password: data.password,
+        gender: data.gender
       },
       {
         fields: [
-          /* "id", */ "name",
+          "name",
           "lastName",
           "dni",
           "email",
@@ -39,20 +41,32 @@ router.post("/", async function (req, res) {
           "birth",
           "user",
           "password",
+          "gender"
         ],
       }
     );
-    const creandoMaEspecialista = await Especialista_medico.create(
+    const creandoMatriculaEspecialista = await Especialista_medico.create(
       {
-        // id: uuidv4(),
-        enrollment: data.enrollment,
+        enrollment: data.enrollment,       
+        specialty: data.specialty
       },
-      {
-        fields: [/* "id", */ "enrollment"],
-      }
+       {
+         fields: [
+           "enrollment", 
+           "specialty"
+          ],
+       }
     );
-
-    res.json(creandoEspecialista);
+     
+   
+    let queryEn = await creandoEspecialista.setEspecialista_medico(
+      creandoMatriculaEspecialista
+     );
+    let obj = {
+      ...creandoEspecialista.dataValues,
+     ...creandoMatriculaEspecialista.dataValues
+    };
+    res.send(obj);
   } catch (e) {
     res.status(400).send("no se puedo crear al especialista");
   }
@@ -62,9 +76,7 @@ router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     if (id) {
-      let query = await Persona.findByPk(
-        id /* , {// include: [datafaltante] } */
-      );
+      let query = await Especialista_medico.findByPk(id, {include : {model : Persona, attributes : ["name", "lastName", "dni", "email", "phone", "adress", "birth", "user", "password"]}});
 
       res.send(query);
     }

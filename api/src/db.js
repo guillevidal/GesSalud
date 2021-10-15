@@ -57,6 +57,15 @@ const {
 
 // Aca vendrian las relaciones
 
+Persona.hasOne(Especialista_medico);
+Especialista_medico.belongsTo(Persona);
+
+
+AgendaTotal.hasOne(Especialista_medico);
+Especialista_medico.belongsTo(AgendaTotal);
+
+
+
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');
