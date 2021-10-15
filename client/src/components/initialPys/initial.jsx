@@ -1,11 +1,18 @@
-import React from "react"
+import React, {useEffect} from "react"
 import {Link} from "react-router-dom";
 import "./initialPys.scss";
+import { useDispatch } from 'react-redux'
+import {obtenerPacientes} from "../../actions/index.js";
 
-const initialPys = () => {
+const InitialPys = () => {
+    const dispatch = useDispatch() 
+    useEffect(() => {
+        dispatch(obtenerPacientes())
+    })
+
     return (
         <div id="initialPys-container">
-            <Link to="pacientePys">
+            <Link to="patientPys">
                 <div className="module-container">
                     <h1>Gestion de paciente</h1>
                 </div>
@@ -31,4 +38,4 @@ const initialPys = () => {
         </div>
     )
 }
-export default initialPys
+export default InitialPys
