@@ -68,37 +68,42 @@ export default function CreateSpecialist() {
         <div id="createSpecialist-container">
 
             <Nav />
-            <div>
-            <form onSubmit={(event) => handleSubmit(event)}>
+            <div className='createSpecialist-form'>
+            <form onSubmit={(event) => handleSubmit(event)} className='form-container'>
+               <div className='form-infoPersonal'>
                 <Person name={input.name} lastName={input.lastName} dni={input.dni} 
                     email={input.email} phone={input.phone} adress={input.adress}
                     birth={input.birth} user={input.user} password={input.password} handle={handleChange}
                 />
-                <hr />
-                <label>TIPO DE ESPECIALDAD</label>
-                <br />
-                <br />
-                <div id="especialist-container">
+                </div>
+                
+                <div id="specialist-container">
+                <div className='label-tipo-title'>
+                    <label className='label-tipo-title-text'>TIPO DE ESPECIALDAD</label>
+                </div>
+                <div className='lista-especialidades'>
                     {
                         typeSpecialty && typeSpecialty.map((type, index) => {
                             return (
-                                <div className="typeSpecialty" key={index + "A"} >
+                                <div className="typeSpeciality" key={index + "A"} >
                                     <input
                                         key={index}
                                         type="checkbox"
                                         name={type}
+                                        className='input-tipo'
                                     />
-                                    <label key={index + type}>{type}</label>
+                                    <label className='label-tipo' key={index + type}>{type}</label>
                                 </div>
                             )
                         })
                     }
+                    </div>
 
                 </div>
-                <div>
-                    <button type="submit">CREAR</button>
-                </div>
             </form>
+                <div className='boton-crear-especialista'>
+                    <button type="submit" className='boton-creacion'>Crear</button>
+                </div>
             </div>
         </div>
     )
