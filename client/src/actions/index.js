@@ -66,6 +66,7 @@ export const obtenerPacientes = () => {
         type: OBTENER_PACIENTE, payload: objPaciente
     }
 }
+
 //OBTENER UNO O VARIOS ESPECIALISTA(S) BUSCANDO POR NOMBRE
 export const obtenerEspecialistaPorNombre = (nombre) => {  
     return {type: OBTENER_ESPECIALISTA_POR_NOMBRE, payload: nombre}         

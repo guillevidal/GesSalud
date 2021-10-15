@@ -1,1 +1,85 @@
-@use '../../../scss/base'
+@import '../../../scss/base';
+
+.createPerson{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+
+    .label-person-title{
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+
+        .label-person-title-text{
+            color:$color-principal;
+            font-size: 1.2em;
+            padding: 5px;
+        }
+
+    }
+    .person-data{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-around;
+
+        .label-input-person{
+            display: flex;
+            width:100%;
+            max-width: 220px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            .input-person{
+                display: flex;
+                width: 100%;
+                max-width: 200px;
+                margin-bottom: 20px;
+            }
+        }
+        .label-input-person-sexo{
+            display: flex;
+            width:100%;
+            max-width: 220px;
+            flex-direction: column; 
+            justify-content: center;
+            align-items: center;
+            
+            .sexo-input-label{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                 margin-bottom: 20px;
+            
+            }
+            .input-person-sexo{
+                margin-left:  5px;
+                margin-right: 10px;
+            }
+            .label-sexo-fem{
+                color: $fuxia;
+                
+            }
+            .label-sexo-mas{
+                color: $color-secundario;
+            }
+        }
+
+        .label-person{
+            font-family: $fuente_principal;
+            font-size: 13px;
+            margin-bottom: 5px;
+            color: $color-terciario;
+            background-color: $grisBlanco;
+            padding: 5px;
+            border-radius: 5px;
+            font-weight: $bold;
+        }
+
+    }
+}
