@@ -59,7 +59,7 @@ router.post("/", async function (req, res) {
     );
      
   
-    let queryEn = await creandoEspecialista.setEspecialista_medico(
+    await creandoEspecialista.setEspecialista_medico(
       creandoMatriculaEspecialista
      );
     let obj = {
