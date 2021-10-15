@@ -5,7 +5,7 @@ import CreateSpecialist from './components/forms/CreateSpecialist/CreateSpeciali
 import CreatePatient from './components/forms/CreatePatient/CreatePatient';
 import InitialPys from "./components/initialPys/initial.jsx";
 import InitialPatient from "./components/initialPys/patientManagement/initial/initialPatient.jsx";
-
+import PatientDetails from "./components/initialPys/patientManagement/initial/patietCardDetails.jsx";
 function App() {
   return (
     <div className="App">
@@ -24,6 +24,9 @@ function App() {
       </Route>
       <Route exact path="/patientPys">
         <InitialPatient/>
+      </Route>
+      <Route exact path="/patientDetails">
+        <PatientDetails/>
       </Route>
     </div>
   );
