@@ -6,7 +6,6 @@ import {faClinicMedical,faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
 export default function Nav(){
 
 
-
     return(
         <div className='nav-bar'>
 

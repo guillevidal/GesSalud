@@ -12,6 +12,7 @@ $desktop: 1024px;
 
 //Colores
 $blanco: #FFFFFF;
+$grisBlanco : #f3f3f3;
 $grisClaro: #e0d9d9;
 $grisOscuro:#2b2b2b;
 $negro: #000000;
@@ -19,9 +20,30 @@ $rojo: #b60101;
 $fuxia: #D81B60;
 $color-secundario: #006dac ;
 $color-principal: #005199;
+$color-terciario: #8ac8ff;
 
 // Fuentes
 $delgada: 300;
 $regular : 400;
+$regularPlus : 500;
 $bold: 600;
 $bold: 700;
+
+//boton
+
+@mixin boton-primario {
+   background-color:$color-principal;
+   color: white;
+   font-size: 1.2em;
+   border: none;
+   padding: 5px 10px;
+   font-weight: $regularPlus;
+   cursor: pointer;
+   box-shadow: 2px 2px 5px $color-terciario;
+
+   &:hover{
+       background-color: white;
+       color: $color-principal;
+       border: 1px solid $color-principal
+   }
+  }
