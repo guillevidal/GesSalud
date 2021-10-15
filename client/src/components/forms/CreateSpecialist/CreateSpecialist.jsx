@@ -1,5 +1,6 @@
 import './CreateSpecialist.scss';
 import Person from '../Person/Person'
+import Nav from '../../Layout/Nav'
 
 
 export default function TypeSpecialty() {
@@ -10,6 +11,8 @@ export default function TypeSpecialty() {
 
     return (
         <>
+
+            <Nav />
             <Person />
             <hr />
             <div>
