@@ -1,2 +1,18 @@
+<<<<<<< HEAD
 @use '../../../scss/base'
 
+=======
+@use '../../../base.scss';
+
+#especialist-container{
+    display: flex;
+    flex-flow: wrap;
+    align-items: center;
+    width: 50%;
+
+    .typeSpecialty{
+        margin: 0px 10px;
+        width: 170px;
+    }
+}
+>>>>>>> 2f2e8cc19fa31485242b45b3820385dd8e0f596f

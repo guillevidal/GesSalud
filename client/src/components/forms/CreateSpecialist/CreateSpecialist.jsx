@@ -1,38 +1,72 @@
 import './CreateSpecialist.scss';
+import React, { useState } from 'react';
 import Person from '../Person/Person'
 import Nav from '../../Layout/Nav'
 
 
-export default function TypeSpecialty() {
+export default function CreateSpecialist() {
     const typeSpecialty = ["Cardiología", "Endocrinología", "Gastroenterología",
         "Geriatría", "Hematología", "Infectología", "Médico clínico", "Neumología",
         "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría",
         "Toxicología", "Dermatología", "Odontología", "Ginecología", "Otorrinolaringología", "Urología", "Traumatología"]
 
+    const [ input, setInput ] = useState({
+        name: "",
+        lastName: "",
+        dni: 0,
+        email: "",
+        phone: "",
+        adress: "",
+        birth: "",
+        user: "",
+        password: "",
+    })
+
+    const handleChange = (e) => {
+        setInput({
+            ...input,
+            [e.target.name]: e.target.value
+        })
+    }
+
     return (
+<<<<<<< HEAD
         <>
 
             <Nav />
             <Person />
             <hr />
             <div>
+=======
+        <div id="createSpecialist-container">
+            <form>
+                <Person name={input.name} lastName={input.lastName} dni={input.dni} 
+                    email={input.email} phone={input.phone} adress={input.adress}
+                    birth={input.birth} user={input.user} password={input.password} handle={handleChange}
+                />
+                <hr />
+>>>>>>> 2f2e8cc19fa31485242b45b3820385dd8e0f596f
                 <label>TIPO DE ESPECIALDAD</label>
                 <br />
-                {
-                    typeSpecialty && typeSpecialty.map((type, index) => {
-                        return (
-                            <div key={index + "A"} >
-                                <label key={index + type}>{type}</label>
-                                <input
-                                    key={index}
-                                    type="checkbox"
-                                    name={type}
-                                />
-                            </div>
-                        )
-                    })
-                }
-            </div>
-        </>
+                <br />
+                <div id="especialist-container">
+                    {
+                        typeSpecialty && typeSpecialty.map((type, index) => {
+                            return (
+                                <div className="typeSpecialty" key={index + "A"} >
+                                    <input 
+                                        key={index}
+                                        type="checkbox"
+                                        name={type}
+                                    />
+                                    <label key={index + type}>{type}</label>
+                                </div>
+                            )
+                        })
+                    }
+
+                </div>
+            </form>
+        </div>
     )
 }
