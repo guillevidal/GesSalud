@@ -6,7 +6,8 @@ import CreatePatient from "./components/forms/CreatePatient/CreatePatient";
 import InitialPys from "./components/initialPys/initial.jsx";
 import InitialPatient from "./components/initialPys/patientManagement/initial/initialPatient.jsx";
 import PatientDetails from "./components/initialPys/patientManagement/initial/patietCardDetails.jsx";
-import HomeRH from "./components/homeRH/HomeRH.jsx";
+import HomeRRHH from "./components/homeRH/HomeRH.jsx";
+
 function App() {
   return (
     <div className="App">
@@ -29,7 +30,7 @@ function App() {
         <PatientDetails />
       </Route>
       <Route exact path="/homeRRHH">
-        <HomeRH />
+        <HomeRRHH />
       </Route>
     </div>
   );

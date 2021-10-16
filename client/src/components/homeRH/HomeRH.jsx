@@ -6,7 +6,7 @@ import Paged from './Paged';
 import {obtenerEspecialistaPorNombre} from '../../actions/index';
 import {obtenerEspecialistas} from '../../actions/index';
 
-export default function HomeRH() {
+const HomeReHu = () => {
     
     const [input, setInput] = useState("");
 
@@ -40,11 +40,12 @@ export default function HomeRH() {
                 <button onClick={() => {handleEspecialidad()}}>Buscar</button>
             </div>
             <div>
-                <Cards /> 
+                {/*<Cards />*/} 
             </div>
             <div>
-                <Paged />
+                {/*<Paged />*/}
             </div>
         </div>
     )
 }
+export default HomeReHu;
