@@ -1,25 +1,23 @@
-const { DataTypes, STRING } = require('sequelize');
-
+const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
+  sequelize.define(
+    "diagnostico",
+    {
+      diagnostic: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
 
-  sequelize.define('diagnostico', {
+      date: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
 
-    diagnostic: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      derivation: {
+        type: DataTypes.STRING,
+      },
     },
-
-    date: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-
-    derivation: {
-      type: DataTypes.STRING,
-    }
-
-    }, 
-  { timestamps: false }
-  ); 
+    { timestamps: false }
+  );
 };

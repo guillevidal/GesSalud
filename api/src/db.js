@@ -62,6 +62,15 @@ Especialista_medico.belongsTo(Persona);
 AgendaTotal.hasOne(Especialista_medico);
 Especialista_medico.belongsTo(AgendaTotal);
 
+Persona.hasOne(Paciente);
+Paciente.belongsTo(Persona);
+
+Paciente.hasOne(HistoriaClinica);
+HistoriaClinica.belongsTo(Paciente);
+
+Paciente.hasMany(Diagnostico);
+Diagnostico.belongsTo(Paciente);
+
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');
