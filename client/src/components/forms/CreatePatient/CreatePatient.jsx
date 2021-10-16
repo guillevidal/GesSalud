@@ -110,6 +110,7 @@ export default function CreatePatient() {
                                 title="El campo solo acepta letras" value={input.emergencyContact} onChange={handleChange}
                             />
                         </div>
+                       </div> 
                    
                     <br />
                     <div>
