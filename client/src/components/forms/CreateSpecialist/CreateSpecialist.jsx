@@ -102,22 +102,37 @@ export default function CreateSpecialist() {
         <div id="createSpecialist-container">
 
             <Nav />
-            <div className='form-container'>
-                <form onSubmit={(event) => handleSubmit(event)}>
+            <div>
+                <form onSubmit={(event) => handleSubmit(event)} className='form-container'>
                    <div className='form-infoPersonal'>
                     <Person name={input.name} lastName={input.lastName} dni={input.dni}
                         email={input.email} phone={input.phone} adress={input.adress}
                         birth={input.birth} user={input.user} password={input.password}
                         handle={handleChange}
                     />
+
+                    <div className='identificacion-personal'>
+                        
+                        <label htmlFor="enrollment" className='label-tipo-title-text'>IDENTIFICACION PROFESIONAL</label>
+                                 
+                        <input
+                            id="enrollment" type="text" name="enrollment" required pattern="[0-9]+" title="El campo solo acepta números"
+                            value={input.enrollment} onChange={handleChange}
+                             />
+                               
+                        </div>
+                    
                     </div>
+                    
                     <div id='specialist-container'>
-                        <label>TIPO DE ESPECIALDAD</label>
+                        <div className='label-tipo-title'>
+                        <label className='label-tipo-title-text'>TIPO DE ESPECIALDAD</label>
+                        </div>
                          <div className='lista-especialidades'>
                         {
                             typeSpecialties && typeSpecialties.map((type, index) => {
                                 return (
-                                    <div className="typeSpecialty" key={index + "A"} >
+                                    <div className="typeSpeciality" key={index + "A"} >
                                         <input
                                             key={index}
                                             type="checkbox"
@@ -134,31 +149,16 @@ export default function CreateSpecialist() {
                         }
 
                         </div>
+
+                    
+
                     </div>
-                   {/*  <div>
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <label htmlFor="enrollment">IDENTIFICACION PROFESIONAL:</label>
-                                    </td>
-                                    <td>
-                                        <input
-                                            id="enrollment" type="text" name="enrollment" required pattern="[0-9]+" title="El campo solo acepta números"
-                                            value={input.enrollment} onChange={handleChange}
-                                        />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div> */}
-                   {/*  <div>
-                        <Link to='/homeRRHH'>
-                        <button >VOLVER</button>
-                        </Link>
-                        <button type="submit">CREAR</button>
-                    </div> */}
+                   
                 </form>
+               
+                     <div className='boton-crear-especialista'>
+                        <button type="submit" className='boton-creacion'>CREAR</button>
+                    </div> 
             </div>
         </div>
     )

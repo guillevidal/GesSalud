@@ -7,17 +7,74 @@
 
     .createPatient-form{
         display: flex;
+        justify-content: center;
+        flex-direction: row;
+        flex-wrap: wrap;
         margin: 20px auto;
         width: 100%;
-        max-width: 50%;
 
-        .boton-crear-paciente{
+        .information-person{
             display: flex;
             width: 100%;
-            justify-content: center;
-            .boton-crear{
-                @include boton-primario
+            max-width: 500px;
+        }
+        .information-clinic{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            align-items: center;
+
+            .label-title{
+                display: flex;
+                width: 100%;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 20px;
+
+                .label-title-text{
+                    color:$color-principal;
+                    font-size: 1.2em;
+                    padding: 5px;
+                }
             }
+            .label-textarea{
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 25px;
+
+                .label-interno{
+                    font-family: $fuente_principal;
+                    font-size: 13px;
+                    margin-bottom: 5px;
+                    color: $color-terciario;
+                    background-color: $grisBlanco;
+                    padding: 5px;
+                     border-radius: 5px;
+                    font-weight: $bold;
+                }
+
+                .inputs{
+                    width: 100%;
+                    max-width: 300px;
+                    height: 70px;
+                }
+
+            }
+        }
+
+        
+    }
+    .boton-crear-paciente{
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 20px;
+        .boton-crear{
+            @include boton-primario
         }
     }
 

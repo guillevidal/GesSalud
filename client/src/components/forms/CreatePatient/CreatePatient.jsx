@@ -76,54 +76,52 @@ export default function CreatePatient() {
         <div id="createPatient-container">
 
             <Nav />
-            <div className='createPatient-form'>
-                <form onSubmit={(event) => { handleSubmit(event) }}>
+                <form onSubmit={(event) => { handleSubmit(event) } }  className='createPatient-form'>
                  
-                    <div>
+                    <div className='information-person'>
                         <Person
                             name={input.name} lastName={input.lastName} dni={input.dni}
                             email={input.email} phone={input.phone} adress={input.adress}
                             birth={input.birth} user={input.user} password={input.password} handle={handleChange}
                         />
                     </div>
-                    <hr />
-                    <div>
-                        <label>INFORMACION CLINICA</label>
-                        <div>
-                            <label htmlFor="medication">Medicación:</label>
-                            <br />
+                    <div className='information-clinic'>
+                        <div className='label-title'>
+                            <label className='label-title-text'>INFORMACION CLINICA</label>
+                        </div>
+                            <div className='label-textarea'>
+                            <label htmlFor="medication" className='label-interno'>Medicación:</label>
                             <textarea
                                 id="medication" type="text" name="medication" required pattern="[[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,64}"
                                 title="El campo solo acepta letras" value={input.medication} onChange={handleChange}
+                                className='inputs'
                             />
-                            <br />
-                            <label htmlFor="disease">Enfermedades:</label>
-                            <br />
+                            </div>
+                            <div className='label-textarea'>
+                            <label htmlFor="disease" className='label-interno'>Enfermedades:</label>
                             <textarea
                                 id="disease" type="text" name="disease" required pattern="[[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,64}"
                                 title="El campo solo acepta letras" value={input.disease} onChange={handleChange}
+                                className='inputs'
                             />
-                            <br />
-                            <label htmlFor="emergencyContact">Contacto de emergencia:</label>
-                            <br />
+                            </div>
+                            <div className='label-textarea'> 
+                            <label htmlFor="emergencyContact" className='label-interno'>Contacto de emergencia:</label>
+                           
                             <input
                                 id="emergencyContact" type="text" name="emergencyContact" required pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"
                                 title="El campo solo acepta letras" value={input.emergencyContact} onChange={handleChange}
+                                className='input-emergencia'
                             />
-                        </div>
-                       </div> 
+                            </div>
+                    </div> 
                    
-                    <br />
-                    <div>
-                        <Link to='/patientPys'>
-                            <button>VOLVER</button>
-                        </Link>
-                     <div className='boton-crear-paciente'>
-                       <button type="submit" className='boton-crear'>CREAR</button>
-                        </div>       
-                    </div>
+                          
                 </form>
-            </div>
+
+                <div className='boton-crear-paciente'>
+                       <button type="submit" className='boton-crear'>CREAR</button>
+                    </div>  
         </div>
 
     )
