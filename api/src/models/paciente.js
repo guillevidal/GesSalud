@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
       },
 
       disease: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
       },
     },
     { timestamps: false }

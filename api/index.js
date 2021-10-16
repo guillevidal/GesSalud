@@ -7,11 +7,21 @@ conn.sync({ force: true }).then(async () => {
     let getEspecialidades = await axios.get(
       `http://localhost:3001/especialidades`
     );
-    let Especialidades = getEspecialidades.data.sort();
+    let Especialidades = getEspecialidades.data.sort(function (a, b) {
+      if (a.name > b.name) {
+        return 1;
+      }
+      if (a.name < b.name) {
+        return -1;
+      }
+      // a must be equal to b
+      return 0;
+    });
     await Tipo_especialidad.bulkCreate(
       Especialidades &&
         Especialidades.map((e) => ({
-          name: e,
+          name: e.name,
+          modulo_atencion: e.modulo,
         }))
     );
 
