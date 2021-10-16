@@ -5,9 +5,16 @@
 
 }
 
+#prueba{
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+    align-items: center;
+}
 #patientDetails-container{
     display: flex;
     flex-flow: column;
     width: 100%;
 
 }
+
