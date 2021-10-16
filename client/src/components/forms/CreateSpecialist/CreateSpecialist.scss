@@ -6,15 +6,33 @@
     width: 100%;
 
     .form-container{
-
         display: flex;
         margin-top: 20px;
+        flex-wrap: wrap;
+        justify-content: space-around;
+
+        .label-tipo-title-text{
+            color:$color-principal;
+            font-size: 1.2em;
+            padding: 5px;
+        }
 
         .form-infoPersonal{
 
             display: flex;
+            flex-direction: column;
             width: 100%;
-            max-width: 50%;
+            max-width: 500px;
+
+            .identificacion-personal{
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                margin: 30px auto;
+    
+    
+            }
 
         }
 
@@ -22,7 +40,7 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            max-width: 50%;
+            max-width: 450px;
 
             .label-tipo-title{
                 display: flex;
@@ -31,11 +49,7 @@
                 align-items: center;
                 margin-bottom: 20px;
         
-                .label-tipo-title-text{
-                    color:$color-principal;
-                    font-size: 1.2em;
-                    padding: 5px;
-                }
+                
         
             }
 
@@ -43,12 +57,12 @@
             display: flex;
             width: 100%;
             flex-wrap: wrap;
-            justify-content: space-around;
+            justify-content: space-between;
 
             .typeSpeciality{
                 display: flex;
                 width: 100%;
-                max-width: 150px;
+                max-width: 140px;
                 margin: 10px;
                 align-items: center;
 
@@ -67,10 +81,12 @@
                     font-weight: $regularPlus;
                 }
             }
+
+            
         }
 
         
-
+        
 
         }
        
@@ -82,6 +98,7 @@
         width: 100%;
         justify-content: center;
         margin-bottom: 20px;
+        margin-top: 20px;
 
         .boton-creacion{
             @include boton-primario
