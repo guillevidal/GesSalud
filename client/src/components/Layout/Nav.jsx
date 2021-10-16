@@ -32,6 +32,12 @@ export default function Nav(){
                     <Link to='/consultorioPys' className='nav-link-ok' >Consultorios</Link>
                 </div>
             }
+            {status === '2' &&
+                <div className='nav-link'>
+                    <Link to='/homeRRHH' className='nav-link-ok' >Home</Link>
+                    <Link to='/createSpecialist' className='nav-link-ok' >Crear Especialista</Link>
+                </div>
+            }
                 <div  className='nav-logo'>
                     <FontAwesomeIcon icon={faClinicMedical} className='nav-logo-icon'/>
                     <span className='nav-logo-text'>GesSalud</span>
