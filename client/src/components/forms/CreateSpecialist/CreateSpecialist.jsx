@@ -2,6 +2,7 @@ import './CreateSpecialist.scss';
 import React, { useState, useEffect } from 'react';
 import Nav from '../../Layout/Nav'
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Person from '../Person/Person';
 import {
     crearEspecialista,
@@ -82,7 +83,7 @@ export default function CreateSpecialist() {
         setInput({
             name: "",
             lastName: "",
-            dni: 0,
+            dni: "",
             email: "",
             phone: "",
             adress: "",
@@ -90,7 +91,7 @@ export default function CreateSpecialist() {
             user: "",
             password: "",
             gener: "",
-            enrollment: 0,
+            enrollment: "",
             typeSpecialties: [],
         })
         alert(`El especialista médico se creó correctamente `)
@@ -150,6 +151,9 @@ export default function CreateSpecialist() {
                         </table>
                     </div>
                     <div>
+                        <Link to='/homeRRHH'>
+                        <button >VOLVER</button>
+                        </Link>
                         <button type="submit">CREAR</button>
                     </div>
                 </form>
