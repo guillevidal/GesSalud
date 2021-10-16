@@ -58,15 +58,15 @@ export default function Person({name, lastName, dni, email, phone, adress, birth
                             />
                         </td>
                         <td>
-                            <label htmlFor="gener">Sexo:</label>
+                            <label htmlFor="gender">Sexo:</label>
                         </td>
                         <td>
                             <input
-                                id="femenino" type="radio" name="gener" value="femenino"  onChange={handle} 
+                                id="femenino" type="radio" name="gender" value="femenino"  onChange={handle} 
                             />
                             <label htmlFor="femenino">Femenino</label>
                             <input
-                                id="masculino" type="radio" name="gener" value="masculino" onChange={handle}
+                                id="masculino" type="radio" name="gender" value="masculino" onChange={handle}
                             />
                             <label htmlFor="masculino">Masculino</label>
                         </td>
