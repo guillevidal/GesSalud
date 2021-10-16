@@ -31,9 +31,9 @@ export default function CreateSpecialist() {
         birth: "",
         user: "",
         password: "",
-        gener: "",
+        gender: "",
         enrollment: "",
-        typeSpecialties: [],
+        specialty: [],
     })
     
     const handleChange = (event) => {
@@ -73,9 +73,9 @@ export default function CreateSpecialist() {
             birth: input.birth,
             user: input.user,
             password: input.password,
-            gener: input.gener,
+            gender: input.gener,
             enrollment: parseInt(input.enrollment),
-            typeSpecialties: input.typeSpecialties.join(', '),
+            specialty: input.typeSpecialties.join(', '),
 
         }
 
@@ -90,9 +90,9 @@ export default function CreateSpecialist() {
             birth: "",
             user: "",
             password: "",
-            gener: "",
+            gender: "",
             enrollment: "",
-            typeSpecialties: [],
+            specialty: [],
         })
         alert(`El especialista médico se creó correctamente `)
     }
