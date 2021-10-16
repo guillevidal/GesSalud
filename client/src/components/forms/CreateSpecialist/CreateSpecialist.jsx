@@ -102,18 +102,18 @@ export default function CreateSpecialist() {
         <div id="createSpecialist-container">
 
             <Nav />
-            <div>
+            <div className='form-container'>
                 <form onSubmit={(event) => handleSubmit(event)}>
+                   <div className='form-infoPersonal'>
                     <Person name={input.name} lastName={input.lastName} dni={input.dni}
                         email={input.email} phone={input.phone} adress={input.adress}
                         birth={input.birth} user={input.user} password={input.password}
                         handle={handleChange}
                     />
-                    <hr />
-                    <label>TIPO DE ESPECIALDAD</label>
-                    <br />
-                    <br />
-                    <div id="especialist-container">
+                    </div>
+                    <div id='specialist-container'>
+                        <label>TIPO DE ESPECIALDAD</label>
+                         <div className='lista-especialidades'>
                         {
                             typeSpecialties && typeSpecialties.map((type, index) => {
                                 return (
@@ -125,15 +125,17 @@ export default function CreateSpecialist() {
                                             value={type.name}
                                             id={type.name}
                                             onChange={handleChangeTypeSpecialities}
+                                            className='input-tipo'
                                         />
-                                        <label key={index + type.name}>{type.name}</label>
+                                        <label className='label-tipo' key={index + type.name}>{type.name}</label>
                                     </div>
                                 )
                             })
                         }
 
+                        </div>
                     </div>
-                    <div>
+                   {/*  <div>
                         <table>
                             <tbody>
                                 <tr>
@@ -149,13 +151,13 @@ export default function CreateSpecialist() {
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                    <div>
+                    </div> */}
+                   {/*  <div>
                         <Link to='/homeRRHH'>
                         <button >VOLVER</button>
                         </Link>
                         <button type="submit">CREAR</button>
-                    </div>
+                    </div> */}
                 </form>
             </div>
         </div>

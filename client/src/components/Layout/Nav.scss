@@ -63,13 +63,14 @@
 
             .nav-exit-conjunto{
                 display: flex;
+                align-items: center;
                 margin-right: 10px;
                 padding: 5px;
                 border-radius: 5px;
                 cursor: pointer;
-
+                
                 &:hover{
-                    background-color: $color-secundario;
+                    background-color:$color-secundario;
                 }
 
                 .nav-exit-icon{
@@ -78,9 +79,11 @@
                     margin-right: 5px;
                 }
                 .nav-exit-link{
-                    display: flex;
-                    color: white;
                     text-decoration: none;
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    color: white;
                 }
 
             }

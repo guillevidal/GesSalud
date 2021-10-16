@@ -45,7 +45,7 @@ export default function Nav(){
                 <div  className='nav-exit'>
                     <div className='nav-exit-conjunto'>
                     <FontAwesomeIcon icon={faSignOutAlt} className='nav-exit-icon'/>
-                    <Link onClick={e => logout(e)} className='nav-exit-link'>Salir</Link>
+                    <button  onClick={e => logout(e)} className='nav-exit-link'>Salir</button>
                     </div>
                 </div>
 
