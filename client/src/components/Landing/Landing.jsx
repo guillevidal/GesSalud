@@ -2,16 +2,19 @@ import './Landing'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faClinicMedical,faUserMd} from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { rol } from '../../actions'
+import { Redirect } from 'react-router-dom'
 
 
 export default function Landing(){
 
     const dispatch = useDispatch()
+    const status = useSelector(state => state.rol);
 
     const [input, setInput] = useState({
-        user : null,
-        pass : null
+        user : '',
+        pass : ''
     })
 
     const handleChange = (e) => {
@@ -24,15 +27,19 @@ export default function Landing(){
         
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
 
         e.preventDefault()
 
+       await dispatch(rol(input.user))
 
     }
 
     return(
         <div id='landing-container'>
+            { status === '1' && <Redirect to ='/initialPys' />}
+            { status === '2' && <Redirect to ='/vistaPrincipalRRHH' />}
+            
             <div id='landing-header'>
                 <div id='landing-title'>
                     <FontAwesomeIcon icon={faClinicMedical} className='icon-salud' />

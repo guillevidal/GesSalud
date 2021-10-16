@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Person from "../Person/Person";
 import Nav from '../../Layout/Nav'
 import { crearPaciente } from '../../../actions/index'
+import './CreatePatient.scss'
 
 export default function CreatePatient() {
     const [input, setInput] = useState({
@@ -74,8 +75,9 @@ export default function CreatePatient() {
         <div id="createPatient-container">
 
             <Nav />
-            <div>
+            <div className='createPatient-form'>
                 <form onSubmit={(event) => { handleSubmit(event) }}>
+                 
                     <div>
                         <Person
                             name={input.name} lastName={input.lastName} dni={input.dni}
@@ -108,13 +110,15 @@ export default function CreatePatient() {
                                 title="El campo solo acepta letras" value={input.emergencyContact} onChange={handleChange}
                             />
                         </div>
-                    </div>
+                   
                     <br />
                     <div>
                         <Link to='/patientPys'>
                             <button>VOLVER</button>
                         </Link>
-                        <button type="submit">CREAR</button>
+                     <div className='boton-crear-paciente'>
+                       <button type="submit" className='boton-crear'>CREAR</button>
+                        </div>       
                     </div>
                 </form>
             </div>
