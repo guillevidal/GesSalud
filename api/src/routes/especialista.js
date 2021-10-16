@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const db = require("../db");
 const {
   Persona,
   Especialista_medico,
@@ -112,5 +113,26 @@ router.get("/:id", async (req, res) => {
     res.status(400).json(error);
   }
 });
+
+
+router.put ("/:id", async (req, res) => {
+try{
+let id= req.params.id;
+let query = await Especialista_medico.findByPk(id);
+let { personaId } = query
+
+let {specialty, email, phone, adress, user, password } = req.body;
+await Especialista_medico.update({specialty},{where: {id}})
+
+await Persona.update({ user },{where: {id : personaId}})
+
+res.status(200).send("Se actualizaron los datos correctamente");
+
+}catch(e){
+
+  res.status(400).send("No se pudieron actualizar los datos.");
+}
+
+} )
 
 module.exports = router;

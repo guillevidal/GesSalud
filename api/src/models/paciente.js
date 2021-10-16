@@ -1,24 +1,21 @@
-const { DataTypes, STRING } = require('sequelize');
-
+const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  
-  sequelize.define('paciente', {
+  sequelize.define(
+    "paciente",
+    {
+      medication: {
+        type: DataTypes.STRING,
+      },
 
-    medication: {
-      type: DataTypes.STRING,
-     
+      emergencyContact: {
+        type: DataTypes.INTEGER,
+      },
+
+      disease: {
+        type: DataTypes.STRING,
+      },
     },
-
-    emergencyContact: {
-      type: DataTypes.INTEGER,
-    },
-
-    disease: {
-      type: DataTypes.INTEGER,
-    }
-
-    }, 
-  { timestamps: false }
-  ); 
+    { timestamps: false }
+  );
 };

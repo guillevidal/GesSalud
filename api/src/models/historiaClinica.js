@@ -1,16 +1,14 @@
-const { DataTypes, STRING } = require('sequelize');
-
+const { DataTypes, STRING } = require("sequelize");
 
 module.exports = (sequelize) => {
-  
-  sequelize.define('historiaClinica', {
-
-    creationDate: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    }
-
-    }, 
-  { timestamps: false }
-  ); 
+  sequelize.define(
+    "historiaClinica",
+    {
+      creationDate: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+    },
+    { timestamps: false }
+  );
 };

@@ -18,7 +18,7 @@ const InitialPatient = () => {
             {!busquedaPaciente[0]?pacientes.map(({id, name, lastName, dni, email, phone, adress, birth , user, password, hc,
              medicacion, contactos_emergencia, enfermedades }) => {
                 return (
-                    <PatientCard key={id} name={name} lastName={lastName} dni={dni} email={email}
+                    <PatientCard key={id} id={id} name={name} lastName={lastName} dni={dni} email={email}
                         phone={phone} adress={adress} birth={birth} user={user} password={password}
                         hc={hc} medicacion={medicacion} contactos_emergencia={contactos_emergencia}
                         enfermedades={enfermedades} setDetails={setDetails} details={details}

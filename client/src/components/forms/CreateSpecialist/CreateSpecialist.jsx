@@ -1,31 +1,41 @@
 import './CreateSpecialist.scss';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Nav from '../../Layout/Nav'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Person from '../Person/Person';
-import { crearEspecialista } from '../../../actions/index'
+import {
+    crearEspecialista,
+    obtenerEspecialidades,
+} from '../../../actions/index'
 
 
 
 export default function CreateSpecialist() {
-    const typeSpecialty = ["Cardiología", "Endocrinología", "Gastroenterología",
-        "Geriatría", "Hematología", "Infectología", "Médico clínico", "Neumología",
-        "Neurología", "Nutriología", "Oftalmología", "Oncología", "Pediatría", "Psiquiatría",
-        "Toxicología", "Dermatología", "Odontología", "Ginecología", "Otorrinolaringología", "Urología", "Traumatología"]
 
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(obtenerEspecialidades())
+    }, [])
+
+    const typeSpecialties = useSelector((state) => state.especialidades)
+
     const [input, setInput] = useState({
         name: "",
         lastName: "",
-        dni: 0,
+        dni: "",
         email: "",
         phone: "",
         adress: "",
         birth: "",
         user: "",
         password: "",
+        gender: "",
+        enrollment: "",
+        specialty: [],
     })
-
+    
     const handleChange = (event) => {
         setInput({
             ...input,
@@ -33,8 +43,25 @@ export default function CreateSpecialist() {
         })
     }
 
+    const handleChangeTypeSpecialities = (e) => {
+        if (input.typeSpecialties.includes(e.target.value)) {
+            setInput({
+                ...input,
+                typeSpecialties: input.typeSpecialties.filter(type => type !== e.target.value)
+
+            })
+        } else {
+            setInput({
+                ...input,
+                typeSpecialties: [...input.typeSpecialties, e.target.value]
+            })
+        }
+
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault()
+
 
         let newSpecialist = {
             name: input.name.toLowerCase(),
@@ -42,23 +69,30 @@ export default function CreateSpecialist() {
             dni: parseInt(input.dni),
             email: input.email,
             phone: input.phone,
-            adress: input.adress,
+            adress: input.adress.toLowerCase(),
             birth: input.birth,
             user: input.user,
             password: input.password,
+            gender: input.gener,
+            enrollment: parseInt(input.enrollment),
+            specialty: input.typeSpecialties.join(', '),
+
         }
 
         dispatch(crearEspecialista(newSpecialist))
         setInput({
             name: "",
             lastName: "",
-            dni: 0,
+            dni: "",
             email: "",
             phone: "",
             adress: "",
             birth: "",
             user: "",
             password: "",
+            gender: "",
+            enrollment: "",
+            specialty: [],
         })
         alert(`El especialista médico se creó correctamente `)
     }
@@ -68,42 +102,61 @@ export default function CreateSpecialist() {
         <div id="createSpecialist-container">
 
             <Nav />
-            <div className='createSpecialist-form'>
-            <form onSubmit={(event) => handleSubmit(event)} className='form-container'>
-               <div className='form-infoPersonal'>
-                <Person name={input.name} lastName={input.lastName} dni={input.dni} 
-                    email={input.email} phone={input.phone} adress={input.adress}
-                    birth={input.birth} user={input.user} password={input.password} handle={handleChange}
-                />
-                </div>
-                
-                <div id="specialist-container">
-                <div className='label-tipo-title'>
-                    <label className='label-tipo-title-text'>TIPO DE ESPECIALDAD</label>
-                </div>
-                <div className='lista-especialidades'>
-                    {
-                        typeSpecialty && typeSpecialty.map((type, index) => {
-                            return (
-                                <div className="typeSpeciality" key={index + "A"} >
-                                    <input
-                                        key={index}
-                                        type="checkbox"
-                                        name={type}
-                                        className='input-tipo'
-                                    />
-                                    <label className='label-tipo' key={index + type}>{type}</label>
-                                </div>
-                            )
-                        })
-                    }
-                    </div>
+            <div>
+                <form onSubmit={(event) => handleSubmit(event)}>
+                    <Person name={input.name} lastName={input.lastName} dni={input.dni}
+                        email={input.email} phone={input.phone} adress={input.adress}
+                        birth={input.birth} user={input.user} password={input.password}
+                        handle={handleChange}
+                    />
+                    <hr />
+                    <label>TIPO DE ESPECIALDAD</label>
+                    <br />
+                    <br />
+                    <div id="especialist-container">
+                        {
+                            typeSpecialties && typeSpecialties.map((type, index) => {
+                                return (
+                                    <div className="typeSpecialty" key={index + "A"} >
+                                        <input
+                                            key={index}
+                                            type="checkbox"
+                                            name={type}
+                                            value={type}
+                                            id={type}
+                                            onChange={handleChangeTypeSpecialities}
+                                        />
+                                        <label key={index + type}>{type}</label>
+                                    </div>
+                                )
+                            })
+                        }
 
-                </div>
-            </form>
-                <div className='boton-crear-especialista'>
-                    <button type="submit" className='boton-creacion'>Crear</button>
-                </div>
+                    </div>
+                    <div>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <label htmlFor="enrollment">IDENTIFICACION PROFESIONAL:</label>
+                                    </td>
+                                    <td>
+                                        <input
+                                            id="enrollment" type="text" name="enrollment" required pattern="[0-9]+" title="El campo solo acepta números"
+                                            value={input.enrollment} onChange={handleChange}
+                                        />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <Link to='/homeRRHH'>
+                        <button >VOLVER</button>
+                        </Link>
+                        <button type="submit">CREAR</button>
+                    </div>
+                </form>
             </div>
         </div>
     )
