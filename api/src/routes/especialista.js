@@ -122,7 +122,6 @@ let query = await Especialista_medico.findByPk(id);
 let { personaId } = query
 
 let {specialty, email, phone, adress, user, password } = req.body;
-console.log;
 await Especialista_medico.update({specialty},{where: {id}})
 
 await Persona.update({ user },{where: {id : personaId}})

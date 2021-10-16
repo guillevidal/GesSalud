@@ -111,4 +111,53 @@ router.post("/", async function (req, res) {
   }
 });
 
+//BÚSQUEDA DE PACIENTE POR "DNI"
+router.get("/consulta", async (req, res) => {
+  const { dni } = req.body;
+  try {
+    if (dni) {
+      let query = await Persona.findOne({
+        where : { dni : dni},
+        include: {
+          model: Paciente,
+          include:
+          [{
+            model: HistoriaClinica,
+          },
+          {
+            model: Diagnostico,
+          }
+          ]
+        },
+      });
+
+      res.send(query);
+    }
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
+//ACTUALIZACIÓN DE DATOS PERSONALES DE PACIENTE
+router.put ("/:id", async (req, res) => {
+  try{
+  let id= req.params.id;
+  let query = await Paciente.findByPk(id);
+  let { personaId } = query
+  let {email, phone, adress, birth, user, password, gender } = req.body;
+
+    if (email && phone && adress && birth && user && password && gender) {
+      await Persona.update({ email, phone, adress, birth, user, password, gender },{where: {id : personaId}})
+      res.status(200).send("Se actualizaron los datos correctamente");
+    }
+    else {
+      res.status(400).send("Actualización FALLIDA, Campos vacíos")
+    }
+  }catch(e){
+    res.status(400).send("No se pudieron actualizar los datos.");
+  }
+  
+});
+
+
 module.exports = router;
