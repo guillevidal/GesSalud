@@ -2,28 +2,32 @@ import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
 // import NavBar from './NavBar';
 import Cards from './Cards';
-import Paged from './Paged';
 import {obtenerEspecialistaPorNombre} from '../../actions/index';
 import {obtenerEspecialistas} from '../../actions/index';
 
-const HomeReHu = () => {
+export default function HomeRH() {
     
-    const [input, setInput] = useState("");
+    const [inputName, setInputName] = useState("");
+    const [inputEspecialista, setInputEspecialista] = useState("");
 
     const dispatch = useDispatch();
 
-    function handleInput(e){         
-        setInput(e.target.value);
+    function handleInputName(e){         
+        setInputName(e.target.value);
     }
 
     function handleName() {
-        dispatch(obtenerEspecialistaPorNombre(input));
-        setInput("");
+        dispatch(obtenerEspecialistaPorNombre(inputName));
+        setInputName("");
+    }
+
+    function handleInputEspecialista(e){         
+        setInputEspecialista(e.target.value);
     }
 
     function handleEspecialidad() {
-        dispatch(obtenerEspecialistas(input));
-        setInput("");
+        dispatch(obtenerEspecialistas(inputEspecialista));
+        setInputEspecialista("");
     }
 
     return (
@@ -32,20 +36,17 @@ const HomeReHu = () => {
                 {/* <NavBar /> */}
             </div>
             <div>
-                <input type="text" placeholder="Buscar por nombre" onChange={handleInput} value={input}/>
+                <input type="text" placeholder="Buscar por nombre" onChange={handleInputName} value={inputName}/>
                 <button onClick={() => {handleName()}}>Buscar</button>
             </div>
             <div>
-                <input type="text" placeholder="Buscar por especialidad" onChange={handleInput} value={input}/>
+                <input type="text" placeholder="Buscar por especialidad" onChange={handleInputEspecialista} value={inputEspecialista}/>
                 <button onClick={() => {handleEspecialidad()}}>Buscar</button>
             </div>
             <div>
-                {/*<Cards />*/} 
+                <Cards /> 
             </div>
-            <div>
-                {/*<Paged />*/}
-            </div>
+
         </div>
     )
 }
-export default HomeReHu;
