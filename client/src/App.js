@@ -7,6 +7,7 @@ import InitialPys from "./components/initialPys/initial.jsx";
 import InitialPatient from "./components/initialPys/patientManagement/initial/initialPatient.jsx";
 import PatientDetails from "./components/initialPys/patientManagement/initial/patietCardDetails.jsx";
 import HomeRRHH from "./components/homeRH/HomeRH.jsx";
+import DetailEspecialista from "./components/homeRH/DetailEspecialista.jsx";
 
 function App() {
   return (
@@ -32,6 +33,11 @@ function App() {
       <Route exact path="/homeRRHH">
         <HomeRRHH />
       </Route>
+      <Route
+        path="/detailEspecialista/:id"
+        render={({ match }) => <DetailEspecialista id={match.params.id} />}
+      />
+      <Route />
     </div>
   );
 }
