@@ -44,22 +44,22 @@ export default function CreateSpecialist() {
     }
 
     const handleChangeTypeSpecialities = (e) => {
-        if (input.typeSpecialties.includes(e.target.value)) {
+        if (input.specialty.includes(e.target.value)) {
             setInput({
                 ...input,
-                typeSpecialties: input.typeSpecialties.filter(type => type !== e.target.value)
+                specialty: input.specialty.filter(type => type !== e.target.value)
 
             })
         } else {
             setInput({
                 ...input,
-                typeSpecialties: [...input.typeSpecialties, e.target.value]
+                specialty: [...input.specialty, e.target.value]
             })
         }
 
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit  = async (event) => {
         event.preventDefault()
 
 
@@ -75,11 +75,11 @@ export default function CreateSpecialist() {
             password: input.password,
             gender: input.gener,
             enrollment: parseInt(input.enrollment),
-            specialty: input.typeSpecialties.join(', '),
+            specialty: input.specialty.join(', '),
 
         }
 
-        dispatch(crearEspecialista(newSpecialist))
+        await dispatch(crearEspecialista(newSpecialist))
         setInput({
             name: "",
             lastName: "",
@@ -121,12 +121,12 @@ export default function CreateSpecialist() {
                                         <input
                                             key={index}
                                             type="checkbox"
-                                            name={type}
-                                            value={type}
-                                            id={type}
+                                            name={type.name}
+                                            value={type.name}
+                                            id={type.name}
                                             onChange={handleChangeTypeSpecialities}
                                         />
-                                        <label key={index + type}>{type}</label>
+                                        <label key={index + type.name}>{type.name}</label>
                                     </div>
                                 )
                             })
