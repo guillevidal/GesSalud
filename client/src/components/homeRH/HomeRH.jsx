@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
-// import NavBar from './NavBar';
+import Nav from '../Layout/Nav';
 import Cards from './Cards';
 import {obtenerEspecialistaPorNombre} from '../../actions/index';
 import {obtenerEspecialistas} from '../../actions/index';
+import './homeRH.scss'
 
 export default function HomeRH() {
     
@@ -31,10 +32,8 @@ export default function HomeRH() {
     }
 
     return (
-        <div>
-            <div>
-                {/* <NavBar /> */}
-            </div>
+        <div className='container-homeRRHH'>
+            <Nav />
             <div>
                 <input type="text" placeholder="Buscar por nombre" onChange={handleInputName} value={inputName}/>
                 <button onClick={() => {handleName()}}>Buscar</button>

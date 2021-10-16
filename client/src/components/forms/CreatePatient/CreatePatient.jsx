@@ -5,6 +5,7 @@ import Person from "../Person/Person";
 import Nav from '../../Layout/Nav'
 import { crearPaciente } from '../../../actions/index'
 import './CreatePatient.scss'
+import '../Person/Person.scss'
 
 export default function CreatePatient() {
     const [input, setInput] = useState({
