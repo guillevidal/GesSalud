@@ -111,6 +111,7 @@ export default function CreatePatient() {
         <div id="createPatient-container">
 
             <Nav />
+
             <form onSubmit={(event) => { handleSubmit(event) }} className='createPatient-form'>
 
                 <div className='information-person'>
@@ -138,8 +139,7 @@ export default function CreatePatient() {
                             id="disease" type="text" name="disease" required pattern="[[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+[0-9]+{2,64}"
                             title="El campo solo acepta letras" value={input.disease} onChange={handleChange}
                             className='inputs'
-                        />
-                    </div>
+             
                     <div className='label-textarea'>
                         <label htmlFor="emergencyContact" className='label-interno'>Contacto de emergencia:</label>
 
@@ -153,10 +153,7 @@ export default function CreatePatient() {
                 <div className='boton-crear-paciente'>
                     <button type="submit" className='boton-crear'>CREAR</button>
                 </div>
-
-            </form>
-
-
+                </form>
         </div>
 
     )

@@ -5,6 +5,19 @@
     flex-direction: column;
     width: 100%;
 
+    .boton-regresar{
+        display: flex;
+        width: 100%;
+
+        .boton{
+            margin: 20px ;
+            margin-bottom: -20px;
+            text-decoration: none;
+            @include boton-primario
+        }
+
+    }
+
     .createPatient-form{
         display: flex;
         justify-content: center;

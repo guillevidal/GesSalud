@@ -1,0 +1,65 @@
+@import '../../../../scss/base/variables';
+
+.card-paciente{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 20px;
+    max-width: 300px;
+    background-color: $color-detalle;
+    border-radius: 10px;
+    font-family: $fuente_principal;
+
+    .header-card{
+        display: flex;
+        flex-direction: column;
+
+        .icon-paciente{
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            margin: 10px auto;
+
+            .icon{
+                color: $color-principal;
+                font-size: 2em;
+            }
+        }   
+
+        .info-paciente{
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+    }
+
+    .identificacion{
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .opciones-paciente{
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        margin-bottom: 10px;
+
+        .opcion{
+            text-decoration: none;
+            background-color: $color-terciario;
+            padding: 5px;
+            border-radius: 10px;
+            color:white;
+
+            &:hover{
+                background-color: $color-secundario;
+            }
+        }
+    }
+
+
+}

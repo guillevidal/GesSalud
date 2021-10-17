@@ -1,0 +1,78 @@
+@import '../../../../scss/base/variables';
+
+#patientDetails-container{
+    display: flex;
+    width:100%;
+    flex-direction: column;
+    align-items: center;
+
+
+    .boton-regresar{
+        display: flex;
+        width: 100%;
+
+        .boton{
+            margin: 20px;
+            margin-bottom: -10px;
+            text-decoration: none;
+            @include boton-primario
+        }
+
+    }
+    .lista-detalles{
+        display: flex;
+        width: 100%;
+        max-width: 800px;
+        justify-content: center;
+        background-color: $color-detalle;
+        font-family: $fuente_principal;
+        border-radius: 20px;
+
+
+        .detalles{
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            .encabezado{
+                display: flex;
+                width: 100%;
+                max-width: 400px;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+
+                .nombre-apellido{
+                    font-size: 2em;
+                    margin: 20px auto;
+                    font-weight: $bold;
+                    color: $color-principal;
+                }
+            }
+
+            .data{
+                display: flex;
+                width: 100%;
+                max-width: 500px;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+
+                .data-info{
+                    display: flex;
+                    text-align: center;
+                    margin: 15px;
+
+                    .data-detail{
+                        color: $color-principal;
+                        margin-left: 5px;
+                    }
+                }
+            }
+        }
+
+    }
+
+}
