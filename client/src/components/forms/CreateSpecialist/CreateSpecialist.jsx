@@ -2,7 +2,7 @@ import './CreateSpecialist.scss';
 import React, { useState, useEffect } from 'react';
 import Nav from '../../Layout/Nav'
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import Person from '../Person/Person';
 import {
     crearEspecialista,
@@ -20,6 +20,17 @@ export default function CreateSpecialist() {
     }, [])
 
     const typeSpecialties = useSelector((state) => state.especialidades)
+    const [error, setError] = useState({})
+    const validationCreateSpecialty = (input) => {
+        let errors = {};
+        if (input.gender.length === 0) {
+            errors.gender = 'Seleccione un tipo de genero'
+        }
+        if(input.specialty.length === 0) {
+            errors.specialty = 'Seleccione al menos un tipo de especialidad'
+        }
+        return errors;
+    }
 
     const [input, setInput] = useState({
         name: "",
@@ -35,12 +46,16 @@ export default function CreateSpecialist() {
         enrollment: "",
         specialty: [],
     })
-    
+
     const handleChange = (event) => {
         setInput({
             ...input,
             [event.target.name]: event.target.value
         })
+        setError(validationCreateSpecialty({
+            ...input,
+            [event.target.name]: event.target.value
+        }))
     }
 
     const handleChangeTypeSpecialities = (e) => {
@@ -59,7 +74,7 @@ export default function CreateSpecialist() {
 
     }
 
-    const handleSubmit  = async (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
 
 
@@ -73,7 +88,7 @@ export default function CreateSpecialist() {
             birth: input.birth,
             user: input.user,
             password: input.password,
-            gender: input.gener,
+            gender: input.gender,
             enrollment: parseInt(input.enrollment),
             specialty: input.specialty.join(', '),
 
@@ -104,61 +119,65 @@ export default function CreateSpecialist() {
             <Nav />
             <div>
                 <form onSubmit={(event) => handleSubmit(event)} className='form-container'>
-                   <div className='form-infoPersonal'>
-                    <Person name={input.name} lastName={input.lastName} dni={input.dni}
-                        email={input.email} phone={input.phone} adress={input.adress}
-                        birth={input.birth} user={input.user} password={input.password}
-                        handle={handleChange}
-                    />
+                    <div className='form-infoPersonal'>
+                        <Person name={input.name} lastName={input.lastName} dni={input.dni}
+                            email={input.email} phone={input.phone} adress={input.adress}
+                            birth={input.birth} user={input.user} password={input.password}
+                            handle={handleChange} error={error}
+                        />
 
-                    <div className='identificacion-personal'>
-                        
-                        <label htmlFor="enrollment" className='label-tipo-title-text'>IDENTIFICACION PROFESIONAL</label>
-                                 
-                        <input
-                            id="enrollment" type="text" name="enrollment" required pattern="[0-9]+" title="El campo solo acepta números"
-                            value={input.enrollment} onChange={handleChange}
-                             />
-                               
+                        <div className='identificacion-personal'>
+
+                            <label htmlFor="enrollment" className='label-tipo-title-text'>IDENTIFICACION PROFESIONAL</label>
+
+                            <input
+                                id="enrollment" type="text" name="enrollment" required pattern="[0-9]+" title="El campo solo acepta números"
+                                value={input.enrollment} onChange={handleChange}
+                            />
+
                         </div>
-                    
+
                     </div>
-                    
+
                     <div id='specialist-container'>
                         <div className='label-tipo-title'>
-                        <label className='label-tipo-title-text'>TIPO DE ESPECIALDAD</label>
+                            <label className='label-tipo-title-text'>TIPO DE ESPECIALDAD</label>
                         </div>
-                         <div className='lista-especialidades'>
-                        {
-                            typeSpecialties && typeSpecialties.map((type, index) => {
-                                return (
-                                    <div className="typeSpeciality" key={index + "A"} >
-                                        <input
-                                            key={index}
-                                            type="checkbox"
-                                            name={type.name}
-                                            value={type.name}
-                                            id={type.name}
-                                            onChange={handleChangeTypeSpecialities}
-                                            className='input-tipo'
-                                        />
-                                        <label className='label-tipo' key={index + type.name}>{type.name}</label>
-                                    </div>
+                        <div className='lista-especialidades'>
+                            {
+                                typeSpecialties && typeSpecialties.map((type, index) => {
+                                    return (
+                                        <div className="typeSpeciality" key={index + "A"} >
+                                            <input
+                                                key={index}
+                                                type="checkbox"
+                                                name={type.name}
+                                                value={type.name}
+                                                id={type.name}
+                                                onChange={handleChangeTypeSpecialities}
+                                                className='input-tipo'
+                                            />
+                                            <label className='label-tipo' key={index + type.name}>{type.name}</label>
+                                        </div>
+                                    )
+                                })
+                            }
+
+                        </div>
+                            {
+                                error.specialty && (
+                                    <span>{error.specialty}</span>
                                 )
-                            })
-                        }
+                            }
 
-                        </div>
-
-                    
 
                     </div>
-                   
+                    <div className='boton-crear-especialista'>
+                        <button type="submit" className='boton-creacion' >CREAR</button>
+                    </div>
                 </form>
-               
-                     <div className='boton-crear-especialista'>
-                        <button type="submit" className='boton-creacion'>CREAR</button>
-                    </div> 
+
+
             </div>
         </div>
     )
