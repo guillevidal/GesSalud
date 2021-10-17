@@ -2,7 +2,8 @@
 import {
     CREAR_ESPECIALISTA, CREAR_PACIENTE, OBTENER_ESPECIALIDADES, OBTENER_ESPECIALISTAS, OBTENER_PACIENTES,
     OBTENER_ESPECIALISTA_POR_NOMBRE, ESPECIALISTA_DETALLADO, OBTENER_PACIENTE_POR_NOMBRE, PACIENTE_DETALLADO,
-    OBTENER_ESPECIALISTA_POR_ESPECIALIDAD, RESETEAR_BUSQUEDA_ESPECIALISTA, PAGINADO, ROL, RESETEAR_BUSQUEDA_PACIENTE
+    OBTENER_ESPECIALISTA_POR_ESPECIALIDAD, RESETEAR_BUSQUEDA_ESPECIALISTA, PAGINADO, ROL, RESETEAR_BUSQUEDA_PACIENTE,
+    RESETEAR_ESPECIALISTA_CREADO, RESETEAR_PACIENTE_CREADO, RESETEAR_PACIENTE_DETALLADO, RESETEAR_ESPECIALISTA_DETALLADO
 } from "./valuesForActions.js";
 
 //CREAR ESPECIALISTA
@@ -116,4 +117,20 @@ export const resetearBusquedaPaciente = () => {
 //PARA MANEJO DEL PAGINADO 
 export const paginado = (valor) => {
     return { type: PAGINADO, payload: valor }
+}
+
+export const resetearPacienteCreado = () => {
+    return { type: RESETEAR_PACIENTE_CREADO, payload: [] }
+}
+
+export const resetearEspecialistaCreado = () => {
+    return { type: RESETEAR_ESPECIALISTA_CREADO, payload: [] }
+}
+
+export const resetearPacienteDetallado = () => {
+    return { type: RESETEAR_PACIENTE_DETALLADO, payload: [] }
+}
+
+export const resetearEspecialistaDetallado = () => {
+    return { type: RESETEAR_ESPECIALISTA_DETALLADO, payload: [] }
 }

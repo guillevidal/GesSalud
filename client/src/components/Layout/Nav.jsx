@@ -3,7 +3,8 @@ import './Nav'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faClinicMedical,faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from "react-redux"
-import { rol } from "../../actions"
+import { rol, resetearPacienteCreado, resetearEspecialistaCreado,
+    resetearPacienteDetallado, resetearEspecialistaDetallado} from "../../actions"
 import { Redirect } from "react-router"
 
 export default function Nav(){
@@ -18,6 +19,15 @@ export default function Nav(){
         dispatch(rol(''))
     }
 
+    const handleResetActionsRol1 = () => {
+        dispatch(resetearPacienteCreado())
+        dispatch(resetearPacienteDetallado())
+    }
+
+    const handleResetActionsRol2 = () => {
+        dispatch(resetearEspecialistaCreado())
+        dispatch(resetearEspecialistaDetallado())
+    }
     return(
         <div className='nav-bar'>
 
@@ -26,7 +36,7 @@ export default function Nav(){
             <div className='nav-elementos'>
             {status === '1' &&
                 <div className='nav-link'>
-                    <Link to='/patientPys' className='nav-link-ok' >Pacientes</Link>
+                    <Link onClick={handleResetActionsRol1}to='/patientPys' className='nav-link-ok' >Pacientes</Link>
                     <Link to='/turnoPys' className='nav-link-ok' >Turnos</Link>
                     <Link to='/especialistaPys' className='nav-link-ok' >Especialistas</Link>
                     <Link to='/consultorioPys' className='nav-link-ok' >Consultorios</Link>
@@ -34,7 +44,7 @@ export default function Nav(){
             }
             {status === '2' &&
                 <div className='nav-link'>
-                    <Link to='/homeRRHH' className='nav-link-ok' >Home</Link>
+                    <Link onClick={handleResetActionsRol2} to='/homeRRHH' className='nav-link-ok' >Home</Link>
                     <Link to='/createSpecialist' className='nav-link-ok' >Crear Especialista</Link>
                 </div>
             }

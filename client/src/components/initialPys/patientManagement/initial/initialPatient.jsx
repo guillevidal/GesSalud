@@ -31,7 +31,7 @@ const InitialPatient = () => {
             </div>
             </div>
             <div id="prueba">       
-            {!busquedaPaciente[0]?pacientes.slice(valorPaginado, valorPaginado+6).map((pa) => {
+            {!busquedaPaciente[0]?!pacientes[0]?<h1>No se encontraron pacientes registrados</h1>:pacientes.slice(valorPaginado, valorPaginado+6).map((pa) => {
                 return (
                     <PatientCard pa={pa}/>
                 )
