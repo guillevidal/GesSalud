@@ -1,18 +1,18 @@
 /* eslint-disable */
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {paginado} from "../../actions/index.js";
+import {paginado} from "../../../../actions/index.js"
 
 const Paginado = ()=> {
 
     const dispatch = useDispatch();
     const valorPaginado = useSelector( state => state.paginado);
-    const especialistas = useSelector( state => state.especialistas)
-    const busquedaEspecialista = useSelector(state => state.busquedaEspecialista);
+    const pacientes = useSelector( state => state.pacientes)
+    const busquedaPaciente = useSelector(state => state.busquedaPaciente);
 
     const paginaSIguiente = () => {
-        if(!busquedaEspecialista[0]?especialistas.slice(valorPaginado, valorPaginado+6).length > especialistas.length%6:
-        busquedaEspecialista.slice(valorPaginado, valorPaginado+6).length > busquedaEspecialista.length%6) {
+        if(!busquedaPaciente[0]?pacientes.slice(valorPaginado, valorPaginado+6).length > pacientes.length%6:
+        busquedaPaciente.slice(valorPaginado, valorPaginado+6).length > busquedaPaciente.length%6) {
             dispatch(paginado(valorPaginado+6))
         }
     }

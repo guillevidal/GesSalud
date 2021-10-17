@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect } from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import Nav from '../Layout/Nav';
@@ -11,6 +12,7 @@ const HomeRH = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(paginado(0))
         dispatch(obtenerEspecialistas())
     },[])
 
