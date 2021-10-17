@@ -13,7 +13,6 @@ export default function CreatePatient() {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
 
-
     const [input, setInput] = useState({
         name: "",
         lastName: "",

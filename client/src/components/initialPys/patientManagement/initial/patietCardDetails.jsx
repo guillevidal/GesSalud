@@ -7,6 +7,9 @@ import './patientCardDetails.scss';
 
 
 const PatientCardDetails = () => {
+    const capitalFirstLetter = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1)
+    }
     const patientDetails = useSelector(state => state.pacienteDetallado);
     const { id, medication, disease, persona, historiaClinica, diagnosticos, emergencyContact } = patientDetails[0];
     return (
@@ -15,11 +18,14 @@ const PatientCardDetails = () => {
             <div className='boton-regresar'>
                 <Link to="/patientPys" className='boton'>Volver</Link>
             </div>
+            <div className='boton-regresar'>
+                <Link to="/patientEdit" className='boton'>Modificar</Link>
+            </div>
             <div className='lista-detalles'>
 
                 <div className='detalles'>
                     <div className='encabezado'>
-                        <span className='nombre-apellido'>{persona.name + ' ' + persona.lastName}</span>
+                        <span className='nombre-apellido'>{capitalFirstLetter(persona.name) + ' ' + capitalFirstLetter(persona.lastName)}</span>
                     </div>
                     <div className='data'>
                         <span className='data-info'>Dni: <b className='data-detail'>{persona.dni}</b></span>
@@ -35,8 +41,9 @@ const PatientCardDetails = () => {
                         <span className='data-info'>enfermedades: <b className='data-detail'>{disease}</b></span>
                     </div>
                 </div>
-
+               
             </div>
+            
         </div>
 
     )

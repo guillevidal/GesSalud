@@ -6,10 +6,14 @@ import Nav from "../../Layout/Nav";
 import { obtenerEspecialidades } from '../../../actions/index'
 
 export default function EditSpecialty() {
+    const capitalFirstLetter = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1)
+    }
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(obtenerEspecialidades())
     }, [])
+
     const specialtyDetail = useSelector(state => state.especialistaDetallado)
     const typeSpecialties = useSelector((state) => state.especialidades)
     const [error, setError] = useState({})
@@ -65,6 +69,43 @@ export default function EditSpecialty() {
         }
 
     }
+
+    const handleSubmit = (event) => {
+        event.preventDefault()
+
+        let newSpecialist = {
+            name: input.name.toLowerCase(),
+            lastName: input.lastName.toLowerCase(),
+            dni: parseInt(input.dni),
+            email: input.email,
+            phone: input.phone,
+            adress: input.adress.toLowerCase(),
+            birth: input.birth,
+            user: input.user,
+            password: input.password,
+            gender: input.gender,
+            enrollment: parseInt(input.enrollment),
+            specialty: input.specialty.join(', '),
+
+        }
+
+        setInput({
+            name: "",
+            lastName: "",
+            dni: "",
+            email: "",
+            phone: "",
+            adress: "",
+            birth: "",
+            user: "",
+            password: "",
+            gender: "",
+            enrollment: "",
+            specialty: [],
+        })
+        alert(`El especialista médico ${capitalFirstLetter(input.name)} ${capitalFirstLetter(input.lastName)} se modificó correctamente `)
+    }
+
 
     return (
         <div id="createSpecialist-container">
