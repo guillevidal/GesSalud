@@ -1,20 +1,37 @@
-#initialPatient-contairner{
+@import '../../../../scss/base/variables';
+
+#initialPatient-container{
     display: flex;
-    flex-flow: column;
+    flex-direction: column;
     width: 100%;
-
-}
-
-#prueba{
-    display: flex;
-    flex-flow: wrap;
-    justify-content: center;
     align-items: center;
-}
-#patientDetails-container{
-    display: flex;
-    flex-flow: column;
-    width: 100%;
+
+    .header-paciente{
+        display: flex;
+        width: 100%;
+        max-width: 800px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        flex-wrap: wrap;
+
+        .boton-crear-paciente-div{
+        .boton-crear-paciente{
+            text-decoration: none;
+            @include boton-primario;
+            margin-right: 20px;
+        }
+    }
 
 }
+    
+#prueba{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+}
+
 

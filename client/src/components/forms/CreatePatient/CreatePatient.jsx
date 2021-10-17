@@ -76,7 +76,10 @@ export default function CreatePatient() {
         <div id="createPatient-container">
 
             <Nav />
-                <form onSubmit={(event) => { handleSubmit(event) } }  className='createPatient-form'>
+            <div className='boton-regresar'>
+                <Link to="/patientPys" className='boton'>Volver</Link>
+            </div>
+              <form onSubmit={(event) => { handleSubmit(event) } }  className='createPatient-form'>
                  
                     <div className='information-person'>
                         <Person

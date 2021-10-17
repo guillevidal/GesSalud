@@ -21,6 +21,7 @@ $fuxia: #D81B60;
 $color-secundario: #006dac ;
 $color-principal: #005199;
 $color-terciario: #8ac8ff;
+$color-detalle :#e0f0ff ;
 
 // Fuentes
 $delgada: 300;
@@ -40,10 +41,10 @@ $bold: 700;
    font-weight: $regularPlus;
    cursor: pointer;
    box-shadow: 2px 2px 5px $color-terciario;
+   border: 1px solid $color-principal;
 
    &:hover{
        background-color: white;
        color: $color-principal;
-       border: 1px solid $color-principal
    }
   }
