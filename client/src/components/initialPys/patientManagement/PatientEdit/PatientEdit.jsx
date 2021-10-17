@@ -1,29 +1,27 @@
 /* eslint-disable */
-import React, { useState, useEffect } from "react";
-//import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Nav from '../../../Layout/Nav';
 import Person from '../../../forms/Person/Person.jsx';
 
-const PatientEdit = () => {
-    // const patientDetail = useSelector(state => state.pacienteDetallado)
-    /*useEffect(() => {
-        console.log(patientDetail)
-    }, [])
-*/
+export default function PatientEdit() {
+    const patientDetail = useSelector(state => state.pacienteDetallado)
 
     const [input, setInput] = useState({
-        name: "",
-        lastName: "",
-        dni: "",
-        email: "",
-        phone: "",
-        adress: "",
-        birth: "",
-        user: "",
-        password: "",
+        name: patientDetail[0].persona.name,
+        lastName: patientDetail[0].persona.lastName,
+        dni: patientDetail[0].persona.dni,
+        email: patientDetail[0].persona.email,
+        phone: patientDetail[0].persona.phone,
+        adress: patientDetail[0].persona.adress,
+        birth: patientDetail[0].persona.birth,
+        user: patientDetail[0].persona.user,
+        password: patientDetail[0].persona.password,
         gender: "",
-        emergencyContact: "",
+        emergencyContact: patientDetail[0].emergencyContact
     })
+
     const [error, setError] = useState({})
     const validationCreatePatient = (input) => {
         let errors = {};
@@ -32,6 +30,7 @@ const PatientEdit = () => {
         }
         return errors;
     }
+
     const handleChange = (event) => {
         setInput({
             ...input,
@@ -42,18 +41,53 @@ const PatientEdit = () => {
             [event.target.name]: event.target.value
         }))
     }
+
+    const handleSubmit = (event) => {
+        event.preventDefault()
+
+        let newPatient = {
+            name: input.name.toLowerCase(),
+            lastName: input.lastName.toLowerCase(),
+            dni: parseInt(input.dni),
+            email: input.email,
+            phone: input.phone,
+            adress: input.adress.toLowerCase(),
+            birth: input.birth,
+            user: input.user,
+            password: input.password,
+            gender: input.gender,
+            emergencyContact: parseInt(input.emergencyContact),
+        }
+
+        setInput({
+            name: "",
+            lastName: "",
+            dni: "",
+            email: "",
+            phone: "",
+            adress: "",
+            birth: "",
+            user: "",
+            password: "",
+            gender: "",
+            emergencyContact: "",
+        })
+        alert(`El paciente ${capitalFirstLetter(input.name)} ${capitalFirstLetter(input.lastName)} se modificó correctamente `)
+    }
+
     return (
         <div id="createPatient-container">
             <Nav />
-            <form >
+
+            <form className='createPatient-form' >
                 <div className='information-person'>
-                    {
-                        <Person
-                            name={input.name} lastName={input.lastName} dni={input.dni}
-                            email={input.email} phone={input.phone} adress={input.adress}
-                            birth={input.birth} user={input.user} password={input.password} handle={handleChange} error={error}
-                        />
-                    }
+
+                    <Person
+                        name={input.name} lastName={input.lastName} dni={input.dni}
+                        email={input.email} phone={input.phone} adress={input.adress}
+                        birth={input.birth} user={input.user} password={input.password} handle={handleChange} error={error}
+                    />
+
 
                 </div>
                 <div className='information-clinic'>
@@ -68,11 +102,15 @@ const PatientEdit = () => {
                     </div>
                 </div>
                 <div className='boton-crear-paciente'>
+                    <Link to="/patientPys">
+                        <button className='boton-crear'>CANCELAR</button>
+                    </Link>
+                </div>
+                <div className='boton-crear-paciente'>
                     <button type="submit" className='boton-crear'>MODIFICAR</button>
                 </div>
             </form>
+
         </div>
     )
 }
-
-export default PatientEdit;
