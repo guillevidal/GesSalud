@@ -59,7 +59,7 @@ export default function CreatePatient() {
         event.preventDefault()
 
         let creationDate = new Date();
-       creationDate = creationDate.toDateString().slice(4, 15);
+        creationDate = creationDate.toDateString().slice(4, 15);
 
         let newPatient = {
             name: input.name.toLowerCase(),
@@ -126,34 +126,35 @@ export default function CreatePatient() {
                         <label className='label-title-text'>INFORMACION CLINICA</label>
                     </div>
                     <div className='label-textarea'>
-                        <label htmlFor="medication" className='label-interno'>Medicación:</label>
+                        <label htmlFor="medication" className='label-interno'>Medicación: </label>
                         <textarea
                             id="medication" type="text" name="medication" required pattern="[[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+[0-9]+{2,64}"
                             title="El campo solo acepta letras" value={input.medication} onChange={handleChange}
-                            className='inputs'
-                        />
+                            className='inputs' />
                     </div>
                     <div className='label-textarea'>
-                        <label htmlFor="disease" className='label-interno'>Enfermedades:</label>
+                        <label htmlFor="disease" className='label-interno'>Enfermedades: </label>
                         <textarea
                             id="disease" type="text" name="disease" required pattern="[[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+[0-9]+{2,64}"
                             title="El campo solo acepta letras" value={input.disease} onChange={handleChange}
-                            className='inputs'
-             
-                    <div className='label-textarea'>
-                        <label htmlFor="emergencyContact" className='label-interno'>Contacto de emergencia:</label>
+                            className='inputs' />
 
-                        <input
-                            id="emergencyContact" type="text" name="emergencyContact" required pattern="[0-9]+"
-                            title="El campo solo acepta números" value={input.emergencyContact} onChange={handleChange}
-                            className='input-emergencia'
-                        />
+                        <div className='label-textarea'>
+                            <label htmlFor="emergencyContact" className='label-interno'>Contacto de emergencia: </label>
+
+                            <input
+                                id="emergencyContact" type="text" name="emergencyContact" required pattern="[0-9]+"
+                                title="El campo solo acepta números" value={input.emergencyContact} onChange={handleChange}
+                                className='input-emergencia'
+                            />
+                        </div>
                     </div>
                 </div>
+
                 <div className='boton-crear-paciente'>
                     <button type="submit" className='boton-crear'>CREAR</button>
                 </div>
-                </form>
+            </form>
         </div>
 
     )
