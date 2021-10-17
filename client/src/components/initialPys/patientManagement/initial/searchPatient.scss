@@ -1,0 +1,30 @@
+@import '../../../../scss/base/variables';
+
+.input-buscador{
+    display: flex;
+    width: 100%;
+    max-width: 300px;
+    margin: 40px auto;
+    justify-content: center;
+    align-items: center;
+
+    .icon-search{
+        display: flex;
+        background-color: $color-secundario;
+        height: 100%;
+        width: 30px;
+        color: white;
+        padding: 5px;
+        border-radius: 3px;
+        margin-right: 5px;
+    }
+
+    .input-search{
+        display: flex;
+        width: 100%;
+        max-width: 300px;
+        height: 100%;
+    }
+
+
+}
