@@ -12,6 +12,9 @@ import {
 
 
 export default function CreateSpecialist() {
+    const capitalFirstLetter = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1)
+    }
 
     const dispatch = useDispatch()
 
@@ -109,7 +112,7 @@ export default function CreateSpecialist() {
             enrollment: "",
             specialty: [],
         })
-        alert(`El especialista médico se creó correctamente `)
+        alert(`El especialista médico ${capitalFirstLetter(input.name)} ${capitalFirstLetter(input.lastName)} se creó correctamente `)
     }
 
     return (
