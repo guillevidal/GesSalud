@@ -1,51 +1,41 @@
-import React, {useState} from 'react';
-import {useDispatch} from "react-redux";
+import React, { useEffect } from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import Nav from '../Layout/Nav';
-import Cards from './Cards';
-import {obtenerEspecialistaPorNombre} from '../../actions/index';
-import {obtenerEspecialistas} from '../../actions/index';
+import Card from "./Card.jsx"
+import {obtenerEspecialistas, paginado} from '../../actions/index';
 import './homeRH.scss'
+import SearchEspecialist from './SearchEspecialist';
+import Paginado from './Paginado';
 
-export default function HomeRH() {
-    
-    const [inputName, setInputName] = useState("");
-    const [inputEspecialista, setInputEspecialista] = useState("");
-
+const HomeRH = () => {
     const dispatch = useDispatch();
 
-    function handleInputName(e){         
-        setInputName(e.target.value);
-    }
+    useEffect(() => {
+        dispatch(obtenerEspecialistas())
+    },[])
 
-    function handleName() {
-        dispatch(obtenerEspecialistaPorNombre(inputName));
-        setInputName("");
-    }
-
-    function handleInputEspecialista(e){         
-        setInputEspecialista(e.target.value);
-    }
-
-    function handleEspecialidad() {
-        dispatch(obtenerEspecialistas(inputEspecialista));
-        setInputEspecialista("");
-    }
+    const especialistas = useSelector( state => state.especialistas)
+    const busquedaEspecialista = useSelector(state => state.busquedaEspecialista)
+    const valorPaginado = useSelector(state => state.paginado)
 
     return (
         <div className='container-homeRRHH'>
-            <Nav />
-            <div>
-                <input type="text" placeholder="Buscar por nombre" onChange={handleInputName} value={inputName}/>
-                <button onClick={() => {handleName()}}>Buscar</button>
-            </div>
-            <div>
-                <input type="text" placeholder="Buscar por especialidad" onChange={handleInputEspecialista} value={inputEspecialista}/>
-                <button onClick={() => {handleEspecialidad()}}>Buscar</button>
-            </div>
-            <div>
-                <Cards /> 
-            </div>
-
+            <Nav/>
+            <SearchEspecialist/>
+           
+            {!busquedaEspecialista[0]?especialistas.slice(valorPaginado, valorPaginado+6).map(e => {
+                return(
+                    <Card e={e} key={e.id}/>)})
+            :
+            typeof busquedaEspecialista[0]==="string"?<h1>{busquedaEspecialista[0]}</h1>:busquedaEspecialista.slice(valorPaginado, valorPaginado+6).map(e => {
+                return (
+                    <Card e={e} key={e.id+"busqueda"}/>
+                )
+            })}
+            <Paginado/>
         </div>
     )
 }
+
+
+export default HomeRH
