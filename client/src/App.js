@@ -7,6 +7,7 @@ import InitialPatient from "./components/initialPys/patientManagement/initial/in
 import PatientDetails from "./components/initialPys/patientManagement/initial/patietCardDetails.jsx";
 import HomeRRHH from "./components/homeRH/HomeRH.jsx";
 import DetailEspecialista from "./components/homeRH/DetailEspecialista.jsx";
+import PatientEdit from "./components/initialPys/patientManagement/PatientEdit/PatientEdit.jsx";
 
 function App() {
   return (
@@ -34,6 +35,9 @@ function App() {
         render={({ match }) => <DetailEspecialista id={match.params.id} />}
       />
       <Route />
+      <Route exact path="/patientEdit">
+        <PatientEdit />
+      </Route>
     </div>
   );
 }
