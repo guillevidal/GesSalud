@@ -1,6 +1,7 @@
 
-import {CREAR_ESPECIALISTA, CREAR_PACIENTE, OBTENER_ESPECIALIDADES, OBTENER_ESPECIALISTA, OBTENER_PACIENTE, 
-    OBTENER_ESPECIALISTA_POR_NOMBRE, ESPECIALISTA_DETALLADO, OBTENER_PACIENTE_POR_NOMBRE, PACIENTE_DETALLADO} from "../actions/valuesForActions.js";
+import {CREAR_ESPECIALISTA, CREAR_PACIENTE, OBTENER_ESPECIALIDADES, OBTENER_ESPECIALISTAS, OBTENER_PACIENTES, 
+    OBTENER_ESPECIALISTA_POR_NOMBRE, ESPECIALISTA_DETALLADO, OBTENER_PACIENTE_POR_NOMBRE, PACIENTE_DETALLADO,
+    OBTENER_ESPECIALISTA_POR_ESPECIALIDAD, RESETEAR_BUSQUEDA_ESPECIALISTA, PAGINADO, ROL} from "../actions/valuesForActions.js";
 
 const initialState = {
     //SE IRAN AGREGANDO MAS ESTADOS A MEDIDA DE QUE SE HAGAN MAS COMPONENTES 
@@ -12,8 +13,9 @@ const initialState = {
     especialistaDetallado: [],
     pacienteDetallado: [],
     busquedaPaciente: [],
-    busqedaEspecialista: [],
-    rol: ""
+    busquedaEspecialista: [],
+    rol: "",
+    paginado: ""
 }
 
 const Reducer = (state=initialState, action) => {
@@ -28,16 +30,17 @@ const Reducer = (state=initialState, action) => {
         case OBTENER_ESPECIALIDADES:
             return {...state, especialidades: action.payload}
         
-        case OBTENER_PACIENTE: 
+        case OBTENER_PACIENTES: 
             return {...state, pacientes: action.payload}    
         
-        case OBTENER_ESPECIALISTA:
+        case OBTENER_ESPECIALISTAS:
             return {...state, especialistas: action.payload}
 
         case OBTENER_ESPECIALISTA_POR_NOMBRE:
             let busquedaE=[];;
             for (let index = 0; index < state.especialistas.length; index++) {
-                if(state.especialistas[index].name.toLowerCase().includes(action.payload.toLowerCase())){
+                if(state.especialistas[index].persona.name.toLowerCase().includes(action.payload.toLowerCase()) ||
+                state.especialistas[index].persona.lastName.toLowerCase().includes(action.payload.toLowerCase())){
                     busquedaE=[...busquedaE, state.especialistas[index]];
                 }
             }
@@ -45,6 +48,28 @@ const Reducer = (state=initialState, action) => {
                 busquedaE=["No se encontro empleado"];
             }
             return {...state, busquedaEspecialista: busquedaE}
+        
+        case OBTENER_ESPECIALISTA_POR_ESPECIALIDAD:
+            let busquedaEs=[];
+            let esp
+            let cont = 0;
+                for (let index = 0; index < state.especialistas.length; index++) {
+                     esp = state.especialistas[index].specialty.split(" ")
+                    for (let index2 = 0; index2 < esp.length ; index2++){                     
+                        if(esp[index2].includes(action.payload.toLowerCase())){
+                            console.log("AQUII")
+                            busquedaEs=[...busquedaEs, state.especialistas[index]];
+                    }
+    
+                    }
+                }
+                if(!busquedaEs[0]){
+                    busquedaEs=["No se encontro empleado"];
+                }
+                return {...state, busquedaEspecialista: busquedaEs}
+
+        case RESETEAR_BUSQUEDA_ESPECIALISTA: 
+                return {...state, busquedaEspecialista: action.payload}
 
         case OBTENER_PACIENTE_POR_NOMBRE:
             let busquedaP=[];
@@ -60,13 +85,17 @@ const Reducer = (state=initialState, action) => {
 
 
         case ESPECIALISTA_DETALLADO: 
-            return {...state, especialistaDetallado: state.especialistas.filter( esp => action.payload === esp.id)}
+            return {...state, especialistaDetallado: state.especialistas.filter( espe => action.payload === espe.id)}
         
         case PACIENTE_DETALLADO: 
             return {...state, pacienteDetallado: state.pacientes.filter( pac => action.payload === pac.id)}  
         
-        case "ROL": {
+        case ROL: {
             return {...state, rol: action.payload}
+        }
+
+        case PAGINADO: {
+            return {...state, paginado: action.payload}
         }
         default:
             return state;

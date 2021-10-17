@@ -29,11 +29,9 @@ function App() {
       <Route exact path="/homeRRHH">
         <HomeRRHH />
       </Route>
-      <Route
-        path="/detailEspecialista/:id"
-        render={({ match }) => <DetailEspecialista id={match.params.id} />}
-      />
-      <Route />
+      <Route exact path="/detailEspecialista" >
+        <DetailEspecialista/>
+      </Route>
     </div>
   );
 }
