@@ -24,7 +24,7 @@ const PatientCard = ({id, name, lastName, dni, email, phone, adress, birth , use
                 </div>
             <div className='opciones-paciente'>
             <Link to="/patientDetails" className='opcion' onClick={()=>{dispatch(pacienteDetallado(id))}}>Ver Detalles</Link>
-            <Link to="/patientEdit" className='opcion'>Editar info</Link>
+            <Link to="/patientEdit" className='opcion' onClick={()=>{dispatch(pacienteDetallado(id))}} >Editar info</Link>
             </div>
         </div>
         
