@@ -1,7 +1,9 @@
-
-import {CREAR_ESPECIALISTA, CREAR_PACIENTE, OBTENER_ESPECIALIDADES, OBTENER_ESPECIALISTAS, OBTENER_PACIENTES, 
+/* eslint-disable */
+import {
+    CREAR_ESPECIALISTA, CREAR_PACIENTE, OBTENER_ESPECIALIDADES, OBTENER_ESPECIALISTAS, OBTENER_PACIENTES,
     OBTENER_ESPECIALISTA_POR_NOMBRE, ESPECIALISTA_DETALLADO, OBTENER_PACIENTE_POR_NOMBRE, PACIENTE_DETALLADO,
-    OBTENER_ESPECIALISTA_POR_ESPECIALIDAD, RESETEAR_BUSQUEDA_ESPECIALISTA, PAGINADO, ROL} from "../actions/valuesForActions.js";
+    OBTENER_ESPECIALISTA_POR_ESPECIALIDAD, RESETEAR_BUSQUEDA_ESPECIALISTA, PAGINADO, ROL, RESETEAR_BUSQUEDA_PACIENTE
+} from "../actions/valuesForActions.js";
 
 const initialState = {
     //SE IRAN AGREGANDO MAS ESTADOS A MEDIDA DE QUE SE HAGAN MAS COMPONENTES 
@@ -18,84 +20,86 @@ const initialState = {
     paginado: ""
 }
 
-const Reducer = (state=initialState, action) => {
+const Reducer = (state = initialState, action) => {
 
     switch (action.type) {
         case CREAR_ESPECIALISTA:
-            return {...state, especialistaCreado: action.payload};
-        
-        case CREAR_PACIENTE: 
-            return {...state, pacienteCreado: action.payload}
+            return { ...state, especialistaCreado: action.payload };
+
+        case CREAR_PACIENTE:
+            return { ...state, pacienteCreado: action.payload }
 
         case OBTENER_ESPECIALIDADES:
-            return {...state, especialidades: action.payload}
-        
-        case OBTENER_PACIENTES: 
-            return {...state, pacientes: action.payload}    
-        
+            return { ...state, especialidades: action.payload }
+
+        case OBTENER_PACIENTES:
+            return { ...state, pacientes: action.payload }
+
         case OBTENER_ESPECIALISTAS:
-            return {...state, especialistas: action.payload}
+            return { ...state, especialistas: action.payload }
 
         case OBTENER_ESPECIALISTA_POR_NOMBRE:
-            let busquedaE=[];;
+            let busquedaE = [];;
             for (let index = 0; index < state.especialistas.length; index++) {
-                if(state.especialistas[index].persona.name.toLowerCase().includes(action.payload.toLowerCase()) ||
-                state.especialistas[index].persona.lastName.toLowerCase().includes(action.payload.toLowerCase())){
-                    busquedaE=[...busquedaE, state.especialistas[index]];
+                if (state.especialistas[index].persona.name.toLowerCase().includes(action.payload.toLowerCase()) ||
+                    state.especialistas[index].persona.lastName.toLowerCase().includes(action.payload.toLowerCase())) {
+                    busquedaE = [...busquedaE, state.especialistas[index]];
                 }
             }
-            if(!busquedaE[0]){
-                busquedaE=["No se encontro empleado"];
+            if (!busquedaE[0]) {
+                busquedaE = ["No se encontro empleado"];
             }
-            return {...state, busquedaEspecialista: busquedaE}
-        
+            return { ...state, busquedaEspecialista: busquedaE }
+
         case OBTENER_ESPECIALISTA_POR_ESPECIALIDAD:
-            let busquedaEs=[];
+            let busquedaEs = [];
             let esp
             let cont = 0;
-                for (let index = 0; index < state.especialistas.length; index++) {
-                     esp = state.especialistas[index].specialty.split(" ")
-                    for (let index2 = 0; index2 < esp.length ; index2++){                     
-                        if(esp[index2].includes(action.payload.toLowerCase())){
-                            console.log("AQUII")
-                            busquedaEs=[...busquedaEs, state.especialistas[index]];
-                    }
-    
-                    }
-                }
-                if(!busquedaEs[0]){
-                    busquedaEs=["No se encontro empleado"];
-                }
-                return {...state, busquedaEspecialista: busquedaEs}
+            for (let index = 0; index < state.especialistas.length; index++) {
+                esp = state.especialistas[index].specialty.split(" ")
+                for (let index2 = 0; index2 < esp.length; index2++) {
+                    if (esp[index2].includes(action.payload.toLowerCase())) {
 
-        case RESETEAR_BUSQUEDA_ESPECIALISTA: 
-                return {...state, busquedaEspecialista: action.payload}
+                        busquedaEs = [...busquedaEs, state.especialistas[index]];
+                    }
+
+                }
+            }
+            if (!busquedaEs[0]) {
+                busquedaEs = ["No se encontro empleado"];
+            }
+            return { ...state, busquedaEspecialista: busquedaEs }
+
+        case RESETEAR_BUSQUEDA_ESPECIALISTA:
+            return { ...state, busquedaEspecialista: action.payload }
 
         case OBTENER_PACIENTE_POR_NOMBRE:
-            let busquedaP=[];
-                for (let index = 0; index < state.pacientes.length; index++) {
-                    if(state.pacientes[index].name.toLowerCase().includes(action.payload.toLowerCase())){
-                        busquedaP=[...busquedaP, state.pacientes[index]];
-                    }
+            let busquedaP = [];
+            for (let index = 0; index < state.pacientes.length; index++) {
+                if (state.pacientes[index].persona.name.toLowerCase().includes(action.payload.toLowerCase()) || 
+                state.pacientes[index].persona.lastName.toLowerCase().includes(action.payload.toLowerCase())) {
+                    busquedaP = [...busquedaP, state.pacientes[index]];
                 }
-                if(!busquedaP[0]){
-                    busquedaP=["No se encontro paciente"];
-                }
-            return {...state, busquedaPaciente: busquedaP}
+            }
+            if (!busquedaP[0]) {
+                busquedaP = ["No se encontro paciente"];
+            }
+            return { ...state, busquedaPaciente: busquedaP }
 
+        case RESETEAR_BUSQUEDA_PACIENTE:
+            return { ...state, busquedaPaciente: action.payload }
+        case ESPECIALISTA_DETALLADO:
+            return { ...state, especialistaDetallado: state.especialistas.filter(espe => action.payload === espe.id) }
 
-        case ESPECIALISTA_DETALLADO: 
-            return {...state, especialistaDetallado: state.especialistas.filter( espe => action.payload === espe.id)}
-        
-        case PACIENTE_DETALLADO: 
-            return {...state, pacienteDetallado: state.pacientes.filter( pac => action.payload === pac.id)}  
-        
+        case PACIENTE_DETALLADO:
+            return { ...state, pacienteDetallado: state.pacientes.filter(pac => action.payload === pac.id) }
+
         case ROL: {
-            return {...state, rol: action.payload}
+            return { ...state, rol: action.payload }
         }
 
         case PAGINADO: {
-            return {...state, paginado: action.payload}
+            return { ...state, paginado: action.payload }
         }
         default:
             return state;

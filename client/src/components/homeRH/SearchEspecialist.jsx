@@ -1,7 +1,8 @@
+/* eslint-disable */
 import React, { useState} from "react";
 import {useDispatch} from "react-redux";
 import {obtenerEspecialistaPorEspecialidad, obtenerEspecialistaPorNombre, obtenerEspecialistas,
-    resetearBusquedaEspecialista} from "../../actions/index.js"
+    resetearBusquedaEspecialista, paginado} from "../../actions/index.js"
 
 const SearchEspecialist = () => {
     const dispatch= useDispatch();
@@ -11,15 +12,19 @@ const SearchEspecialist = () => {
     const handleChange = (e) => {    
         
         if(e.target.value.length===0){
+            dispatch(paginado(0))
             setInput({...input, value: e.target.value})
             dispatch(resetearBusquedaEspecialista())
             dispatch(obtenerEspecialistas())
 
         }else if (input.option==="nombre"){
+            dispatch(paginado(0))
             setInput({...input, value: e.target.value})
             dispatch(obtenerEspecialistaPorNombre(e.target.value))
 
+
         }else if(input.option==="especialidad"){
+            dispatch(paginado(0))
             setInput({...input, value: e.target.value})
             dispatch(obtenerEspecialistaPorEspecialidad(e.target.value))
         }

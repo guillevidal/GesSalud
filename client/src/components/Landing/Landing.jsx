@@ -1,3 +1,4 @@
+/* eslint-disable */
 import './Landing'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faClinicMedical,faUserMd} from '@fortawesome/free-solid-svg-icons'

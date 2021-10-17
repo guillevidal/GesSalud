@@ -1,3 +1,4 @@
+/* eslint-disable */
 //import './Person.scss';
 import React from 'react';
 

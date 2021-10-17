@@ -1,3 +1,4 @@
+/* eslint-disable */
 import './CreateSpecialist.scss';
 import React, { useState, useEffect } from 'react';
 import Nav from '../../Layout/Nav'
