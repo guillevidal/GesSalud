@@ -15,7 +15,7 @@ export default function Card(props) {
             <Link onClick={() => dispatch(especialistaDetallado(id))} to="/detailEspecialista">
                 <button>Ver mas</button>
             </Link>
-            <Link to='/createSpecialist'>
+            <Link onClick={() => dispatch(especialistaDetallado(id))} to='/specialtyEdit'>
                 <button>Modificar</button>
             </Link>
             

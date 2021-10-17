@@ -1,27 +1,16 @@
-import './CreateSpecialist.scss';
-import React, { useState, useEffect } from 'react';
-import Nav from '../../Layout/Nav'
-import { useDispatch, useSelector } from 'react-redux';
-//import { Link } from 'react-router-dom';
-import Person from '../Person/Person';
-import {
-    crearEspecialista,
-    obtenerEspecialidades,
-} from '../../../actions/index'
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import Person from '../../forms/Person/Person';
+import Nav from "../../Layout/Nav";
+import { obtenerEspecialidades } from '../../../actions/index'
 
-
-
-export default function CreateSpecialist() {
-    const capitalFirstLetter = (str) => {
-        return str.charAt(0).toUpperCase() + str.slice(1)
-    }
-
-    const dispatch = useDispatch()
-
+export default function EditSpecialty() {
+    const dispatch = useDispatch();
     useEffect(() => {
         dispatch(obtenerEspecialidades())
     }, [])
-
+    const specialtyDetail = useSelector(state => state.especialistaDetallado)
     const typeSpecialties = useSelector((state) => state.especialidades)
     const [error, setError] = useState({})
     const validationCreateSpecialty = (input) => {
@@ -36,18 +25,18 @@ export default function CreateSpecialist() {
     }
 
     const [input, setInput] = useState({
-        name: "",
-        lastName: "",
-        dni: "",
-        email: "",
-        phone: "",
-        adress: "",
-        birth: "",
-        user: "",
-        password: "",
+        name: specialtyDetail[0].persona.name,
+        lastName: specialtyDetail[0].persona.lastName,
+        dni: specialtyDetail[0].persona.dni,
+        email: specialtyDetail[0].persona.email,
+        phone: specialtyDetail[0].persona.phone,
+        adress: specialtyDetail[0].persona.adress,
+        birth: specialtyDetail[0].persona.birth,
+        user: specialtyDetail[0].persona.user,
+        password: specialtyDetail[0].persona.password,
         gender: "",
-        enrollment: "",
-        specialty: [],
+        enrollment: specialtyDetail[0].enrollment,
+        specialty: specialtyDetail[0].specialty.split(', '),
     })
 
     const handleChange = (event) => {
@@ -77,71 +66,26 @@ export default function CreateSpecialist() {
 
     }
 
-    const handleSubmit = async (event) => {
-        event.preventDefault()
-
-
-        let newSpecialist = {
-            name: input.name.toLowerCase(),
-            lastName: input.lastName.toLowerCase(),
-            dni: parseInt(input.dni),
-            email: input.email,
-            phone: input.phone,
-            adress: input.adress.toLowerCase(),
-            birth: input.birth,
-            user: input.user,
-            password: input.password,
-            gender: input.gender,
-            enrollment: parseInt(input.enrollment),
-            specialty: input.specialty.join(', '),
-
-        }
-
-        await dispatch(crearEspecialista(newSpecialist))
-        setInput({
-            name: "",
-            lastName: "",
-            dni: "",
-            email: "",
-            phone: "",
-            adress: "",
-            birth: "",
-            user: "",
-            password: "",
-            gender: "",
-            enrollment: "",
-            specialty: [],
-        })
-        alert(`El especialista médico ${capitalFirstLetter(input.name)} ${capitalFirstLetter(input.lastName)} se creó correctamente `)
-    }
-
     return (
-
         <div id="createSpecialist-container">
-
             <Nav />
             <div>
-                <form onSubmit={(event) => handleSubmit(event)} className='form-container'>
+                <form className='form-container'>
                     <div className='form-infoPersonal'>
-                        <Person name={input.name} lastName={input.lastName} dni={input.dni}
+                        <Person
+                            name={input.name} lastName={input.lastName} dni={input.dni}
                             email={input.email} phone={input.phone} adress={input.adress}
                             birth={input.birth} user={input.user} password={input.password}
                             handle={handleChange} error={error}
                         />
-
                         <div className='identificacion-personal'>
-
                             <label htmlFor="enrollment" className='label-tipo-title-text'>IDENTIFICACION PROFESIONAL</label>
-
                             <input
                                 id="enrollment" type="text" name="enrollment" required pattern="[0-9]+" title="El campo solo acepta números"
                                 value={input.enrollment} onChange={handleChange}
                             />
-
                         </div>
-
                     </div>
-
                     <div id='specialist-container'>
                         <div className='label-tipo-title'>
 
@@ -158,8 +102,8 @@ export default function CreateSpecialist() {
                                 })
                             }
                         </div>
-                        
                         <div className='label-tipo-title'>
+
                             <label className='label-tipo-title-text'>TIPO DE ESPECIALDAD</label>
                         </div>
                         <div className='lista-especialidades'>
@@ -169,7 +113,7 @@ export default function CreateSpecialist() {
                                         <div className="typeSpeciality" key={index + "A"} >
                                             <input
                                                 key={index}
-                                                type="checkbox"
+                                                type="checkbox"                                          
                                                 name={type.name}
                                                 value={type.name}
                                                 id={type.name}
@@ -190,12 +134,16 @@ export default function CreateSpecialist() {
                         }
                     </div>
                     <div className='boton-crear-especialista'>
-                        <button type="submit" className='boton-creacion' >CREAR</button>
+                        <Link to='/homeRRHH'>
+                            <button className='boton-creacion' >CANCELAR</button>
+                        </Link>
+                    </div>
+                    <div className='boton-crear-especialista'>
+                        <button type="submit" className='boton-creacion' >MODIFICAR</button>
                     </div>
                 </form>
-
-
             </div>
         </div>
     )
 }
+
