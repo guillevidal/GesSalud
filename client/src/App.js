@@ -8,6 +8,7 @@ import PatientDetails from "./components/initialPys/patientManagement/initial/pa
 import HomeRRHH from "./components/homeRH/HomeRH.jsx";
 import DetailEspecialista from "./components/homeRH/DetailEspecialista.jsx";
 import PatientEdit from "./components/initialPys/patientManagement/PatientEdit/PatientEdit.jsx";
+import SpecialtyEdit from './components/homeRH/EditSpecialty/EditSpecialty.jsx';
 
 function App() {
   return (
@@ -30,14 +31,14 @@ function App() {
       <Route exact path="/homeRRHH">
         <HomeRRHH />
       </Route>
-
-      
       <Route exact path="/patientEdit">
         <PatientEdit />
-    </Route>
-
+      </Route>
+      <Route exact path="/specialtyEdit">
+        <SpecialtyEdit />
+      </Route>
       <Route exact path="/detailEspecialista" >
-        <DetailEspecialista/>
+        <DetailEspecialista />
 
       </Route>
     </div>

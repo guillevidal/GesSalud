@@ -70,7 +70,7 @@ export default function Person({ name, lastName, dni, email, phone, adress, birt
                         <label htmlFor="femenino" className='label-sexo-fem'>Femenino</label>
 
                         <input
-                            id="feminino" type="radio" name="gender" value="feminino"
+                            id="feminino" type="radio" name="gender" value="femenino"
                             className='input-person-sexo' onChange={handle}
                         />
 
