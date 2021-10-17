@@ -4,7 +4,9 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faClinicMedical,faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from "react-redux"
 import { rol, resetearPacienteCreado, resetearEspecialistaCreado,
-    resetearPacienteDetallado, resetearEspecialistaDetallado} from "../../actions"
+    resetearPacienteDetallado, resetearEspecialistaDetallado,
+    resetearBusquedaPaciente, resetearBusquedaEspecialista,
+    resetearPacientes, resetearEspecialistas  } from "../../actions"
 import { Redirect } from "react-router"
 
 export default function Nav(){
@@ -15,8 +17,15 @@ export default function Nav(){
 
     const logout = (e) => {
         e.preventDefault()
-
         dispatch(rol(''))
+        dispatch(resetearPacienteCreado())
+        dispatch(resetearPacienteDetallado())
+        dispatch(resetearEspecialistaCreado())
+        dispatch(resetearEspecialistaDetallado())
+        dispatch(resetearBusquedaPaciente())
+        dispatch(resetearBusquedaEspecialista())
+        dispatch(resetearEspecialistas())
+        dispatch(resetearPacientes())
     }
 
     const handleResetActionsRol1 = () => {
