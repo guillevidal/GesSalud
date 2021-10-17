@@ -15,11 +15,13 @@ const SearchPatient = () => {
             dispatch(paginado(0))
             setInput(e.target.value)
             dispatch(resetearBusquedaPaciente())
-            dispatch(obtenerPacientes)
+            dispatch(obtenerPacientes())
+            return
         }else{
         dispatch(paginado(0))
         setInput(e.target.value)}
-        dispatch(obtenerPacientePorNombre(e.target.value))       
+        dispatch(obtenerPacientePorNombre(e.target.value))
+        return       
     }
     return (
         <div className='input-buscador'>

@@ -2,7 +2,8 @@
 import {
     CREAR_ESPECIALISTA, CREAR_PACIENTE, OBTENER_ESPECIALIDADES, OBTENER_ESPECIALISTAS, OBTENER_PACIENTES,
     OBTENER_ESPECIALISTA_POR_NOMBRE, ESPECIALISTA_DETALLADO, OBTENER_PACIENTE_POR_NOMBRE, PACIENTE_DETALLADO,
-    OBTENER_ESPECIALISTA_POR_ESPECIALIDAD, RESETEAR_BUSQUEDA_ESPECIALISTA, PAGINADO, ROL, RESETEAR_BUSQUEDA_PACIENTE
+    OBTENER_ESPECIALISTA_POR_ESPECIALIDAD, RESETEAR_BUSQUEDA_ESPECIALISTA, PAGINADO, ROL, RESETEAR_BUSQUEDA_PACIENTE,
+    RESETEAR_ESPECIALISTA_CREADO, RESETEAR_PACIENTE_CREADO, RESETEAR_PACIENTE_DETALLADO, RESETEAR_ESPECIALISTA_DETALLADO
 } from "../actions/valuesForActions.js";
 
 const initialState = {
@@ -47,7 +48,7 @@ const Reducer = (state = initialState, action) => {
                 }
             }
             if (!busquedaE[0]) {
-                busquedaE = ["No se encontro empleado"];
+                busquedaE = ["No se encontro especialista"];
             }
             return { ...state, busquedaEspecialista: busquedaE }
 
@@ -66,7 +67,7 @@ const Reducer = (state = initialState, action) => {
                 }
             }
             if (!busquedaEs[0]) {
-                busquedaEs = ["No se encontro empleado"];
+                busquedaEs = ["No se encontro especalista"];
             }
             return { ...state, busquedaEspecialista: busquedaEs }
 
@@ -88,6 +89,7 @@ const Reducer = (state = initialState, action) => {
 
         case RESETEAR_BUSQUEDA_PACIENTE:
             return { ...state, busquedaPaciente: action.payload }
+
         case ESPECIALISTA_DETALLADO:
             return { ...state, especialistaDetallado: state.especialistas.filter(espe => action.payload === espe.id) }
 
@@ -101,6 +103,19 @@ const Reducer = (state = initialState, action) => {
         case PAGINADO: {
             return { ...state, paginado: action.payload }
         }
+
+        case RESETEAR_PACIENTE_CREADO:
+            return { ...state, pacienteCreado: action.payload }
+        
+        case RESETEAR_ESPECIALISTA_CREADO:
+            return { ...state, especialistaCreado: action.payload }
+
+        case RESETEAR_PACIENTE_DETALLADO:
+                return { ...state, pacienteDetallado: action.payload }
+    
+        case RESETEAR_ESPECIALISTA_DETALLADO:
+            return { ...state, especialistaDetallado: action.payload }
+        
         default:
             return state;
     }

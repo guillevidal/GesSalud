@@ -25,7 +25,7 @@ const HomeRH = () => {
             <Nav/>
             <SearchEspecialist/>
            
-            {!busquedaEspecialista[0]?especialistas.slice(valorPaginado, valorPaginado+6).map(e => {
+            {!busquedaEspecialista[0]?!especialistas[0]?<h1>No se econtro especialista registrado</h1>:especialistas.slice(valorPaginado, valorPaginado+6).map(e => {
                 return(
                     <Card e={e} key={e.id}/>)})
             :
