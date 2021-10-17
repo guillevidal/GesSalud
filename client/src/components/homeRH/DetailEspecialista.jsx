@@ -1,38 +1,28 @@
 import React, {useEffect} from 'react'
-import {useDispatch, useSelector} from "react-redux";
-import {especialistaDetallado} from '../../actions/index';
+import { useSelector} from "react-redux";
 import {Link} from 'react-router-dom';
+import Nav from '../Layout/Nav.jsx';
 
-        
-
-export default function DetailEspecialista(id) {
-
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(especialistaDetallado(id));
-    },[dispatch, id]);
-    
-    const especialistDetail = useSelector((state) => state.especialistaDetallado);
-    const {name, lastName, dni, email, phone, adress, birth, user, password, gender, specialty} = especialistDetail;
+export default function DetailEspecialista() {
+    const especialistaDetallado = useSelector((state) => state.especialistaDetallado);
+    const {id,persona,specialty,enrollment, agendaTotalId, personaId } = especialistaDetallado[0];
 
     return (
         <div>
-            <p>nombre: {name}</p>
-            <p>apellido: {lastName}</p>
-            <p>dni: {dni}</p>
-            <p>email: {email}</p>
-            <p>celular: {phone}</p>
-            <p>direccion: {adress}</p>
-            <p>fecha de nacimiento: {birth}</p>
-            <p>usuario: {user}</p>
-            <p>clave: {password}</p>
-            <p>genero: {gender}</p>
+            <Nav/>
+            <p>nombre: {persona.name}</p>
+            <p>apellido: {persona.lastName}</p>
+            <p>dni: {persona.dni}</p>
+            <p>email: {persona.email}</p>
+            <p>celular: {persona.phone}</p>
+            <p>direccion: {persona.adress}</p>
+            <p>fecha de nacimiento: {persona.birth}</p>
+            <p>usuario: {persona.user}</p>
+            <p>clave: {persona.password}</p>
+            <p>genero: {persona.gender}</p>
             <p>especialidad: {specialty}</p>
-
-            <Link to={`/homeRRHH`} >
-                <h4>volver</h4>
-            </Link>            
+            <p>dni profesional {enrollment}</p>
+          
         </div>
     )
 }
