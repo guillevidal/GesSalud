@@ -17,8 +17,6 @@ const PatientCardDetails = () => {
             <Nav />
             <div className='boton-regresar'>
                 <Link to="/patientPys" className='boton'>Volver</Link>
-            </div>
-            <div className='boton-regresar'>
                 <Link to="/patientEdit" className='boton'>Modificar</Link>
             </div>
             <div className='lista-detalles'>
@@ -35,10 +33,10 @@ const PatientCardDetails = () => {
                         <span className='data-info'>Birth: <b className='data-detail'>{persona.birth}</b></span>
                     </div>
                     <div className='data'>
-                        <span className='data-info'>historia clinica: <b className='data-detail'>{historiaClinica.creationDate}</b></span>
-                        <span className='data-info'>medicacion: <b className='data-detail'>{medication}</b></span>
-                        <span className='data-info'>contacto de emergencia: <b className='data-detail'> {emergencyContact}</b></span>
-                        <span className='data-info'>enfermedades: <b className='data-detail'>{disease}</b></span>
+                        <span className='data-info'>Historia clinica: <b className='data-detail'>{historiaClinica.creationDate}</b></span>
+                        <span className='data-info'>Medicacion: <b className='data-detail'>{medication}</b></span>
+                        <span className='data-info'>Contacto de emergencia: <b className='data-detail'> {emergencyContact}</b></span>
+                        <span className='data-info'>Enfermedades: <b className='data-detail'>{disease}</b></span>
                     </div>
                 </div>
                

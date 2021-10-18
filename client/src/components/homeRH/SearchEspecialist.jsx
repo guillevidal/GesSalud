@@ -3,6 +3,9 @@ import React, { useState} from "react";
 import {useDispatch} from "react-redux";
 import {obtenerEspecialistaPorEspecialidad, obtenerEspecialistaPorNombre, obtenerEspecialistas,
     resetearBusquedaEspecialista, paginado} from "../../actions/index.js"
+import './SearchEspecialista.scss'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const SearchEspecialist = () => {
     const dispatch= useDispatch();
@@ -35,12 +38,17 @@ const SearchEspecialist = () => {
     }
 
     return (
-        <div>
-            <input type="text" placeholder="Buscar especialista" onChange={(e)=>handleChange(e)} value={input.value}/>
-            <select onClick={(e) => {handleSelect(e)}}>
+        <div className='buscador-especialista'>
+            <div className='elementos-buscador'>
+                
+            <FontAwesomeIcon icon={faSearch} className='icon-search'/>
+            <input className='input-buscador' type="text" placeholder="Buscar especialista" onChange={(e)=>handleChange(e)} value={input.value}/>
+            <select className='select-buscador' onClick={(e) => {handleSelect(e)}}>
                 <option value={"nombre"}>Por nombre</option>
                 <option value={"especialidad"} disabled>Por especialidad</option>
             </select>
+            </div>
+           
         </div>
     )
 }

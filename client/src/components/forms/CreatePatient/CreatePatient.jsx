@@ -7,6 +7,7 @@ import Nav from '../../Layout/Nav'
 import { crearPaciente } from '../../../actions/index'
 import './CreatePatient.scss'
 import '../Person/Person.scss'
+import swal from 'sweetalert';
 
 export default function CreatePatient() {
     const capitalFirstLetter = (str) => {
@@ -55,7 +56,7 @@ export default function CreatePatient() {
         }))
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit =  (event) => {
         event.preventDefault()
 
         let creationDate = new Date();
@@ -82,7 +83,7 @@ export default function CreatePatient() {
 
         }
 
-        dispatch(crearPaciente(newPatient))
+         dispatch(crearPaciente(newPatient))
         setInput({
             name: "",
             lastName: "",
@@ -102,8 +103,14 @@ export default function CreatePatient() {
             date: "",
             derivation: ""
         })
-        alert(`El paciente ${capitalFirstLetter(input.name)} ${capitalFirstLetter(input.lastName)} se creó correctamente `)
+        swal({
+            title: "Paciente creado",
+            text:  `El paciente ${capitalFirstLetter(input.name) + ' '}  ${capitalFirstLetter(input.lastName)} se creó correctamente `,
+            icon: "success",
+        
+        })
     }
+    
 
 
     return (

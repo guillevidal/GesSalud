@@ -91,6 +91,9 @@ export default function PatientEdit() {
 
                 </div>
                 <div className='information-clinic'>
+                <div className='label-title'>
+                        <label className='label-title-text'>INFORMACION CLINICA</label>
+                    </div>
                     <div className='label-textarea'>
                         <label htmlFor="emergencyContact" className='label-interno'>Contacto de emergencia: </label>
 
@@ -105,8 +108,6 @@ export default function PatientEdit() {
                     <Link to="/patientPys">
                         <button className='boton-crear'>CANCELAR</button>
                     </Link>
-                </div>
-                <div className='boton-crear-paciente'>
                     <button type="submit" className='boton-crear'>MODIFICAR</button>
                 </div>
             </form>

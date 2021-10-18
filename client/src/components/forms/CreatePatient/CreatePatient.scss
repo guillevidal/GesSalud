@@ -87,7 +87,8 @@
         justify-content: center;
         margin-bottom: 20px;
         .boton-crear{
-            @include boton-primario
+            @include boton-primario;
+            margin: 0 20px;
         }
     }
 

@@ -1,0 +1,44 @@
+@import '../../scss/base/variables';
+
+.buscador-especialista{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+        .elementos-buscador{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 450px;
+            height: 25px;
+            margin-top: 30px;
+
+            .icon-search{
+                background-color: $color-secundario;
+                height: 100%;
+                width: 30px;
+                color: white;
+                padding: 5px;
+                border-radius: 3px;
+                margin-right: -20px;
+            }
+
+            .input-buscador{
+                display: flex;
+                width: 100%;
+                max-width: 250px;
+                
+            }
+
+            .select-buscador{
+                color: $color-principal;
+
+               
+            }
+
+        }
+
+
+}
+

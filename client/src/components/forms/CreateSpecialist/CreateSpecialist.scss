@@ -101,7 +101,8 @@
         margin-top: 20px;
 
         .boton-creacion{
-            @include boton-primario
+            @include boton-primario;
+            margin: 0 20px
         }
     }
 
