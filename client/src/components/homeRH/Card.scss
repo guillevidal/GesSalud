@@ -1,0 +1,54 @@
+@import '../../scss/base/variables';
+
+.card-especialista{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+    background-color: $color-detalle;
+    font-family: $fuente_principal;
+    margin: 20px;
+
+    .datos-principales{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        margin: 10px auto;
+
+        .nombre-apellido{
+            font-size: 2em;
+            color : $color-principal;
+            margin-bottom: 10px;
+        }
+
+        .especialidad{
+            font-size: 1.4em;
+            color: $color-terciario;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+    }
+    .links{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 10px;
+    }
+    .enlace{
+        text-decoration: none;
+        background-color: $color-terciario;
+        padding: 5px;
+        border-radius: 10px;
+        color:white;
+
+        &:hover{
+            background-color: $color-secundario;
+        }
+    }
+
+
+}

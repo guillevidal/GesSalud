@@ -10,6 +10,8 @@ import {
     obtenerEspecialidades,
 } from '../../../actions/index'
 
+import swal from 'sweetalert';
+
 
 
 export default function CreateSpecialist() {
@@ -29,10 +31,10 @@ export default function CreateSpecialist() {
         let errors = {};
         if (input.gender.length === 0) {
             errors.gender = 'Seleccione un tipo de genero'
-        }
+        }/* 
         if (input.specialty.length === 0) {
             errors.specialty = 'Seleccione al menos un tipo de especialidad'
-        }
+        } */
         return errors;
     }
 
@@ -113,8 +115,12 @@ export default function CreateSpecialist() {
             enrollment: "",
             specialty: [],
         })
-        alert(`El especialista médico ${capitalFirstLetter(input.name)} ${capitalFirstLetter(input.lastName)} se creó correctamente `)
-    }
+        swal({
+            title: "Especialista médico creado",
+            text:  `El especialista ${capitalFirstLetter(input.name) + ' '}  ${capitalFirstLetter(input.lastName)} se creó correctamente `,
+            icon: "success",
+        
+        }) }
 
     return (
 
@@ -144,7 +150,7 @@ export default function CreateSpecialist() {
                     </div>
 
                     <div id='specialist-container'>
-                        <div className='label-tipo-title'>
+                        {/* <div className='label-tipo-title'>
 
                             <label className='label-tipo-title-text'>ESPECIALIDADES ASIGNADAS</label>
                         </div>
@@ -158,7 +164,7 @@ export default function CreateSpecialist() {
                                     )
                                 })
                             }
-                        </div>
+                        </div> */}
                         
                         <div className='label-tipo-title'>
                             <label className='label-tipo-title-text'>TIPO DE ESPECIALDAD</label>

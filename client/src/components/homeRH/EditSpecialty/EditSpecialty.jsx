@@ -128,7 +128,7 @@ export default function EditSpecialty() {
                         </div>
                     </div>
                     <div id='specialist-container'>
-                        <div className='label-tipo-title'>
+                       {/*  <div className='label-tipo-title'>
 
                             <label className='label-tipo-title-text'>ESPECIALIDADES ASIGNADAS</label>
                         </div>
@@ -142,7 +142,7 @@ export default function EditSpecialty() {
                                     )
                                 })
                             }
-                        </div>
+                        </div> */}
                         <div className='label-tipo-title'>
 
                             <label className='label-tipo-title-text'>TIPO DE ESPECIALDAD</label>
@@ -178,8 +178,6 @@ export default function EditSpecialty() {
                         <Link to='/homeRRHH'>
                             <button className='boton-creacion' >CANCELAR</button>
                         </Link>
-                    </div>
-                    <div className='boton-crear-especialista'>
                         <button type="submit" className='boton-creacion' >MODIFICAR</button>
                     </div>
                 </form>

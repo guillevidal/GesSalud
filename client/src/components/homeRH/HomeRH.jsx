@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import Nav from '../Layout/Nav';
 import Card from "./Card.jsx"
 import {obtenerEspecialistas, paginado} from '../../actions/index';
-import './homeRH.scss'
+import './HomeRH.scss'
 import SearchEspecialist from './SearchEspecialist';
 import Paginado from './Paginado';
 
@@ -24,6 +24,8 @@ const HomeRH = () => {
         <div className='container-homeRRHH'>
             <Nav/>
             <SearchEspecialist/>
+
+            <div className='tarjetas'>
            
             {!busquedaEspecialista[0]?!especialistas[0]?<h1>No se econtro especialista registrado</h1>:especialistas.slice(valorPaginado, valorPaginado+6).map(e => {
                 return(
@@ -34,6 +36,8 @@ const HomeRH = () => {
                     <Card e={e} key={e.id+"busqueda"}/>
                 )
             })}
+
+        </div>
             <Paginado/>
         </div>
     )

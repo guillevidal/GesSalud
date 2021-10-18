@@ -1,0 +1,63 @@
+@import '../../scss/base/variables';
+.detalle-especialista{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+
+    .card-detail{
+        display: flex;
+        width: 100%;
+        max-width: 800px;
+        flex-direction: column;
+        background-color: $color-detalle;
+        margin: 20px auto;
+        font-family: $fuente_principal;
+
+        .datos{
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .nombre{
+                font-size: 2.5em;
+                margin-top: 10px;
+                color: $color-principal;
+                font-weight: $bold;
+            }
+
+            .data{
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                max-width: 600px;
+                flex-wrap: wrap;
+                margin: 20px auto;
+
+                b{
+                    color: $color-principal;
+                }
+
+                .datodemas{
+                    margin: 10px;
+                }
+            }
+
+        }
+
+        .masDatos{
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-bottom: 20px;
+            
+            b{
+                color: rgb(161, 13, 219);
+            }
+        }
+
+        
+    }
+
+}
