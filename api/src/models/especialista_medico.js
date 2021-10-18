@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
       },
       specialty: {
         type: DataTypes.STRING,
-        allowNull: false,
+  
       },
     },
     { timestamps: false }

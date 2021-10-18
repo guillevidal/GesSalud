@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
     {
       creationDate: {
         type: DataTypes.STRING,
-        allowNull: false,
+        //allowNull: false,
       },
     },
     { timestamps: false }
