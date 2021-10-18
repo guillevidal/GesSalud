@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { rol, resetearPacienteCreado, resetearEspecialistaCreado,
     resetearPacienteDetallado, resetearEspecialistaDetallado,
     resetearBusquedaPaciente, resetearBusquedaEspecialista,
-    resetearPacientes, resetearEspecialistas  } from "../../actions"
+    resetearPacientes, resetearEspecialistas, resetearModificado} from "../../actions"
 import { Redirect } from "react-router"
 
 export default function Nav(){
@@ -15,9 +15,9 @@ export default function Nav(){
 
     const status = useSelector(state => state.rol);
 
-    const logout = (e) => {
+    const logout = async (e) => {
         e.preventDefault()
-        dispatch(rol(''))
+        await dispatch(rol(''))
         dispatch(resetearPacienteCreado())
         dispatch(resetearPacienteDetallado())
         dispatch(resetearEspecialistaCreado())
@@ -26,16 +26,21 @@ export default function Nav(){
         dispatch(resetearBusquedaEspecialista())
         dispatch(resetearEspecialistas())
         dispatch(resetearPacientes())
+        dispatch(resetearModificado())
     }
 
     const handleResetActionsRol1 = () => {
         dispatch(resetearPacienteCreado())
         dispatch(resetearPacienteDetallado())
+        dispatch(resetearBusquedaPaciente())
+        dispatch(resetearModificado())
     }
 
     const handleResetActionsRol2 = () => {
         dispatch(resetearEspecialistaCreado())
         dispatch(resetearEspecialistaDetallado())
+        dispatch(resetearBusquedaEspecialista())
+        dispatch(resetearModificado())
     }
     return(
         <div className='nav-bar'>
