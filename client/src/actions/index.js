@@ -171,7 +171,7 @@ export const modificarPaciente = (paciente) => {
 export const modificarEspecialistas = (especialista) => {
     return async (dispatch) => {
         {
-            const result = await fetch(`http://localhost:3001/especialista${especialista.id}`,
+            const result = await fetch(`http://localhost:3001/especialista/${especialista.id}`,
                 {
                     method: "PUT",
                     headers: {
