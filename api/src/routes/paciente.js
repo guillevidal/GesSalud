@@ -112,8 +112,8 @@ router.post("/", async function (req, res) {
 });
 
 //BÚSQUEDA DE PACIENTE POR "DNI"
-router.get("/consulta", async (req, res) => {
-  const { dni } = req.body;
+router.get("/consulta/:dni", async (req, res) => {
+  const { dni } = req.params;
   try {
     if (dni) {
       let query = await Persona.findOne({
@@ -144,15 +144,12 @@ router.put ("/:id", async (req, res) => {
   let id= req.params.id;
   let query = await Paciente.findByPk(id);
   let { personaId } = query
-  let {email, phone, adress, birth, user, password, gender } = req.body;
+  let {name, lastName, dni, email, phone, adress, birth, user, password, gender } = req.body;
 
-    if (email && phone && adress && birth && user && password && gender) {
-      await Persona.update({ email, phone, adress, birth, user, password, gender },{where: {id : personaId}})
+   
+      await Persona.update({name, lastName, dni, email, phone, adress, birth, user, password, gender},{where: {id : personaId}})
       res.status(200).send("Se actualizaron los datos correctamente");
-    }
-    else {
-      res.status(400).send("Actualización FALLIDA, Campos vacíos")
-    }
+    
   }catch(e){
     res.status(400).send("No se pudieron actualizar los datos.");
   }

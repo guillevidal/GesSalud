@@ -10,7 +10,7 @@ const router = Router();
 
 router.get("/", async function (req, res, next) {
   let especialistas = await Especialista_medico.findAll({
-    include: {
+    include: [{
       model: Persona,
       attributes: [
         "name",
@@ -22,10 +22,33 @@ router.get("/", async function (req, res, next) {
         "birth",
         "user",
         "password",
-        "gender",
-      ],
+      ]
     },
+    // {
+    //   model: Tipo_especialidad,
+    //   }
+    ]
   });
+
+  // let queryEspecialista = especialistas.map((el) => {
+  //   return {
+  //     id: el.id,
+  //     enrollment: el.enrollment,
+  //     name: el.persona.name,
+  //     lastName: el.persona.lastName,
+  //     dni: el.persona.dni,
+  //     email: el.persona.email,
+  //     phone: el.persona.phone,
+  //     adress: el.persona.adress,
+  //     birth: el.persona.birth,
+  //     user: el.persona.user,
+  //     password: el.persona.password,
+  //     //specialty: el.tipo_especialidads.map(ele => ele.name)
+  //     specialty: el.specialty,
+  //   };
+    
+  // });
+
 
   res.send(especialistas);
 });
@@ -66,12 +89,23 @@ router.post("/", async function (req, res) {
     const creandoMatriculaEspecialista = await Especialista_medico.create(
       {
         enrollment: data.enrollment,
-        specialty: data.specialty,
+        specialty: data.specialty
       },
       {
         fields: ["enrollment", "specialty"],
       }
     );
+      
+
+    // let especialidadesPromise = await Promise.all(
+    //   data.specialty.map((el) =>
+    //   Tipo_especialidad.findOne({ where: { name: el } })
+    //   )
+    // );
+    
+    // await creandoMatriculaEspecialista.setTipo_especialidads(
+    //   especialidadesPromise);
+
 
     await creandoEspecialista.setEspecialista_medico(
       creandoMatriculaEspecialista
@@ -91,7 +125,7 @@ router.get("/:id", async (req, res) => {
   try {
     if (id) {
       let query = await Especialista_medico.findByPk(id, {
-        include: {
+        include: [{
           model: Persona,
           attributes: [
             "name",
@@ -103,10 +137,32 @@ router.get("/:id", async (req, res) => {
             "birth",
             "user",
             "password",
-          ],
+          ]
         },
+        // {
+        //   model: Tipo_especialidad,
+        // }
+        ]
+          
       });
-
+    
+      // let queryEspecialista =
+      //   {
+      // id: query.id,
+      // enrollment: query.enrollment,
+      // name: query.persona.name,
+      // lastName: query.persona.lastName,
+      // dni: query.persona.dni,
+      // email: query.persona.email,
+      // phone: query.persona.phone,
+      // adress: query.persona.adress,
+      // birth: query.persona.birth,
+      // user: query.persona.user,
+      // password: query.persona.password,
+      // //specialty: query.tipo_especialidads.map(el => el.name)
+      // specialty: query.persona.specialty,
+      //   };
+     
       res.send(query);
     }
   } catch (error) {
@@ -120,11 +176,11 @@ try{
 let id= req.params.id;
 let query = await Especialista_medico.findByPk(id);
 let { personaId } = query
+let {name, lastName, dni, email, phone, adress, birth, user, password, specialty, gender, enrollment}  = req.body;
 
-let {specialty, email, phone, adress, user, password } = req.body;
-await Especialista_medico.update({specialty},{where: {id}})
+await Especialista_medico.update({ enrollment, specialty },{where: {id}})
+await Persona.update({ name, lastName, dni, email, phone, adress, birth, user, password, gender },{where: {id : personaId}})
 
-await Persona.update({ user },{where: {id : personaId}})
 
 res.status(200).send("Se actualizaron los datos correctamente");
 

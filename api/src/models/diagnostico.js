@@ -6,12 +6,12 @@ module.exports = (sequelize) => {
     {
       diagnostic: {
         type: DataTypes.STRING,
-        allowNull: false,
+        //allowNull: false,
       },
 
       date: {
         type: DataTypes.STRING,
-        allowNull: false,
+        //allowNull: false,
       },
 
       derivation: {

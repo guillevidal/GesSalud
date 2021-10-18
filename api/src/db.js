@@ -59,6 +59,9 @@ const {
 Persona.hasOne(Especialista_medico);
 Especialista_medico.belongsTo(Persona);
 
+Especialista_medico.belongsToMany(Tipo_especialidad, {through: "especialistaEspecialidad"});
+Tipo_especialidad.belongsToMany(Especialista_medico, {through: "especialistaEspecialidad"});
+
 AgendaTotal.hasOne(Especialista_medico);
 Especialista_medico.belongsTo(AgendaTotal);
 
