@@ -4,7 +4,7 @@ import {
     OBTENER_ESPECIALISTA_POR_NOMBRE, ESPECIALISTA_DETALLADO, OBTENER_PACIENTE_POR_NOMBRE, PACIENTE_DETALLADO,
     OBTENER_ESPECIALISTA_POR_ESPECIALIDAD, RESETEAR_BUSQUEDA_ESPECIALISTA, PAGINADO, ROL, RESETEAR_BUSQUEDA_PACIENTE,
     RESETEAR_ESPECIALISTA_CREADO, RESETEAR_PACIENTE_CREADO, RESETEAR_PACIENTE_DETALLADO, RESETEAR_ESPECIALISTA_DETALLADO,
-    RESETEAR_ESPECIALISTAS, RESETEAR_PACIENTES
+    RESETEAR_ESPECIALISTAS, RESETEAR_PACIENTES, MODIFICAR_PACIENTE, MODIFICAR_ESPECIALISTA, RESETEAR_MODIFICADO
 } from "../actions/valuesForActions.js";
 
 const initialState = {
@@ -19,7 +19,8 @@ const initialState = {
     busquedaPaciente: [],
     busquedaEspecialista: [],
     rol: "",
-    paginado: ""
+    paginado: "",
+    modificado: ""
 }
 
 const Reducer = (state = initialState, action) => {
@@ -61,8 +62,16 @@ const Reducer = (state = initialState, action) => {
                 esp = state.especialistas[index].specialty.split(" ")
                 for (let index2 = 0; index2 < esp.length; index2++) {
                     if (esp[index2].includes(action.payload.toLowerCase())) {
-
-                        busquedaEs = [...busquedaEs, state.especialistas[index]];
+                        if(!busuqedaEs[0]){
+                           busquedaEs = [...busquedaEs, state.especialistas[index]];
+                        }else{
+                            for (let index3 = 0; index3 < busuqedaEs.length; index3++) {
+                                if(busquedaEs[index3].id!==state.especialistas[index].id){
+                                    busquedaEs = [...busquedaEs, state.especialistas[index]];
+                                }
+                                
+                            }
+                        }
                     }
 
                 }
@@ -122,7 +131,12 @@ const Reducer = (state = initialState, action) => {
         
         case RESETEAR_ESPECIALISTAS:
             return { ...state, especialistas: action.payload }
-            
+
+        case MODIFICAR_PACIENTE:
+            return { ...state, modificado: action.payload}
+
+        case MODIFICAR_ESPECIALISTA:
+            return {...state, modificado: action.payload}
         default:
             return state;
     }
