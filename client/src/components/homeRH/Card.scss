@@ -9,6 +9,7 @@
     background-color: $color-detalle;
     font-family: $fuente_principal;
     margin: 20px;
+    border-radius: 10px;
 
     .datos-principales{
         display: flex;
@@ -22,11 +23,12 @@
             font-size: 2em;
             color : $color-principal;
             margin-bottom: 10px;
+            text-align: center;
         }
 
         .especialidad{
             font-size: 1.4em;
-            color: $color-terciario;
+            color: rgb(161, 13, 219);;
             margin-bottom: 10px;
             text-align: center;
         }
