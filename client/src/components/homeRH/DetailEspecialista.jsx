@@ -7,7 +7,7 @@ import './DetailEspecialista.scss'
 export default function DetailEspecialista() {
     const especialistaDetallado = useSelector((state) => state.especialistaDetallado);
     const {id,persona,specialty,enrollment, agendaTotalId, personaId } = especialistaDetallado[0];
-
+    console.log('PERSONA detail especialista', especialistaDetallado);
     return (
         <div className='detalle-especialista'>
             <Nav/>
