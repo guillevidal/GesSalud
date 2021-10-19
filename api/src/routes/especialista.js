@@ -22,6 +22,7 @@ router.get("/", async function (req, res, next) {
         "birth",
         "user",
         "password",
+        "rol"
       ]
     },
     // {
@@ -70,6 +71,7 @@ router.post("/", async function (req, res) {
         user: data.user,
         password: data.password,
         gender: data.gender,
+        rol: '1'
       },
       {
         fields: [
@@ -83,6 +85,7 @@ router.post("/", async function (req, res) {
           "user",
           "password",
           "gender",
+          "rol"
         ],
       }
     );
@@ -137,6 +140,7 @@ router.get("/:id", async (req, res) => {
             "birth",
             "user",
             "password",
+            "rol"
           ]
         },
         // {
