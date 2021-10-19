@@ -24,8 +24,8 @@ const PatientCard = (props) => {
                 <span>Dni: {persona.dni}</span>
             </div>
             <div className='opciones-paciente'>
-                <Link to="/patientDetails" className='opcion' onClick={() => { dispatch(pacienteDetallado(id)) }}>Ver Detalles</Link>
-                <Link to="/patientEdit" className='opcion' onClick={() => { dispatch(pacienteDetallado(id)) }} >Editar info</Link>
+                <Link to="/patientDetails" className='opcion' onClick={() => { dispatch(pacienteDetallado(id)) }}>Ver Mas</Link>
+                <Link to="/patientEdit" className='opcion' onClick={() => { dispatch(pacienteDetallado(id)) }} >Modificar</Link>
             </div>
         </div>
 

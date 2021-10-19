@@ -7,7 +7,8 @@ import {obtenerEspecialistas, paginado} from '../../actions/index';
 import './HomeRH.scss'
 import SearchEspecialist from './SearchEspecialist';
 import Paginado from './Paginado';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 const HomeRH = () => {
     const dispatch = useDispatch();
 
@@ -25,9 +26,13 @@ const HomeRH = () => {
             <Nav/>
             <SearchEspecialist/>
 
+            {busquedaEspecialista && busquedaEspecialista.length > 6 ? <Paginado/> :null}
+        {!busquedaEspecialista.length && especialistas && especialistas.length > 6 ? <Paginado/> :null}
+        
+
             <div className='tarjetas'>
            
-            {!busquedaEspecialista[0]?!especialistas[0]?<h1>No se econtro especialista registrado</h1>:especialistas.slice(valorPaginado, valorPaginado+6).map(e => {
+            {!busquedaEspecialista[0]?!especialistas[0]?<span className='empty'><FontAwesomeIcon icon={faTimesCircle} /> No se encontró especialista registrado</span>:especialistas.slice(valorPaginado, valorPaginado+6).map(e => {
                 return(
                     <Card e={e} key={e.id}/>)})
             :
@@ -38,8 +43,7 @@ const HomeRH = () => {
             })}
 
         </div>
-            <Paginado/>
-        </div>
+       </div>
     )
 }
 
