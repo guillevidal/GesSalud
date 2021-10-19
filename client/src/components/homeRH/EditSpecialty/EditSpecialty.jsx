@@ -3,7 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Person from '../../forms/Person/Person';
 import Nav from "../../Layout/Nav";
+
 import { obtenerEspecialidades, modificarEspecialistas} from "../../../actions/index.js";
+
 
 export default function EditSpecialty() {
     const capitalFirstLetter = (str) => {
@@ -27,22 +29,24 @@ export default function EditSpecialty() {
         }
         return errors;
     }
+    // console.log('ESPECIALDETAIL', specialtyDetail);
 
     const [input, setInput] = useState({
-        name: specialtyDetail[0].persona.name,
-        lastName: specialtyDetail[0].persona.lastName,
-        dni: specialtyDetail[0].persona.dni,
-        email: specialtyDetail[0].persona.email,
-        phone: specialtyDetail[0].persona.phone,
-        adress: specialtyDetail[0].persona.adress,
-        birth: specialtyDetail[0].persona.birth,
-        user: specialtyDetail[0].persona.user,
-        password: specialtyDetail[0].persona.password,
-        gender: "",
-        enrollment: specialtyDetail[0].enrollment,
-        specialty: specialtyDetail[0].specialty.split(', '),
+        id:specialtyDetail[0]?.personaId,
+        name: specialtyDetail[0]?.persona.name,
+        lastName: specialtyDetail[0]?.persona.lastName,
+        dni: specialtyDetail[0]?.persona.dni,
+        email: specialtyDetail[0]?.persona.email,
+        phone: specialtyDetail[0]?.persona.phone,
+        adress: specialtyDetail[0]?.persona.adress,
+        birth: specialtyDetail[0]?.persona.birth,
+        user: specialtyDetail[0]?.persona.user,
+        password: specialtyDetail[0]?.persona.password,
+        gender: specialtyDetail[0]?.persona.gender,
+        enrollment: specialtyDetail[0]?.enrollment,
+        specialty: specialtyDetail[0]?.specialty.split(', '),
     })
-
+    // console.log('INPUT',input);
     const handleChange = (event) => {
         setInput({
             ...input,
@@ -74,7 +78,8 @@ export default function EditSpecialty() {
         
 
         let newSpecialist = {
-            id: specialtyDetail[0].id,
+
+            id:specialtyDetail[0]?.id,
             name: input.name.toLowerCase(),
             lastName: input.lastName.toLowerCase(),
             dni: parseInt(input.dni),
@@ -89,23 +94,27 @@ export default function EditSpecialty() {
             specialty: input.specialty.join(', '),
 
         }
-        dispatch(modificarEspecialistas(newSpecialist));
 
-        // setInput({
-        //     name: "",
-        //     lastName: "",
-        //     dni: "",
-        //     email: "",
-        //     phone: "",
-        //     adress: "",
-        //     birth: "",
-        //     user: "",
-        //     password: "",
-        //     gender: "",
-        //     enrollment: "",
-        //     specialty: [],
-        // })
-        // alert(`El especialista médico ${capitalFirstLetter(input.name)} ${capitalFirstLetter(input.lastName)} se modificó correctamente `)
+        console.log('NEWSPECIALIST', newSpecialist);
+
+        dispatch(modificarEspecialistas(newSpecialist))
+        
+        setInput({
+            name: "",
+            lastName: "",
+            dni: "",
+            email: "",
+            phone: "",
+            adress: "",
+            birth: "",
+            user: "",
+            password: "",
+            gender: "",
+            enrollment: "",
+            specialty: [],
+        })
+        alert(`El especialista médico ${capitalFirstLetter(input.name)} ${capitalFirstLetter(input.lastName)} se modificó correctamente `)
+
     }
 
 
@@ -113,7 +122,7 @@ export default function EditSpecialty() {
         <div id="createSpecialist-container">
             <Nav />
             <div>
-                <form className='form-container'>
+                <form className='form-container' onSubmit={handleSubmit}>
                     <div className='form-infoPersonal'>
                         <Person
                             name={input.name} lastName={input.lastName} dni={input.dni}
