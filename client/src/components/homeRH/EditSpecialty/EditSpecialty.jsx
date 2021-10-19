@@ -3,7 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Person from '../../forms/Person/Person';
 import Nav from "../../Layout/Nav";
-import { obtenerEspecialidades, modificarEspecialistas } from '../../../actions/index'
+
+import { obtenerEspecialidades, modificarEspecialistas} from "../../../actions/index.js";
+
 
 export default function EditSpecialty() {
     const capitalFirstLetter = (str) => {
@@ -72,10 +74,11 @@ export default function EditSpecialty() {
 
     }
 
-    const handleSubmit = (event) => {
-        event.preventDefault()
+    const handleSubmit = () => {
+        
 
         let newSpecialist = {
+
             id:specialtyDetail[0]?.id,
             name: input.name.toLowerCase(),
             lastName: input.lastName.toLowerCase(),
@@ -91,6 +94,7 @@ export default function EditSpecialty() {
             specialty: input.specialty.join(', '),
 
         }
+
         console.log('NEWSPECIALIST', newSpecialist);
 
         dispatch(modificarEspecialistas(newSpecialist))
@@ -110,6 +114,7 @@ export default function EditSpecialty() {
             specialty: [],
         })
         alert(`El especialista médico ${capitalFirstLetter(input.name)} ${capitalFirstLetter(input.lastName)} se modificó correctamente `)
+
     }
 
 
@@ -184,7 +189,7 @@ export default function EditSpecialty() {
                         <Link to='/homeRRHH'>
                             <button className='boton-creacion' >CANCELAR</button>
                         </Link>
-                        <button type="submit" className='boton-creacion' >MODIFICAR</button>
+                        <Link to="/homeRRHH" onClick={()=>handleSubmit()}><button type="submit" className='boton-creacion' >MODIFICAR</button></Link>
                     </div>
                 </form>
             </div>

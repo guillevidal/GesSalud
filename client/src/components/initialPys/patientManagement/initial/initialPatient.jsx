@@ -8,6 +8,9 @@ import Nav from "../../../Layout/Nav.jsx";
 import "./initialPatient.scss";
 import { obtenerPacientes, paginado } from "../../../../actions/index.js";
 import Paginado from "./Paginado.jsx";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+
 
 const InitialPatient = () => {
     const pacientes = useSelector(state => state.pacientes)
@@ -26,12 +29,20 @@ const InitialPatient = () => {
             <Nav/>
             <div className='header-paciente'>
             <SearchPatient/>
+
+           
+
+
             <div className='boton-crear-paciente-div'>
             <Link to="/createPatient" className='boton-crear-paciente'>Crear Paciente</Link>
             </div>
             </div>
+
+            {busquedaPaciente && busquedaPaciente.length > 6 ? <Paginado/> :null}
+            {!busquedaPaciente.length && pacientes && pacientes.length > 6 ? <Paginado/> :null}
+        
             <div id="prueba">       
-            {!busquedaPaciente[0]?!pacientes[0]?<h1>No se encontraron pacientes registrados</h1>:pacientes.slice(valorPaginado, valorPaginado+6).map((pa) => {
+            {!busquedaPaciente[0]?!pacientes[0]?<span className='empty'><FontAwesomeIcon icon={faTimesCircle} /> No se encontraron pacientes registrados</span>:pacientes.slice(valorPaginado, valorPaginado+6).map((pa) => {
                 return (
                     <PatientCard pa={pa}/>
                 )
@@ -44,7 +55,6 @@ const InitialPatient = () => {
             }):<h1>{busquedaPaciente[0]}</h1>
             }
             </div>
-            <Paginado/>
         </div>
     )
 }

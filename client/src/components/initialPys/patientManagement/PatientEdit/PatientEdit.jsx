@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, { useState } from "react";
+
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Nav from '../../../Layout/Nav';
@@ -11,9 +12,8 @@ export default function PatientEdit() {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
     const patientDetail = useSelector(state => state.pacienteDetallado)
-    const dispatch = useDispatch();
 
-    console.log('patientedit', patientDetail);
+    const dispatch = useDispatch();  
 
     const [input, setInput] = useState({
         id:patientDetail[0]?.personaId,
@@ -28,8 +28,9 @@ export default function PatientEdit() {
         password: patientDetail[0]?.persona.password,
         gender: patientDetail[0]?.persona.gender,
         emergencyContact: patientDetail[0]?.emergencyContact
+
     })
-console.log('INPUT',input);
+
     const [error, setError] = useState({})
     const validationCreatePatient = (input) => {
         let errors = {};
@@ -50,10 +51,11 @@ console.log('INPUT',input);
         }))
     }
 
-    const handleSubmit = (event) => {
-        event.preventDefault()
+    const handleSubmit = () => {
+        
 
         let newPatient = {
+
             id: patientDetail[0]?.personaId,
             name: input.name.toLowerCase(),
             lastName: input.lastName.toLowerCase(),
@@ -65,11 +67,11 @@ console.log('INPUT',input);
             user: input.user,
             password: input.password,
             gender: input.gender,
-            emergencyContact: parseInt(input.emergencyContact),
+           
         }
-        console.log('NEWPATIENT', newPatient);
-        
-        dispatch(modificarPaciente(newPatient))
+
+        dispatch(modificarPaciente(newPatient));
+
         // setInput({
         //     name: "",
         //     lastName: "",
@@ -83,7 +85,9 @@ console.log('INPUT',input);
         //     gender: "",
         //     emergencyContact: "",
         // })
+
         alert(`El paciente ${capitalFirstLetter(input.name)} ${capitalFirstLetter(input.lastName)} se modificó correctamente `)
+
     }
 
     return (
@@ -119,7 +123,7 @@ console.log('INPUT',input);
                     <Link to="/patientPys">
                         <button className='boton-crear'>CANCELAR</button>
                     </Link>
-                    <button type="submit" className='boton-crear'>MODIFICAR</button>
+                    <Link to="/patientPys" onClick={()=>handleSubmit()}><button type="submit" className='boton-crear'>MODIFICAR</button></Link>
                 </div>
             </form>
 
