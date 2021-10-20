@@ -417,7 +417,7 @@ export default function CreateSpecialist() {
                                 id="enrollment" type="text" name="enrollment"
                                 value={input.enrollment.value} onChange={(e) => handleEnrollment(e)}
                             />
-                            {input.enrollment.error && <p>{input.enrollment.error}</p>}
+                            {input.enrollment.error && <span className='error-label'>{input.enrollment.error}</span>}
                         </div>
 
                     </div>
@@ -425,13 +425,13 @@ export default function CreateSpecialist() {
                     <div id='specialist-container'>
 
                         <div className='label-tipo-title'>
-                            <label className='label-tipo-title-text'>TIPO DE ESPECIALDAD</label>
+                            <label className='label-tipo-title-text'>TIPO DE ESPECIALIDADES</label>
                         </div>
-                        {input.specialty.error && <p>{input.specialty.error}</p>}
+                        {input.specialty.error && <span className='error-label'>{input.specialty.error}</span>}
 
                         <div className='lista-especialidades'>
                             <select>
-                                <option>Tipos de esp...</option>
+                                <option>Tipos de especialidades</option>
                                 {typeSpecialties && typeSpecialties.map((type, index) => {
                                     return (
                                         <option onClick={(e) => { handleChangeTypeSpecialities(e) }} value={type.name} key={index} id={type.name} name={type.name}>{type.name}</option>
@@ -443,13 +443,13 @@ export default function CreateSpecialist() {
                                 return (
                                     <button onClick={(e) => handleDeleteTypeSpecialities(e)} value={type}>{type}</button>
                                 )
-                            }) : <p>Seleccione un tipo de especialista</p>}
+                            }) : <span className='error-label'>Seleccione un tipo de especialista</span>}
 
                         </div>
 
                     </div>
                     <div className='boton-crear-especialista'>
-                        {!validation && <p>Diligencie correctamente el formulario</p>}
+                        {!validation && <span className='error-label'>Completa correctamente el formulario</span>}
                         <button onClick={(event) => handleSubmit(event)} className='boton-creacion' >CREAR</button>
                     </div>
                 </form>
