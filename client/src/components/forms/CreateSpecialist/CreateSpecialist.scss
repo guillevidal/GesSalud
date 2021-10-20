@@ -56,29 +56,53 @@
         .lista-especialidades{
             display: flex;
             width: 100%;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
 
-            .typeSpeciality{
+            .select{
                 display: flex;
                 width: 100%;
-                max-width: 140px;
-                margin: 10px;
-                align-items: center;
+                max-width: 300px;
+                justify-content: center;
+            }
 
-                .input-tipo{
-                    margin-right: 8px;
-                    padding: 10px;
-                    cursor: pointer;
-                    transform: scale(1.5);
-                    -ms-transform: scale(1.5);
-                    -webkit-transform: scale(1.5);
-                    padding: 10px;
+            .error-label-especialidad{
+                color: rgb(255, 86, 86);
+                text-align: center;
+                font-size:12px;
+                margin-top: 5px;
+            }
+
+            .preview{
+                display: flex;
+                background-color: $color-detalle;
+                margin-top: 20px;
+                align-items: center;
+                border-radius: 5px;
+
+                .text{
+                    padding: 3px;
+                    color: $color-secundario;
+                    font-size: 1.5em;
+                    margin-right: 10px;
                 }
-                .label-tipo{
-                    font-family: $fuente_principal;
-                    color: $color-terciario;
-                    font-weight: $regularPlus;
+                .eliminar-esp{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 20px;
+                    height: 20px;
+                    cursor: pointer;
+                    border: none;
+                    color: white;
+                    font-size: 13px;
+                    background-color: rgb(255, 86, 86);
+                    
+                    &:hover{
+                        background-color: red;
+                    }
+                
                 }
             }
 
