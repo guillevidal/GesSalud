@@ -27,9 +27,10 @@ import {
 
 //CREAR ESPECIALISTA
 export const crearEspecialista = (especialista) => {
+  
   return async (dispatch) => {
     {
-      const result = await fetch("http://localhost:3001/especialista", {
+      const result = await fetch(`http://localhost:3001/especialista`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -44,9 +45,10 @@ export const crearEspecialista = (especialista) => {
 };
 //CREAR PACIENTE
 export const crearPaciente = (paciente) => {
+  const token = localStorage['access-token'];
   return async (dispatch) => {
     {
-      const result = await fetch("http://localhost:3001/paciente", {
+      const result = await fetch(`http://localhost:3001/paciente?token=${token}`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -79,8 +81,9 @@ export const obtenerEspecialistas = () => {
 
 //OBTENER PACIENTE
 export const obtenerPacientes = () => {
+  const token = localStorage['access-token'];
   return async (dispatch) => {
-    const result = await fetch("http://localhost:3001/paciente");
+    const result = await fetch(`http://localhost:3001/paciente?token=${token}`);
     const data = await result.json();
     return dispatch({ type: OBTENER_PACIENTES, payload: data });
   };
