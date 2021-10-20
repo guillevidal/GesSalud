@@ -427,23 +427,25 @@ export default function CreateSpecialist() {
                         <div className='label-tipo-title'>
                             <label className='label-tipo-title-text'>TIPO DE ESPECIALIDADES</label>
                         </div>
-                        {input.specialty.error && <span className='error-label'>{input.specialty.error}</span>}
-
+     
                         <div className='lista-especialidades'>
-                            <select>
-                                <option>Tipos de especialidades</option>
+                            <div className='select'>
+                            <select onChange={(e) => { handleChangeTypeSpecialities(e) }} >
+                                <option >Tipos de especialidades</option>
                                 {typeSpecialties && typeSpecialties.map((type, index) => {
                                     return (
-                                        <option onClick={(e) => { handleChangeTypeSpecialities(e) }} value={type.name} key={index} id={type.name} name={type.name}>{type.name}</option>
+                                        <option  value={type.name} key={index} id={type.name} name={type.name}>{type.name}</option>
                                     )
                                 })}
                             </select>
+            
+                            </div>
 
                             {input.specialty.value[0] ? input.specialty.value.map((type, index) => {
                                 return (
-                                    <button onClick={(e) => handleDeleteTypeSpecialities(e)} value={type}>{type}</button>
+                                    <div className='preview'><span className='text'>{type}</span><button onClick={(e) => handleDeleteTypeSpecialities(e)} value={type} className='eliminar-esp'>X</button></div>
                                 )
-                            }) : <span className='error-label'>Seleccione un tipo de especialista</span>}
+                            }) : <span className='error-label-especialidad'>Seleccione un tipo de especialidad</span>}
 
                         </div>
 
