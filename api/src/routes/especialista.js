@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const db = require("../db");
+const { transporter } = require("../config/nodemailer");
 const {
   Persona,
   Especialista_medico,
@@ -10,24 +11,25 @@ const router = Router();
 
 router.get("/", async function (req, res, next) {
   let especialistas = await Especialista_medico.findAll({
-    include: [{
-      model: Persona,
-      attributes: [
-        "name",
-        "lastName",
-        "dni",
-        "email",
-        "phone",
-        "adress",
-        "birth",
-        "user",
-        "password",
-      ]
-    },
-    // {
-    //   model: Tipo_especialidad,
-    //   }
-    ]
+    include: [
+      {
+        model: Persona,
+        attributes: [
+          "name",
+          "lastName",
+          "dni",
+          "email",
+          "phone",
+          "adress",
+          "birth",
+          "user",
+          "password",
+        ],
+      },
+      // {
+      //   model: Tipo_especialidad,
+      //   }
+    ],
   });
 
   // let queryEspecialista = especialistas.map((el) => {
@@ -46,14 +48,11 @@ router.get("/", async function (req, res, next) {
   //     //specialty: el.tipo_especialidads.map(ele => ele.name)
   //     specialty: el.specialty,
   //   };
-    
-  // });
 
+  // });
 
   res.send(especialistas);
 });
-
-module.exports = router;
 
 router.post("/", async function (req, res) {
   const data = req.body;
@@ -89,23 +88,21 @@ router.post("/", async function (req, res) {
     const creandoMatriculaEspecialista = await Especialista_medico.create(
       {
         enrollment: data.enrollment,
-        specialty: data.specialty
+        specialty: data.specialty,
       },
       {
         fields: ["enrollment", "specialty"],
       }
     );
-      
 
     // let especialidadesPromise = await Promise.all(
     //   data.specialty.map((el) =>
     //   Tipo_especialidad.findOne({ where: { name: el } })
     //   )
     // );
-    
+
     // await creandoMatriculaEspecialista.setTipo_especialidads(
     //   especialidadesPromise);
-
 
     await creandoEspecialista.setEspecialista_medico(
       creandoMatriculaEspecialista
@@ -114,6 +111,15 @@ router.post("/", async function (req, res) {
       ...creandoEspecialista.dataValues,
       ...creandoMatriculaEspecialista.dataValues,
     };
+    if (obj.email && obj.name && obj.lastName && obj.user && obj.password) {
+      await transporter.sendMail({
+        from: '"GesSalud💉" <ges.salud.04@gmail.com>',
+        to: obj.email,
+        subject: "Creacion de cuenta exitosa ✔",
+        html: `<b> Hola ${obj.name} ${obj.lastName}🩺 , tu usuario es: ${obj.user} y tu contraseña: ${obj.password} </b>`,
+      });
+    }
+
     res.send(obj);
   } catch (e) {
     res.status(400).send("no se puedo crear al especialista");
@@ -125,27 +131,27 @@ router.get("/:id", async (req, res) => {
   try {
     if (id) {
       let query = await Especialista_medico.findByPk(id, {
-        include: [{
-          model: Persona,
-          attributes: [
-            "name",
-            "lastName",
-            "dni",
-            "email",
-            "phone",
-            "adress",
-            "birth",
-            "user",
-            "password",
-          ]
-        },
-        // {
-        //   model: Tipo_especialidad,
-        // }
-        ]
-          
+        include: [
+          {
+            model: Persona,
+            attributes: [
+              "name",
+              "lastName",
+              "dni",
+              "email",
+              "phone",
+              "adress",
+              "birth",
+              "user",
+              "password",
+            ],
+          },
+          // {
+          //   model: Tipo_especialidad,
+          // }
+        ],
       });
-    
+
       // let queryEspecialista =
       //   {
       // id: query.id,
@@ -162,7 +168,7 @@ router.get("/:id", async (req, res) => {
       // //specialty: query.tipo_especialidads.map(el => el.name)
       // specialty: query.persona.specialty,
       //   };
-     
+
       res.send(query);
     }
   } catch (error) {
@@ -170,25 +176,50 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  try {
+    let id = req.params.id;
+    let query = await Especialista_medico.findByPk(id);
+    let { personaId } = query;
+    let {
+      name,
+      lastName,
+      dni,
+      email,
+      phone,
+      adress,
+      birth,
+      user,
+      password,
+      specialty,
+      gender,
+      enrollment,
+    } = req.body;
 
-router.put ("/:id", async (req, res) => {
-try{
-let id= req.params.id;
-let query = await Especialista_medico.findByPk(id);
-let { personaId } = query
-let {name, lastName, dni, email, phone, adress, birth, user, password, specialty, gender, enrollment}  = req.body;
+    await Especialista_medico.update(
+      { enrollment, specialty },
+      { where: { id } }
+    );
+    await Persona.update(
+      {
+        name,
+        lastName,
+        dni,
+        email,
+        phone,
+        adress,
+        birth,
+        user,
+        password,
+        gender,
+      },
+      { where: { id: personaId } }
+    );
 
-await Especialista_medico.update({ enrollment, specialty },{where: {id}})
-await Persona.update({ name, lastName, dni, email, phone, adress, birth, user, password, gender },{where: {id : personaId}})
-
-
-res.status(200).send("Se actualizaron los datos correctamente");
-
-}catch(e){
-
-  res.status(400).send("No se pudieron actualizar los datos.");
-}
-
-} )
+    res.status(200).send("Se actualizaron los datos correctamente");
+  } catch (e) {
+    res.status(400).send("No se pudieron actualizar los datos.");
+  }
+});
 
 module.exports = router;
