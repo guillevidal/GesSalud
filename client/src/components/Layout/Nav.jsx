@@ -81,6 +81,12 @@ export default function Nav(){
                     <Link to='/createSpecialist' className='nav-link-ok' >Crear Especialista</Link>
                 </div>
             }
+            {status === '3' &&
+                <div className='nav-link'>
+                    <Link onClick={handleResetActionsRol1}to='/patientPys' className='nav-link-ok' >Pacientes</Link>
+                    <Link to='/perfilEspecialista' className='nav-link-ok' >Perfil</Link>
+               </div>
+            }
                 <div  className='nav-logo'>
                     <FontAwesomeIcon icon={faClinicMedical} className='nav-logo-icon'/>
                     <span className='nav-logo-text'>GesSalud</span>
