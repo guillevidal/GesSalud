@@ -22,7 +22,7 @@ handleUser, handlePassword}) {
                         value={name.value} onChange={(e)=>handleName(e)}
                         className='input-person'
                     />
-                {name.error&&<p>{name.error}</p>}
+                {name.error&&<span className='error-label'>{name.error}</span>}
                 </div>
                 <div className='label-input-person'>
                     <label htmlFor="lastName" className='label-person'>Apellido</label>
@@ -32,7 +32,7 @@ handleUser, handlePassword}) {
                         value={lastName.value} onChange={(e)=>handleLastName(e)}
                         className='input-person'
                     />
-                    {lastName.error&&<p>{lastName.error}</p>}
+                    {lastName.error&&<span className='error-label'>{lastName.error}</span>}
                 </div>
 
                 <div className='label-input-person'>
@@ -43,18 +43,19 @@ handleUser, handlePassword}) {
                         value={dni.value} onChange={(e)=>{handleDni(e)}}
                         className='input-person'
                     />
-                    {dni.error&&<p>{dni.error}</p>}
+                    {dni.error&&<span className='error-label'>{dni.error}</span>}
                 </div>
 
                 <div className='label-input-person'>
                     <label htmlFor="birth" className='label-person'>Fecha de nacimiento</label >
-                    {birth.error&&<p>{birth.error}</p>}
-
+      
                     <input
                         id="birth" type="date" name="birth" 
                         value={birth.value} onChange={(e)=>handleBrith(e)}
                         className='input-person'
                     />
+                                  {birth.error&&<span className='error-label'>{birth.error}</span>}
+
                 </div>
 
                 <div className='label-input-person'>
@@ -65,7 +66,7 @@ handleUser, handlePassword}) {
                         value={phone.value} onChange={(e)=>{handlePhone(e)}}
                         className='input-person'
                     />
-                    {phone.error&&<p>{phone.error}</p>}
+                    {phone.error&&<span className='error-label'>{phone.error}</span>}
                 </div>
 
 
@@ -85,9 +86,10 @@ handleUser, handlePassword}) {
                             id="masculino" type="radio" name="gender" value="masculino"
                             className='input-person-sexo'  onChange={(e)=>{handleGender(e)}}
                         />
-                        {gender.error&&<p>{gender.error}</p>}
-                        {gender.ad&&<p>{gender.ad}</p>}
                     </div>
+                    {gender.error&&<span className='error-label'>{gender.error}</span>}
+                        {gender.ad&&<span className='error-label'>{gender.ad}</span>}
+                   
 
                 </div>
 
@@ -100,7 +102,7 @@ handleUser, handlePassword}) {
                         value={adress.value} onChange={(e)=>{handleAdress(e)}}
                         className='input-person'
                     />
-                    {adress.error&&<p>{adress.error}</p>}
+                    {adress.error&&<span className='error-label'>{adress.error}</span>}
                 </div>
 
                 <div className='label-input-person'>
@@ -111,7 +113,7 @@ handleUser, handlePassword}) {
                         size="30" value={email.value} onChange={(e)=>{handleEmail(e)}}
                         className='input-person'
                     />
-                    {email.error&&<p>{email.error}</p>}
+                    {email.error&&<span className='error-label'>{email.error}</span>}
                 </div>
 
                 <div className='label-input-person'>
@@ -122,7 +124,7 @@ handleUser, handlePassword}) {
                         value={user.value} onChange={(e)=>handleUser(e)} 
                         className='input-person'
                     />
-                    {user.error&&<p>{user.error}</p>}
+                    {user.error&&<span className='error-label'>{user.error}</span>}
                 </div>
 
                 <div className='label-input-person'>
@@ -133,7 +135,7 @@ handleUser, handlePassword}) {
                         value={password.value} onChange={(e)=>{handlePassword(e)}} 
                         className='input-person'
                     />
-                    {password.error&&<p>{password.error}</p>}
+                    {password.error&&<span className='error-label'>{password.error}</span>}
                 </div>
             </div>
 
