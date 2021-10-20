@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { transporter } = require("../configs/nodemailer");
 const db = require("../db");
 const {
   Persona,
@@ -10,26 +11,27 @@ const router = Router();
 
 router.get("/", async function (req, res, next) {
   let especialistas = await Especialista_medico.findAll({
-    include: [{
-      model: Persona,
-      attributes: [
-        "name",
-        "lastName",
-        "dni",
-        "email",
-        "phone",
-        "adress",
-        "birth",
-        "user",
-        "password",
-        "gender",
-        "rol"
-      ]
-    },
-    // {
-    //   model: Tipo_especialidad,
-    //   }
-    ]
+    include: [
+      {
+        model: Persona,
+        attributes: [
+          "name",
+          "lastName",
+          "dni",
+          "email",
+          "phone",
+          "adress",
+          "birth",
+          "user",
+          "password",
+          "gender",
+          "rol",
+        ],
+      },
+      // {
+      //   model: Tipo_especialidad,
+      //   }
+    ],
   });
 
   // let queryEspecialista = especialistas.map((el) => {
@@ -71,7 +73,7 @@ router.post("/", async function (req, res) {
         user: data.user,
         password: data.password,
         gender: data.gender,
-        rol: '1'
+        rol: "1",
       },
       {
         fields: [
@@ -85,7 +87,7 @@ router.post("/", async function (req, res) {
           "user",
           "password",
           "gender",
-          "rol"
+          "rol",
         ],
       }
     );
@@ -115,6 +117,14 @@ router.post("/", async function (req, res) {
       ...creandoEspecialista.dataValues,
       ...creandoMatriculaEspecialista.dataValues,
     };
+    if (obj.email && obj.name && obj.lastName && obj.user && obj.password) {
+      await transporter.sendMail({
+        from: '"GesSalud💉" <ges.salud.04@gmail.com>',
+        to: obj.email,
+        subject: "Creacion de cuenta exitosa ✔",
+        html: `<b> Hola ${obj.name} ${obj.lastName}🩺 , tu usuario es: ${obj.user} y tu contraseña: ${obj.password} </b>`,
+      });
+    }
     res.send(obj);
   } catch (e) {
     res.status(400).send("no se puedo crear al especialista");
@@ -126,25 +136,26 @@ router.get("/:id", async (req, res) => {
   try {
     if (id) {
       let query = await Especialista_medico.findByPk(id, {
-        include: [{
-          model: Persona,
-          attributes: [
-            "name",
-            "lastName",
-            "dni",
-            "email",
-            "phone",
-            "adress",
-            "birth",
-            "user",
-            "password",
-            "rol"
-          ]
-        },
-        // {
-        //   model: Tipo_especialidad,
-        // }
-        ]
+        include: [
+          {
+            model: Persona,
+            attributes: [
+              "name",
+              "lastName",
+              "dni",
+              "email",
+              "phone",
+              "adress",
+              "birth",
+              "user",
+              "password",
+              "rol",
+            ],
+          },
+          // {
+          //   model: Tipo_especialidad,
+          // }
+        ],
       });
 
       // let queryEspecialista =
