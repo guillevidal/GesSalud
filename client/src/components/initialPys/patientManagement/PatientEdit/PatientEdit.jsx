@@ -1,25 +1,34 @@
 /* eslint-disable */
 import React, { useState } from "react";
-import { useSelector, useDispatch} from "react-redux";
+
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Nav from '../../../Layout/Nav';
 import Person from '../../../forms/Person/Person.jsx';
-import {modificarPaciente} from "../../../../actions/index.js"
+import { modificarPaciente } from "../../../../actions/index.js";
+
 export default function PatientEdit() {
+    const capitalFirstLetter = (str) => { // agregado marce
+        return str.charAt(0).toUpperCase() + str.slice(1)
+    }
     const patientDetail = useSelector(state => state.pacienteDetallado)
-    const dispatch = useDispatch()
+
+    const dispatch = useDispatch();  
+
     const [input, setInput] = useState({
-        name: patientDetail[0].persona.name,
-        lastName: patientDetail[0].persona.lastName,
-        dni: patientDetail[0].persona.dni,
-        email: patientDetail[0].persona.email,
-        phone: patientDetail[0].persona.phone,
-        adress: patientDetail[0].persona.adress,
-        birth: patientDetail[0].persona.birth,
-        user: patientDetail[0].persona.user,
-        password: patientDetail[0].persona.password,
-        gender: "",
-        
+        id:patientDetail[0]?.personaId,
+        name: patientDetail[0]?.persona.name,
+        lastName: patientDetail[0]?.persona.lastName,
+        dni: patientDetail[0]?.persona.dni,
+        email: patientDetail[0]?.persona.email,
+        phone: patientDetail[0]?.persona.phone,
+        adress: patientDetail[0]?.persona.adress,
+        birth: patientDetail[0]?.persona.birth,
+        user: patientDetail[0]?.persona.user,
+        password: patientDetail[0]?.persona.password,
+        gender: patientDetail[0]?.persona.gender,
+        emergencyContact: patientDetail[0]?.emergencyContact
+
     })
 
     const [error, setError] = useState({})
@@ -46,7 +55,8 @@ export default function PatientEdit() {
         
 
         let newPatient = {
-            id: patientDetail[0].id,
+
+            id: patientDetail[0]?.personaId,
             name: input.name.toLowerCase(),
             lastName: input.lastName.toLowerCase(),
             dni: parseInt(input.dni),
@@ -59,7 +69,9 @@ export default function PatientEdit() {
             gender: input.gender,
            
         }
+
         dispatch(modificarPaciente(newPatient));
+
         // setInput({
         //     name: "",
         //     lastName: "",
@@ -73,14 +85,16 @@ export default function PatientEdit() {
         //     gender: "",
         //     emergencyContact: "",
         // })
-        // alert(`El paciente ${capitalFirstLetter(input.name)} ${capitalFirstLetter(input.lastName)} se modificó correctamente `)
+
+        alert(`El paciente ${capitalFirstLetter(input.name)} ${capitalFirstLetter(input.lastName)} se modificó correctamente `)
+
     }
 
     return (
         <div id="createPatient-container">
             <Nav />
 
-            <form className='createPatient-form' >
+            <form className='createPatient-form' onSubmit={handleSubmit}>
                 <div className='information-person'>
 
                     <Person

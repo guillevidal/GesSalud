@@ -87,6 +87,7 @@ module.exports = router;
 
 router.post("/", rutasProtegidas, async function (req, res) {
   const data = req.body;
+  console.log("crear persona ruta back", data);
   try {
     const creandoPersona = await Persona.create(
       {
@@ -173,17 +174,17 @@ router.get("/consulta/:dni", async (req, res) => {
   try {
     if (dni) {
       let query = await Persona.findOne({
-        where : { dni : dni},
+        where: { dni: dni },
         include: {
           model: Paciente,
-          include:
-          [{
-            model: HistoriaClinica,
-          },
-          {
-            model: Diagnostico,
-          }
-          ]
+          include: [
+            {
+              model: HistoriaClinica,
+            },
+            {
+              model: Diagnostico,
+            },
+          ],
         },
       });
 
@@ -195,22 +196,44 @@ router.get("/consulta/:dni", async (req, res) => {
 });
 
 //ACTUALIZACIÓN DE DATOS PERSONALES DE PACIENTE
-router.put ("/:id", async (req, res) => {
-  try{
-  let id= req.params.id;
-  let query = await Paciente.findByPk(id);
-  let { personaId } = query
-  let {name, lastName, dni, email, phone, adress, birth, user, password, gender } = req.body;
+router.put("/:id", async (req, res) => {
+  console.log("ruta actualizacion paciente", req.params, "REQ.BODY", req.body);
+  try {
+    let id = req.params.id;
+    let query = await Paciente.findByPk(id);
+    let { personaId } = query;
+    let {
+      name,
+      lastName,
+      dni,
+      email,
+      phone,
+      adress,
+      birth,
+      user,
+      password,
+      gender,
+    } = req.body;
 
-   
-      await Persona.update({name, lastName, dni, email, phone, adress, birth, user, password, gender},{where: {id : personaId}})
-      res.status(200).send("Se actualizaron los datos correctamente");
-    
-  }catch(e){
+    await Persona.update(
+      {
+        name,
+        lastName,
+        dni,
+        email,
+        phone,
+        adress,
+        birth,
+        user,
+        password,
+        gender,
+      },
+      { where: { id: personaId } }
+    );
+    res.status(200).send("Se actualizaron los datos correctamente");
+  } catch (e) {
     res.status(400).send("No se pudieron actualizar los datos.");
   }
-  
 });
-
 
 module.exports = router;
