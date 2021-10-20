@@ -46,6 +46,9 @@ module.exports = (sequelize) => {
       gender: {
         type: DataTypes.STRING,
       },
+      rol: {
+        type: DataTypes.STRING,
+      }
     },
     { timestamps: false }
   );

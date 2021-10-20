@@ -3,7 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Person from '../../forms/Person/Person';
 import Nav from "../../Layout/Nav";
+
 import { obtenerEspecialidades, modificarEspecialistas, obtenerEspecialistas } from "../../../actions/index.js";
+
+
 
 export default function EditSpecialty() {
     
@@ -67,6 +70,8 @@ export default function EditSpecialty() {
             }
         }
     }
+   
+
 
     const handleLastName = (event) => {
         const { value } = event.target
@@ -87,6 +92,7 @@ export default function EditSpecialty() {
                 setInput({ ...input, lastName: { value, error: null } })
             }
         }
+
     }
 
     const handleDni = (event) => {
@@ -349,6 +355,7 @@ export default function EditSpecialty() {
         dispatch(modificarEspecialistas(newSpecialist));
         dispatch(obtenerEspecialistas())
         return
+
     }
 
 
@@ -356,7 +363,7 @@ export default function EditSpecialty() {
         <div id="createSpecialist-container">
             <Nav />
             <div>
-                <form className='form-container'>
+                <form className='form-container' onSubmit={handleSubmit}>
                     <div className='form-infoPersonal'>
                         <Person name={input.name} lastName={input.lastName} dni={input.dni}
                             email={input.email} phone={input.phone} adress={input.adress}

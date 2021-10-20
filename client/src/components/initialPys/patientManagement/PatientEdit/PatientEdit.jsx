@@ -1,4 +1,5 @@
 /* eslint-disable */
+
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch} from "react-redux";
 import { Link } from "react-router-dom";
@@ -24,6 +25,7 @@ export default function PatientEdit() {
         password: {value: patientDetail[0]?.persona.password, error: null},
         gender: {value: patientDetail[0]?.persona.gender , error: null , ad: "el genero seleccionado es: "+ patientDetail[0]?.persona.gender},
         emergencyContact: {value: patientDetail[0]?.emergencyContact, error: null}
+
     })
     const [validation, setValidation]= useState(true)
     useEffect(() => {
@@ -265,6 +267,7 @@ export default function PatientEdit() {
 
 
         let newPatient = {
+
             id: patientDetail[0]?.id,
             name: input.name.value.toLowerCase(),
             lastName: input.lastName.value.toLowerCase(),
@@ -283,13 +286,14 @@ export default function PatientEdit() {
         dispatch(modificarPaciente(newPatient));
         dispatch(obtenerPacientes())
         return
+
     }
 
     return (
         <div id="createPatient-container">
             <Nav />
 
-            <form className='createPatient-form' >
+            <form className='createPatient-form' onSubmit={handleSubmit}>
                 <div className='information-person'>
 
                 <Person name={input.name} lastName={input.lastName} dni={input.dni}

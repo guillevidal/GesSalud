@@ -18,6 +18,7 @@ export default function Landing(){
         pass : ''
     })
 
+
     const handleChange = (e) => {
         e.preventDefault()
 
@@ -32,9 +33,20 @@ export default function Landing(){
 
         e.preventDefault()
 
-       await dispatch(rol(input.user))
+        
+    axios.post('http://localhost:3001/paciente/autenticar', { 
+        usuario: input.user,
+        password: input.pass
+    })
+    .then( data => {
+    if(data.data.token) {
+        localStorage.setItem('access-token', data.data.token)
+        dispatch(rol(data.data.rol));
 
     }
+    })
+
+}
 
     return(
         <div id='landing-container'>
