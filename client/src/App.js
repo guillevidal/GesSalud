@@ -6,9 +6,12 @@ import CreatePatient from "./components/forms/CreatePatient/CreatePatient";
 import InitialPatient from "./components/initialPys/patientManagement/initial/initialPatient.jsx";
 import PatientDetails from "./components/initialPys/patientManagement/initial/patietCardDetails.jsx";
 import HomeRRHH from "./components/homeRH/HomeRH.jsx";
-import DetailEspecialista from "./components/homeRH/DetailEspecialista.jsx";
+import DetailEspecialista from "./components/homeRH/DetailEspecialista";
 import PatientEdit from "./components/initialPys/patientManagement/PatientEdit/PatientEdit.jsx";
-import SpecialtyEdit from './components/homeRH/EditSpecialty/EditSpecialty.jsx';
+import SpecialtyEdit from "./components/homeRH/EditSpecialty/EditSpecialty.jsx"
+import HomeSpecialist from "./components/specialist/HomeSpecialist";
+import ProfileSpecialist from "./components/specialist/ProfileSpecialist"
+
 
 function App() {
   return (
@@ -37,9 +40,14 @@ function App() {
       <Route exact path="/specialtyEdit">
         <SpecialtyEdit />
       </Route>
-      <Route exact path="/detailEspecialista" >
+      <Route exact path="/detailEspecialista" >     
         <DetailEspecialista />
-
+      </Route>
+      <Route exact path="/homeEspecialista">
+        <HomeSpecialist /> 
+      </Route>
+      <Route exact path="/perfilEspecialista">
+        <ProfileSpecialist /> 
       </Route>
     </div>
   );

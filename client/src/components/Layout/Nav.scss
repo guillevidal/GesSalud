@@ -113,6 +113,8 @@
 
             .nav-exit-conjunto{
                 display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
                 align-items: center;
                 margin-right: 10px;
                 padding: 5px;
@@ -129,6 +131,7 @@
                     margin-right: 5px;
                 }
                 .nav-exit-link{
+                    display: flex;
                     text-decoration: none;
                     background: none;
                     border: none;

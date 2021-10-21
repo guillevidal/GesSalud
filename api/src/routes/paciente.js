@@ -100,7 +100,7 @@ router.post("/", rutasProtegidas, async function (req, res) {
         user: data.user,
         password: data.password,
         gender: data.gender,
-        rol: "2",
+        rol: '1'
       },
       {
         fields: [
@@ -189,6 +189,7 @@ router.get("/consulta/:dni", async (req, res) => {
       res.send(query);
     }
   } catch (error) {
+    
     res.status(400).json(error);
   }
 });
