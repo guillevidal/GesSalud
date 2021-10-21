@@ -271,7 +271,7 @@ export default function PatientEdit() {
 
 
         let newPatient = {
-
+            personaId: patientDetail[0]?.paciente.personaId,
             id: patientDetail[0]?.paciente.id,
             name: input.name.value.toLowerCase(),
             lastName: input.lastName.value.toLowerCase(),
