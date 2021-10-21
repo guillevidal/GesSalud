@@ -73,7 +73,7 @@ router.post("/", async function (req, res) {
         user: data.user,
         password: data.password,
         gender: data.gender,
-        rol: "1",
+        rol: "2",
       },
       {
         fields: [
@@ -150,6 +150,7 @@ router.get("/:id", async (req, res) => {
               "user",
               "password",
               "rol",
+              "gender"
             ],
           },
           // {
