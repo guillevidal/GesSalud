@@ -55,6 +55,7 @@ export default function Landing(){
         <div id='landing-container'>
             { status === '1' && <Redirect to ='/patientPys' />}
             { status === '2' && <Redirect to ='/homeRRHH' />}
+            { status === '3' && <Redirect to ='/homeEspecialista' />}
             
             <div id='landing-header'>
                 <div id='landing-title'>

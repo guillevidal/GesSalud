@@ -296,6 +296,7 @@ export default function CreateSpecialist() {
                         setValidation(false)
                         return
                     } else {
+
                          dispatch(crearEspecialista(newSpecialist))
                         
                         swal({
@@ -354,6 +355,7 @@ export default function CreateSpecialist() {
 
                         dispatch(crearEspecialista(newSpecialist))
                         swal({
+
                             title: "Especialista médico creado",
                             text: `El especialista ${capitalFirstLetter(input.name.value) + ' '}  ${capitalFirstLetter(input.lastName.value)} se creó correctamente `,
                             icon: "success",
@@ -443,6 +445,7 @@ export default function CreateSpecialist() {
                                     <div className='preview'><span className='text'>{type}</span><button onClick={(e) => handleDeleteTypeSpecialities(e)} value={type} className='eliminar-esp'>X</button></div>
                                 )
                             }) : <span className='error-label-especialidad'>Seleccione un tipo de especialidad</span>}
+                           
                             {input.specialty.error && <span className='error-label-especialidad'>{input.specialty.error}</span>}
 
                         </div>

@@ -59,11 +59,20 @@ const {
 Persona.hasOne(Especialista_medico);
 Especialista_medico.belongsTo(Persona);
 
-Especialista_medico.belongsToMany(Tipo_especialidad, {through: "especialistaEspecialidad"});
-Tipo_especialidad.belongsToMany(Especialista_medico, {through: "especialistaEspecialidad"});
+Especialista_medico.belongsToMany(Tipo_especialidad, {
+  through: "especialistaEspecialidad",
+});
+Tipo_especialidad.belongsToMany(Especialista_medico, {
+  through: "especialistaEspecialidad",
+});
 
-AgendaTotal.hasOne(Especialista_medico);
-Especialista_medico.belongsTo(AgendaTotal);
+Especialista_medico.hasOne(Agenda);
+Agenda.belongsTo(Especialista_medico);
+
+
+Agenda.belongsTo(Tipo_especialidad);
+Tipo_especialidad.hasOne(Agenda);
+
 
 Persona.hasOne(Paciente);
 Paciente.belongsTo(Persona);
@@ -73,6 +82,13 @@ HistoriaClinica.belongsTo(Paciente);
 
 Paciente.hasMany(Diagnostico);
 Diagnostico.belongsTo(Paciente);
+
+Persona.hasOne(Personal_administrativo);
+Personal_administrativo.belongsTo(Persona);
+
+
+
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
