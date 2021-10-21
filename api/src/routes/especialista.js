@@ -22,6 +22,7 @@ router.get("/", async function (req, res, next) {
         "birth",
         "user",
         "password",
+        "gender"
       ]
     },
     // {
@@ -137,6 +138,7 @@ router.get("/:id", async (req, res) => {
             "birth",
             "user",
             "password",
+            "gender"
           ]
         },
         // {
