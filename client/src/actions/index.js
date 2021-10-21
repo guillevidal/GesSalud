@@ -27,7 +27,7 @@ import {
 
 //CREAR ESPECIALISTA
 export const crearEspecialista = (especialista) => {
-  
+
   return async (dispatch) => {
     {
       const result = await fetch(`http://localhost:3001/especialista`, {
@@ -101,8 +101,15 @@ export const obtenerEspecialistaPorEspecialidad = (especialidad) => {
 
 //OBTENES INFORMACION DETALLADA DEL ESPECIALISTA POR ID
 export const especialistaDetallado = (id) => {
-  return { type: ESPECIALISTA_DETALLADO, payload: id };
-};
+  console.log(id)
+  return async (dispatch) => {
+    const result = await fetch(`http://localhost:3001/especialista/${id}`);
+    const data = await result.json();
+    return dispatch({ type: ESPECIALISTA_DETALLADO, payload: data });
+   
+  };
+}
+
 
 //OBTENER UNO O VARIOS PACIENTE(S) BUSCANDO POR NOMBRE
 export const obtenerPacientePorNombre = (nombre) => {
@@ -110,8 +117,12 @@ export const obtenerPacientePorNombre = (nombre) => {
 };
 
 //OBTENES INFORMACION DETALLADA DE PACIENTE POR ID
-export const pacienteDetallado = (id) => {
-  return { type: PACIENTE_DETALLADO, payload: id };
+export const pacienteDetallado = (dni) => {
+  return async (dispatch) => {
+    const result = await fetch(`http://localhost:3001/paciente/consulta/${dni}`);
+    const data = await result.json();
+    return dispatch({ type: PACIENTE_DETALLADO, payload: data });
+  };
 };
 
 //PARA MANEJO DE ROLES

@@ -35,7 +35,7 @@ export default function Landing(){
         e.preventDefault()
 
         
-    /* axios.post('http://localhost:3001/paciente/autenticar', { 
+     axios.post('http://localhost:3001/paciente/autenticar', { 
         usuario: input.user,
         password: input.pass
     })
@@ -45,9 +45,9 @@ export default function Landing(){
         dispatch(rol(data.data.rol));
 
     }
-    }) */
+    }) 
 
-    dispatch(rol(input.user));
+    // dispatch(rol(input.user));
 
 }
 
