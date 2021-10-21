@@ -1,0 +1,90 @@
+@import '../../scss/base/variables';
+
+.ProfileSpecialist{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+
+
+    .card-profile{
+
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+
+    .encabezado{
+        display: flex;
+        width: 100%;
+        max-width: 800px;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+
+        .imagen{
+            width: 200px;
+            height: 200px;
+            border: 3px solid $color-detalle;
+            border-radius: 100%;
+        }
+        .nombre{
+            font-size: 2.5em;
+            font-weight: $bold;
+            color: $color-principal;
+        }
+        .especialidad{
+            font-size: 1.5em;
+            margin-top: 5px;
+            color: $color-terciario;
+            font-family: $fuente_principal;
+        }
+
+    }
+
+    .informacion{
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        max-width: 100%;
+        margin-top: 20px;
+        justify-content: space-around;
+
+        .info{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            background-color: #ebf5ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            justify-content: center;
+
+            .info-title{
+                text-align: center;
+                font-size: 1.3em;
+                margin-bottom: 10px;
+                padding-bottom: 3px;
+                border-bottom: 1px solid $color-principal;
+            
+           
+            }
+
+            .data{
+                margin: 5px 0px;
+
+                .data-real{
+                    color: $color-terciario;
+                    font-weight: $regularPlus;
+                }
+            }
+
+
+        }
+
+    }
+
+}
+}
