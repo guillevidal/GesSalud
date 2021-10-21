@@ -24,8 +24,8 @@ router.get("/", async function (req, res, next) {
         "birth",
         "user",
         "password",
-        "gender"
-    "rol",
+        "gender",
+        "rol",
       ]
     },
     // {
