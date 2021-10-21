@@ -35,7 +35,7 @@ export default function Landing(){
         e.preventDefault()
 
         
-    /* axios.post('http://localhost:3001/paciente/autenticar', { 
+     axios.post('http://localhost:3001/paciente/autenticar', { 
         usuario: input.user,
         password: input.pass
     })
@@ -45,9 +45,9 @@ export default function Landing(){
         dispatch(rol(data.data.rol));
 
     }
-    }) */
+    }) 
 
-    dispatch(rol(input.user));
+    // dispatch(rol(input.user));
 
 }
 
@@ -55,6 +55,7 @@ export default function Landing(){
         <div id='landing-container'>
             { status === '1' && <Redirect to ='/patientPys' />}
             { status === '2' && <Redirect to ='/homeRRHH' />}
+            { status === '3' && <Redirect to ='/homeEspecialista' />}
             
             <div id='landing-header'>
                 <div id='landing-title'>

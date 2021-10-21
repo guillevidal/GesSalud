@@ -101,10 +101,10 @@ const Reducer = (state = initialState, action) => {
             return { ...state, busquedaPaciente: action.payload }
 
         case ESPECIALISTA_DETALLADO:
-            return { ...state, especialistaDetallado: state.especialistas.filter(espe => action.payload === espe.id) }
+            return { ...state, especialistaDetallado: [action.payload] }
 
         case PACIENTE_DETALLADO:
-            return { ...state, pacienteDetallado: state.pacientes.filter(pac => action.payload === pac.id) }
+            return { ...state, pacienteDetallado: [action.payload] }
 
         case ROL: {
             return { ...state, rol: action.payload }

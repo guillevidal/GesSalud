@@ -1,20 +1,23 @@
 /* eslint-disable */
-import React from 'react'
-import { useSelector} from "react-redux";
+import React, { useEffect} from 'react'
+import { useSelector, useDispatch} from "react-redux";
 import Nav from '../Layout/Nav.jsx';
 import './DetailEspecialista.scss'
-import { Link } from 'react-router-dom';
-
-export default function DetailEspecialista() {
-    const especialistaDetallado = useSelector((state) => state.especialistaDetallado);
-    const {id,persona,specialty,enrollment, agendaTotalId, personaId } = especialistaDetallado[0];
-    console.log('PERSONA detail especialista', especialistaDetallado);
+import { Link, useParams, withRouter } from 'react-router-dom';
+import {resetearEspecialistaDetallado} from "../../actions/index.js"
+const  DetailEspecialista = () => {
+    const dispatch = useDispatch();
+    const especialistaD= useSelector(state => state.especialistaDetallado)
+    const {persona,specialty,enrollment, agendaTotalId, personaId } = especialistaD[0];
+    const handleReset = () => {
+       dispatch(resetearEspecialistaDetallado()) 
+    }
     return (
         <div className='detalle-especialista'>
             <Nav/>
 
-            <div className='boton-regresar'>
-                <Link to="/homeRRHH" className='boton'>Volver</Link>
+             <div className='boton-regresar'>
+                <Link to="/homeRRHH" className='boton' onClick={handleReset}>Volver</Link>
                 <Link to="/specialtyEdit" className='boton'>Modificar</Link>
             </div>
 
@@ -30,12 +33,14 @@ export default function DetailEspecialista() {
             </div>
             </div>
             <div className='masDatos'>
-            <span className='datodemas'>Genero: <b>{persona.gender}</b></span>
+            <span className='datodemas'>Genero: <b>{persona.gender}</b></span>  
             <span className='datodemas'>Especialidad: <b>{specialty}</b></span>
             <span className='datodemas'>N° Enrolamiento <b>{enrollment}</b></span>
             </div>
-            </div>
+            </div> 
           
         </div>
+      
     )
 }
+export default DetailEspecialista;
