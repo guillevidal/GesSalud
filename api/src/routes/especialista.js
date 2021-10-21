@@ -11,27 +11,28 @@ const router = Router();
 
 router.get("/", async function (req, res, next) {
   let especialistas = await Especialista_medico.findAll({
-    include: [
-      {
-        model: Persona,
-        attributes: [
-          "name",
-          "lastName",
-          "dni",
-          "email",
-          "phone",
-          "adress",
-          "birth",
-          "user",
-          "password",
-          "gender",
-          "rol",
-        ],
-      },
-      // {
-      //   model: Tipo_especialidad,
-      //   }
-    ],
+
+    include: [{
+      model: Persona,
+      attributes: [
+        "name",
+        "lastName",
+        "dni",
+        "email",
+        "phone",
+        "adress",
+        "birth",
+        "user",
+        "password",
+        "gender"
+    "rol",
+      ]
+    },
+    // {
+    //   model: Tipo_especialidad,
+    //   }
+    ]
+
   });
 
   // let queryEspecialista = especialistas.map((el) => {
@@ -136,26 +137,29 @@ router.get("/:id", async (req, res) => {
   try {
     if (id) {
       let query = await Especialista_medico.findByPk(id, {
-        include: [
-          {
-            model: Persona,
-            attributes: [
-              "name",
-              "lastName",
-              "dni",
-              "email",
-              "phone",
-              "adress",
-              "birth",
-              "user",
-              "password",
-              "rol",
-            ],
-          },
-          // {
-          //   model: Tipo_especialidad,
-          // }
-        ],
+
+        include: [{
+          model: Persona,
+          attributes: [
+            "name",
+            "lastName",
+            "dni",
+            "email",
+            "phone",
+            "adress",
+            "birth",
+            "user",
+            "password",
+            "gender"
+            "rol",
+          ]
+        },
+        // {
+        //   model: Tipo_especialidad,
+        // }
+        ]
+          
+
       });
 
       // let queryEspecialista =

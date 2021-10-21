@@ -4,10 +4,13 @@ module.exports = (sequelize) => {
 sequelize.define('agenda', {
   
     date: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    amount: {
+      type: DataTypes.INTEGER,
       allowNull: false
     }
-  
   },
   { timestamps: false }
   );

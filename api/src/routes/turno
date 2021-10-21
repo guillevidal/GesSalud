@@ -1,0 +1,8 @@
+const { Router } = require("express");
+const { Persona, Paciente, HistoriaClinica, Diagnostico } = require("../db");
+const router = Router();
+// const { v4: uuidv4 } = require("uuid");
+
+
+
+module.exports = router;
