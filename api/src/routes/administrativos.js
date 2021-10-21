@@ -18,7 +18,7 @@ router.post("/", async function (req, res) {
         user: data.user,
         password: data.password,
         gender: data.gender,
-        rol: "1",
+        rol: data.rol,
       },
       {
         fields: [
@@ -124,6 +124,7 @@ router.put("/:id", async function (req, res) {
       password,
       status,
       gender,
+      rol,
     } = req.body;
     await Personal_administrativo.update({ status }, { where: { id } });
     await Persona.update(
@@ -138,6 +139,7 @@ router.put("/:id", async function (req, res) {
         user,
         password,
         gender,
+        rol,
       },
       { where: { id: personaId } }
     );
