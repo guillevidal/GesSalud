@@ -3,7 +3,6 @@ import './CreateSpecialist.scss';
 import React, { useState, useEffect } from 'react';
 import Nav from '../../Layout/Nav'
 import { useDispatch, useSelector } from 'react-redux';
-//import { Link } from 'react-router-dom';
 import Person from '../Person/Person';
 import {
     crearEspecialista,
@@ -245,7 +244,6 @@ export default function CreateSpecialist() {
     const handleDeleteTypeSpecialities = (event) => {
         event.preventDefault()
         const { value } = event.target;
-        console.log("AQUIII", event.target)
         let arrDelete = []
         for (let index = 0; index < input.specialty.value.length; index++) {
             if (input.specialty.value[index].toLowerCase() !== value.toLowerCase()) {
@@ -262,7 +260,7 @@ export default function CreateSpecialist() {
 
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault()
 
         if (!input.name.error && !input.lastName.error && !input.password.error && !input.email.error && !input.phone.error
@@ -298,8 +296,10 @@ export default function CreateSpecialist() {
                         setValidation(false)
                         return
                     } else {
-                        dispatch(crearEspecialista(newSpecialist))
-                       swal({
+
+                         dispatch(crearEspecialista(newSpecialist))
+                        
+                        swal({
                             title: "Especialista médico creado",
                             text: `El especialista ${capitalFirstLetter(input.name.value) + ' '}  ${capitalFirstLetter(input.lastName.value)} se creó correctamente `,
                             icon: "success",
@@ -353,8 +353,9 @@ export default function CreateSpecialist() {
                         return
                     } else {
 
-                         dispatch(crearEspecialista(newSpecialist))
-                       swal({
+                        dispatch(crearEspecialista(newSpecialist))
+                        swal({
+
                             title: "Especialista médico creado",
                             text: `El especialista ${capitalFirstLetter(input.name.value) + ' '}  ${capitalFirstLetter(input.lastName.value)} se creó correctamente `,
                             icon: "success",

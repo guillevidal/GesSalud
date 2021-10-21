@@ -1,10 +1,9 @@
 /* eslint-disable */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector} from "react-redux";
-//import { Link } from "react-router-dom";
 import Person from "../Person/Person";
 import Nav from '../../Layout/Nav'
-import { crearPaciente, obtenerPacientes } from '../../../actions/index'
+import { crearPaciente } from '../../../actions/index'
 import './CreatePatient.scss'
 import '../Person/Person.scss'
 import swal from 'sweetalert';
@@ -251,7 +250,7 @@ export default function CreatePatient() {
             setInput({ ...input, emergencyContact: { value, error: null } })
         }
     }
-    const handleSubmit = async (event) => {
+    const handleSubmit =  (event) => {
         event.preventDefault()
 
         let creationDate = new Date();
@@ -292,8 +291,8 @@ export default function CreatePatient() {
                     derivation: ""
                 }
                 if(!pacientes[0]){
-                    await dispatch(crearPaciente(newPatient))
-                    await dispatch(obtenerPacientes())
+                     dispatch(crearPaciente(newPatient))
+                    
                     swal({
                         title: "Paciente creado",
                         text: `El paciente ${capitalFirstLetter(input.name.value) + ' '}  ${capitalFirstLetter(input.lastName.value)} se creó correctamente `,
@@ -343,8 +342,7 @@ export default function CreatePatient() {
  
                     } 
 
-                    await dispatch(crearPaciente(newPatient))
-                    await dispatch(obtenerPacientes())
+                     dispatch(crearPaciente(newPatient))
                     swal({
                         title: "Paciente creado",
                         text: `El paciente ${capitalFirstLetter(input.name.value) + ' '}  ${capitalFirstLetter(input.lastName.value)} se creó correctamente `,
