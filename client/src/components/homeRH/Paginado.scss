@@ -1,0 +1,35 @@
+@import '../../scss/base/variables';
+
+.paginado{
+    margin:20px auto; 
+    display: flex;
+    width: 100%;
+    max-width: 200px;
+    justify-content: space-between;
+    align-items: center;
+
+    .boton{
+        display: flex;
+        width: 20px;
+        height: 20px;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        background-color: white;
+        padding: 5px 0px;
+        border-radius: 100%;
+        border:none;
+
+        .flecha{
+            font-size: 2.2em;
+            color: $color-principal;
+            border-radius: 100%;
+
+            &:hover{
+                color: white;
+                background-color:$color-principal;
+            }
+        }
+
+    }
+}

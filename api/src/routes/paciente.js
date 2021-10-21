@@ -2,8 +2,61 @@ const { Router } = require("express");
 const { Persona, Paciente, HistoriaClinica, Diagnostico } = require("../db");
 const router = Router();
 // const { v4: uuidv4 } = require("uuid");
+const jwt = require('jsonwebtoken');
+const config = require('../configs/config');
 
-router.get("/", async function (req, res, next) {
+
+//MIDDLEWARE DE PROTECCION
+const rutasProtegidas = Router(); 
+rutasProtegidas.use((req, res, next) => {
+const {token} = req.query;
+  if (token) {
+    jwt.verify(token, config.masterKeyGesSalud, (err, decoded) => {      
+      if (err) {
+        return res.json({ mensaje: 'Token inválida' });    
+      } else {
+        req.decoded = decoded;    
+        next();
+      }
+    });
+  } else {
+    res.send({ 
+        mensaje: 'Token no proveída.' 
+    });
+  }
+});
+
+
+router.post("/autenticar", async (req, res) => {
+  const register = await Persona.findOne({
+      attributes: ['user', 'password', 'rol'],
+      where : { user : req.body.usuario}});
+
+  if (register) {
+      if (register.dataValues.password === req.body.password) {
+          const payload = {
+              check:  true
+          };
+          const token = jwt.sign(payload, config.masterKeyGesSalud, {
+              expiresIn: 1440
+          });
+          res.json({
+                  // res: true,
+                  // mensaje: 'Autenticación correcta',
+                  // token: token
+                  token,
+                  rol: register.dataValues.rol
+          });
+      } else {
+          res.json({ mensaje: "Usuario o contraseña incorrectos"})
+      }
+  }
+  else {
+      res.json({ mensaje: "Usuario o contraseña incorrectos"})
+  }
+});
+
+router.get("/", rutasProtegidas, async function (req, res, next) {
   let dataPacientes = await Paciente.findAll({
     include: [
       {
@@ -19,6 +72,7 @@ router.get("/", async function (req, res, next) {
           "user",
           "password",
           "gender",
+          "rol"
         ],
       },
       { model: HistoriaClinica, attributes: ["creationDate"] },
@@ -31,8 +85,9 @@ router.get("/", async function (req, res, next) {
 
 module.exports = router;
 
-router.post("/", async function (req, res) {
+router.post("/", rutasProtegidas, async function (req, res) {
   const data = req.body;
+  console.log("crear persona ruta back", data);
   try {
     const creandoPersona = await Persona.create(
       {
@@ -47,6 +102,7 @@ router.post("/", async function (req, res) {
         user: data.user,
         password: data.password,
         gender: data.gender,
+        rol: '2'
       },
       {
         fields: [
@@ -60,6 +116,7 @@ router.post("/", async function (req, res) {
           "user",
           "password",
           "gender",
+          "rol"
         ],
       }
     );
@@ -117,17 +174,17 @@ router.get("/consulta/:dni", async (req, res) => {
   try {
     if (dni) {
       let query = await Persona.findOne({
-        where : { dni : dni},
+        where: { dni: dni },
         include: {
           model: Paciente,
-          include:
-          [{
-            model: HistoriaClinica,
-          },
-          {
-            model: Diagnostico,
-          }
-          ]
+          include: [
+            {
+              model: HistoriaClinica,
+            },
+            {
+              model: Diagnostico,
+            },
+          ],
         },
       });
 
@@ -139,22 +196,44 @@ router.get("/consulta/:dni", async (req, res) => {
 });
 
 //ACTUALIZACIÓN DE DATOS PERSONALES DE PACIENTE
-router.put ("/:id", async (req, res) => {
-  try{
-  let id= req.params.id;
-  let query = await Paciente.findByPk(id);
-  let { personaId } = query
-  let {name, lastName, dni, email, phone, adress, birth, user, password, gender } = req.body;
+router.put("/:id", async (req, res) => {
+  console.log("ruta actualizacion paciente", req.params, "REQ.BODY", req.body);
+  try {
+    let id = req.params.id;
+    let query = await Paciente.findByPk(id);
+    let { personaId } = query;
+    let {
+      name,
+      lastName,
+      dni,
+      email,
+      phone,
+      adress,
+      birth,
+      user,
+      password,
+      gender,
+    } = req.body;
 
-   
-      await Persona.update({name, lastName, dni, email, phone, adress, birth, user, password, gender},{where: {id : personaId}})
-      res.status(200).send("Se actualizaron los datos correctamente");
-    
-  }catch(e){
+    await Persona.update(
+      {
+        name,
+        lastName,
+        dni,
+        email,
+        phone,
+        adress,
+        birth,
+        user,
+        password,
+        gender,
+      },
+      { where: { id: personaId } }
+    );
+    res.status(200).send("Se actualizaron los datos correctamente");
+  } catch (e) {
     res.status(400).send("No se pudieron actualizar los datos.");
   }
-  
 });
-
 
 module.exports = router;

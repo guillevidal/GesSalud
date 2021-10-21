@@ -136,6 +136,7 @@ const Reducer = (state = initialState, action) => {
             return { ...state, modificado: action.payload}
 
         case MODIFICAR_ESPECIALISTA:
+            
             return {...state, modificado: action.payload}
         default:
             return state;

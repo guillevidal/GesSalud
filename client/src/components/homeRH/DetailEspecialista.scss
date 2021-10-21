@@ -5,6 +5,20 @@
     width: 100%;
     align-items: center;
 
+    .boton-regresar{
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+
+        .boton{
+            margin: 20px;
+            margin-bottom: -10px;
+            text-decoration: none;
+            @include boton-primario
+        }
+
+    }
+
     .card-detail{
         display: flex;
         width: 100%;
