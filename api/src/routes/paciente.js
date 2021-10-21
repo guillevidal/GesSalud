@@ -2,57 +2,55 @@ const { Router } = require("express");
 const { Persona, Paciente, HistoriaClinica, Diagnostico } = require("../db");
 const router = Router();
 // const { v4: uuidv4 } = require("uuid");
-const jwt = require('jsonwebtoken');
-const config = require('../configs/config');
-
+const jwt = require("jsonwebtoken");
+const config = require("../configs/config");
 
 //MIDDLEWARE DE PROTECCION
-const rutasProtegidas = Router(); 
+const rutasProtegidas = Router();
 rutasProtegidas.use((req, res, next) => {
-const {token} = req.query;
+  const { token } = req.query;
   if (token) {
-    jwt.verify(token, config.masterKeyGesSalud, (err, decoded) => {      
+    jwt.verify(token, config.masterKeyGesSalud, (err, decoded) => {
       if (err) {
-        return res.json({ mensaje: 'Token inválida' });    
+        return res.json({ mensaje: "Token inválida" });
       } else {
-        req.decoded = decoded;    
+        req.decoded = decoded;
         next();
       }
     });
   } else {
-    res.send({ 
-        mensaje: 'Token no proveída.' 
+    res.send({
+      mensaje: "Token no proveída.",
     });
   }
 });
 
-
 router.post("/autenticar", async (req, res) => {
   const register = await Persona.findOne({
-      attributes: ['user', 'password', 'rol'],
-      where : { user : req.body.usuario}});
+    attributes: ["user", "password", "rol"],
+    where: { user: req.body.usuario },
+  });
 
   if (register) {
-      if (register.dataValues.password === req.body.password) {
-          const payload = {
-              check:  true
-          };
-          const token = jwt.sign(payload, config.masterKeyGesSalud, {
-              expiresIn: 1440
-          });
-          res.json({
-                  // res: true,
-                  // mensaje: 'Autenticación correcta',
-                  // token: token
-                  token,
-                  rol: register.dataValues.rol
-          });
-      } else {
-          res.json({ mensaje: "Usuario o contraseña incorrectos"})
-      }
-  }
-  else {
-      res.json({ mensaje: "Usuario o contraseña incorrectos"})
+    if (register.dataValues.password === req.body.password) {
+      const payload = {
+        check: true,
+      };
+      const token = jwt.sign(payload, config.masterKeyGesSalud, {
+        expiresIn: 1440,
+      });
+      res.json({
+        // res: true,
+        // mensaje: 'Autenticación correcta',
+        // token: token
+        token,
+        rol: register.dataValues.rol,
+      });
+    } else {
+      res.json({ mensaje: "Usuario o contraseña incorrectos" });
+    }
+  } else {
+    res.json({ mensaje: "Usuario o contraseña incorrectos" });
   }
 });
 
@@ -72,7 +70,7 @@ router.get("/", rutasProtegidas, async function (req, res, next) {
           "user",
           "password",
           "gender",
-          "rol"
+          "rol",
         ],
       },
       { model: HistoriaClinica, attributes: ["creationDate"] },
@@ -102,7 +100,7 @@ router.post("/", rutasProtegidas, async function (req, res) {
         user: data.user,
         password: data.password,
         gender: data.gender,
-        rol: '2'
+        rol: "2",
       },
       {
         fields: [
@@ -116,7 +114,7 @@ router.post("/", rutasProtegidas, async function (req, res) {
           "user",
           "password",
           "gender",
-          "rol"
+          "rol",
         ],
       }
     );

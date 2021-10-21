@@ -5,6 +5,7 @@ const router = Router();
 const paciente = require("./paciente.js");
 const especialista = require("./especialista");
 const especialidades = require("./especialidades.js");
+const administrativos = require("./administrativos");
 // const autenticar = require("./autenticar.js");
 
 // Configurar los routers
@@ -12,6 +13,7 @@ const especialidades = require("./especialidades.js");
 router.use("/paciente", paciente);
 router.use("/especialista", especialista);
 router.use("/especialidades", especialidades);
+router.use("/administrativos", administrativos);
 // router.use("/autenticar", autenticar);
 
 module.exports = router;

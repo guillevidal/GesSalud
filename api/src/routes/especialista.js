@@ -150,6 +150,7 @@ router.get("/:id", async (req, res) => {
               "user",
               "password",
               "rol",
+              "gender",
             ],
           },
           // {

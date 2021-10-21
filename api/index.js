@@ -2,7 +2,7 @@ const server = require("./src/app.js");
 const { conn, Tipo_especialidad } = require("./src/db.js");
 const axios = require("axios");
 
-conn.sync({ force: false }).then(async () => {
+conn.sync({ force: true }).then(async () => {
   server.listen(3001, async () => {
     let getEspecialidades = await axios.get(
       `http://localhost:3001/especialidades`
