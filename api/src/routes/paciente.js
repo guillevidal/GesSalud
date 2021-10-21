@@ -83,7 +83,7 @@ router.get("/", rutasProtegidas, async function (req, res, next) {
 
 module.exports = router;
 
-router.post("/", rutasProtegidas, async function (req, res) {
+router.post("/",  async function (req, res) {
   const data = req.body;
   console.log("crear persona ruta back", data);
   try {

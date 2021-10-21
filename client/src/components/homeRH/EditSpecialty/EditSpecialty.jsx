@@ -337,6 +337,7 @@ export default function EditSpecialty() {
 
        
         let newSpecialist = {
+            personaId: specialtyDetail[0].personaId,
             id: specialtyDetail[0].id,
             name: input.name.value.toLowerCase(),
             lastName: input.lastName.value.toLowerCase(),
