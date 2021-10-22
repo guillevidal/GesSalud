@@ -29,7 +29,9 @@ import {
   RESETEAR_ADMINISTRATIVOS,
   MODIFICAR_ADMINISTRATIVO,
   OBTENER_ADMINISTRATIVO_DETALLADO,
-  RESETEAR_ADMINISTRATIVO_DETALLADO
+  RESETEAR_ADMINISTRATIVO_DETALLADO,
+  BUSQUEDA_ADMINSTRATIVO,
+  RESETEAR_BUSQUEDA_ADMINISTRATIVO
 } from "./valuesForActions.js";
 
 const token = localStorage['access-token'];
@@ -240,7 +242,7 @@ export const crearAdministrativo = (administrativo) => {
   return async (dispatch) => {
     {
       const result = await fetch(
-        `http://localhost:3001/administrativo`,
+        `http://localhost:3001/administrativos`,
         {
           method: "POST",
           headers: {
@@ -265,7 +267,7 @@ export const resetearAdministrativoCreado = () => {
 //OBTENER ADMINISTRATIVOS
 export const obtenerAdministrativos = () => {
   return async (dispatch) => {
-    const result = await fetch(`http://localhost:3001/administrativo`);
+    const result = await fetch(`http://localhost:3001/administrativos`);
     const data = await result.json();
     return dispatch({ type: OBTENER_ADMINISTRATIVOS, payload: data });
   };
@@ -281,7 +283,7 @@ export const modificarAdministrativo = (administrativo) => {
   return async (dispatch) => {
     {
       const result = await fetch(
-        `http://localhost:3001/especialista/${administrativo.id}`,
+        `http://localhost:3001/administrativos/${administrativo.id}`,
         {
           method: "PUT",
           headers: {
@@ -307,4 +309,14 @@ export const administrativoDetallado = (id) => {
 
 export const resetearAdministrativoDetallado = () => {
   return { type: RESETEAR_ADMINISTRATIVO_DETALLADO, payload: [] };
+}
+
+//BUSQUEDA ADMINISTRATIVO 
+export const busquedaAdminstrativo = (value) => {
+  return { type: BUSQUEDA_ADMINSTRATIVO, payload: value}
+}
+
+//RESETEAR BUSQUEDA ADMINISTRATIVO 
+export const resetearBusquedaAdministrativo = () => {
+  return { type: RESETEAR_BUSQUEDA_ADMINISTRATIVO, payload: []}
 }

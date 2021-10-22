@@ -5,6 +5,7 @@ const router = Router();
 const paciente = require("./paciente.js");
 const especialista = require("./especialista");
 const especialidades = require("./especialidades.js");
+const turnos = require("./turno.js");
 const administrativos = require("./administrativos");
 const agendas= require("./agendas");
 
@@ -19,6 +20,7 @@ router.use("/especialista", especialista);
 router.use("/especialidades", especialidades);
 router.use("/administrativos", administrativos);
 router.use("/agendas", agendas);
+router.use("/turnos", turnos );
 
 router.use("/autenticar", autenticar);
 

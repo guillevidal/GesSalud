@@ -4,7 +4,12 @@ const router = Router();
 const rutasProtegidas = require('./Middleware/rutasProtegidas.js');
 // const { v4: uuidv4 } = require("uuid");
 
-router.get("/", rutasProtegidas, async function (req, res, next) {
+
+const jwt = require("jsonwebtoken");
+const config = require("../configs/config");
+
+
+router.get("/", async function (req, res, next) {
   let dataPacientes = await Paciente.findAll({
     include: [
       {
@@ -33,9 +38,9 @@ router.get("/", rutasProtegidas, async function (req, res, next) {
 
 module.exports = router;
 
-router.post("/", rutasProtegidas, async function (req, res) {
+router.post("/",  async function (req, res) {
   const data = req.body;
-  console.log("crear persona ruta back", data);
+  console.log(data)
   try {
     const creandoPersona = await Persona.create(
       {
@@ -103,14 +108,8 @@ router.post("/", rutasProtegidas, async function (req, res) {
     await creandoDatosPaciente.setHistoriaClinica(creandoDatosHistoriaClinica);
     await creandoDatosPaciente.addDiagnostico(creandoDatosDiagnostico);
 
-    let obj = {
-      ...creandoPersona.dataValues,
-      ...creandoDatosPaciente.dataValues,
-      ...creandoDatosHistoriaClinica.dataValues,
-      ...creandoDatosDiagnostico.dataValues,
-    };
-
-    res.json(obj);
+   
+    res.status(201).send({msg:"Se creo el paciente correctamente"});
   } catch (e) {
     res.status(400).send("no se puedo crear al Paciente");
   }

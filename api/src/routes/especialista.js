@@ -12,48 +12,29 @@ const router = Router();
 router.get("/", async function (req, res, next) {
   let especialistas = await Especialista_medico.findAll({
 
-    include: [
-      {
-        model: Persona,
-        attributes: [
-          "name",
-          "lastName",
-          "dni",
-          "email",
-          "phone",
-          "adress",
-          "birth",
-          "user",
-          "password",
-          "gender",
-          "rol",
-        ],
-      },
-      // {
-      //   model: Tipo_especialidad,
-      //   }
-    ],
+
+    include: [{
+      model: Persona,
+      attributes: [
+        "name",
+        "lastName",
+        "dni",
+        "email",
+        "phone",
+        "adress",
+        "birth",
+        "user",
+        "password",
+        "gender",
+        "rol",
+      ]
+    },
+   
+    ]
+
 
   });
 
-  // let queryEspecialista = especialistas.map((el) => {
-  //   return {
-  //     id: el.id,
-  //     enrollment: el.enrollment,
-  //     name: el.persona.name,
-  //     lastName: el.persona.lastName,
-  //     dni: el.persona.dni,
-  //     email: el.persona.email,
-  //     phone: el.persona.phone,
-  //     adress: el.persona.adress,
-  //     birth: el.persona.birth,
-  //     user: el.persona.user,
-  //     password: el.persona.password,
-  //     //specialty: el.tipo_especialidads.map(ele => ele.name)
-  //     specialty: el.specialty,
-  //   };
-
-  // });
 
   res.send(especialistas);
 });
@@ -89,7 +70,7 @@ router.post("/", async function (req, res) {
           "user",
           "password",
           "gender",
-          "rol",
+          "rol"
         ],
       }
     );
@@ -102,15 +83,6 @@ router.post("/", async function (req, res) {
         fields: ["enrollment", "specialty"],
       }
     );
-
-    // let especialidadesPromise = await Promise.all(
-    //   data.specialty.map((el) =>
-    //   Tipo_especialidad.findOne({ where: { name: el } })
-    //   )
-    // );
-
-    // await creandoMatriculaEspecialista.setTipo_especialidads(
-    //   especialidadesPromise);
 
     await creandoEspecialista.setEspecialista_medico(
       creandoMatriculaEspecialista
@@ -138,6 +110,7 @@ router.get("/:id", async (req, res) => {
   try {
     if (id) {
       let query = await Especialista_medico.findByPk(id, {
+
         include: [
           {
             model: Persona,
