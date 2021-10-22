@@ -53,12 +53,12 @@ function App() {
       <Route exact path="/createEmployee">
        <CreateEmployee />
       </Route>
-
       <Route exact path="/detailAdmin">
         <DetailAdmin/>
       </Route>
       <Route exact path="/AdminEdit">
         <EditAdmin/>
+      </Route>
       <Route exact path="/especialistaPys">
         <InitialSpecialty />
       </Route>
