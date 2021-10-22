@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Person from "../Person/Person.jsx";
-
+import { crearAdministrativo, resetearAdministrativoCreado } from "../../../actions/index.js"
 const CreatePyS = () => {
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
     const dispatch = useDispatch()
-
+    const [validation, setValidation] = useState(true)
     const [input, setInput] = useState({
         name: { value: "", error: null },
         lastName: { value: "", error: null },
@@ -19,18 +19,10 @@ const CreatePyS = () => {
         user: { value: "", error: null },
         password: { value: "", error: null },
         gender: { value: "", error: "Seleccione un genero", ad: null },
-        medication: { value: "", error: null },
-        emergencyContact: { value: "", error: null },
-        disease: { value: "", error: null },
-        creationDate: { value: "", error: null },
-        diagnostic: { value: "", error: null },
-        date: { value: "", error: null },
-        derivation: { value: "", error: null },
 
     })
 
-    const pacientes = useSelector(state => state.pacientes)
-    const [validation, setValidation] = useState(true)
+    const administrativos = useSelector(state => state.administrativos)
 
     useEffect(() => {
         setTimeout(() => { setValidation(true) }, 2500)
@@ -184,8 +176,83 @@ const CreatePyS = () => {
         }
 
     }
+    const handleSubmit = (event) => {
+        event.preventDefault()
+
+        if (!input.name.error && !input.lastName.error && !input.password.error && !input.email.error && !input.phone.error
+            && !input.user.error && !input.birth.error && !input.dni.error
+            && !input.adress.error) {
+
+            if (input.name.value.length === 0 || input.lastName.value.length === 0 || input.password.value.length === 0 || input.email.value.length === 0 || input.phone.value.length === 0
+                || input.user.value.length === 0 || input.birth.value.length === 0 || input.dni.value.length === 0
+                || input.adress.value.length === 0) {
+                setValidation(false)
+                return
+
+            } else {
+
+                if (administrativos.length > 0) {
+
+                    for (let index = 0; index < administrativos.length; index++) {
+
+                        if (parseInt(administrativos[index].persona.dni) === parseInt(input.dni.value)) {
+
+                            setValidation(false)
+                            alert("El DNI  que intenta crear ya se encuentra registrado")
+                            return
+                        }
+
+                        if (administrativos[index].persona.email === input.email.value) {
+                            setValidation(false)
+                            alert("El EMAIL  que intenta crear ya se encuentra registrado")
+                            return
+                        }
+
+                        if (administrativos[index].persona.user === input.user.value) {
+                            setValidation(false)
+                            alert("El Usuario  que intenta crear ya se encuentra registrado")
+                            return
+                        }
+
+                    }
+
+                }
+
+
+            }
+        } else {
+            setValidation(false)
+            return
+        }
+
+
+        let newAdmin = {
+            name: input.name.value.toLowerCase(),
+            lastName: input.lastName.value.toLowerCase(),
+            dni: parseInt(input.dni.value),
+            email: input.email.value,
+            phone: input.phone.value,
+            adress: input.adress.value.toLowerCase(),
+            birth: input.birth.value,
+            user: input.user.value,
+            password: input.password.value,
+            gender: input.gender.value,
+            rol: "1"
+
+        }
+
+        alert(`El Administrativo ${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se creo correctamente `)
+        dispatch(crearAdministrativo(newAdmin));
+        return
+
+    }
+
+    const handleCancel = (e) => {
+        dispatch(resetearAdministrativoCreado())
+    }
+
     return (
-        <div>
+        <div className="information-person">
 
             <Person name={input.name} lastName={input.lastName} dni={input.dni}
                 email={input.email} phone={input.phone} adress={input.adress}
@@ -195,7 +262,11 @@ const CreatePyS = () => {
                 handleAdress={handleAdress} handleEmail={handleEmail} handleUser={handleUser}
                 handlePassword={handlePassword}
             />
+            {!validation && <p>Diligencie correctamente el formulario</p>}
+            <div className='boton-crear-paciente'>
 
+                <button onClick={(e) => handleSubmit(e)} className='boton-crear'>CREAR</button>
+            </div>
         </div>
     )
 }

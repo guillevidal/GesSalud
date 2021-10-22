@@ -19,7 +19,7 @@ const CreateEmployee = () => {
         <Nav />
         <select onChange={(e)=>handleEmployee(e)}>
             <option value="especialista">Crear Especialista</option>
-            <option value="pys">Crear Productos y Servicios</option>
+            <option value="pys">Crear Planeacion y Servicios</option>
             <option value="rrhh">Crear Recursos Humanos</option>
         </select>
 
