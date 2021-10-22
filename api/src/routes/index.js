@@ -10,7 +10,7 @@ const administrativos = require("./administrativos");
 const agendas= require("./agendas");
 
 
-// const autenticar = require("./autenticar.js");
+const autenticar = require("./autenticar.js");
 
 
 // Configurar los routers
@@ -22,7 +22,7 @@ router.use("/administrativos", administrativos);
 router.use("/agendas", agendas);
 router.use("/turnos", turnos );
 
-// router.use("/autenticar", autenticar);
+router.use("/autenticar", autenticar);
 
 
 module.exports = router;

@@ -2,6 +2,7 @@ const { Router } = require("express");
 const { Persona, Tipo_especialidad } = require("../db");
 const router = Router();
 
+
 router.get("/", async function (req, res, next) {
  try{
    
