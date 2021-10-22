@@ -71,7 +71,7 @@ let query = await Agenda.findByPk(id);
 let { especialistaMedicoId, tipoEspecialidadId, date, amount} = req.body;
 
 await Agenda.update({especialistaMedicoId, tipoEspecialidadId, date, amount}, {where :{id}})
-res.status(200).send("Se actualizaron los datos correctamente");
+res.status(200).send({msg:"Se actualizaron los datos correctamente"});
 
 }catch(e){
 

@@ -13,6 +13,10 @@ import ProfileSpecialist from "./components/specialist/ProfileSpecialist.jsx"
 import CreateEmployee from "./components/forms/CreateEmployee/CreateEmployee.jsx"
 import DetailAdmin from "./components/homeRH/DetailsAdmin.jsx"
 import EditAdmin from "./components/homeRH/EditAdmin/EditAdmin.jsx"
+import InitialSpecialty from "./components/initialPys/SpecialtyManagement/Initial/InitialSpecialty.jsx"
+import CreateAgenda from './components/initialPys/SpecialtyManagement/CreateAgenda/CreateAgenda.jsx';
+
+
 function App() {
   return (
     <div className="App">
@@ -49,11 +53,17 @@ function App() {
       <Route exact path="/createEmployee">
        <CreateEmployee />
       </Route>
+
       <Route exact path="/detailAdmin">
         <DetailAdmin/>
       </Route>
       <Route exact path="/AdminEdit">
         <EditAdmin/>
+      <Route exact path="/especialistaPys">
+        <InitialSpecialty />
+      </Route>
+      <Route exact path="/createAgenda">
+        <CreateAgenda />
       </Route>
     </div>
   );
