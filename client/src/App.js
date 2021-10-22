@@ -1,7 +1,6 @@
 import "./App.scss";
 import { Route } from "react-router-dom";
 import Landing from "./components/Landing/Landing";
-import CreateSpecialist from "./components/forms/CreateSpecialist/CreateSpecialist.jsx";
 import CreatePatient from "./components/forms/CreatePatient/CreatePatient";
 import InitialPatient from "./components/initialPys/patientManagement/initial/initialPatient.jsx";
 import PatientDetails from "./components/initialPys/patientManagement/initial/patietCardDetails.jsx";
@@ -9,18 +8,15 @@ import HomeRRHH from "./components/homeRH/HomeRH.jsx";
 import DetailEspecialista from "./components/homeRH/DetailEspecialista";
 import PatientEdit from "./components/initialPys/patientManagement/PatientEdit/PatientEdit.jsx";
 import SpecialtyEdit from "./components/homeRH/EditSpecialty/EditSpecialty.jsx"
-import HomeSpecialist from "./components/specialist/HomeSpecialist";
-import ProfileSpecialist from "./components/specialist/ProfileSpecialist"
-
+import HomeSpecialist from "./components/specialist/HomeSpecialist.jsx";
+import ProfileSpecialist from "./components/specialist/ProfileSpecialist.jsx"
+import CreateEmployee from "./components/forms/CreateEmployee/CreateEmployee.jsx"
 
 function App() {
   return (
     <div className="App">
       <Route exact path="/">
         <Landing />
-      </Route>
-      <Route exact path="/createSpecialist">
-        <CreateSpecialist />
       </Route>
       <Route exact path="/createPatient">
         <CreatePatient />
@@ -48,6 +44,9 @@ function App() {
       </Route>
       <Route exact path="/perfilEspecialista">
         <ProfileSpecialist /> 
+      </Route>
+      <Route exact path="/createEmployee">
+       <CreateEmployee />
       </Route>
     </div>
   );

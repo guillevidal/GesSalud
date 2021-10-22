@@ -78,7 +78,7 @@ export default function Nav(){
             {status === '2' &&
                 <div className='nav-link'>
                     <Link onClick={handleResetActionsRol2} to='/homeRRHH' className='nav-link-ok' >Home</Link>
-                    <Link to='/createSpecialist' className='nav-link-ok' >Crear Especialista</Link>
+                    <Link to='/createEmployee' className='nav-link-ok' >Crear Empleado</Link>
                 </div>
             }
             {status === '3' &&
