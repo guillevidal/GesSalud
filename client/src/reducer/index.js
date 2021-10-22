@@ -148,7 +148,7 @@ const Reducer = (state = initialState, action) => {
             return {...state, administrativos: action.payload}
 
         case OBTENER_ADMINISTRATIVO_DETALLADO: 
-            return {...state, administrativoDetallado: state.administrativos.filter(adm => adm === action.payload)}
+            return {...state, administrativoDetallado: state.administrativos.filter(adm => adm.id === action.payload)}
          
         case RESETEAR_ADMINISTRATIVO_DETALLADO:
             return { ...state, administrativoDetallado: action.payload}
@@ -167,7 +167,7 @@ const Reducer = (state = initialState, action) => {
             return { ...state, busquedaAdministrativo: busquedaAdmin }
             
         case RESETEAR_BUSQUEDA_ADMINISTRATIVO:
-            return { ...state, busquedaAdmin: action.payload}    
+            return { ...state, busquedaAdministrativo: action.payload}    
         
         default:
             return state;

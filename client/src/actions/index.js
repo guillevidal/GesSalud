@@ -300,7 +300,7 @@ export const modificarAdministrativo = (administrativo) => {
   };
 }
 
-//OBTENER ADMINISTRATIVO DETALLADO VARIOS
+//OBTENER ADMINISTRATIVO DETALLADO 
 export const administrativoDetallado = (id) => {
   return { type: OBTENER_ADMINISTRATIVO_DETALLADO, payload: id}
 }

@@ -115,7 +115,7 @@ export default function Nav(){
                     {mobile && status === '2' &&
                     <div className='nav-link-mobile'>
                         <Link onClick={handleResetActionsRol2} to='/homeRRHH' className='nav-link-ok-mobile' >Home</Link>
-                        <Link to='/createSpecialist' className='nav-link-ok-mobile' >Crear Especialista</Link>
+                        <Link to='/createEmployee' className='nav-link-ok-mobile' >Crear Empleado</Link>
                         <div className='nav-link-ok-mobile' onClick={e => logout(e)}>
                          <FontAwesomeIcon icon={faSignOutAlt}/><span>  Salir</span>
                         </div>

@@ -8,6 +8,7 @@ import './HomeRH.scss'
 import SearchEspecialist from './SearchEspecialist';
 import SearchAdmin from './SearchAmin.jsx';
 import Paginado from './Paginado';
+import PaginadoAdmin from './PaginadoAdmin.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import CardAdmin from './CardAdmin.jsx';
@@ -44,8 +45,8 @@ const HomeRH = () => {
             {empleados === "especialistas" && busquedaEspecialista && busquedaEspecialista.length > 6 ? <Paginado /> : null}
             {empleados === "especialistas" && !busquedaEspecialista.length && especialistas && especialistas.length > 6 ? <Paginado /> : null}
 
-            {empleados === "administrativos" && busquedaAdministrativo && busquedaAdministrativo.length > 6 ? <Paginado /> : null}
-            {empleados === "administrativos" && !busquedaAdministrativo.length && administrativos && administrativos.length > 6 ? <Paginado /> : null}
+            {empleados === "administrativos" && busquedaAdministrativo && busquedaAdministrativo.length > 6 ? <PaginadoAdmin /> : null}
+            {empleados === "administrativos" && !busquedaAdministrativo.length && administrativos && administrativos.length > 6 ? <PaginadoAdmin /> : null}
 
             <div className='tarjetas'>
 
