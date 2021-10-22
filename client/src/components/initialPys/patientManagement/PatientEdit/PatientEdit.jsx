@@ -5,7 +5,7 @@ import { useSelector, useDispatch} from "react-redux";
 import { Link } from "react-router-dom";
 import Nav from '../../../Layout/Nav';
 import Person from '../../../forms/Person/Person.jsx';
-import {modificarPaciente, obtenerPacientes} from "../../../../actions/index.js"
+import {modificarPaciente, obtenerPacientes, resetearPacienteDetallado} from "../../../../actions/index.js"
 export default function PatientEdit() {
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
@@ -13,18 +13,19 @@ export default function PatientEdit() {
     const patientDetail = useSelector(state => state.pacienteDetallado)
     const pacientes = useSelector(state => state.pacientes)
     const dispatch = useDispatch()
+
     const [input, setInput] = useState({
-        name: {value: patientDetail[0]?.persona.name, error: null},
-        lastName: {value: patientDetail[0]?.persona.lastName, error: null},
-        dni: {value: patientDetail[0]?.persona.dni, error: null},
-        email: {value: patientDetail[0]?.persona.email, error: null},
-        phone: {value: patientDetail[0]?.persona.phone, error: null},
-        adress: {value: patientDetail[0]?.persona.adress, error: null},
-        birth: {value: patientDetail[0]?.persona.birth, error: null},
-        user: {value: patientDetail[0]?.persona.user, error: null},
-        password: {value: patientDetail[0]?.persona.password, error: null},
-        gender: {value: patientDetail[0]?.persona.gender , error: null , ad: "el genero seleccionado es: "+ patientDetail[0]?.persona.gender},
-        emergencyContact: {value: patientDetail[0]?.emergencyContact, error: null}
+        name: {value: patientDetail[0]?.name, error: null},
+        lastName: {value: patientDetail[0]?.lastName, error: null},
+        dni: {value: patientDetail[0]?.dni, error: null},
+        email: {value: patientDetail[0]?.email, error: null},
+        phone: {value: patientDetail[0]?.phone, error: null},
+        adress: {value: patientDetail[0]?.adress, error: null},
+        birth: {value: patientDetail[0]?.birth, error: null},
+        user: {value: patientDetail[0]?.user, error: null},
+        password: {value: patientDetail[0]?.password, error: null},
+        gender: {value: patientDetail[0]?.gender , error: null , ad: "el genero seleccionado es: "+ patientDetail[0]?.gender},
+        emergencyContact: {value: patientDetail[0]?.paciente.emergencyContact, error: null}
 
     })
     const [validation, setValidation]= useState(true)
@@ -203,6 +204,10 @@ export default function PatientEdit() {
         }
     }
 
+    const handleReset = () => {
+        dispatch(resetearPacienteDetallado())
+    }
+
     const handleSubmit =  (event) => {
         event.preventDefault()
 
@@ -219,15 +224,15 @@ export default function PatientEdit() {
                 return
             }else{ 
 
-                let filtro = pacientes.filter((pat) => { return pat.id !== patientDetail[0]?.id })
-                let filtro2 = pacientes.filter((pat) => { return pat.persona.email !== patientDetail[0]?.persona.email })
-                let filtro3 = pacientes.filter((pat) => { return pat.persona.user !== patientDetail[0]?.persona.user })
+                let filtro = pacientes.filter((pat) => { return pat.persona.dni !== patientDetail[0]?.dni})
+                let filtro2 = pacientes.filter((pat) => { return pat.persona.email !== patientDetail[0]?.email })
+                let filtro3 = pacientes.filter((pat) => { return pat.persona.user !== patientDetail[0]?.user })
                 
                 if (filtro.length > 0) {
-                    
+                    console.log("Aquiiiiii",filtro)
                     for (let index = 0; index < filtro.length; index++) {
-                        console.log("Aquiiiiii", filtro.length )
-                        if (parseInt(filtro[index].persona.dni) === parseInt(input.dni.value)) {
+                        
+                        if (filtro[index].persona.dni === parseInt(input.dni.value)) {
                             
                             setValidation(false)
                             alert("El DNI  que intenta modificar ya se encuentra registrado")
@@ -267,8 +272,8 @@ export default function PatientEdit() {
 
 
         let newPatient = {
-
-            id: patientDetail[0]?.id,
+            personaId: patientDetail[0]?.paciente.personaId,
+            id: patientDetail[0]?.paciente.id,
             name: input.name.value.toLowerCase(),
             lastName: input.lastName.value.toLowerCase(),
             dni: parseInt(input.dni.value),
@@ -324,7 +329,7 @@ export default function PatientEdit() {
                 </div>
                 {!validation && <p>Diligencie correctamente el formulario</p>}
                 <div className='boton-crear-paciente'>
-                    <Link to="/patientPys">
+                    <Link to="/patientPys" onClick={handleReset}>
                         <button className='boton-crear'>CANCELAR</button>
                     </Link>
                     <button onClick={(e)=>handleSubmit(e)} className='boton-crear'>MODIFICAR</button>

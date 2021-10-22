@@ -23,11 +23,20 @@ import {
   MODIFICAR_PACIENTE,
   MODIFICAR_ESPECIALISTA,
   RESETEAR_MODIFICADO,
+  CREAR_ADMINISTRATIVO,
+  RESETAR_ADMINISTRATIVO_CREADO,
+  OBTENER_ADMINISTRATIVOS,
+  RESETEAR_ADMINISTRATIVOS,
+  MODIFICAR_ADMINISTRATIVO,
+  OBTENER_ADMINISTRATIVO_DETALLADO,
+  RESETEAR_ADMINISTRATIVO_DETALLADO,
+  BUSQUEDA_ADMINSTRATIVO,
+  RESETEAR_BUSQUEDA_ADMINISTRATIVO
 } from "./valuesForActions.js";
 
 //CREAR ESPECIALISTA
 export const crearEspecialista = (especialista) => {
-  
+
   return async (dispatch) => {
     {
       const result = await fetch(`http://localhost:3001/especialista`, {
@@ -101,8 +110,15 @@ export const obtenerEspecialistaPorEspecialidad = (especialidad) => {
 
 //OBTENES INFORMACION DETALLADA DEL ESPECIALISTA POR ID
 export const especialistaDetallado = (id) => {
-  return { type: ESPECIALISTA_DETALLADO, payload: id };
-};
+  console.log(id)
+  return async (dispatch) => {
+    const result = await fetch(`http://localhost:3001/especialista/${id}`);
+    const data = await result.json();
+    return dispatch({ type: ESPECIALISTA_DETALLADO, payload: data });
+   
+  };
+}
+
 
 //OBTENER UNO O VARIOS PACIENTE(S) BUSCANDO POR NOMBRE
 export const obtenerPacientePorNombre = (nombre) => {
@@ -110,8 +126,12 @@ export const obtenerPacientePorNombre = (nombre) => {
 };
 
 //OBTENES INFORMACION DETALLADA DE PACIENTE POR ID
-export const pacienteDetallado = (id) => {
-  return { type: PACIENTE_DETALLADO, payload: id };
+export const pacienteDetallado = (dni) => {
+  return async (dispatch) => {
+    const result = await fetch(`http://localhost:3001/paciente/consulta/${dni}`);
+    const data = await result.json();
+    return dispatch({ type: PACIENTE_DETALLADO, payload: data });
+  };
 };
 
 //PARA MANEJO DE ROLES
@@ -208,5 +228,91 @@ export const modificarEspecialistas = (especialista) => {
 
 //RESET ESTADO DE MODIFICADO
 export const resetearModificado = () => {
-  return { type: RESETEAR_MODIFICADO, payload: [] };
+  return { type: RESETEAR_MODIFICADO, payload: "" };
 };
+
+
+//CREAR ADMINISTRATIVO 
+
+export const crearAdministrativo = (administrativo) => {
+  return async (dispatch) => {
+    {
+      const result = await fetch(
+        `http://localhost:3001/administrativos`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(administrativo),
+        }
+      );
+
+      const data = await result.json();
+      return dispatch({ type: CREAR_ADMINISTRATIVO, payload: data });
+    }
+  };
+}
+
+//RESETEAR ADMINISTRATIVO CREADO 
+export const resetearAdministrativoCreado = () => {
+  return { type: RESETAR_ADMINISTRATIVO_CREADO, payload: []}
+}
+
+//OBTENER ADMINISTRATIVOS
+export const obtenerAdministrativos = () => {
+  return async (dispatch) => {
+    const result = await fetch(`http://localhost:3001/administrativos`);
+    const data = await result.json();
+    return dispatch({ type: OBTENER_ADMINISTRATIVOS, payload: data });
+  };
+}
+
+//RESETEAR ADMINISTRATIVOS
+export const resetearAdministrativos = () => {
+  return { type: RESETEAR_ADMINISTRATIVOS, payload: [] };
+}
+
+//MODIFICAR ADMINISTRATIVO 
+export const modificarAdministrativo = (administrativo) => {
+  return async (dispatch) => {
+    {
+      const result = await fetch(
+        `http://localhost:3001/administrativos/${administrativo.id}`,
+        {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(administrativo),
+        }
+      );
+
+      const data = await result.json();
+      return dispatch({ type: MODIFICAR_ADMINISTRATIVO, payload: data });
+    }
+  };
+}
+
+//OBTENER ADMINISTRATIVO DETALLADO VARIOS
+export const administrativoDetallado = (id) => {
+  return { type: OBTENER_ADMINISTRATIVO_DETALLADO, payload: id}
+}
+
+//RESETEAR ADMINISTRATIVO DETALLADO
+
+export const resetearAdministrativoDetallado = () => {
+  return { type: RESETEAR_ADMINISTRATIVO_DETALLADO, payload: [] };
+}
+
+//BUSQUEDA ADMINISTRATIVO 
+export const busquedaAdminstrativo = (value) => {
+  return { type: BUSQUEDA_ADMINSTRATIVO, payload: value}
+}
+
+//RESETEAR BUSQUEDA ADMINISTRATIVO 
+export const resetearBusquedaAdministrativo = () => {
+  return { type: RESETEAR_BUSQUEDA_ADMINISTRATIVO, payload: []}
+}

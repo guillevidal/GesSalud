@@ -12,6 +12,7 @@ const router = Router();
 router.get("/", async function (req, res, next) {
   let especialistas = await Especialista_medico.findAll({
 
+
     include: [{
       model: Persona,
       attributes: [
@@ -30,6 +31,7 @@ router.get("/", async function (req, res, next) {
     },
    
     ]
+
 
   });
 
@@ -54,7 +56,7 @@ router.post("/", async function (req, res) {
         user: data.user,
         password: data.password,
         gender: data.gender,
-        rol: "1",
+        rol: "2",
       },
       {
         fields: [
@@ -109,28 +111,27 @@ router.get("/:id", async (req, res) => {
     if (id) {
       let query = await Especialista_medico.findByPk(id, {
 
-        include: [{
-          model: Persona,
-          attributes: [
-            "name",
-            "lastName",
-            "dni",
-            "email",
-            "phone",
-            "adress",
-            "birth",
-            "user",
-            "password",
-            "gender",
-            "rol"
-          ]
-        },
-        // {
-        //   model: Tipo_especialidad,
-        // }
-        ]
-          
-
+        include: [
+          {
+            model: Persona,
+            attributes: [
+              "name",
+              "lastName",
+              "dni",
+              "email",
+              "phone",
+              "adress",
+              "birth",
+              "user",
+              "password",
+              "rol",
+              "gender"
+            ],
+          },
+          // {
+          //   model: Tipo_especialidad,
+          // }
+        ],
       });
 
       // let queryEspecialista =

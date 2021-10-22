@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Person from '../../forms/Person/Person';
 import Nav from "../../Layout/Nav";
 
-import { obtenerEspecialidades, modificarEspecialistas, obtenerEspecialistas } from "../../../actions/index.js";
+import { obtenerEspecialidades, modificarEspecialistas, obtenerEspecialistas, resetearEspecialistaDetallado } from "../../../actions/index.js";
 
 
 
@@ -260,7 +260,9 @@ export default function EditSpecialty() {
 
     }
 
-
+    const handleCancel = () => {
+        dispatch(resetearEspecialistaDetallado())
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -335,6 +337,7 @@ export default function EditSpecialty() {
 
        
         let newSpecialist = {
+            personaId: specialtyDetail[0].personaId,
             id: specialtyDetail[0].id,
             name: input.name.value.toLowerCase(),
             lastName: input.lastName.value.toLowerCase(),
@@ -390,17 +393,17 @@ export default function EditSpecialty() {
                         <div className='lista-especialidades'>
 
 
-                            <select>
+                            <select onChange={(e) => { handleChangeTypeSpecialities(e) }}>
                                 <option>Tipos de esp...</option>
                                 {typeSpecialties && typeSpecialties.map((type, index) => {
                                     return (
-                                        <option onClick={(e) => { handleChangeTypeSpecialities(e) }} value={type.name} key={index} id={type.name} name={type.name}>{type.name}</option>
+                                        <option value={type.name} key={index} id={type.name} name={type.name}>{type.name}</option>
                                     )
                                 })}
                             </select>
                             {input.specialty.value[0] ? input.specialty.value.map((type, index) => {
                                 return (
-                                    <button onClick={(e) => handleDeleteTypeSpecialities(e)} value={type}>{type}</button>
+                                    <div className='preview'><span className='text'>{type}</span><button onClick={(e) => handleDeleteTypeSpecialities(e)} value={type} className='eliminar-esp'>X</button></div>
                                 )
                             }) : <p>Seleccione un tipo de especialista</p>}
 
@@ -408,7 +411,7 @@ export default function EditSpecialty() {
 
                     </div>
                     <div className='boton-crear-especialista'>
-                        <Link to='/homeRRHH'>
+                        <Link to='/homeRRHH' onClick={handleCancel}>
                             <button className='boton-creacion' >CANCELAR</button>
                         </Link>
                         {!validation && <p>Diligencie correctamente el formulario</p>}

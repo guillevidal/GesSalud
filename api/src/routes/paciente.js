@@ -2,9 +2,8 @@ const { Router } = require("express");
 const { Persona, Paciente, HistoriaClinica, Diagnostico } = require("../db");
 const router = Router();
 // const { v4: uuidv4 } = require("uuid");
-const jwt = require('jsonwebtoken');
-const config = require('../configs/config');
-
+const jwt = require("jsonwebtoken");
+const config = require("../configs/config");
 
 //MIDDLEWARE DE PROTECCION
 // const rutasProtegidas = Router(); 
@@ -72,7 +71,7 @@ router.get("/", async function (req, res, next) {
           "user",
           "password",
           "gender",
-          "rol"
+          "rol",
         ],
       },
       { model: HistoriaClinica, attributes: ["creationDate"] },
@@ -102,7 +101,7 @@ router.post("/",  async function (req, res) {
         user: data.user,
         password: data.password,
         gender: data.gender,
-        rol: '2'
+        rol: '1'
       },
       {
         fields: [
@@ -116,7 +115,7 @@ router.post("/",  async function (req, res) {
           "user",
           "password",
           "gender",
-          "rol"
+          "rol",
         ],
       }
     );
@@ -185,6 +184,7 @@ router.get("/consulta/:dni", async (req, res) => {
       res.send(query);
     }
   } catch (error) {
+    
     res.status(400).json(error);
   }
 });

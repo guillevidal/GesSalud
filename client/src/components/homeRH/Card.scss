@@ -44,8 +44,10 @@
         text-decoration: none;
         background-color: $color-terciario;
         padding: 5px;
+        border: none;
         border-radius: 10px;
         color:white;
+        cursor: pointer;
 
         &:hover{
             background-color: $color-secundario;

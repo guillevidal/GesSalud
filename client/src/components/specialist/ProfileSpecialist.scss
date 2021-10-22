@@ -1,0 +1,186 @@
+@import '../../scss/base/variables';
+
+.ProfileSpecialist{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+
+
+    .card-profile{
+
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+
+    .encabezado{
+        display: flex;
+        width: 100%;
+        max-width: 100%;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        background-image:  linear-gradient(
+            rgba(0, 0, 0, 0.6),
+            rgba(0, 0, 0, 0.6)
+          ),
+          url("https://postgradomedicina.com/wp-content/uploads/BANNER-MEDICINA.jpg");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 100% 100%;
+        
+         .image-label{
+            display: flex;
+            width: 250px;
+            height: 200px;
+            border-radius: 100%;
+            margin-top: 10px;
+
+            .icon-label{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-left: -10px;
+
+
+                .icon{
+                    color: white;
+                    font-size: 1.2em;
+                    cursor: pointer;
+                    background-color: $color-principal;
+                    border:1px solid $color-terciario;
+                    padding: 7px;
+                    border-radius: 100%;
+                 }
+            }
+
+
+
+             
+        .imagen{
+            display: flex;
+            height: auto;
+            width: 100%;
+            border-radius: 100%;
+            border: 1px solid $color-terciario;    
+           
+        }
+
+        }
+
+        .file {
+            display: none;
+         }
+
+        .nombre{
+            font-size: 2.5em;
+            font-weight: $bold;
+            color: white;
+        }
+        .especialidad{
+            font-size: 1.5em;
+            margin-top: 5px;
+            color: $color-terciario;
+            font-family: $fuente_principal;
+            margin-bottom: 10px;
+        }
+
+    }
+
+    .informacion{
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        max-width: 100%;
+        margin-top: 20px;
+        justify-content: space-around;
+
+        .info{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            background-color: #ebf5ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            justify-content: flex-start;
+
+            .error{
+                color: red;
+                font-size: 13px;
+                margin-top: -5px;
+            }
+
+            .info-edit{
+
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+                align-items: flex-start;
+                border-bottom: 2px solid $color-principal;
+                height: 30px;
+                margin-bottom: 10px;
+                
+
+                .icon-label-datos{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                .button{
+                    display: flex;
+                    border-radius: 100%;
+                    text-align: center;
+                    cursor: pointer;
+                    margin-top: -10px;
+                }
+
+                .icon{
+                        color: white;
+                        font-size: 2.3em;
+                        cursor: pointer;
+                        background-color: $color-principal;
+                        border:2px solid $color-terciario;
+                        padding: 7px;
+                        border-radius: 100%;
+                }
+            }
+
+            }
+
+
+            .info-title{
+                text-align: start;
+                font-size: 1.3em;
+                margin-bottom: 10px;
+                padding-bottom: 3px;
+                border-bottom: 2px solid $color-principal;
+
+                &.personal{
+                    border:none;
+                }
+           
+            }
+
+            .data{
+                margin: 5px 0px;
+
+                .data-real{
+                    color: $color-terciario;
+                    font-weight: $regularPlus;
+                }
+            }
+
+
+        }
+
+    }
+
+    .button-change{
+        @include boton-primario
+    }
+
+}
+}

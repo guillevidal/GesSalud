@@ -59,8 +59,12 @@ const {
 Persona.hasOne(Especialista_medico);
 Especialista_medico.belongsTo(Persona);
 
-Especialista_medico.belongsToMany(Tipo_especialidad, {through: "especialistaEspecialidad"});
-Tipo_especialidad.belongsToMany(Especialista_medico, {through: "especialistaEspecialidad"});
+Especialista_medico.belongsToMany(Tipo_especialidad, {
+  through: "especialistaEspecialidad",
+});
+Tipo_especialidad.belongsToMany(Especialista_medico, {
+  through: "especialistaEspecialidad",
+});
 
 Especialista_medico.hasOne(Agenda);
 Agenda.belongsTo(Especialista_medico);
@@ -83,6 +87,10 @@ HistoriaClinica.belongsTo(Paciente);
 
 Paciente.hasMany(Diagnostico);
 Diagnostico.belongsTo(Paciente);
+
+Persona.hasOne(Personal_administrativo);
+Personal_administrativo.belongsTo(Persona);
+
 
 
 

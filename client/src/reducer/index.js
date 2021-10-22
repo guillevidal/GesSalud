@@ -4,7 +4,10 @@ import {
     OBTENER_ESPECIALISTA_POR_NOMBRE, ESPECIALISTA_DETALLADO, OBTENER_PACIENTE_POR_NOMBRE, PACIENTE_DETALLADO,
     OBTENER_ESPECIALISTA_POR_ESPECIALIDAD, RESETEAR_BUSQUEDA_ESPECIALISTA, PAGINADO, ROL, RESETEAR_BUSQUEDA_PACIENTE,
     RESETEAR_ESPECIALISTA_CREADO, RESETEAR_PACIENTE_CREADO, RESETEAR_PACIENTE_DETALLADO, RESETEAR_ESPECIALISTA_DETALLADO,
-    RESETEAR_ESPECIALISTAS, RESETEAR_PACIENTES, MODIFICAR_PACIENTE, MODIFICAR_ESPECIALISTA, RESETEAR_MODIFICADO
+    RESETEAR_ESPECIALISTAS, RESETEAR_PACIENTES, MODIFICAR_PACIENTE, MODIFICAR_ESPECIALISTA, RESETEAR_MODIFICADO,
+    RESETAR_ADMINISTRATIVO_CREADO, RESETEAR_ADMINISTRATIVOS, MODIFICAR_ADMINISTRATIVO, OBTENER_ADMINISTRATIVO_DETALLADO,
+    RESETEAR_ADMINISTRATIVO_DETALLADO, OBTENER_ADMINISTRATIVOS, CREAR_ADMINISTRATIVO,BUSQUEDA_ADMINSTRATIVO,
+    RESETEAR_BUSQUEDA_ADMINISTRATIVO
 } from "../actions/valuesForActions.js";
 
 const initialState = {
@@ -20,25 +23,33 @@ const initialState = {
     busquedaEspecialista: [],
     rol: "",
     paginado: "",
-    modificado: ""
+    modificado: "",
+    administrativoCreado: [],
+    administrativos: [],
+    administrativoDetallado: [],
+    busquedaAdministrativo: []
 }
 
 const Reducer = (state = initialState, action) => {
 
     switch (action.type) {
         case CREAR_ESPECIALISTA:
+        case RESETEAR_ESPECIALISTA_CREADO:
             return { ...state, especialistaCreado: action.payload };
 
         case CREAR_PACIENTE:
+        case RESETEAR_PACIENTE_CREADO:
             return { ...state, pacienteCreado: action.payload }
 
         case OBTENER_ESPECIALIDADES:
             return { ...state, especialidades: action.payload }
 
         case OBTENER_PACIENTES:
+        case RESETEAR_PACIENTES:
             return { ...state, pacientes: action.payload }
 
         case OBTENER_ESPECIALISTAS:
+        case RESETEAR_ESPECIALISTAS:
             return { ...state, especialistas: action.payload }
 
         case OBTENER_ESPECIALISTA_POR_NOMBRE:
@@ -101,10 +112,10 @@ const Reducer = (state = initialState, action) => {
             return { ...state, busquedaPaciente: action.payload }
 
         case ESPECIALISTA_DETALLADO:
-            return { ...state, especialistaDetallado: state.especialistas.filter(espe => action.payload === espe.id) }
+            return { ...state, especialistaDetallado: [action.payload] }
 
         case PACIENTE_DETALLADO:
-            return { ...state, pacienteDetallado: state.pacientes.filter(pac => action.payload === pac.id) }
+            return { ...state, pacienteDetallado: [action.payload] }
 
         case ROL: {
             return { ...state, rol: action.payload }
@@ -113,33 +124,54 @@ const Reducer = (state = initialState, action) => {
         case PAGINADO: {
             return { ...state, paginado: action.payload }
         }
-
-        case RESETEAR_PACIENTE_CREADO:
-            return { ...state, pacienteCreado: action.payload }
-        
-        case RESETEAR_ESPECIALISTA_CREADO:
-            return { ...state, especialistaCreado: action.payload }
-
+    
         case RESETEAR_PACIENTE_DETALLADO:
                 return { ...state, pacienteDetallado: action.payload }
     
         case RESETEAR_ESPECIALISTA_DETALLADO:
             return { ...state, especialistaDetallado: action.payload }
 
-        case RESETEAR_PACIENTES:
-            return { ...state, pacientes: action.payload }
-        
-        case RESETEAR_ESPECIALISTAS:
-            return { ...state, especialistas: action.payload }
 
         case MODIFICAR_PACIENTE:
+        case MODIFICAR_ESPECIALISTA:
+        case MODIFICAR_ADMINISTRATIVO:
+        case RESETEAR_MODIFICADO:
             return { ...state, modificado: action.payload}
 
-        case MODIFICAR_ESPECIALISTA:
+
+        case CREAR_ADMINISTRATIVO:
+        case RESETAR_ADMINISTRATIVO_CREADO:
+            return {...state, administrativoCreado: action.payload}
+
+        case OBTENER_ADMINISTRATIVOS:
+        case RESETEAR_ADMINISTRATIVOS:
+            return {...state, administrativos: action.payload}
+
+        case OBTENER_ADMINISTRATIVO_DETALLADO: 
+            return {...state, administrativoDetallado: state.administrativos.filter(adm => adm === action.payload)}
+         
+        case RESETEAR_ADMINISTRATIVO_DETALLADO:
+            return { ...state, administrativoDetallado: action.payload}
+
+        case BUSQUEDA_ADMINSTRATIVO:
+            let busquedaAdmin = [];
+            for (let index = 0; index < state.administrativos.length; index++) {
+                if (state.administrativos[index].persona.name.toLowerCase().includes(action.payload.toLowerCase()) || 
+                state.administrativos[index].persona.lastName.toLowerCase().includes(action.payload.toLowerCase())) {
+                    busquedaAdmin = [...busquedaAdmin, state.administrativos[index]];
+                }
+            }
+            if (!busquedaAdmin[0]) {
+                busquedaAdmin = ["No se encontro Administrativo"];
+            }
+            return { ...state, busquedaAdministrativo: busquedaAdmin }
             
-            return {...state, modificado: action.payload}
+        case RESETEAR_BUSQUEDA_ADMINISTRATIVO:
+            return { ...state, busquedaAdmin: action.payload}    
+        
         default:
             return state;
+
     }
 
 }
