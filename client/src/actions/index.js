@@ -32,6 +32,8 @@ import {
   RESETEAR_ADMINISTRATIVO_DETALLADO
 } from "./valuesForActions.js";
 
+const token = localStorage['access-token'];
+
 //CREAR ESPECIALISTA
 export const crearEspecialista = (especialista) => {
 
@@ -52,14 +54,14 @@ export const crearEspecialista = (especialista) => {
 };
 //CREAR PACIENTE
 export const crearPaciente = (paciente) => {
-  const token = localStorage['access-token'];
   return async (dispatch) => {
     {
-      const result = await fetch(`http://localhost:3001/paciente?token=${token}`, {
+      const result = await fetch('http://localhost:3001/paciente', {
         method: "POST",
         headers: {
-          Accept: "application/json",
+          // Accept: "application/json",
           "Content-Type": "application/json",
+          'accept': token,
         },
         body: JSON.stringify(paciente),
       });
@@ -88,9 +90,11 @@ export const obtenerEspecialistas = () => {
 
 //OBTENER PACIENTE
 export const obtenerPacientes = () => {
-  const token = localStorage['access-token'];
   return async (dispatch) => {
-    const result = await fetch(`http://localhost:3001/paciente?token=${token}`);
+    const result = await fetch('http://localhost:3001/paciente',{
+      method: 'GET',
+      headers: {'accept': token}
+    });
     const data = await result.json();
     return dispatch({ type: OBTENER_PACIENTES, payload: data });
   };
