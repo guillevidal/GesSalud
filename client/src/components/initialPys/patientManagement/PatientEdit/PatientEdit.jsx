@@ -207,6 +207,7 @@ export default function PatientEdit() {
     const handleReset = () => {
         dispatch(resetearPacienteDetallado())
     }
+
     const handleSubmit =  (event) => {
         event.preventDefault()
 
@@ -223,15 +224,15 @@ export default function PatientEdit() {
                 return
             }else{ 
 
-                let filtro = pacientes.filter((pat) => { return pat.id !== patientDetail[0]?.id })
-                let filtro2 = pacientes.filter((pat) => { return pat.email !== patientDetail[0]?.email })
-                let filtro3 = pacientes.filter((pat) => { return pat.user !== patientDetail[0]?.user })
+                let filtro = pacientes.filter((pat) => { return pat.persona.dni !== patientDetail[0]?.dni})
+                let filtro2 = pacientes.filter((pat) => { return pat.persona.email !== patientDetail[0]?.email })
+                let filtro3 = pacientes.filter((pat) => { return pat.persona.user !== patientDetail[0]?.user })
                 
                 if (filtro.length > 0) {
-                    
+                    console.log("Aquiiiiii",filtro)
                     for (let index = 0; index < filtro.length; index++) {
                         
-                        if (parseInt(filtro[index].dni) === parseInt(input.dni.value)) {
+                        if (filtro[index].persona.dni === parseInt(input.dni.value)) {
                             
                             setValidation(false)
                             alert("El DNI  que intenta modificar ya se encuentra registrado")
@@ -243,7 +244,7 @@ export default function PatientEdit() {
 
                 if(filtro2.length> 0){
                     for (let index = 0; index < filtro2.length; index++){
-                        if (filtro2[index].email===input.email.value) {
+                        if (filtro2[index].persona.email===input.email.value) {
                             setValidation(false)
                             alert("El EMAIL  que intenta modificar ya se encuentra registrado")
                             return
@@ -252,7 +253,7 @@ export default function PatientEdit() {
                 }
                 if(filtro3.length> 0){
                     for (let index = 0; index < filtro3.length; index++){
-                        if (filtro3[index].user===input.user.value) {
+                        if (filtro3[index].persona.user===input.user.value) {
                             setValidation(false)
                             alert("El Usuario  que intenta modificar ya se encuentra registrado")
                             return
