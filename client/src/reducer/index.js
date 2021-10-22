@@ -6,7 +6,8 @@ import {
     RESETEAR_ESPECIALISTA_CREADO, RESETEAR_PACIENTE_CREADO, RESETEAR_PACIENTE_DETALLADO, RESETEAR_ESPECIALISTA_DETALLADO,
     RESETEAR_ESPECIALISTAS, RESETEAR_PACIENTES, MODIFICAR_PACIENTE, MODIFICAR_ESPECIALISTA, RESETEAR_MODIFICADO,
     RESETAR_ADMINISTRATIVO_CREADO, RESETEAR_ADMINISTRATIVOS, MODIFICAR_ADMINISTRATIVO, OBTENER_ADMINISTRATIVO_DETALLADO,
-    RESETEAR_ADMINISTRATIVO_DETALLADO, OBTENER_ADMINISTRATIVOS, CREAR_ADMINISTRATIVO
+    RESETEAR_ADMINISTRATIVO_DETALLADO, OBTENER_ADMINISTRATIVOS, CREAR_ADMINISTRATIVO,BUSQUEDA_ADMINSTRATIVO,
+    RESETEAR_BUSQUEDA_ADMINISTRATIVO
 } from "../actions/valuesForActions.js";
 
 const initialState = {
@@ -25,7 +26,8 @@ const initialState = {
     modificado: "",
     administrativoCreado: [],
     administrativos: [],
-    administrativoDetallado: []
+    administrativoDetallado: [],
+    busquedaAdministrativo: []
 }
 
 const Reducer = (state = initialState, action) => {
@@ -150,6 +152,23 @@ const Reducer = (state = initialState, action) => {
          
         case RESETEAR_ADMINISTRATIVO_DETALLADO:
             return { ...state, administrativoDetallado: action.payload}
+
+        case BUSQUEDA_ADMINSTRATIVO:
+            let busquedaAdmin = [];
+            for (let index = 0; index < state.administrativos.length; index++) {
+                if (state.administrativos[index].persona.name.toLowerCase().includes(action.payload.toLowerCase()) || 
+                state.administrativos[index].persona.lastName.toLowerCase().includes(action.payload.toLowerCase())) {
+                    busquedaAdmin = [...busquedaAdmin, state.administrativos[index]];
+                }
+            }
+            if (!busquedaAdmin[0]) {
+                busquedaAdmin = ["No se encontro Administrativo"];
+            }
+            return { ...state, busquedaAdministrativo: busquedaAdmin }
+            
+        case RESETEAR_BUSQUEDA_ADMINISTRATIVO:
+            return { ...state, busquedaAdmin: action.payload}    
+        
         default:
             return state;
 
