@@ -1,41 +1,35 @@
 /* eslint-disable */
-
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch} from "react-redux";
-import { Link } from "react-router-dom";
-import Nav from '../../../Layout/Nav';
-import Person from '../../../forms/Person/Person.jsx';
-import {modificarPaciente, obtenerPacientes, resetearPacienteDetallado} from "../../../../actions/index.js"
-export default function PatientEdit() {
+import { useDispatch, useSelector } from "react-redux";
+import Person from "../Person/Person.jsx";
+import { crearAdministrativo, resetearAdministrativoCreado } from "../../../actions/index.js"
+
+const CreateRRHH = () => {
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
-    const patientDetail = useSelector(state => state.pacienteDetallado)
-    const pacientes = useSelector(state => state.pacientes)
     const dispatch = useDispatch()
-
+    const [validation, setValidation] = useState(true)
     const [input, setInput] = useState({
-        name: {value: patientDetail[0]?.name, error: null},
-        lastName: {value: patientDetail[0]?.lastName, error: null},
-        dni: {value: patientDetail[0]?.dni, error: null},
-        email: {value: patientDetail[0]?.email, error: null},
-        phone: {value: patientDetail[0]?.phone, error: null},
-        adress: {value: patientDetail[0]?.adress, error: null},
-        birth: {value: patientDetail[0]?.birth, error: null},
-        user: {value: patientDetail[0]?.user, error: null},
-        password: {value: patientDetail[0]?.password, error: null},
-        gender: {value: patientDetail[0]?.gender , error: null , ad: "el genero seleccionado es: "+ patientDetail[0]?.gender},
-        emergencyContact: {value: patientDetail[0]?.paciente.emergencyContact, error: null}
+        name: { value: "", error: null },
+        lastName: { value: "", error: null },
+        dni: { value: "", error: null },
+        email: { value: "", error: null },
+        phone: { value: "", error: null },
+        adress: { value: "", error: null },
+        birth: { value: "", error: "Seleccione una fecha" },
+        user: { value: "", error: null },
+        password: { value: "", error: null },
+        gender: { value: "", error: "Seleccione un genero", ad: null },
 
     })
-    const [validation, setValidation]= useState(true)
+
+    const administrativos = useSelector(state => state.administrativos)
+
     useEffect(() => {
         setTimeout(() => { setValidation(true) }, 2500)
     }, [validation])
 
-    useEffect(async () => {
-        await dispatch(obtenerPacientes())
-    }, [])
     const handleName = (event) => {
         const { value } = event.target
         if (value === "") {
@@ -184,96 +178,57 @@ export default function PatientEdit() {
         }
 
     }
-
-
-    const handleContactEmergy = (event) => {
-        const { value } = event.target
-        if (value === "") {
-            setInput({ ...input, emergencyContact: { value, error: "Campo requerido" } })
-        }
-        if (value[0]?.includes(" ")) {
-            setInput({ ...input, emergencyContact: { value, error: "No debe contener espacions al inicio" } })
-        } else if (value.includes(" ")) {
-            setInput({ ...input, emergencyContact: { value, error: "No debe contener espacios" } })
-        } else if (/\W/.test(value.replace(/\s/g, "_"))) {
-            setInput({ ...input, emergencyContact: { value, error: "No debe contener caracteres especiales" } })
-        } else if (/\D/.test(value)) {
-            setInput({ ...input, emergencyContact: { value, error: "No debe contener letras" } })
-        } else {
-            setInput({ ...input, emergencyContact: { value, error: null } })
-        }
-    }
-
-    const handleReset = () => {
-        dispatch(resetearPacienteDetallado())
-    }
-
-    const handleSubmit =  (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault()
 
         if (!input.name.error && !input.lastName.error && !input.password.error && !input.email.error && !input.phone.error
-            && !input.user.error  && !input.birth.error  && !input.dni.error
-            && !input.adress.error  && !input.emergencyContact.error 
-            ) {
+            && !input.user.error && !input.birth.error && !input.dni.error
+            && !input.adress.error) {
 
             if (input.name.value.length === 0 || input.lastName.value.length === 0 || input.password.value.length === 0 || input.email.value.length === 0 || input.phone.value.length === 0
                 || input.user.value.length === 0 || input.birth.value.length === 0 || input.dni.value.length === 0
-                || input.adress.value.length === 0 || input.emergencyContact.value.length === 0 
-                ) {
+                || input.adress.value.length === 0) {
                 setValidation(false)
                 return
-            }else{ 
 
-                let filtro = pacientes.filter((pat) => { return pat.persona.dni !== patientDetail[0]?.dni})
-                let filtro2 = pacientes.filter((pat) => { return pat.persona.email !== patientDetail[0]?.email })
-                let filtro3 = pacientes.filter((pat) => { return pat.persona.user !== patientDetail[0]?.user })
-                
-                if (filtro.length > 0) {
-                    console.log("Aquiiiiii",filtro)
-                    for (let index = 0; index < filtro.length; index++) {
-                        
-                        if (filtro[index].persona.dni === parseInt(input.dni.value)) {
-                            
+            } else {
+
+                if (administrativos.length > 0) {
+
+                    for (let index = 0; index < administrativos.length; index++) {
+
+                        if (parseInt(administrativos[index].persona.dni) === parseInt(input.dni.value)) {
+
                             setValidation(false)
-                            alert("El DNI  que intenta modificar ya se encuentra registrado")
+                            alert("El DNI  que intenta crear ya se encuentra registrado")
+                            return
+                        }
+
+                        if (administrativos[index].persona.email === input.email.value) {
+                            setValidation(false)
+                            alert("El EMAIL  que intenta crear ya se encuentra registrado")
+                            return
+                        }
+
+                        if (administrativos[index].persona.user === input.user.value) {
+                            setValidation(false)
+                            alert("El Usuario  que intenta crear ya se encuentra registrado")
                             return
                         }
 
                     }
+
                 }
 
-                if(filtro2.length> 0){
-                    for (let index = 0; index < filtro2.length; index++){
-                        if (filtro2[index].persona.email===input.email.value) {
-                            setValidation(false)
-                            alert("El EMAIL  que intenta modificar ya se encuentra registrado")
-                            return
-                        }
-                    }
-                }
-                if(filtro3.length> 0){
-                    for (let index = 0; index < filtro3.length; index++){
-                        if (filtro3[index].persona.user===input.user.value) {
-                            setValidation(false)
-                            alert("El Usuario  que intenta modificar ya se encuentra registrado")
-                            return
-                        }
-                    }
-                }
 
             }
-        }else{
+        } else {
             setValidation(false)
-            return 
+            return
         }
 
 
-
-
-
-        let newPatient = {
-            personaId: patientDetail[0]?.paciente.personaId,
-            id: patientDetail[0]?.paciente.id,
+        let newAdmin = {
             name: input.name.value.toLowerCase(),
             lastName: input.lastName.value.toLowerCase(),
             dni: parseInt(input.dni.value),
@@ -284,58 +239,39 @@ export default function PatientEdit() {
             user: input.user.value,
             password: input.password.value,
             gender: input.gender.value,
-            emergencyContact: parseInt(input.emergencyContact.value)
+            rol: "2"
+
         }
 
-        alert(`El paciente ${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se modificó correctamente `)
-        dispatch(modificarPaciente(newPatient));
-        dispatch(obtenerPacientes())
+        alert(`El Administrativo ${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se creo correctamente `)
+        dispatch(crearAdministrativo(newAdmin));
         return
 
     }
 
+    const handleCancel = (e) => {
+        dispatch(resetearAdministrativoCreado())
+    }
+
     return (
-        <div id="createPatient-container">
-            <Nav />
+        <div>
 
-            <form className='createPatient-form' onSubmit={handleSubmit}>
-                <div className='information-person'>
+            <Person name={input.name} lastName={input.lastName} dni={input.dni}
+                email={input.email} phone={input.phone} adress={input.adress}
+                birth={input.birth} user={input.user} password={input.password} gender={input.gender}
+                handleName={handleName} handleLastName={handleLastName} handleDni={handleDni}
+                handleBrith={handleBrith} handlePhone={handlePhone} handleGender={handleGender}
+                handleAdress={handleAdress} handleEmail={handleEmail} handleUser={handleUser}
+                handlePassword={handlePassword}
+            />
+            {!validation && <p>Diligencie correctamente el formulario</p>}
+            <div className='boton-crear-paciente'>
 
-                <Person name={input.name} lastName={input.lastName} dni={input.dni}
-                        email={input.email} phone={input.phone} adress={input.adress}
-                        birth={input.birth} user={input.user} password={input.password} gender={input.gender}
-                        handleName={handleName} handleLastName={handleLastName} handleDni={handleDni}
-                        handleBrith={handleBrith} handlePhone={handlePhone} handleGender={handleGender}
-                        handleAdress={handleAdress} handleEmail={handleEmail} handleUser={handleUser}
-                        handlePassword={handlePassword}
-                    />
-
-
-                </div>
-                <div className='information-clinic'>
-                <div className='label-title'>
-                        <label className='label-title-text'>INFORMACION CLINICA</label>
-                    </div>
-                    <div className='label-textarea'>
-                        <label htmlFor="emergencyContact" className='label-interno'>Contacto de emergencia: </label>
-
-                        <input
-                            id="emergencyContact" type="text" name="emergencyContact" required pattern="[0-9]+"
-                            title="El campo solo acepta números" value={input.emergencyContact.value} onChange={(e) => handleContactEmergy(e)}
-                            className='input-emergencia'
-                        />
-                        {input.emergencyContact.error && <p>{input.emergencyContact.error}</p>}
-                    </div>
-                </div>
-                {!validation && <p>Diligencie correctamente el formulario</p>}
-                <div className='boton-crear-paciente'>
-                    <Link to="/patientPys" onClick={handleReset}>
-                        <button className='boton-crear'>CANCELAR</button>
-                    </Link>
-                    <button onClick={(e)=>handleSubmit(e)} className='boton-crear'>MODIFICAR</button>
-                </div>
-            </form>
-
+                <button onClick={(e) => handleSubmit(e)} className='boton-crear'>CREAR</button>
+            </div>
         </div>
     )
 }
+
+
+export default CreateRRHH

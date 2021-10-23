@@ -69,9 +69,14 @@ Tipo_especialidad.belongsToMany(Especialista_medico, {
 Especialista_medico.hasOne(Agenda);
 Agenda.belongsTo(Especialista_medico);
 
-
 Agenda.belongsTo(Tipo_especialidad);
 Tipo_especialidad.hasOne(Agenda);
+
+Turno.belongsTo(Agenda);
+Agenda.hasOne(Turno);
+
+Turno.belongsTo(Paciente);
+Paciente.hasOne(Turno);
 
 
 Persona.hasOne(Paciente);

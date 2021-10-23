@@ -1,13 +1,13 @@
 const server = require("./src/app.js");
 const { conn, Tipo_especialidad } = require("./src/db.js");
 const axios = require("axios");
+const { especialidades } = require("./src/configs/specialties.js")
 
-conn.sync({ force: true }).then(async () => {
+conn.sync({ force: false }).then(async () => {
   server.listen(3001, async () => {
-    let getEspecialidades = await axios.get(
-      `http://localhost:3001/especialidades`
-    );
-    let Especialidades = getEspecialidades.data.sort(function (a, b) {
+    
+    
+    let Especialidades = especialidades.sort(function (a, b) {
       if (a.name > b.name) {
         return 1;
       }

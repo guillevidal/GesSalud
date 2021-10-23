@@ -35,7 +35,13 @@ export default function Landing(){
         e.preventDefault()
 
         
+
    /*   axios.post('http://localhost:3001/paciente/autenticar', { 
+
+
+     axios.post('http://localhost:3001/autenticar', { 
+
+
         usuario: input.user,
         password: input.pass
     })
@@ -44,8 +50,15 @@ export default function Landing(){
         localStorage.setItem('access-token', data.data.token)
         dispatch(rol(data.data.rol));
 
-    }
+    }   else alert(data.data.mensaje)
+    }) 
+
     })  */
+
+
+ 
+
+
 
     dispatch(rol(input.user));
 

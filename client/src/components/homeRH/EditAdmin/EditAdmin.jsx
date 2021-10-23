@@ -1,56 +1,39 @@
 /* eslint-disable */
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { modificarAdministrativo, obtenerAdministrativos, resetearAdministrativoDetallado } from "../../../actions/index.js"
 import { Link } from "react-router-dom";
-import Person from '../../forms/Person/Person';
-import Nav from "../../Layout/Nav";
+import Nav from "../../Layout/Nav.jsx"
+import Person from "../../forms/Person/Person.jsx"
 
-import { obtenerEspecialidades, modificarEspecialistas, obtenerEspecialistas, resetearEspecialistaDetallado } from "../../../actions/index.js";
-
-
-
-export default function EditSpecialty() {
-    
-    const capitalFirstLetter = (str) => {
-        return str.charAt(0).toUpperCase() + str.slice(1)
-    }
-
-    const dispatch = useDispatch();
-    const specialtyDetail = useSelector(state => state.especialistaDetallado)
-    useEffect(async () => {
-        await dispatch(obtenerEspecialidades())
-        await dispatch(obtenerEspecialistas())
-    }, [])
-
-    const especialistas = useSelector(state => state.especialistas)
-    const typeSpecialties = useSelector((state) => state.especialidades)
-    const [validation, setValidation] = useState(true);
-
-
+const EditAdmin = () => {
+    const administrativoDetallado = useSelector(state => state.administrativoDetallado)
+    const administrativos = useSelector(state => state.administrativos)
+    const dispatch = useDispatch()
     const [input, setInput] = useState({
-        name: { value: specialtyDetail[0]?.persona.name, error: null },
-        lastName: { value: specialtyDetail[0]?.persona.lastName, error: null },
-        dni: { value: specialtyDetail[0]?.persona.dni, error: null },
-        email: { value: specialtyDetail[0]?.persona.email, error: null },
-        phone: { value: specialtyDetail[0]?.persona.phone, error: null },
-        adress: { value: specialtyDetail[0]?.persona.adress, error: null },
-        birth: { value: specialtyDetail[0]?.persona.birth, error: null },
-        user: { value: specialtyDetail[0]?.persona.user, error: null },
-        password: { value: specialtyDetail[0]?.persona.password, error: null },
-        gender: { value: specialtyDetail[0]?.persona.gender, error: null, ad: "El genero seleccionado es: " + specialtyDetail[0]?.persona.gender },
-        enrollment: { value: specialtyDetail[0]?.enrollment, error: null },
-        specialty: { value: specialtyDetail[0]?.specialty.split(', '), error: null },
+        name: { value: administrativoDetallado[0]?.persona.name, error: null },
+        lastName: { value: administrativoDetallado[0]?.persona.lastName, error: null },
+        dni: { value: administrativoDetallado[0]?.persona.dni, error: null },
+        email: { value: administrativoDetallado[0]?.persona.email, error: null },
+        phone: { value: administrativoDetallado[0]?.persona.phone, error: null },
+        adress: { value: administrativoDetallado[0]?.persona.adress, error: null },
+        birth: { value: administrativoDetallado[0]?.persona.birth, error: null },
+        user: { value: administrativoDetallado[0]?.persona.user, error: null },
+        password: { value: administrativoDetallado[0]?.persona.password, error: null },
+        gender: { value: administrativoDetallado[0]?.persona.gender, error: null, ad: "El genero seleccionado es: " + administrativoDetallado[0]?.persona.gender },
+        status: { value: administrativoDetallado[0]?.status, error: null },
+        rol: {value: administrativoDetallado[0]?.persona.rol, error: null}
     })
 
-    useEffect(() => {
-        if (input.specialty.error) {
-            setTimeout(() => { setInput({ ...input, specialty: { value: [...input.specialty.value], error: null } }) }, 2500)
-        }
-    }, [input.specialty.error])
+    const [validation, setValidation] = useState(true);
+
     useEffect(() => {
         setTimeout(() => { setValidation(true) }, 2500)
     }, [validation])
 
+    const capitalFirstLetter = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1)
+    }
     const handleName = (event) => {
         const { value } = event.target
         if (value === "") {
@@ -71,7 +54,7 @@ export default function EditSpecialty() {
             }
         }
     }
-   
+
 
 
     const handleLastName = (event) => {
@@ -202,87 +185,35 @@ export default function EditSpecialty() {
         }
 
     }
-
-    const handleEnrollment = (event) => {
-        const { value } = event.target
-        if (value === "") {
-            setInput({ ...input, enrollment: { value, error: "Campo requerido" } })
+    const handleStatus = (e) => {
+        const {value} = e.target
+        setInput({ ...input, status : {value, error: null}})
+    }
+    const handleRol = (e) => {
+        if(e.target.value!=="Rol..."){
+            const {value} = e.target
+            setInput({ ...input, rol : {value, error: null}})
 
         }
-        if (value[0]?.includes(" ")) {
-            setInput({ ...input, enrollment: { value, error: "No debe contener espacions al inicio" } })
-        } else if (value.includes(" ")) {
-            setInput({ ...input, enrollment: { value, error: "No debe contener espacios" } })
-        } else if (/\D/.test(value)) {
-            setInput({ ...input, enrollment: { value, error: "No debe contener letras" } })
-        } else {
-            setInput({ ...input, enrollment: { value, error: null } })
-        }
     }
-
-
-    const handleChangeTypeSpecialities = (e) => {
-        e.preventDefault()
-        const { value } = e.target
-        if(!input.specialty.value[0]){
-            setInput({ ...input, specialty: {value: [value], error: null}})
-            return
-        }else{
-            for (let index = 0; index < input.specialty.value.length; index++) {
-
-                if(input.specialty.value[index].toLowerCase()=== value.toLowerCase()){
-
-                    setInput({ ...input, specialty: {value: [...input.specialty.value], error: "Ya ha seleccionado esta opcion"}})
-                    return
-                }
-                
-            }
-            setInput({ ...input, specialty: {value: [...input.specialty.value, value], error: null}})
-            return
-        }
-
-    }
-    const handleDeleteTypeSpecialities = (event) => {
-        event.preventDefault()
-        const { value } = event.target;
-        let arrDelete = []
-        for (let index = 0; index < input.specialty.value.length; index++) {
-            if (input.specialty.value[index].toLowerCase() !== value.toLowerCase()) {
-                arrDelete = [...arrDelete, input.specialty.value[index]]
-            }
-
-        }
-        setInput({
-            ...input, specialty: {
-                value: arrDelete,
-                error: null
-            }
-        })
-
-    }
-
-    const handleCancel = () => {
-        dispatch(resetearEspecialistaDetallado())
-    }
-
     const handleSubmit = (event) => {
         event.preventDefault()
         
         if (!input.name.error && !input.lastName.error && !input.password.error && !input.email.error && !input.phone.error
-            && !input.user.error && !input.specialty.error && !input.birth.error && !input.dni.error
-            && !input.enrollment.error && !input.adress.error) {
+            && !input.user.error  && !input.birth.error && !input.dni.error
+             && !input.adress.error) {
 
             if (input.name.value.length === 0 || input.lastName.value.length === 0 || input.password.value.length === 0 || input.email.value.length === 0 || input.phone.value.length === 0
-                || input.user.value.length === 0 || input.specialty.value.length === 0 || input.birth.value.length === 0 || input.dni.value.length === 0
-                || input.enrollment.value.length === 0 || input.adress.value.length === 0) {
+                || input.user.value.length === 0  || input.birth.value.length === 0 || input.dni.value.length === 0
+                || input.adress.value.length === 0) {
                 setValidation(false)
                 return
 
             } else {
-                let filtro = especialistas.filter((esp) => { return esp.persona.dni !== specialtyDetail[0]?.persona.dni })
-                let filtro2 = especialistas.filter((esp) => { return esp.persona.email !== specialtyDetail[0]?.persona.email })
-                let filtro3 = especialistas.filter((esp) => { return esp.persona.user !== specialtyDetail[0]?.persona.user })
-                let filtro4 = especialistas.filter((esp) => { return esp.enrollment !== specialtyDetail[0]?.enrollment })
+                let filtro = administrativos.filter((esp) => { return esp.persona.dni !== administrativoDetallado[0]?.persona.dni })
+                let filtro2 = administrativos.filter((esp) => { return esp.persona.email !== administrativoDetallado[0]?.persona.email })
+                let filtro3 = administrativos.filter((esp) => { return esp.persona.user !== administrativoDetallado[0]?.persona.user })
+                
                 if (filtro.length > 0) {
                     
                     for (let index = 0; index < filtro.length; index++) {
@@ -313,20 +244,7 @@ export default function EditSpecialty() {
                         }
                     }
                 }
-                if(filtro4.length> 0){
-                    for (let index = 0; index < filtro4.length; index++){
-                        if (filtro4[index].enrollment===parseInt(input.enrollment.value)) {
-                            setValidation(false)
-                            alert("La identificacion profesional que intenta modificar ya se encuentra registrado")
-                            return
-                        }
-                    }
-                }
-                if(input.specialty.value.length===0){
-                    setValidation(false)
-                            alert("Debe seleccionar por lo menos un tipo de especialidad")
-                            return
-                }
+ 
             } 
      
                 
@@ -337,9 +255,9 @@ export default function EditSpecialty() {
         }
 
        
-        let newSpecialist = {
-            personaId: specialtyDetail[0].personaId,
-            id: specialtyDetail[0].id,
+        let newAdmin = {
+            
+            id: administrativoDetallado[0].id,
             name: input.name.value.toLowerCase(),
             lastName: input.lastName.value.toLowerCase(),
             dni: parseInt(input.dni.value),
@@ -350,18 +268,21 @@ export default function EditSpecialty() {
             user: input.user.value,
             password: input.password.value,
             gender: input.gender.value,
-            enrollment: parseInt(input.enrollment.value),
-            specialty: input.specialty.value.join(', '),
+            status: input.status.value,
+            rol: input.rol.value
 
         }
         
-        alert(`El especialista médico ${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se modificó correctamente `)
-        dispatch(modificarEspecialistas(newSpecialist));
-        dispatch(obtenerEspecialistas())
+        alert(`El Administrativo ${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se modificó correctamente `)
+        dispatch(modificarAdministrativo(newAdmin));
+        dispatch(obtenerAdministrativos())
         return
 
     }
 
+    const handleCancel = (e) => {
+        dispatch(resetearAdministrativoDetallado())
+    }
 
     return (
         <div id="createSpecialist-container">
@@ -377,40 +298,23 @@ export default function EditSpecialty() {
                             handleAdress={handleAdress} handleEmail={handleEmail} handleUser={handleUser}
                             handlePassword={handlePassword}
                         />
-                        <div className='identificacion-personal'>
-                            <label htmlFor="enrollment" className='label-tipo-title-text'>IDENTIFICACION PROFESIONAL</label>
-                            <input
-                                id="enrollment" type="text" name="enrollment"
-                                value={input.enrollment.value} onChange={(e) => handleEnrollment(e)}
-                            />
-                        </div>
+                        {<div>
+                          <select onChange={(e) => handleStatus(e)}>
+                              <option value={input.status.value?true:false}>{input.status.value?"Activo":"Inactivo"}</option>
+                              <option value={!input.status.value?true:false}>{!input.status.value?"Activo":"Inactivo"}</option>
+                          </select>
+                             
+                        </div>}
+                        {<div>
+                            <select onChange={(e) => handleRol(e)}>
+                              <option>Rol...</option>
+                              <option value="1">Rol PYS</option>
+                              <option value="2">Rol RRHH</option>
+                          </select>
+                         </div>}
                     </div>
-                    <div id='specialist-container'>
-
-                        <div className='label-tipo-title'>
-
-                            <label className='label-tipo-title-text'>TIPO DE ESPECIALDAD</label>
-                        </div>
-                        <div className='lista-especialidades'>
 
 
-                            <select onChange={(e) => { handleChangeTypeSpecialities(e) }}>
-                                <option>Tipos de esp...</option>
-                                {typeSpecialties && typeSpecialties.map((type, index) => {
-                                    return (
-                                        <option value={type.name} key={index} id={type.name} name={type.name}>{type.name}</option>
-                                    )
-                                })}
-                            </select>
-                            {input.specialty.value[0] ? input.specialty.value.map((type, index) => {
-                                return (
-                                    <div className='preview'><span className='text'>{type}</span><button onClick={(e) => handleDeleteTypeSpecialities(e)} value={type} className='eliminar-esp'>X</button></div>
-                                )
-                            }) : <p>Seleccione un tipo de especialista</p>}
-
-                        </div>
-
-                    </div>
                     <div className='boton-crear-especialista'>
                         <Link to='/homeRRHH' onClick={handleCancel}>
                             <button className='boton-creacion' >CANCELAR</button>
@@ -421,6 +325,7 @@ export default function EditSpecialty() {
                 </form>
             </div>
         </div>
+
     )
 }
-
+export default EditAdmin;

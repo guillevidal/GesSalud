@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Nav from "../Layout/Nav"
 import './ProfileSpecialist.scss'
 import { useDispatch, useSelector } from "react-redux"
@@ -53,6 +54,23 @@ export default  function ProfileSpecialist(){
 
 
 
+    const [editar, setEditar] = useState({
+        imagen : false,
+        datos : false,
+        cuenta : false
+    })
+
+    const [datosEsp, setDatos] = useState({
+        ...especialista[0].persona
+    })
+
+    const [newData, setNewData] = useState({
+        ...especialista[0]
+    })
+
+    const [validaciones, setValidaciones] = useState(false)
+
+
     const mayus = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
     };
@@ -74,7 +92,6 @@ export default  function ProfileSpecialist(){
 
     }
 
-
     const handleChange = async (e) =>{
         if(rol === '3'){
          setDatos({
@@ -91,6 +108,7 @@ export default  function ProfileSpecialist(){
             })
         }
 
+
         if(e.target.name === 'passwordActual'){
             if(e.target.value !== especialista[0].persona.password){
                 setValidaciones(true)
@@ -100,6 +118,7 @@ export default  function ProfileSpecialist(){
                 setValidaciones(false)
                 return
             }
+
         }   
 
        
@@ -163,7 +182,6 @@ export default  function ProfileSpecialist(){
 
     }
 
-  
 
     const hardCodeo = (number) =>{
         
@@ -179,6 +197,7 @@ export default  function ProfileSpecialist(){
     return(
         <div className='ProfileSpecialist'>
             <Nav />
+
 
             {rol === '3' && <div className='card-profile'>
                 <div className='encabezado'>
@@ -197,6 +216,7 @@ export default  function ProfileSpecialist(){
                 </div>
                 <div className='info'>
                 <div className='info-edit'><span className='info-title personal'>Información personal</span><div className='icon-label-datos'><label onClick={e => handleClick(e,'datos')} className='button'><FontAwesomeIcon icon={faEdit} className='icon'/></label></div></div>
+
                     <div className='data'><span>Telefono: </span>{editar.datos === true ? <input type='text' value={datosEsp.phone} onChange={e => handleChange(e)} name='phone'/> : <span className='data-real'>{ especialista[0].persona.phone}</span>}</div>
                     <div className='data'><span>Email: </span>{editar.datos === true ? <input type='text' value={datosEsp.email} onChange={e => handleChange(e)} name='email'/> : <span className='data-real'>{especialista[0].persona.email}</span>}</div>
                     <div className='data'><span>Dirección: </span>{editar.datos === true ? <input type='text' value={datosEsp.adress} onChange={e => handleChange(e)} name='adress' /> : <span className='data-real'>{especialista[0].persona.adress}</span>}</div>
@@ -232,6 +252,7 @@ export default  function ProfileSpecialist(){
                     <div className='data'><span>Telefono: </span>{editar.datos === true ? <input type='text' value={datosPac.phone} onChange={e => handleChange(e)} name='phone'/> : <span className='data-real'>{ paciente[0].phone}</span>}</div>
                     <div className='data'><span>Email: </span>{editar.datos === true ? <input type='text' value={datosPac.email} onChange={e => handleChange(e)} name='email'/> : <span className='data-real'>{paciente[0].email}</span>}</div>
                     <div className='data'><span>Dirección: </span>{editar.datos === true ? <input type='text' value={datosPac.adress} onChange={e => handleChange(e)} name='adress' /> : <span className='data-real'>{paciente[0].adress}</span>}</div>
+
                 </div>
 
                 <div className='info'>
@@ -250,6 +271,7 @@ export default  function ProfileSpecialist(){
                  {(editar.imagen === true) || (editar.datos === true) || (editar.cuenta === true) ? <button onClick={e => handleSubmit(e)} name='saveImage' className='button-change'>Guardar cambios</button> : null} 
                    
             </div>}
+
 
         </div>
     )

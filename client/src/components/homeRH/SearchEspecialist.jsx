@@ -7,7 +7,7 @@ import './SearchEspecialista.scss'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-const SearchEspecialist = () => {
+const SearchEspecialist = ({empleados}) => {
     const dispatch= useDispatch();
     const [input, setInput] = useState({value: "", option: "nombre"});
 
@@ -42,11 +42,12 @@ const SearchEspecialist = () => {
             <div className='elementos-buscador'>
                 
             <FontAwesomeIcon icon={faSearch} className='icon-search'/>
+           
             <input className='input-buscador' type="text" placeholder="Buscar especialista" onChange={(e)=>handleChange(e)} value={input.value}/>
             <select className='select-buscador' onClick={(e) => {handleSelect(e)}}>
                 <option value={"nombre"}>Por nombre</option>
                 <option value={"especialidad"} disabled>Por especialidad</option>
-            </select>
+            </select >
             </div>
            
         </div>
