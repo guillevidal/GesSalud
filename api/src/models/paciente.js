@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
       },
 
       emergencyContact: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
       },
 
       disease: {
