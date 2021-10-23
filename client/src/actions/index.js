@@ -31,7 +31,8 @@ import {
   OBTENER_ADMINISTRATIVO_DETALLADO,
   RESETEAR_ADMINISTRATIVO_DETALLADO,
   BUSQUEDA_ADMINSTRATIVO,
-  RESETEAR_BUSQUEDA_ADMINISTRATIVO
+  RESETEAR_BUSQUEDA_ADMINISTRATIVO,
+  RESETEAR_ESPECIALIDADES
 } from "./valuesForActions.js";
 
 const token = localStorage['access-token'];
@@ -81,6 +82,10 @@ export const obtenerEspecialidades = () => {
   };
 };
 
+//RESETEAR ESPECIALIDADES 
+export const resetearEspecialidades = () => {
+  return { type: RESETEAR_ESPECIALIDADES, payload: [] }
+}
 //OBTENER ESPECIALISTA
 export const obtenerEspecialistas = () => {
   return async (dispatch) => {

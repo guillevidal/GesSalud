@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { rol, resetearPacienteCreado, resetearEspecialistaCreado,
     resetearPacienteDetallado, resetearEspecialistaDetallado,
     resetearBusquedaPaciente, resetearBusquedaEspecialista,
-    resetearPacientes, resetearEspecialistas, resetearModificado} from "../../actions"
+    resetearPacientes, resetearEspecialistas, resetearModificado,
+    resetearAdministrativos, resetearAdministrativoCreado, resetearAdministrativoDetallado} from "../../actions"
 import { Redirect } from "react-router"
 import { useState } from "react"
 
@@ -31,6 +32,9 @@ export default function Nav(){
         dispatch(resetearEspecialistas())
         dispatch(resetearPacientes())
         dispatch(resetearModificado())
+        dispatch(resetearAdministrativoDetallado())
+        dispatch(resetearAdministrativoCreado())
+        dispatch(resetearAdministrativos())
     }
 
     const handleResetActionsRol1 = () => {
@@ -45,6 +49,9 @@ export default function Nav(){
         dispatch(resetearEspecialistaDetallado())
         dispatch(resetearBusquedaEspecialista())
         dispatch(resetearModificado())
+        dispatch(resetearAdministrativoDetallado())
+        dispatch(resetearAdministrativoCreado())
+        dispatch(resetearAdministrativos())
     }
 
     const responsive = (e) =>{
