@@ -56,8 +56,8 @@ const {
 } = sequelize.models;
 
 // Aca vendrian las relaciones
-Especialista_medico.hasOne(Persona);
-Persona.belongsTo(Especialista_medico);
+Especialista_medico.belongsTo(Persona);
+Persona.hasOne(Especialista_medico);
 
 Especialista_medico.belongsToMany(Tipo_especialidad, {through: "especialistaEspecialidad"});
 Tipo_especialidad.belongsToMany(Especialista_medico, {through: "especialistaEspecialidad"});
