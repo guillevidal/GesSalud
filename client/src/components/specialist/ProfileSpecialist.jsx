@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Nav from "../Layout/Nav"
 import './ProfileSpecialist.scss'
 import { useSelector } from "react-redux"

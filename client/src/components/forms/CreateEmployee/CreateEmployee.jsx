@@ -1,11 +1,19 @@
+/* eslint-disable */
 import React, {useState, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import Nav from "../../Layout/Nav.jsx";
 import CreateSpecialist from "../CreateSpecialist/CreateSpecialist.jsx";
 import CreatePyS from "../CreatePys/CreatePys.jsx"
 import CreateRRHH from "../CreateRRHH/CreateRRHH.jsx";
-
+import {
+    obtenerEspecialidades,
+} from '../../../actions/index.js'
 const CreateEmployee = () => {
+    const dispatch=useDispatch()
+    useEffect(()=>{ 
+        dispatch(obtenerEspecialidades())
+
+    })
     const [state, setState] = useState("especialista")
 
     const handleEmployee = (e) => {

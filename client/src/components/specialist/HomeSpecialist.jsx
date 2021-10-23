@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { especialistaDetallado } from "../../actions"

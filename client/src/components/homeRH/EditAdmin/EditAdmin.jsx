@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { modificarAdministrativo, obtenerAdministrativos, resetearAdministrativoDetallado } from "../../../actions/index.js"

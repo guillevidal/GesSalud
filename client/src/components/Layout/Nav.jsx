@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Link } from "react-router-dom"
 import './Nav'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
