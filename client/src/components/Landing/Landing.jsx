@@ -48,7 +48,7 @@ export default function Landing(){
     .then( data => {
     if(data.data.token) {
         localStorage.setItem('access-token', data.data.token)
-        dispatch(rol(data.data.rol));
+        dispatch(rol(data.data.persona.rol));
 
     }   else alert(data.data.mensaje)
     }) 

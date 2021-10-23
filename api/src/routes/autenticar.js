@@ -6,7 +6,6 @@ const { Persona } = require("../db");
 
 router.post("/", async (req, res) => {
     const register = await Persona.findOne({
-        attributes: ['user', 'password', 'rol'],
         where : { user : req.body.usuario}});
 
     if (register) {
@@ -19,7 +18,7 @@ router.post("/", async (req, res) => {
             });
             res.json({
                     token: token,
-                    rol: register.dataValues.rol,
+                    persona: register.dataValues,
             });
         } else {
             res.json({ mensaje: "Usuario o contraseña incorrectos"})
