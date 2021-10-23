@@ -18,6 +18,7 @@ import InitialSpecialty from "./components/initialPys/SpecialtyManagement/Initia
 import CreateAgenda from './components/initialPys/SpecialtyManagement/CreateAgenda/CreateAgenda.jsx';
 
 
+
 function App() {
   return (
     <div className="App">
@@ -45,11 +46,11 @@ function App() {
       <Route exact path="/detailEspecialista" >     
         <DetailEspecialista />
       </Route>
-      <Route exact path="/homeEspecialista">
-        <HomeSpecialist /> 
+      <Route exact path="/homeUser">
+        <HomeUser /> 
       </Route>
-      <Route exact path="/perfilEspecialista">
-        <ProfileSpecialist /> 
+      <Route exact path="/perfilUser">
+        <ProfileUser /> 
       </Route>
       <Route exact path="/createEmployee">
        <CreateEmployee />

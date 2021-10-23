@@ -89,10 +89,10 @@ export default function Nav(){
                     <Link to='/createEmployee' className='nav-link-ok' >Crear Empleado</Link>
                 </div>
             }
-            {status === '3' &&
+            {(status === '3' || status === '4') &&
                 <div className='nav-link'>
-                    <Link to='/homeEspecialista' className='nav-link-ok' >Home</Link>
-                    <Link to='/perfilEspecialista' className='nav-link-ok' >Perfil</Link>
+                    <Link to='/homeUser' className='nav-link-ok' >Home</Link>
+                    <Link to='/perfilUser' className='nav-link-ok' >Perfil</Link>
                </div>
             }
                 <div  className='nav-logo'>
@@ -129,10 +129,10 @@ export default function Nav(){
                         </div>
                     </div>
                     }
-                    {mobile && status === '3' &&
+                    {mobile && (status === '3' || status === '4') &&
                     <div className='nav-link-mobile'>
-                        <Link to='/homeEspecialista' className='nav-link-ok-mobile' >Home</Link>
-                    <Link to='/perfilEspecialista' className='nav-link-ok-mobile' >Perfil</Link>
+                        <Link to='/homeUser' className='nav-link-ok-mobile' >Home</Link>
+                    <Link to='/perfilUser' className='nav-link-ok-mobile' >Perfil</Link>
                         <div className='nav-link-ok-mobile' onClick={e => logout(e)}>
                          <FontAwesomeIcon icon={faSignOutAlt}/><span>  Salir</span>
                         </div>
