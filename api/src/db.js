@@ -56,8 +56,8 @@ const {
 } = sequelize.models;
 
 // Aca vendrian las relaciones
-Persona.hasOne(Especialista_medico);
-Especialista_medico.belongsTo(Persona);
+Especialista_medico.hasOne(Persona);
+Persona.belongsTo(Especialista_medico);
 
 Especialista_medico.belongsToMany(Tipo_especialidad, {through: "especialistaEspecialidad"});
 Tipo_especialidad.belongsToMany(Especialista_medico, {through: "especialistaEspecialidad"});
@@ -68,11 +68,12 @@ Agenda.belongsTo(Especialista_medico);
 Agenda.belongsTo(Tipo_especialidad);
 Tipo_especialidad.hasOne(Agenda);
 
+Agenda.hasMany(Turno);
 Turno.belongsTo(Agenda);
-Agenda.hasOne(Turno);
 
+Paciente.hasMany(Turno);
 Turno.belongsTo(Paciente);
-Paciente.hasOne(Turno);
+
 
 
 Persona.hasOne(Paciente);
