@@ -7,7 +7,7 @@ import {
     RESETEAR_ESPECIALISTAS, RESETEAR_PACIENTES, MODIFICAR_PACIENTE, MODIFICAR_ESPECIALISTA, RESETEAR_MODIFICADO,
     RESETAR_ADMINISTRATIVO_CREADO, RESETEAR_ADMINISTRATIVOS, MODIFICAR_ADMINISTRATIVO, OBTENER_ADMINISTRATIVO_DETALLADO,
     RESETEAR_ADMINISTRATIVO_DETALLADO, OBTENER_ADMINISTRATIVOS, CREAR_ADMINISTRATIVO,BUSQUEDA_ADMINSTRATIVO,
-    RESETEAR_BUSQUEDA_ADMINISTRATIVO
+    RESETEAR_BUSQUEDA_ADMINISTRATIVO, RESETEAR_ESPECIALIDADES
 } from "../actions/valuesForActions.js";
 
 const initialState = {
@@ -42,6 +42,7 @@ const Reducer = (state = initialState, action) => {
             return { ...state, pacienteCreado: action.payload }
 
         case OBTENER_ESPECIALIDADES:
+        case RESETEAR_ESPECIALIDADES:
             return { ...state, especialidades: action.payload }
 
         case OBTENER_PACIENTES:
@@ -66,28 +67,30 @@ const Reducer = (state = initialState, action) => {
             return { ...state, busquedaEspecialista: busquedaE }
 
         case OBTENER_ESPECIALISTA_POR_ESPECIALIDAD:
+            
             let busquedaEs = [];
-            let esp
-            let cont = 0;
+            let esp=[]
             for (let index = 0; index < state.especialistas.length; index++) {
-                esp = state.especialistas[index].specialty.split(" ")
+                
+                esp=state.especialistas[index].specialty.toLowerCase().split(", ")
+                
                 for (let index2 = 0; index2 < esp.length; index2++) {
-                    if (esp[index2].includes(action.payload.toLowerCase())) {
-                        if(!busuqedaEs[0]){
-                           busquedaEs = [...busquedaEs, state.especialistas[index]];
-                        }else{
-                            for (let index3 = 0; index3 < busuqedaEs.length; index3++) {
-                                if(busquedaEs[index3].id!==state.especialistas[index].id){
-                                    busquedaEs = [...busquedaEs, state.especialistas[index]];
-                                }
-                                
+                    let formart=esp[index2].normalize('NFD').replace(/[\u00C0-\u00FF]/g, '')
+                    if(formart.startsWith(action.payload.toLowerCase())){
+                        if(busquedaEs.length>0){
+                            let filtro=busquedaEs.filter( es => es.id===state.especialistas[index].id)
+                            if(!filtro[0]){
+                                busquedaEs.push(state.especialistas[index])
                             }
+                        }else{
+                            busquedaEs.push(state.especialistas[index])
                         }
                     }
-
+                    
                 }
             }
             if (!busquedaEs[0]) {
+               
                 busquedaEs = ["No se encontro especalista"];
             }
             return { ...state, busquedaEspecialista: busquedaEs }
