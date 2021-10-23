@@ -7,6 +7,7 @@ router.post("/", async function (req, res){
     let {date, amount, idSpecialist, idSpecialties} = req.body;
 try{
 
+    
 if(date && amount && idSpecialist && idSpecialties){
 
     
