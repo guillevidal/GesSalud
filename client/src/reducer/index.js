@@ -1,33 +1,49 @@
 /* eslint-disable */
 import {
-    CREAR_ESPECIALISTA, CREAR_PACIENTE, OBTENER_ESPECIALIDADES, OBTENER_ESPECIALISTAS, OBTENER_PACIENTES,
-    OBTENER_ESPECIALISTA_POR_NOMBRE, ESPECIALISTA_DETALLADO, OBTENER_PACIENTE_POR_NOMBRE, PACIENTE_DETALLADO,
-    OBTENER_ESPECIALISTA_POR_ESPECIALIDAD, RESETEAR_BUSQUEDA_ESPECIALISTA, PAGINADO, ROL, RESETEAR_BUSQUEDA_PACIENTE,
-    RESETEAR_ESPECIALISTA_CREADO, RESETEAR_PACIENTE_CREADO, RESETEAR_PACIENTE_DETALLADO, RESETEAR_ESPECIALISTA_DETALLADO,
-    RESETEAR_ESPECIALISTAS, RESETEAR_PACIENTES, MODIFICAR_PACIENTE, MODIFICAR_ESPECIALISTA, RESETEAR_MODIFICADO,
-    RESETAR_ADMINISTRATIVO_CREADO, RESETEAR_ADMINISTRATIVOS, MODIFICAR_ADMINISTRATIVO, OBTENER_ADMINISTRATIVO_DETALLADO,
-    RESETEAR_ADMINISTRATIVO_DETALLADO, OBTENER_ADMINISTRATIVOS, CREAR_ADMINISTRATIVO,BUSQUEDA_ADMINSTRATIVO,
-    RESETEAR_BUSQUEDA_ADMINISTRATIVO, RESETEAR_ESPECIALIDADES
+    CREAR_ESPECIALISTA, CREAR_PACIENTE,
+    OBTENER_ESPECIALIDADES, OBTENER_ESPECIALISTAS,
+    OBTENER_PACIENTES, OBTENER_ESPECIALISTA_POR_NOMBRE, 
+    ESPECIALISTA_DETALLADO, OBTENER_PACIENTE_POR_NOMBRE, 
+    PACIENTE_DETALLADO,OBTENER_ESPECIALISTA_POR_ESPECIALIDAD, 
+    RESETEAR_BUSQUEDA_ESPECIALISTA, PAGINADO, 
+    ROL, RESETEAR_BUSQUEDA_PACIENTE,
+    RESETEAR_ESPECIALISTA_CREADO, RESETEAR_PACIENTE_CREADO, 
+    RESETEAR_PACIENTE_DETALLADO, RESETEAR_ESPECIALISTA_DETALLADO,
+    RESETEAR_ESPECIALISTAS, RESETEAR_PACIENTES, MODIFICAR_PACIENTE, 
+    MODIFICAR_ESPECIALISTA, RESETEAR_MODIFICADO,
+    RESETAR_ADMINISTRATIVO_CREADO, RESETEAR_ADMINISTRATIVOS, 
+    MODIFICAR_ADMINISTRATIVO, OBTENER_ADMINISTRATIVO_DETALLADO,
+    RESETEAR_ADMINISTRATIVO_DETALLADO, OBTENER_ADMINISTRATIVOS, 
+    CREAR_ADMINISTRATIVO,BUSQUEDA_ADMINSTRATIVO,
+    RESETEAR_BUSQUEDA_ADMINISTRATIVO, RESETEAR_ESPECIALIDADES,
+    CREAR_AGENDA, RESETEAR_AGENDA_CREADA,
+    OBTENER_AGENDAS, RESETEAR_AGENDAS,
+    MODIFICAR_AGENDA, OBTENER_TURNOS,
+    RESETEAR_TURNOS, CREAR_TURNO,
+    RESETEAR_TURNO_CREADO, OBTENER_TURNO_DETALLADO,
+    RESETEAR_TURNO_DETALLADO, MODIFICAR_TURNO,
+    ELIMINAR_TURNO
 } from "../actions/valuesForActions.js";
 
 const initialState = {
     //SE IRAN AGREGANDO MAS ESTADOS A MEDIDA DE QUE SE HAGAN MAS COMPONENTES 
-    especialistaCreado: [],
-    pacienteCreado: [],
     especialidades: [],
     pacientes: [],
     especialistas: [],
-    especialistaDetallado: [],
+    administrativos: [],
+    agendas: [],
+    turnos: [],
     pacienteDetallado: [],
+    especialistaDetallado: [],
+    administrativoDetallado: [],
+    turnoDetallado: [],
     busquedaPaciente: [],
     busquedaEspecialista: [],
-    rol: "",
-    paginado: "",
+    busquedaAdministrativo: [],
+    creado: [],
     modificado: "",
-    administrativoCreado: [],
-    administrativos: [],
-    administrativoDetallado: [],
-    busquedaAdministrativo: []
+    rol: "",
+    paginado: ""
 }
 
 const Reducer = (state = initialState, action) => {
@@ -35,11 +51,16 @@ const Reducer = (state = initialState, action) => {
     switch (action.type) {
         case CREAR_ESPECIALISTA:
         case RESETEAR_ESPECIALISTA_CREADO:
-            return { ...state, especialistaCreado: action.payload };
-
         case CREAR_PACIENTE:
         case RESETEAR_PACIENTE_CREADO:
-            return { ...state, pacienteCreado: action.payload }
+        case CREAR_ADMINISTRATIVO:
+        case RESETAR_ADMINISTRATIVO_CREADO:
+        case CREAR_AGENDA:
+        case RESETEAR_AGENDA_CREADA:
+        case CREAR_TURNO:
+        case RESETEAR_TURNO_CREADO:
+            return { ...state, creado: action.payload };
+
 
         case OBTENER_ESPECIALIDADES:
         case RESETEAR_ESPECIALIDADES:
@@ -139,12 +160,10 @@ const Reducer = (state = initialState, action) => {
         case MODIFICAR_ESPECIALISTA:
         case MODIFICAR_ADMINISTRATIVO:
         case RESETEAR_MODIFICADO:
+        case MODIFICAR_AGENDA:
+        case MODIFICAR_TURNO:
+        case ELIMINAR_TURNO:
             return { ...state, modificado: action.payload}
-
-
-        case CREAR_ADMINISTRATIVO:
-        case RESETAR_ADMINISTRATIVO_CREADO:
-            return {...state, administrativoCreado: action.payload}
 
         case OBTENER_ADMINISTRATIVOS:
         case RESETEAR_ADMINISTRATIVOS:
@@ -172,9 +191,21 @@ const Reducer = (state = initialState, action) => {
         case RESETEAR_BUSQUEDA_ADMINISTRATIVO:
             return { ...state, busquedaAdministrativo: action.payload}    
         
+        case OBTENER_AGENDAS:
+        case RESETEAR_AGENDAS:
+            return {...state, agendas: action.payload}
+        
+        case OBTENER_TURNO_DETALLADO:
+        case RESETEAR_TURNO_DETALLADO:
+            return { ...state, turnoDetallado: action.payload}
+
+        case OBTENER_TURNOS:
+        case RESETEAR_TURNOS:
+            return { ...state, turnos: action.payload}
+            
         default:
             return state;
-
+        
     }
 
 }
