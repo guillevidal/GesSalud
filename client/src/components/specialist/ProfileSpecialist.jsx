@@ -1,5 +1,5 @@
 import Nav from "../Layout/Nav"
-import './ProfileUser.scss'
+import './ProfileSpecialist.scss'
 import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -8,7 +8,7 @@ import { modificarEspecialistas, especialistaDetallado, modificarPaciente, pacie
 import { useEffect } from "react"
 import swal from 'sweetalert';
 
-export default  function ProfileUser(){
+export default  function ProfileSpecialist(){
 
     let rol = useSelector(state => state.rol)
 

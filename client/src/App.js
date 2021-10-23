@@ -9,8 +9,8 @@ import HomeRRHH from "./components/homeRH/HomeRH.jsx";
 import DetailEspecialista from "./components/homeRH/DetailEspecialista";
 import PatientEdit from "./components/initialPys/patientManagement/PatientEdit/PatientEdit.jsx";
 import SpecialtyEdit from "./components/homeRH/EditSpecialty/EditSpecialty.jsx"
-import HomeUser from "./components/User/HomeUser";
-import ProfileUser from "./components/User/ProfileUser"
+import HomeSpecialist from "./components/specialist/HomeSpecialist";
+import ProfileSpecialist from "./components/specialist/HomeSpecialist"
 
 
 function App() {

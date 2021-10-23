@@ -2,9 +2,9 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { especialistaDetallado, pacienteDetallado } from "../../actions"
 import Nav from "../Layout/Nav"
-import './HomeUser.scss'
+import './HomeSpecialist.scss'
 
-export default function HomeUser(){
+export default function HomeSpecialist(){
 
     const dispatch = useDispatch()
     let rol = useSelector(state => state.rol)
