@@ -5,8 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Person from '../Person/Person';
 import {
     crearEspecialista,
-    obtenerEspecialidades, obtenerEspecialistas,
-} from '../../../actions/index'
+} from '../../../actions/index.js'
 
 import swal from 'sweetalert';
 
@@ -36,10 +35,6 @@ export default function CreateSpecialist() {
     const typeSpecialties = useSelector((state) => state.especialidades)
     const especialistas = useSelector(state => state.especialistas)
 
-    useEffect(() => {
-        dispatch(obtenerEspecialidades())
-
-    }, [])
 
     useEffect(() => {
         if (input.specialty.error) {
