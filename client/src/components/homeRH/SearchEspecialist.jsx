@@ -46,7 +46,7 @@ const SearchEspecialist = ({empleados}) => {
             <input className='input-buscador' type="text" placeholder="Buscar especialista" onChange={(e)=>handleChange(e)} value={input.value}/>
             <select className='select-buscador' onClick={(e) => {handleSelect(e)}}>
                 <option value={"nombre"}>Por nombre</option>
-                <option value={"especialidad"} disabled>Por especialidad</option>
+                <option value={"especialidad"} >Por especialidad</option>
             </select >
             </div>
            

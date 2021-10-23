@@ -1,34 +1,39 @@
 /* eslint-disable */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Person from "../Person/Person.jsx";
-import { crearAdministrativo, resetearAdministrativoCreado } from "../../../actions/index.js"
-const CreatePyS = () => {
-    const capitalFirstLetter = (str) => {
-        return str.charAt(0).toUpperCase() + str.slice(1)
-    }
-    const dispatch = useDispatch()
-    const [validation, setValidation] = useState(true)
-    const [input, setInput] = useState({
-        name: { value: "", error: null },
-        lastName: { value: "", error: null },
-        dni: { value: "", error: null },
-        email: { value: "", error: null },
-        phone: { value: "", error: null },
-        adress: { value: "", error: null },
-        birth: { value: "", error: "Seleccione una fecha" },
-        user: { value: "", error: null },
-        password: { value: "", error: null },
-        gender: { value: "", error: "Seleccione un genero", ad: null },
+import { modificarAdministrativo, obtenerAdministrativos, resetearAdministrativoDetallado } from "../../../actions/index.js"
+import { Link } from "react-router-dom";
+import Nav from "../../Layout/Nav.jsx"
+import Person from "../../forms/Person/Person.jsx"
 
+const EditAdmin = () => {
+    const administrativoDetallado = useSelector(state => state.administrativoDetallado)
+    const administrativos = useSelector(state => state.administrativos)
+    const dispatch = useDispatch()
+    const [input, setInput] = useState({
+        name: { value: administrativoDetallado[0]?.persona.name, error: null },
+        lastName: { value: administrativoDetallado[0]?.persona.lastName, error: null },
+        dni: { value: administrativoDetallado[0]?.persona.dni, error: null },
+        email: { value: administrativoDetallado[0]?.persona.email, error: null },
+        phone: { value: administrativoDetallado[0]?.persona.phone, error: null },
+        adress: { value: administrativoDetallado[0]?.persona.adress, error: null },
+        birth: { value: administrativoDetallado[0]?.persona.birth, error: null },
+        user: { value: administrativoDetallado[0]?.persona.user, error: null },
+        password: { value: administrativoDetallado[0]?.persona.password, error: null },
+        gender: { value: administrativoDetallado[0]?.persona.gender, error: null, ad: "El genero seleccionado es: " + administrativoDetallado[0]?.persona.gender },
+        status: { value: administrativoDetallado[0]?.status, error: null },
+        rol: {value: administrativoDetallado[0]?.persona.rol, error: null}
     })
 
-    const administrativos = useSelector(state => state.administrativos)
+    const [validation, setValidation] = useState(true);
 
     useEffect(() => {
         setTimeout(() => { setValidation(true) }, 2500)
     }, [validation])
 
+    const capitalFirstLetter = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1)
+    }
     const handleName = (event) => {
         const { value } = event.target
         if (value === "") {
@@ -50,6 +55,8 @@ const CreatePyS = () => {
         }
     }
 
+
+
     const handleLastName = (event) => {
         const { value } = event.target
         if (value === "") {
@@ -69,6 +76,7 @@ const CreatePyS = () => {
                 setInput({ ...input, lastName: { value, error: null } })
             }
         }
+
     }
 
     const handleDni = (event) => {
@@ -177,57 +185,79 @@ const CreatePyS = () => {
         }
 
     }
+    const handleStatus = (e) => {
+        const {value} = e.target
+        setInput({ ...input, status : {value, error: null}})
+    }
+    const handleRol = (e) => {
+        if(e.target.value!=="Rol..."){
+            const {value} = e.target
+            setInput({ ...input, rol : {value, error: null}})
+
+        }
+    }
     const handleSubmit = (event) => {
         event.preventDefault()
-
+        
         if (!input.name.error && !input.lastName.error && !input.password.error && !input.email.error && !input.phone.error
-            && !input.user.error && !input.birth.error && !input.dni.error
-            && !input.adress.error) {
+            && !input.user.error  && !input.birth.error && !input.dni.error
+             && !input.adress.error) {
 
             if (input.name.value.length === 0 || input.lastName.value.length === 0 || input.password.value.length === 0 || input.email.value.length === 0 || input.phone.value.length === 0
-                || input.user.value.length === 0 || input.birth.value.length === 0 || input.dni.value.length === 0
+                || input.user.value.length === 0  || input.birth.value.length === 0 || input.dni.value.length === 0
                 || input.adress.value.length === 0) {
                 setValidation(false)
                 return
 
             } else {
-
-                if (administrativos.length > 0) {
-
-                    for (let index = 0; index < administrativos.length; index++) {
-
-                        if (parseInt(administrativos[index].persona.dni) === parseInt(input.dni.value)) {
-
+                let filtro = administrativos.filter((esp) => { return esp.persona.dni !== administrativoDetallado[0]?.persona.dni })
+                let filtro2 = administrativos.filter((esp) => { return esp.persona.email !== administrativoDetallado[0]?.persona.email })
+                let filtro3 = administrativos.filter((esp) => { return esp.persona.user !== administrativoDetallado[0]?.persona.user })
+                
+                if (filtro.length > 0) {
+                    
+                    for (let index = 0; index < filtro.length; index++) {
+                       
+                        if (parseInt(filtro[index].persona.dni) === parseInt(input.dni.value)) {
+                            
                             setValidation(false)
-                            alert("El DNI  que intenta crear ya se encuentra registrado")
+                            alert("El DNI  que intenta modificar ya se encuentra registrado")
                             return
                         }
-
-                        if (administrativos[index].persona.email === input.email.value) {
-                            setValidation(false)
-                            alert("El EMAIL  que intenta crear ya se encuentra registrado")
-                            return
-                        }
-
-                        if (administrativos[index].persona.user === input.user.value) {
-                            setValidation(false)
-                            alert("El Usuario  que intenta crear ya se encuentra registrado")
-                            return
-                        }
-
-                    }
 
                 }
-
-
+                if(filtro2.length> 0){
+                    for (let index = 0; index < filtro2.length; index++){
+                        if (filtro2[index].persona.email===input.email.value) {
+                            setValidation(false)
+                            alert("El EMAIL  que intenta modificar ya se encuentra registrado")
+                            return
+                        }
+                    }
+                }
+                if(filtro3.length> 0){
+                    for (let index = 0; index < filtro3.length; index++){
+                        if (filtro3[index].persona.user===input.user.value) {
+                            setValidation(false)
+                            alert("El Usuario  que intenta modificar ya se encuentra registrado")
+                            return
+                        }
+                    }
+                }
+ 
+            } 
+     
+                
             }
-        } else {
+        }else{
             setValidation(false)
             return
         }
 
-
+       
         let newAdmin = {
+            
+            id: administrativoDetallado[0].id,
             name: input.name.value.toLowerCase(),
             lastName: input.lastName.value.toLowerCase(),
             dni: parseInt(input.dni.value),
@@ -238,38 +268,64 @@ const CreatePyS = () => {
             user: input.user.value,
             password: input.password.value,
             gender: input.gender.value,
-            rol: "1"
+            status: input.status.value,
+            rol: input.rol.value
 
         }
-
-        alert(`El Administrativo ${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se creo correctamente `)
-        dispatch(crearAdministrativo(newAdmin));
+        
+        alert(`El Administrativo ${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se modificó correctamente `)
+        dispatch(modificarAdministrativo(newAdmin));
+        dispatch(obtenerAdministrativos())
         return
 
     }
 
     const handleCancel = (e) => {
-        dispatch(resetearAdministrativoCreado())
+        dispatch(resetearAdministrativoDetallado())
     }
 
     return (
-        <div className="information-person">
+        <div id="createSpecialist-container">
+            <Nav />
+            <div>
+                <form className='form-container' onSubmit={handleSubmit}>
+                    <div className='form-infoPersonal'>
+                        <Person name={input.name} lastName={input.lastName} dni={input.dni}
+                            email={input.email} phone={input.phone} adress={input.adress}
+                            birth={input.birth} user={input.user} password={input.password} gender={input.gender}
+                            handleName={handleName} handleLastName={handleLastName} handleDni={handleDni}
+                            handleBrith={handleBrith} handlePhone={handlePhone} handleGender={handleGender}
+                            handleAdress={handleAdress} handleEmail={handleEmail} handleUser={handleUser}
+                            handlePassword={handlePassword}
+                        />
+                        {<div>
+                          <select onChange={(e) => handleStatus(e)}>
+                              <option value={input.status.value?true:false}>{input.status.value?"Activo":"Inactivo"}</option>
+                              <option value={!input.status.value?true:false}>{!input.status.value?"Activo":"Inactivo"}</option>
+                          </select>
+                             
+                        </div>}
+                        {<div>
+                            <select onChange={(e) => handleRol(e)}>
+                              <option>Rol...</option>
+                              <option value="1">Rol PYS</option>
+                              <option value="2">Rol RRHH</option>
+                          </select>
+                         </div>}
+                    </div>
 
-            <Person name={input.name} lastName={input.lastName} dni={input.dni}
-                email={input.email} phone={input.phone} adress={input.adress}
-                birth={input.birth} user={input.user} password={input.password} gender={input.gender}
-                handleName={handleName} handleLastName={handleLastName} handleDni={handleDni}
-                handleBrith={handleBrith} handlePhone={handlePhone} handleGender={handleGender}
-                handleAdress={handleAdress} handleEmail={handleEmail} handleUser={handleUser}
-                handlePassword={handlePassword}
-            />
-            {!validation && <p>Diligencie correctamente el formulario</p>}
-            <div className='boton-crear-paciente'>
 
-                <button onClick={(e) => handleSubmit(e)} className='boton-crear'>CREAR</button>
+                    <div className='boton-crear-especialista'>
+                        <Link to='/homeRRHH' onClick={handleCancel}>
+                            <button className='boton-creacion' >CANCELAR</button>
+                        </Link>
+                        {!validation && <p>Diligencie correctamente el formulario</p>}
+                        <button onClick={(e) => handleSubmit(e)} className='boton-creacion' >MODIFICAR</button>
+                    </div>
+                </form>
             </div>
         </div>
+
     )
 }
-
-export default CreatePyS
+export default EditAdmin;

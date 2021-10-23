@@ -1,3 +1,4 @@
+/* eslint-disable */
 import "./App.scss";
 import { Route } from "react-router-dom";
 import Landing from "./components/Landing/Landing";
@@ -11,8 +12,12 @@ import SpecialtyEdit from "./components/homeRH/EditSpecialty/EditSpecialty.jsx"
 import HomeSpecialist from "./components/specialist/HomeSpecialist.jsx";
 import ProfileSpecialist from "./components/specialist/ProfileSpecialist.jsx"
 import CreateEmployee from "./components/forms/CreateEmployee/CreateEmployee.jsx"
+import DetailAdmin from "./components/homeRH/DetailsAdmin.jsx"
+import EditAdmin from "./components/homeRH/EditAdmin/EditAdmin.jsx"
 import InitialSpecialty from "./components/initialPys/SpecialtyManagement/Initial/InitialSpecialty.jsx"
 import CreateAgenda from './components/initialPys/SpecialtyManagement/CreateAgenda/CreateAgenda.jsx';
+
+
 
 function App() {
   return (
@@ -41,14 +46,20 @@ function App() {
       <Route exact path="/detailEspecialista" >     
         <DetailEspecialista />
       </Route>
-      <Route exact path="/homeEspecialista">
+      <Route exact path="/homeUser">
         <HomeSpecialist /> 
       </Route>
-      <Route exact path="/perfilEspecialista">
+      <Route exact path="/perfilUser">
         <ProfileSpecialist /> 
       </Route>
       <Route exact path="/createEmployee">
        <CreateEmployee />
+      </Route>
+      <Route exact path="/detailAdmin">
+        <DetailAdmin/>
+      </Route>
+      <Route exact path="/AdminEdit">
+        <EditAdmin/>
       </Route>
       <Route exact path="/especialistaPys">
         <InitialSpecialty />

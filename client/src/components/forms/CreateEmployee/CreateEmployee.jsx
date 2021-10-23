@@ -1,11 +1,19 @@
+/* eslint-disable */
 import React, {useState, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import Nav from "../../Layout/Nav.jsx";
 import CreateSpecialist from "../CreateSpecialist/CreateSpecialist.jsx";
 import CreatePyS from "../CreatePys/CreatePys.jsx"
 import CreateRRHH from "../CreateRRHH/CreateRRHH.jsx";
-
+import {
+    obtenerEspecialidades,
+} from '../../../actions/index.js'
 const CreateEmployee = () => {
+    const dispatch=useDispatch()
+    useEffect(()=>{ 
+        dispatch(obtenerEspecialidades())
+
+    })
     const [state, setState] = useState("especialista")
 
     const handleEmployee = (e) => {
@@ -19,7 +27,7 @@ const CreateEmployee = () => {
         <Nav />
         <select onChange={(e)=>handleEmployee(e)}>
             <option value="especialista">Crear Especialista</option>
-            <option value="pys">Crear Productos y Servicios</option>
+            <option value="pys">Crear Planeacion y Servicios</option>
             <option value="rrhh">Crear Recursos Humanos</option>
         </select>
 

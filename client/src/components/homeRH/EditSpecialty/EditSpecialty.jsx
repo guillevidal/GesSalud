@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -272,20 +273,20 @@ export default function EditSpecialty() {
             && !input.enrollment.error && !input.adress.error) {
 
             if (input.name.value.length === 0 || input.lastName.value.length === 0 || input.password.value.length === 0 || input.email.value.length === 0 || input.phone.value.length === 0
-                || input.user.value.length === 0 && input.specialty.value.length === 0 || input.birth.value.length === 0 || input.dni.value.length === 0
+                || input.user.value.length === 0 || input.specialty.value.length === 0 || input.birth.value.length === 0 || input.dni.value.length === 0
                 || input.enrollment.value.length === 0 || input.adress.value.length === 0) {
                 setValidation(false)
                 return
 
             } else {
-                let filtro = especialistas.filter((esp) => { return esp.id !== specialtyDetail[0]?.id })
+                let filtro = especialistas.filter((esp) => { return esp.persona.dni !== specialtyDetail[0]?.persona.dni })
                 let filtro2 = especialistas.filter((esp) => { return esp.persona.email !== specialtyDetail[0]?.persona.email })
                 let filtro3 = especialistas.filter((esp) => { return esp.persona.user !== specialtyDetail[0]?.persona.user })
                 let filtro4 = especialistas.filter((esp) => { return esp.enrollment !== specialtyDetail[0]?.enrollment })
                 if (filtro.length > 0) {
                     
                     for (let index = 0; index < filtro.length; index++) {
-                        console.log("Aquiiiiii", filtro.length )
+                       
                         if (parseInt(filtro[index].persona.dni) === parseInt(input.dni.value)) {
                             
                             setValidation(false)

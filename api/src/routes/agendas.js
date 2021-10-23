@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Agenda, Especialista_medico, Tipo_especialidad, Persona } = require("../db");
+const { Agenda, Especialista_medico, Tipo_especialidad, Persona, Turno, Paciente } = require("../db");
 const router = Router();
 
 
@@ -40,8 +40,11 @@ router.get("/", async function (req, res){
     try{
 
         let totalAgendas = await Agenda.findAll({
+            attributes:{exclude:["especialistaMedicoId", "tipoEspecialidadId"]},
             include: [{
+                //attributes:["id","date","amount"],
                 model: Especialista_medico,
+                attributes:{exclude:["enrollment", "specialty"]},
                 include:{
                     model:Persona,
                     attributes: [
@@ -51,6 +54,22 @@ router.get("/", async function (req, res){
                 } 
               },{
                   model: Tipo_especialidad
+              },
+              {
+                model:Turno,
+                attributes:{exclude:["modules","agendaId","pacienteId"]},
+                include:{
+                    model:Paciente,
+                    attributes:{exclude:["medication","personaId","emergencyContact","disease"]},
+                    include:{
+                        model:Persona,
+                        attributes: [
+                            "name",
+                            "lastName"
+                          ]
+                    } 
+                }
+                
               }
               ]}
         );
@@ -71,7 +90,7 @@ let query = await Agenda.findByPk(id);
 let { especialistaMedicoId, tipoEspecialidadId, date, amount} = req.body;
 
 await Agenda.update({especialistaMedicoId, tipoEspecialidadId, date, amount}, {where :{id}})
-res.status(200).send("Se actualizaron los datos correctamente");
+res.status(200).send({msg:"Se actualizaron los datos correctamente"});
 
 }catch(e){
 

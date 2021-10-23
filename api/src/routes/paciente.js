@@ -1,58 +1,12 @@
 const { Router } = require("express");
 const { Persona, Paciente, HistoriaClinica, Diagnostico } = require("../db");
 const router = Router();
+const rutasProtegidas = require('./Middleware/rutasProtegidas.js');
 // const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 const config = require("../configs/config");
 
-//MIDDLEWARE DE PROTECCION
-const rutasProtegidas = Router();
-rutasProtegidas.use((req, res, next) => {
-  const { token } = req.query;
-  if (token) {
-    jwt.verify(token, config.masterKeyGesSalud, (err, decoded) => {
-      if (err) {
-        return res.json({ mensaje: "Token inválida" });
-      } else {
-        req.decoded = decoded;
-        next();
-      }
-    });
-  } else {
-    res.send({
-      mensaje: "Token no proveída.",
-    });
-  }
-});
 
-router.post("/autenticar", async (req, res) => {
-  const register = await Persona.findOne({
-    attributes: ["user", "password", "rol"],
-    where: { user: req.body.usuario },
-  });
-
-  if (register) {
-    if (register.dataValues.password === req.body.password) {
-      const payload = {
-        check: true,
-      };
-      const token = jwt.sign(payload, config.masterKeyGesSalud, {
-        expiresIn: 1440,
-      });
-      res.json({
-        // res: true,
-        // mensaje: 'Autenticación correcta',
-        // token: token
-        token,
-        rol: register.dataValues.rol,
-      });
-    } else {
-      res.json({ mensaje: "Usuario o contraseña incorrectos" });
-    }
-  } else {
-    res.json({ mensaje: "Usuario o contraseña incorrectos" });
-  }
-});
 
 router.get(
   "/",
@@ -162,17 +116,13 @@ router.post(
       );
       await creandoDatosHistoriaClinica.addDiagnostico(creandoDatosDiagnostico);
 
-      let obj = {
-        ...creandoPersona.dataValues,
-        ...creandoDatosPaciente.dataValues,
-        ...creandoDatosHistoriaClinica.dataValues,
-        ...creandoDatosDiagnostico.dataValues,
-      };
+     
 
-      res.json(obj);
+      res.send({msg:"Se creo correctamente"});
     } catch (e) {
       res.status(400).send("no se puedo crear al Paciente");
     }
+
   }
 );
 

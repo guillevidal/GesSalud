@@ -9,12 +9,8 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    date: {
-      type: DataTypes.DATEONLY,
-      //allowNull: false,
-    },
     hour: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       //allowNull: false,
     },
     modules: {

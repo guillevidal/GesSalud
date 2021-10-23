@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState}from "react";
 import {useDispatch} from "react-redux";
 import { administrativoDetallado } from "../../actions";
@@ -24,8 +25,10 @@ const CardAdmin = (props) => {
             <div className='datos-principales'>
 
                 <span className='nombre-apellido'>{persona.name.charAt(0).toUpperCase() + persona.name.slice(1) + " " + persona.lastName.charAt(0).toUpperCase() + persona.lastName.slice(1)}</span>
-                <span className='especialidad'>Dni: {' ' + persona.dni}</span>
-                <span className='dni'>Estado: {' ' + status && "Activo"}</span>
+                {persona.rol==="1" && <span className='especialidad'>Area: {' ' + "Planeacion y Servicios"}</span>}
+                {persona.rol==="2" && <span className='especialidad'>Area: {' ' + "Recursos Humanos"}</span>}
+                {status && <span className='dni'>Estado: {' ' + "Activo"}</span>}
+                {!status && <span className='dni'>Estado: {' ' + "No activo"}</span>}
 
             </div>
 
