@@ -32,7 +32,22 @@ import {
   RESETEAR_ADMINISTRATIVO_DETALLADO,
   BUSQUEDA_ADMINSTRATIVO,
   RESETEAR_BUSQUEDA_ADMINISTRATIVO,
-  RESETEAR_ESPECIALIDADES
+  RESETEAR_ESPECIALIDADES,
+  CREAR_AGENDA,
+  RESETEAR_AGENDA_CREADA,
+  OBTENER_AGENDAS,
+  RESETEAR_AGENDAS,
+  MODIFICAR_AGENDA,
+  OBTENER_TURNOS,
+  RESETEAR_TURNOS,
+  CREAR_TURNO,
+  RESETEAR_TURNO_CREADO,
+  OBTENER_TURNO_DETALLADO,
+  RESETEAR_TURNO_DETALLADO,
+  MODIFICAR_TURNO,
+  ELIMINAR_TURNO
+
+
 } from "./valuesForActions.js";
 
 const token = localStorage['access-token'];
@@ -324,4 +339,150 @@ export const busquedaAdminstrativo = (value) => {
 //RESETEAR BUSQUEDA ADMINISTRATIVO 
 export const resetearBusquedaAdministrativo = () => {
   return { type: RESETEAR_BUSQUEDA_ADMINISTRATIVO, payload: []}
+}
+
+//CREAR AGENDA
+export const crearAgenda = (agenda) => {
+  return async (dispatch) => {
+    const result = await fetch(
+      `http://localhost:3001/agendas`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(agenda),
+      }
+    );
+
+    const data = await result.json();
+    return dispatch({ type: CREAR_AGENDA, payload: data });
+
+  }
+}
+
+
+//RESETEAR AGENDA CREANDA
+export const resetearAgendaCreada = () => {
+  return { type: RESETEAR_AGENDA_CREADA, payload: []}
+}
+
+//OBTENER AGENDAS 
+export const obtenerAgendas = () => {
+  return async (dispatch) => {
+    const result = await fetch("http://localhost:3001/agendas")
+    const data = await result.json();
+    return dispatch({ type: OBTENER_AGENDAS, payload: data})
+  }
+}
+
+//RESETEAR AGENDAS 
+export const resetearAgendas = () => {
+  return { type: RESETEAR_AGENDAS, payload: []}
+}
+
+//MODIFICAR AGENDA
+export const modificarAgenda = (agenda) => {
+  return async (dispatch) => {
+    const result = await fetch(
+      `http://localhost:3001/agendas/${agenda.id}`,
+      {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(agenda),
+      }
+    );
+
+    const data = await result.json();
+    return dispatch({ type: MODIFICAR_AGENDA, payload: data });
+
+  }
+}
+
+//OBTENER TURNOS
+export const obtenerTurnos = () => {
+  return async (dispatch) => {
+    const result = await fetch("http://localhost:3001/turnos")
+    const data = await result.json();
+    return dispatch({ type: OBTENER_TURNOS, payload: data})
+  }
+}
+
+//RESETEAR TURNOS 
+export const resetearTurnos = () => {
+  return { type: RESETEAR_TURNOS, payload: [] }
+}
+
+//CREAR TURNO 
+export const crearTurno = (turno) => {
+  return async (dispatch) => {
+    const result = await fetch(
+      `http://localhost:3001/turnos`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(turno),
+      }
+    );
+
+    const data = await result.json();
+    return dispatch({ type: CREAR_TURNO, payload: data });
+
+  }
+}
+
+//RESETEAR TURNO CREADO
+export const resetearTurnoCreado = () => {
+  return { type: RESETEAR_TURNO_CREADO, payload: []}
+}
+
+//OBTENER TURNO DETALLADO 
+export const turnoDetallado = (id) => {
+  return async (dispatch) => {
+    const result = await fetch(`http://localhost:3001/turnos/${id}`)
+    const data = await result.json();
+    return dispatch({ type: OBTENER_TURNO_DETALLADO, payload: data})
+  }
+}
+
+//RESETEAR TURNO DETALLADO
+export const resetearTurnoDetallado = () => {
+  return { type: RESETEAR_TURNO_DETALLADO, payload: []}
+}
+
+//MODIFICAR TURNO 
+export const modificarTurno = (turno) => {
+  return async (dispatch) => {
+    const result = await fetch(
+      `http://localhost:3001/turnos/${turno.id}`,
+      {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(turno),
+      }
+    );
+
+    const data = await result.json();
+    return dispatch({ type: MODIFICAR_TURNO, payload: data });
+
+  }
+}
+
+//ELIMINAR UN TURNO
+export const turnoDetallado = (id) => {
+  return async (dispatch) => {
+    const result = await fetch(`http://localhost:3001/turnos/borrarturno/${id}`)
+    const data = await result.json();
+    return dispatch({ type: ELIMINAR_TURNO, payload: data})
+  }
 }
