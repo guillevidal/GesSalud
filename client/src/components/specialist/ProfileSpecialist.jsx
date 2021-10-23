@@ -50,23 +50,6 @@ export default  function ProfileSpecialist(){
     const dispatch = useDispatch()
 
 
-    const [validaciones, setValidaciones] = useState(false)
-
-
-
-    const [editar, setEditar] = useState({
-        imagen : false,
-        datos : false,
-        cuenta : false
-    })
-
-    const [datosEsp, setDatos] = useState({
-        ...especialista[0].persona
-    })
-
-    const [newData, setNewData] = useState({
-        ...especialista[0]
-    })
 
     const [validaciones, setValidaciones] = useState(false)
 
