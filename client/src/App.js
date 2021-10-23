@@ -47,10 +47,10 @@ function App() {
         <DetailEspecialista />
       </Route>
       <Route exact path="/homeUser">
-        <HomeUser /> 
+        <HomeSpecialist /> 
       </Route>
       <Route exact path="/perfilUser">
-        <ProfileUser /> 
+        <ProfileSpecialist /> 
       </Route>
       <Route exact path="/createEmployee">
        <CreateEmployee />
