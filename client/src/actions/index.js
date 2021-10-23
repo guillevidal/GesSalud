@@ -479,7 +479,7 @@ export const modificarTurno = (turno) => {
 }
 
 //ELIMINAR UN TURNO
-export const turnoDetallado = (id) => {
+export const eliminarTurno = (id) => {
   return async (dispatch) => {
     const result = await fetch(`http://localhost:3001/turnos/borrarturno/${id}`)
     const data = await result.json();
