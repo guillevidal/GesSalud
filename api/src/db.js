@@ -68,13 +68,12 @@ Agenda.belongsTo(Especialista_medico);
 Agenda.belongsTo(Tipo_especialidad);
 Tipo_especialidad.hasOne(Agenda);
 
+
 Agenda.hasMany(Turno);
 Turno.belongsTo(Agenda);
 
 Paciente.hasMany(Turno);
 Turno.belongsTo(Paciente);
-
-
 
 Persona.hasOne(Paciente);
 Paciente.belongsTo(Persona);
@@ -82,10 +81,11 @@ Paciente.belongsTo(Persona);
 Paciente.hasOne(HistoriaClinica);
 HistoriaClinica.belongsTo(Paciente);
 
-Paciente.hasMany(Diagnostico);
-Diagnostico.belongsTo(Paciente);
+HistoriaClinica.hasMany(Diagnostico);
+Diagnostico.belongsTo(HistoriaClinica);
 
-
+Persona.hasOne(Personal_administrativo);
+Personal_administrativo.belongsTo(Persona);
 
 
 module.exports = {
