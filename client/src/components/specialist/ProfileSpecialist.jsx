@@ -8,6 +8,7 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons"
 import { modificarEspecialistas, especialistaDetallado, modificarPaciente, pacienteDetallado } from "../../actions"
 import { useEffect } from "react"
 import swal from 'sweetalert';
+import imagen from './images/user.png'
 
 export default  function ProfileSpecialist(){
 
@@ -184,7 +185,7 @@ export default  function ProfileSpecialist(){
 
             {rol === '3' && <div className='card-profile'>
                 <div className='encabezado'>
-                   <div className='image-label'><img src="https://wpdicta-ha-staticfiles-media-v1.s3.amazonaws.com/wp-content/uploads/2019/06/01124533/leonardo-dicaprio-meme.jpg" alt="" className='imagen'/><div className='icon-label'><label onClick={e => handleClick(e,'imagen')} className='icon'><FontAwesomeIcon icon={faEdit} /></label></div></div> 
+                   <div className='image-label'><img src={imagen} alt="" className='imagen'/><div className='icon-label'><label onClick={e => handleClick(e,'imagen')} className='icon'><FontAwesomeIcon icon={faEdit} /></label></div></div> 
                    <input className='file' type="file" name="imagen" id="upload" />
                     <span className='nombre'>{mayus(especialista[0].persona.name) + ' ' + mayus(especialista[0].persona.lastName) }</span>
                    <span className='especialidad'>{especialista[0].specialty}</span>

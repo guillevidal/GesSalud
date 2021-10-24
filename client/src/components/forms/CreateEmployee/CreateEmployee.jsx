@@ -8,6 +8,9 @@ import CreateRRHH from "../CreateRRHH/CreateRRHH.jsx";
 import {
     obtenerEspecialidades,
 } from '../../../actions/index.js'
+
+import './CreateEmployee.scss';
+
 const CreateEmployee = () => {
     const dispatch=useDispatch()
     useEffect(()=>{ 
@@ -23,13 +26,15 @@ const CreateEmployee = () => {
 
     return (
 
-    <div>
+    <div className='createEmployeeContainer'>
         <Nav />
-        <select onChange={(e)=>handleEmployee(e)}>
+        <div className='chooseForm'>
+        <select onChange={(e)=>handleEmployee(e)} className='select'>
             <option value="especialista">Crear Especialista</option>
             <option value="pys">Crear Planeacion y Servicios</option>
             <option value="rrhh">Crear Recursos Humanos</option>
         </select>
+        </div>
 
         {state === "especialista" && <CreateSpecialist/>}
         {state === "pys" && <CreatePyS/>}

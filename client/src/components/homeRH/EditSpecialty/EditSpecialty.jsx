@@ -377,13 +377,7 @@ export default function EditSpecialty() {
                             handleAdress={handleAdress} handleEmail={handleEmail} handleUser={handleUser}
                             handlePassword={handlePassword}
                         />
-                        <div className='identificacion-personal'>
-                            <label htmlFor="enrollment" className='label-tipo-title-text'>IDENTIFICACION PROFESIONAL</label>
-                            <input
-                                id="enrollment" type="text" name="enrollment"
-                                value={input.enrollment.value} onChange={(e) => handleEnrollment(e)}
-                            />
-                        </div>
+                       
                     </div>
                     <div id='specialist-container'>
 
@@ -406,17 +400,29 @@ export default function EditSpecialty() {
                                 return (
                                     <div className='preview'><span className='text'>{type}</span><button onClick={(e) => handleDeleteTypeSpecialities(e)} value={type} className='eliminar-esp'>X</button></div>
                                 )
-                            }) : <p>Seleccione un tipo de especialista</p>}
+                            }) : <span className='error-label-especialidad'>Seleccione un tipo de especialidad</span>}
 
                         </div>
 
+                        <div className='identificacion-personal'>
+                            <label htmlFor="enrollment" className='label-tipo-title-text'>IDENTIFICACION PROFESIONAL</label>
+                            <input
+                                id="enrollment" type="text" name="enrollment"
+                                value={input.enrollment.value} onChange={(e) => handleEnrollment(e)}
+                            />
+                        </div>
+
                     </div>
+
+                    <div className='errors'>       
+                        {!validation && <span className='error-label'>Completa correctamente el formulario</span>}
+                    </div>  
+                    
                     <div className='boton-crear-especialista'>
                         <Link to='/homeRRHH' onClick={handleCancel}>
                             <button className='boton-creacion' >CANCELAR</button>
                         </Link>
-                        {!validation && <p>Diligencie correctamente el formulario</p>}
-                        <button onClick={(e) => handleSubmit(e)} className='boton-creacion' >MODIFICAR</button>
+                       <button onClick={(e) => handleSubmit(e)} className='boton-creacion' >MODIFICAR</button>
                     </div>
                 </form>
             </div>

@@ -388,8 +388,7 @@ export default function CreateSpecialist() {
     return (
 
         <div id="createSpecialist-container">
-
-
+               
             <div>
                 <form className='form-container'>
                     <div className='form-infoPersonal'>
@@ -402,16 +401,6 @@ export default function CreateSpecialist() {
                             handlePassword={handlePassword}
                         />
 
-                        <div className='identificacion-personal'>
-
-                            <label htmlFor="enrollment" className='label-tipo-title-text'>IDENTIFICACION PROFESIONAL</label>
-
-                            <input
-                                id="enrollment" type="text" name="enrollment"
-                                value={input.enrollment.value} onChange={(e) => handleEnrollment(e)}
-                            />
-                            {input.enrollment.error && <span className='error-label'>{input.enrollment.error}</span>}
-                        </div>
 
                     </div>
 
@@ -444,10 +433,24 @@ export default function CreateSpecialist() {
 
                         </div>
 
+                        
+                        <div className='identificacion-personal'>
+
+                            <label htmlFor="enrollment" className='label-tipo-title-text'>IDENTIFICACION PROFESIONAL</label>
+
+                            <input
+                                id="enrollment" type="text" name="enrollment"
+                                value={input.enrollment.value} onChange={(e) => handleEnrollment(e)}
+                            />
+                            {input.enrollment.error && <span className='error-label-especialidad'>{input.enrollment.error}</span>}
+                        </div>
+
                     </div>
-                    <div className='boton-crear-especialista'>
+                    <div className='errors'>       
                         {!validation && <span className='error-label'>Completa correctamente el formulario</span>}
-                        <button onClick={(event) => handleSubmit(event)} className='boton-creacion' >CREAR</button>
+                    </div>   
+                    <div className='boton-crear-especialista'>
+                       <button onClick={(event) => handleSubmit(event)} className='boton-creacion' >CREAR</button>
                     </div>
                 </form>
 
