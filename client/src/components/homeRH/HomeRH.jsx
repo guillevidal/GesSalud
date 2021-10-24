@@ -34,7 +34,7 @@ const HomeRH = () => {
     return (
         <div className='container-homeRRHH'>
             <Nav />
-            <select onChange={(e) => handleEmpleados(e)} className='select-buscador'>
+            <select onChange={(e) => handleEmpleados(e)} className='panel'>
                 <option value="especialistas">Especialistas</option>
                 <option value="administrativos">Administrativos</option>
 

@@ -419,7 +419,7 @@ export default function CreatePatient() {
                             id="medication" type="text" name="medication"
                             value={input.medication.value} onChange={(e) => handleMedication(e)}
                             className='inputs' />
-                        {input.medication.error && <p>{input.medication.error}</p>}
+                        {input.medication.error && <span className='error-label'>{input.medication.error}</span>}
                     </div>
                     <div className='label-textarea'>    
                         <label htmlFor="disease" className='label-interno'>Enfermedades: </label>
@@ -427,7 +427,8 @@ export default function CreatePatient() {
                             id="disease" type="text" name="disease"
                             value={input.disease.value} onChange={(e) => handleDisease(e)}
                             className='inputs' />
-                        {input.disease.error && <p>{input.disease.error}</p>}
+                        {input.disease.error && <span className='error-label'>{input.disease.error}</span>}
+                        </div>
                         <div className='label-textarea'>
                             <label htmlFor="emergencyContact" className='label-interno'>Contacto de emergencia: </label>
 
@@ -436,12 +437,15 @@ export default function CreatePatient() {
                                 value={input.emergencyContact.value} onChange={(e) => handleContactEmergy(e)}
                                 className='input-emergencia'
                             />
-                            {input.emergencyContact.error && <p>{input.emergencyContact.error}</p>}
+                            {input.emergencyContact.error && <span className='error-label'>{input.emergencyContact.error}</span>}
                         </div>
-                    </div>
+                    
                 </div>
-                {!validation && <p>Diligencie correctamente el formulario</p>}
+              
                 <div className='boton-crear-paciente'>
+                <div className='errors'>       
+                        {!validation && <span className='error-label'>Completa correctamente el formulario</span>}
+                    </div>  
 
                     <button onClick={(e) => handleSubmit(e)} className='boton-crear'>CREAR</button>
                 </div>

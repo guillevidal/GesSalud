@@ -117,7 +117,7 @@ handleUser, handlePassword}) {
                 </div>
 
                 <div className='label-input-person'>
-                    <label htmlFor="user" className='label-person'>Usuario</label>
+                    <label htmlFor="user" value={email.value} className='label-person'>Usuario</label>
 
                     <input
                         id="user" type="email" name="user" 

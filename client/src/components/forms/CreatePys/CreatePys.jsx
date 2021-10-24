@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Person from "../Person/Person.jsx";
 import { crearAdministrativo, resetearAdministrativoCreado } from "../../../actions/index.js"
+import './CreatePys.scss'
 const CreatePyS = () => {
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
@@ -263,7 +264,12 @@ const CreatePyS = () => {
                 handleAdress={handleAdress} handleEmail={handleEmail} handleUser={handleUser}
                 handlePassword={handlePassword}
             />
-            {!validation && <p>Diligencie correctamente el formulario</p>}
+
+                    <div className='errors'>       
+                        {!validation && <span className='error-label'>Completa correctamente el formulario</span>}
+                    </div>  
+
+
             <div className='boton-crear-paciente'>
 
                 <button onClick={(e) => handleSubmit(e)} className='boton-crear'>CREAR</button>

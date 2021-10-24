@@ -327,8 +327,9 @@ export default function PatientEdit() {
                         {input.emergencyContact.error && <p>{input.emergencyContact.error}</p>}
                     </div>
                 </div>
-                {!validation && <p>Diligencie correctamente el formulario</p>}
-                <div className='boton-crear-paciente'>
+                <div className='errors'>       
+                        {!validation && <span className='error-label'>Completa correctamente el formulario</span>}
+                    </div>   <div className='boton-crear-paciente'>
                     <Link to="/patientPys" onClick={handleReset}>
                         <button className='boton-crear'>CANCELAR</button>
                     </Link>

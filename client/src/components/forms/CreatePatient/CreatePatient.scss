@@ -5,6 +5,12 @@
     flex-direction: column;
     width: 100%;
 
+    .error-label{
+        color: rgb(255, 122, 122);
+        font-size: 13px;
+        margin: 5px auto;
+    }
+
     .boton-regresar{
         display: flex;
         width: 100%;
@@ -85,7 +91,23 @@
         display: flex;
         width: 100%;
         justify-content: center;
+        flex-direction: column;
+        align-items: center;
         margin-bottom: 20px;
+
+        .errors{
+            display: flex;
+            justify-content: center;
+            background-color: rgb(255, 218, 218);
+            border-radius: 5px;
+            margin-top: 5px;
+    
+            .error-label{
+                padding: 5px;
+                color: red;
+            }
+        }
+
         .boton-crear{
             @include boton-primario;
             margin: 0 20px;

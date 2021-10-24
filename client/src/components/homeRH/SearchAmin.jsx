@@ -29,7 +29,7 @@ const SearchEspecialist = () => {
 
     return (
         <div className='buscador-especialista'>
-            <div className='elementos-buscador'>
+            <div className='elementos-buscador-admin'>
                 
             <FontAwesomeIcon icon={faSearch} className='icon-search'/>
            

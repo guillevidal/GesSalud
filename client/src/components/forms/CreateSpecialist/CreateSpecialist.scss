@@ -5,11 +5,24 @@
     flex-direction: column;
     width: 100%;
 
+    .errors{
+        display: flex;
+        justify-content: center;
+        background-color: rgb(255, 218, 218);
+        border-radius: 5px;
+
+        .error-label{
+            padding: 5px;
+            color: red;
+        }
+    }
+
     .form-container{
         display: flex;
-        margin-top: 20px;
+        margin: 20px auto;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: center;
+        width: 100%;
 
         .label-tipo-title-text{
             color:$color-principal;
@@ -22,7 +35,17 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            max-width: 500px;
+            max-width: 800px;
+
+           
+
+        }
+
+        #specialist-container{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 450px;
 
             .identificacion-personal{
                 display: flex;
@@ -33,14 +56,6 @@
     
     
             }
-
-        }
-
-        #specialist-container{
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 450px;
 
             .label-tipo-title{
                 display: flex;
@@ -53,6 +68,13 @@
         
             }
 
+            .error-label-especialidad{
+                color: rgb(255, 86, 86);
+                text-align: center;
+                font-size:12px;
+                margin-top: 5px;
+            }
+
         .lista-especialidades{
             display: flex;
             width: 100%;
@@ -63,16 +85,11 @@
             .select{
                 display: flex;
                 width: 100%;
-                max-width: 300px;
+                max-width: 200px;
                 justify-content: center;
             }
 
-            .error-label-especialidad{
-                color: rgb(255, 86, 86);
-                text-align: center;
-                font-size:12px;
-                margin-top: 5px;
-            }
+           
 
             .preview{
                 display: flex;
