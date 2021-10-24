@@ -1,3 +1,4 @@
+import axios from "axios";
 /* eslint-disable */
 import {
   CREAR_ESPECIALISTA,
@@ -45,27 +46,17 @@ import {
   OBTENER_TURNO_DETALLADO,
   RESETEAR_TURNO_DETALLADO,
   MODIFICAR_TURNO,
-  ELIMINAR_TURNO
-
-
+  ELIMINAR_TURNO,
 } from "./valuesForActions.js";
 
-const token = localStorage['access-token'];
+const token = localStorage["access-token"];
 
 //CREAR ESPECIALISTA
 export const crearEspecialista = (especialista) => {
-
   return async (dispatch) => {
     {
-      const result = await fetch(`http://localhost:3001/especialista`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(especialista),
-      });
-      const data = await result.json();
+      const result = await axios.post(`/especialista`, especialista);
+      const data = result.data;
       return dispatch({ type: CREAR_ESPECIALISTA, payload: data });
     }
   };
@@ -74,16 +65,8 @@ export const crearEspecialista = (especialista) => {
 export const crearPaciente = (paciente) => {
   return async (dispatch) => {
     {
-      const result = await fetch('http://localhost:3001/paciente', {
-        method: "POST",
-        headers: {
-          // Accept: "application/json",
-          "Content-Type": "application/json",
-          'accept': token,
-        },
-        body: JSON.stringify(paciente),
-      });
-      const data = await result.json();
+      const result = await axios.post("/paciente", paciente);
+      const data = result.data;
       return dispatch({ type: CREAR_PACIENTE, payload: data });
     }
   };
@@ -91,21 +74,21 @@ export const crearPaciente = (paciente) => {
 //OBTENER TIPOS DE ESPECIALIDADES
 export const obtenerEspecialidades = () => {
   return async (dispatch) => {
-    const result = await fetch("http://localhost:3001/especialidades");
-    const data = await result.json();
+    const result = await axios.get("/especialidades");
+    const data = result.data;
     return dispatch({ type: OBTENER_ESPECIALIDADES, payload: data });
   };
 };
 
-//RESETEAR ESPECIALIDADES 
+//RESETEAR ESPECIALIDADES
 export const resetearEspecialidades = () => {
-  return { type: RESETEAR_ESPECIALIDADES, payload: [] }
-}
+  return { type: RESETEAR_ESPECIALIDADES, payload: [] };
+};
 //OBTENER ESPECIALISTA
 export const obtenerEspecialistas = () => {
   return async (dispatch) => {
-    const result = await fetch("http://localhost:3001/especialista");
-    const data = await result.json();
+    const result = await axios.get("/especialista");
+    const data = result.data;
     return dispatch({ type: OBTENER_ESPECIALISTAS, payload: data });
   };
 };
@@ -113,11 +96,10 @@ export const obtenerEspecialistas = () => {
 //OBTENER PACIENTE
 export const obtenerPacientes = () => {
   return async (dispatch) => {
-    const result = await fetch('http://localhost:3001/paciente',{
-      method: 'GET',
-      headers: {'accept': token}
+    const result = await axios.get("/paciente", {
+      headers: { accept: token },
     });
-    const data = await result.json();
+    const data = result.data;
     return dispatch({ type: OBTENER_PACIENTES, payload: data });
   };
 };
@@ -132,28 +114,26 @@ export const obtenerEspecialistaPorEspecialidad = (especialidad) => {
   return { type: OBTENER_ESPECIALISTA_POR_ESPECIALIDAD, payload: especialidad };
 };
 
-//OBTENES INFORMACION DETALLADA DEL ESPECIALISTA POR ID
+//OBTENER INFORMACION DETALLADA DEL ESPECIALISTA POR ID
 export const especialistaDetallado = (id) => {
-  console.log(id)
+  console.log(id);
   return async (dispatch) => {
-    const result = await fetch(`http://localhost:3001/especialista/${id}`);
-    const data = await result.json();
+    const result = await axios.get(`/especialista/${id}`);
+    const data = result.data;
     return dispatch({ type: ESPECIALISTA_DETALLADO, payload: data });
-   
   };
-}
-
+};
 
 //OBTENER UNO O VARIOS PACIENTE(S) BUSCANDO POR NOMBRE
 export const obtenerPacientePorNombre = (nombre) => {
   return { type: OBTENER_PACIENTE_POR_NOMBRE, payload: nombre };
 };
 
-//OBTENES INFORMACION DETALLADA DE PACIENTE POR ID
+//OBTENER INFORMACION DETALLADA DE PACIENTE POR DNI
 export const pacienteDetallado = (dni) => {
   return async (dispatch) => {
-    const result = await fetch(`http://localhost:3001/paciente/consulta/${dni}`);
-    const data = await result.json();
+    const result = await axios.get(`/paciente/consulta/${dni}`);
+    const data = result.data;
     return dispatch({ type: PACIENTE_DETALLADO, payload: data });
   };
 };
@@ -211,18 +191,8 @@ export const modificarPaciente = (paciente) => {
   console.log("DATA EN ACCION MODIF PACIENTE", paciente);
   return async (dispatch) => {
     {
-      const result = await fetch(
-        `http://localhost:3001/paciente/${paciente.id}`,
-        {
-          method: "PUT",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(paciente),
-        }
-      );
-      const data = await result.json();
+      const result = await axios.put(`/paciente/${paciente.id}`, paciente);
+      const data = result.data;
       return dispatch({ type: MODIFICAR_PACIENTE, payload: data });
     }
   };
@@ -232,19 +202,12 @@ export const modificarPaciente = (paciente) => {
 export const modificarEspecialistas = (especialista) => {
   return async (dispatch) => {
     {
-      const result = await fetch(
-        `http://localhost:3001/especialista/${especialista.id}`,
-        {
-          method: "PUT",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(especialista),
-        }
+      const result = await axios.put(
+        `/especialista/${especialista.id}`,
+        especialista
       );
 
-      const data = await result.json();
+      const data = result.data;
       return dispatch({ type: MODIFICAR_ESPECIALISTA, payload: data });
     }
   };
@@ -255,234 +218,165 @@ export const resetearModificado = () => {
   return { type: RESETEAR_MODIFICADO, payload: "" };
 };
 
-
-//CREAR ADMINISTRATIVO 
+//CREAR ADMINISTRATIVO
 
 export const crearAdministrativo = (administrativo) => {
   return async (dispatch) => {
     {
-      const result = await fetch(
-        `http://localhost:3001/administrativos`,
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(administrativo),
-        }
-      );
-
-      const data = await result.json();
+      const result = await axios.put(`/administrativos`, administrativo);
+      const data = result.data;
       return dispatch({ type: CREAR_ADMINISTRATIVO, payload: data });
     }
   };
-}
+};
 
-//RESETEAR ADMINISTRATIVO CREADO 
+//RESETEAR ADMINISTRATIVO CREADO
 export const resetearAdministrativoCreado = () => {
-  return { type: RESETAR_ADMINISTRATIVO_CREADO, payload: []}
-}
+  return { type: RESETAR_ADMINISTRATIVO_CREADO, payload: [] };
+};
 
 //OBTENER ADMINISTRATIVOS
 export const obtenerAdministrativos = () => {
   return async (dispatch) => {
-    const result = await fetch(`http://localhost:3001/administrativos`);
-    const data = await result.json();
+    const result = await axios.get(`/administrativos`);
+    const data = result.data;
     return dispatch({ type: OBTENER_ADMINISTRATIVOS, payload: data });
   };
-}
+};
 
 //RESETEAR ADMINISTRATIVOS
 export const resetearAdministrativos = () => {
   return { type: RESETEAR_ADMINISTRATIVOS, payload: [] };
-}
+};
 
-//MODIFICAR ADMINISTRATIVO 
+//MODIFICAR ADMINISTRATIVO
 export const modificarAdministrativo = (administrativo) => {
   return async (dispatch) => {
     {
-      const result = await fetch(
-        `http://localhost:3001/administrativos/${administrativo.id}`,
-        {
-          method: "PUT",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(administrativo),
-        }
+      const result = await axios.put(
+        `/administrativos/${administrativo.id}`,
+        administrativo
       );
-
-      const data = await result.json();
+      const data = result.data;
       return dispatch({ type: MODIFICAR_ADMINISTRATIVO, payload: data });
     }
   };
-}
+};
 
-//OBTENER ADMINISTRATIVO DETALLADO 
+//OBTENER ADMINISTRATIVO DETALLADO
 export const administrativoDetallado = (id) => {
-  return { type: OBTENER_ADMINISTRATIVO_DETALLADO, payload: id}
-}
+  return { type: OBTENER_ADMINISTRATIVO_DETALLADO, payload: id };
+};
 
 //RESETEAR ADMINISTRATIVO DETALLADO
 
 export const resetearAdministrativoDetallado = () => {
   return { type: RESETEAR_ADMINISTRATIVO_DETALLADO, payload: [] };
-}
+};
 
-//BUSQUEDA ADMINISTRATIVO 
+//BUSQUEDA ADMINISTRATIVO
 export const busquedaAdminstrativo = (value) => {
-  return { type: BUSQUEDA_ADMINSTRATIVO, payload: value}
-}
+  return { type: BUSQUEDA_ADMINSTRATIVO, payload: value };
+};
 
-//RESETEAR BUSQUEDA ADMINISTRATIVO 
+//RESETEAR BUSQUEDA ADMINISTRATIVO
 export const resetearBusquedaAdministrativo = () => {
-  return { type: RESETEAR_BUSQUEDA_ADMINISTRATIVO, payload: []}
-}
+  return { type: RESETEAR_BUSQUEDA_ADMINISTRATIVO, payload: [] };
+};
 
 //CREAR AGENDA
 export const crearAgenda = (agenda) => {
   return async (dispatch) => {
-    const result = await fetch(
-      `http://localhost:3001/agendas`,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(agenda),
-      }
-    );
-
-    const data = await result.json();
+    const result = await axios.post(`/agendas`, agenda);
+    const data = result.data;
     return dispatch({ type: CREAR_AGENDA, payload: data });
-
-  }
-}
-
+  };
+};
 
 //RESETEAR AGENDA CREANDA
 export const resetearAgendaCreada = () => {
-  return { type: RESETEAR_AGENDA_CREADA, payload: []}
-}
+  return { type: RESETEAR_AGENDA_CREADA, payload: [] };
+};
 
-//OBTENER AGENDAS 
+//OBTENER AGENDAS
 export const obtenerAgendas = () => {
   return async (dispatch) => {
-    const result = await fetch("http://localhost:3001/agendas")
-    const data = await result.json();
-    return dispatch({ type: OBTENER_AGENDAS, payload: data})
-  }
-}
+    const result = await axios.get("/agendas");
+    const data = result.data;
+    return dispatch({ type: OBTENER_AGENDAS, payload: data });
+  };
+};
 
-//RESETEAR AGENDAS 
+//RESETEAR AGENDAS
 export const resetearAgendas = () => {
-  return { type: RESETEAR_AGENDAS, payload: []}
-}
+  return { type: RESETEAR_AGENDAS, payload: [] };
+};
 
 //MODIFICAR AGENDA
 export const modificarAgenda = (agenda) => {
   return async (dispatch) => {
-    const result = await fetch(
-      `http://localhost:3001/agendas/${agenda.id}`,
-      {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(agenda),
-      }
-    );
-
-    const data = await result.json();
+    const result = await axios.put(`/agendas/${agenda.id}`, agenda);
+    const data = result.data;
     return dispatch({ type: MODIFICAR_AGENDA, payload: data });
-
-  }
-}
+  };
+};
 
 //OBTENER TURNOS
 export const obtenerTurnos = () => {
   return async (dispatch) => {
-    const result = await fetch("http://localhost:3001/turnos")
-    const data = await result.json();
-    return dispatch({ type: OBTENER_TURNOS, payload: data})
-  }
-}
+    const result = await axios.get("/turnos");
+    const data = result.data;
+    return dispatch({ type: OBTENER_TURNOS, payload: data });
+  };
+};
 
-//RESETEAR TURNOS 
+//RESETEAR TURNOS
 export const resetearTurnos = () => {
-  return { type: RESETEAR_TURNOS, payload: [] }
-}
+  return { type: RESETEAR_TURNOS, payload: [] };
+};
 
-//CREAR TURNO 
+//CREAR TURNO
 export const crearTurno = (turno) => {
   return async (dispatch) => {
-    const result = await fetch(
-      `http://localhost:3001/turnos`,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(turno),
-      }
-    );
-
-    const data = await result.json();
+    const result = await axios.post(`/turnos`, turno);
+    const data = result.data;
     return dispatch({ type: CREAR_TURNO, payload: data });
-
-  }
-}
+  };
+};
 
 //RESETEAR TURNO CREADO
 export const resetearTurnoCreado = () => {
-  return { type: RESETEAR_TURNO_CREADO, payload: []}
-}
+  return { type: RESETEAR_TURNO_CREADO, payload: [] };
+};
 
-//OBTENER TURNO DETALLADO 
+//OBTENER TURNO DETALLADO
 export const turnoDetallado = (id) => {
   return async (dispatch) => {
-    const result = await fetch(`http://localhost:3001/turnos/${id}`)
-    const data = await result.json();
-    return dispatch({ type: OBTENER_TURNO_DETALLADO, payload: data})
-  }
-}
+    const result = await axios.get(`/turnos/${id}`);
+    const data = result.data;
+    return dispatch({ type: OBTENER_TURNO_DETALLADO, payload: data });
+  };
+};
 
 //RESETEAR TURNO DETALLADO
 export const resetearTurnoDetallado = () => {
-  return { type: RESETEAR_TURNO_DETALLADO, payload: []}
-}
+  return { type: RESETEAR_TURNO_DETALLADO, payload: [] };
+};
 
-//MODIFICAR TURNO 
+//MODIFICAR TURNO
 export const modificarTurno = (turno) => {
   return async (dispatch) => {
-    const result = await fetch(
-      `http://localhost:3001/turnos/${turno.id}`,
-      {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(turno),
-      }
-    );
-
-    const data = await result.json();
+    const result = await axios.put(`/turnos/${turno.id}`, turno);
+    const data = result.data;
     return dispatch({ type: MODIFICAR_TURNO, payload: data });
-
-  }
-}
+  };
+};
 
 //ELIMINAR UN TURNO
 export const eliminarTurno = (id) => {
   return async (dispatch) => {
-    const result = await fetch(`http://localhost:3001/turnos/borrarturno/${id}`)
-    const data = await result.json();
-    return dispatch({ type: ELIMINAR_TURNO, payload: data})
-  }
-}
+    const result = await axios.get(`/turnos/borrarturno/${id}`);
+    const data = result.data;
+    return dispatch({ type: ELIMINAR_TURNO, payload: data });
+  };
+};

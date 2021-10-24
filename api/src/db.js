@@ -3,15 +3,44 @@ const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 const { default: axios } = require("axios");
-const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 
-const sequelize = new Sequelize(
-  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/gessalud`,
-  {
-    logging: false, // set to console.log to see the raw SQL queries
-    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-  }
-);
+let sequelize =
+  process.env.NODE_ENV === "production"
+    ? new Sequelize({
+        database: DB_NAME,
+        dialect: "postgres",
+        host: DB_HOST,
+        port: 5432,
+        username: DB_USER,
+        password: DB_PASSWORD,
+        pool: {
+          max: 3,
+          min: 1,
+          idle: 10000,
+        },
+        dialectOptions: {
+          ssl: {
+            require: true,
+            // Ref.: https://github.com/brianc/node-postgres/issues/2009
+            rejectUnauthorized: false,
+          },
+          keepAlive: true,
+        },
+        ssl: true,
+      })
+    : new Sequelize(
+        `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/gessalud`,
+        { logging: false, native: false }
+      );
+
+// const sequelize = new Sequelize(
+//   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/gessalud`,
+//   {
+//     logging: false, // set to console.log to see the raw SQL queries
+//     native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+//   }
+// );
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
@@ -59,15 +88,18 @@ const {
 Especialista_medico.belongsTo(Persona);
 Persona.hasOne(Especialista_medico);
 
-Especialista_medico.belongsToMany(Tipo_especialidad, {through: "especialistaEspecialidad"});
-Tipo_especialidad.belongsToMany(Especialista_medico, {through: "especialistaEspecialidad"});
+Especialista_medico.belongsToMany(Tipo_especialidad, {
+  through: "especialistaEspecialidad",
+});
+Tipo_especialidad.belongsToMany(Especialista_medico, {
+  through: "especialistaEspecialidad",
+});
 
 Especialista_medico.hasOne(Agenda);
 Agenda.belongsTo(Especialista_medico);
 
 Agenda.belongsTo(Tipo_especialidad);
 Tipo_especialidad.hasOne(Agenda);
-
 
 Agenda.hasMany(Turno);
 Turno.belongsTo(Agenda);
@@ -86,7 +118,6 @@ Diagnostico.belongsTo(HistoriaClinica);
 
 Persona.hasOne(Personal_administrativo);
 Personal_administrativo.belongsTo(Persona);
-
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
