@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import './InitialSpecialty.scss';
 import Nav from '../../../Layout/Nav';
-import { obtenerEspecialistas, obtenerEspecialidades } from '../../../../actions/index';
+import { obtenerEspecialistas, obtenerEspecialidades, obtenerAgendas } from '../../../../actions/index';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Agenda from '../Agenda/Agenda.jsx';
 
 function InitialSpecialty() {
     const capitalFirstLetter = (str) => {
@@ -16,7 +17,14 @@ function InitialSpecialty() {
     useEffect(() => {
         dispatch(obtenerEspecialistas())
         dispatch(obtenerEspecialidades())
+        dispatch(obtenerAgendas())
     }, [])
+    const agenda = useSelector(state => state.agendas)
+    const agendaSort = agenda.sort((a, b) => {
+        if (a.date > b.date) return 1;
+        if (a.date < b.date) return -1;
+        return 0;
+    })
     const specialties = useSelector(state => state.especialistas)
     const [startDate, setStartDate] = useState(new Date());
     const [inputSearch, setInputSearch] = useState({
@@ -143,7 +151,26 @@ function InitialSpecialty() {
 
                 </div>
                 <div>
-                    <h4>ACA VA la AGENDA</h4>
+                    <label>AGENDA MEDICA</label>
+                    <div className="agenda-header-container">
+                        <p>DIA</p>
+                        <p>HORA</p>
+                        <p>ESPECIALISTA</p>
+                        <p>ESPECIALIDAD</p>
+                        <p>ESTADO DE AGENDA</p>
+                    </div>
+                    {
+                        agendaSort ? agendaSort.map(agenda => {
+                            return (
+                                <Agenda date={agenda.date.split('T')[0]} specialist={capitalFirstLetter(agenda.especialista_medico.persona.name)
+                                    + ' ' + capitalFirstLetter(agenda.especialista_medico.persona.lastName)}
+                                    specialty={agenda.tipo_especialidad.name} turno={agenda.turnos.length > 0 ? agenda.turnos[0] : <span>Agenda disponible</span>}
+                                    hour={agenda.date.split('T')[1]}
+                                />
+                            )
+                        }) : <h4>NO HAY AGENDA CREADA</h4>
+                    }
+                    
                 </div>
             </div>
         </div>
