@@ -17,12 +17,13 @@ function CreateAgenda() {
     /* dateStart: { value: startDate.toISOString().replace(/T.*$/, ''), error: null },*/
     const specialities = useSelector(state => state.especialidades)
     const specialists = useSelector(state => state.especialistas)
-   // const [startDate, setStartDate] = useState(new Date());
+    const agenda = useSelector(state => state.agendas)
+    // const [startDate, setStartDate] = useState(new Date());
 
     const [validation, setValidation] = useState(true)
     const [inputCreateAgenda, setInputCreateAgenda] = useState({
         dateStart: { value: '', error: 'Seleccione una fecha y hora' },
-        dateEnd: { value: '', error: 'Seleccione una fecha' },
+        //dateEnd: { value: '', error: 'Seleccione una fecha' },  // VA A PERMITIR CREAR AGENDAS POR MULTIPLES DÍAS CONSECUTIVOS
         specialty: { value: '', error: 'Campo requerido' }, // Especialidad
         specialist: { value: '', error: 'Campo requerido' }, // Especialista
         shiftsDay: { value: "", error: 'Seleccione los turnos por día' }, //Turnos por día
@@ -56,16 +57,19 @@ function CreateAgenda() {
         setInputCreateAgenda({ ...inputCreateAgenda, dateStart: { value, error: null } })
     }
 
+    /*
     const handleCreateAgendaDateEnd = (event) => {
         const { value } = event.target;
         setInputCreateAgenda({ ...inputCreateAgenda, dateEnd: { value, error: null } })
     }
+    */
 
     const handleCreateAgendaShift = (event) => {
         const { value } = event.target;
         setInputCreateAgenda({ ...inputCreateAgenda, shiftsDay: { value, error: null } })
     }
 
+    /*
     let shiftPerSpecialty = 0;
     if (inputCreateAgenda.specialty.value) {
         specialities.forEach(type => {
@@ -75,6 +79,7 @@ function CreateAgenda() {
         })
         //console.log(shiftPerSpecialty)
     }
+    */
 
     function clockMinuteAdder(time, min) {
         let [hours, minutes] = time.split(':');
@@ -107,50 +112,56 @@ function CreateAgenda() {
     const handleSubmitCreateAgenda = (event) => {
         event.preventDefault();
 
-        if (!inputCreateAgenda.dateStart.error && !inputCreateAgenda.dateEnd.error && !inputCreateAgenda.specialty.error
+        if (!inputCreateAgenda.dateStart.error && !inputCreateAgenda.specialty.error
             && !inputCreateAgenda.specialist.error && !inputCreateAgenda.shiftsDay.error) {
 
-            if (inputCreateAgenda.dateStart.value.length === 0 || inputCreateAgenda.dateEnd.value.length === 0 || inputCreateAgenda.specialty.value.length === 0
+            if (inputCreateAgenda.dateStart.value.length === 0 || inputCreateAgenda.specialty.value.length === 0
                 || inputCreateAgenda.specialist.value.length === 0 || inputCreateAgenda.shiftsDay.value.length === 0) {
                 setValidation(false)
             } else {
                 let idSpecialty = specialities.filter(types => {
                     return types.name.toLowerCase() === inputCreateAgenda.specialty.value.toLowerCase()
                 });
-                /*
-                specialities.forEach(type => {
-                    if (type.name.toLowerCase() === inputCreateAgenda.specialist.value.toLowerCase()) {
-                        idSpecialty = type.id
-                    }
-                })*/
-                //console.log(idSpecialty + '---------------------------------------')
 
                 let newAgenda = {
                     idSpecialist: parseInt(inputCreateAgenda.specialist.value),
                     idSpecialties: idSpecialty[0].id,
                     date: inputCreateAgenda.dateStart.value,
-                    amount: shiftPerSpecialty.toString(),
+                    amount: inputCreateAgenda.shiftsDay.value
                 }
-                //console.log(newAgenda)
-                dispatch(crearAgenda(newAgenda));
-                swal({
+                // console.log(newAgenda.date.split('T')[0] + '---------------------')
+                // console.log(newAgenda.date.split('T')[0].toString())
+                // console.log(newAgenda)
+                for (let i = 0; i < agenda.length; i++) {
+                    if (agenda[i].especialista_medico.id !== parseInt(newAgenda.idSpecialist)
+                        && agenda[i].tipo_especialidad.id !== parseInt(newAgenda.idSpecialties)
+                        && agenda[i].date.split('T')[0] !== newAgenda.date.split('T')[0]) {
 
-                    title: "Agenda médica creada",
-                    text: `La agenda del especialista se creó correctamente `,
-                    icon: "success",
+                        dispatch(crearAgenda(newAgenda));
+                        swal({
 
-                })
+                            title: "Agenda médica creada",
+                            text: `La agenda del especialista se creó correctamente `,
+                            icon: "success",
 
-                setInputCreateAgenda({
-                    dateStart: { value: '', error: 'Seleccione una fecha y hora' },
-                    dateEnd: { value: '', error: 'Seleccione una fecha' },
-                    specialty: { value: '', error: 'Campo requerido' }, // Especialidad
-                    specialist: { value: '', error: 'Campo requerido' }, // Especialista
-                    shiftsDay: { value: "", error: 'Seleccione los turnos por día' }, //Turnos por día
+                        })
 
-                })
+                        setInputCreateAgenda({
+                            dateStart: { value: '', error: 'Seleccione una fecha y hora' },
+                            dateEnd: { value: '', error: 'Seleccione una fecha' },
+                            specialty: { value: '', error: 'Campo requerido' }, // Especialidad
+                            specialist: { value: '', error: 'Campo requerido' }, // Especialista
+                            shiftsDay: { value: "", error: 'Seleccione los turnos por día' }, //Turnos por día
+
+                        })
+                        return
+                    } 
+                }
 
             }
+        } else {
+            setValidation(false)
+            return
         }
 
     }
@@ -212,6 +223,7 @@ function CreateAgenda() {
                         />
 
                     </div>
+                    {/*
                     <div>
                         <label htmlFor="dateEnd">Fecha final de agenda</label>
                         {inputCreateAgenda.dateEnd.error && <span>{inputCreateAgenda.dateEnd.error}</span>}
@@ -225,8 +237,9 @@ function CreateAgenda() {
 
                         />
                     </div>
+                    */}
                     <div>
-                        <label htmlFor="shiftsDay">Seleccione la cantidad de agendas por día</label>
+                        <label htmlFor="shiftsDay">Cantidad de turnos por día</label>
                         {inputCreateAgenda.shiftsDay.error && <span>{inputCreateAgenda.shiftsDay.error}</span>}
                         <input
 
@@ -235,7 +248,7 @@ function CreateAgenda() {
                             name="shiftsDay"
                             value={inputCreateAgenda.shiftsDay.value}
                             onChange={handleCreateAgendaShift}
-                            placeholder="Agendas por día..."
+
                         />
                     </div>
 

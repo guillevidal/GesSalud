@@ -152,25 +152,33 @@ function InitialSpecialty() {
                 </div>
                 <div>
                     <label>AGENDA MEDICA</label>
+
                     <div className="agenda-header-container">
-                        <p>DIA</p>
-                        <p>HORA</p>
-                        <p>ESPECIALISTA</p>
-                        <p>ESPECIALIDAD</p>
-                        <p>ESTADO DE AGENDA</p>
+                        <div><p>DIA</p></div>
+                        
+                        <div><p>ESPECIALISTA</p></div>
+                        <div><p>ESPECIALIDAD</p></div>
+                        
                     </div>
                     {
                         agendaSort ? agendaSort.map(agenda => {
                             return (
-                                <Agenda date={agenda.date.split('T')[0]} specialist={capitalFirstLetter(agenda.especialista_medico.persona.name)
-                                    + ' ' + capitalFirstLetter(agenda.especialista_medico.persona.lastName)}
-                                    specialty={agenda.tipo_especialidad.name} turno={agenda.turnos.length > 0 ? agenda.turnos[0] : <span>Agenda disponible</span>}
-                                    hour={agenda.date.split('T')[1]}
-                                />
+                                <div>
+                                    <Agenda date={agenda.date.split('T')[0]} specialist={capitalFirstLetter(agenda.especialista_medico.persona.name)
+                                        + ' ' + capitalFirstLetter(agenda.especialista_medico.persona.lastName)}
+                                        specialty={agenda.tipo_especialidad.name} turno={agenda.turnos.length > 0 ? agenda.turnos[0] : <span>Agenda disponible</span>}
+                                        hour={agenda.date.split('T')[1]}
+                                    />
+                                    <Link to={`especialistaPys/agenda/${agenda.id}`}>
+                                        <button>VER MAS</button>
+                                    </Link>
+                                    
+                                </div>
+
                             )
                         }) : <h4>NO HAY AGENDA CREADA</h4>
                     }
-                    
+
                 </div>
             </div>
         </div>

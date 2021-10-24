@@ -1,6 +1,6 @@
 import React from "react";
 
-function Agenda({specialist, date, specialty, turno, hour}) { 
+function Agenda({specialist, date, specialty}) { 
     return(
         
         <div>
@@ -8,10 +8,10 @@ function Agenda({specialist, date, specialty, turno, hour}) {
                 <h4>{date}</h4>
             </div>
             <div>
-                <p>{hour}</p>
+                
                 <p>{specialist}</p>
                 <p>{specialty}</p>
-                <p>{turno}</p>
+              
             </div>
         </div>
     )

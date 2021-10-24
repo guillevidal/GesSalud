@@ -1,0 +1,12 @@
+@import '../../../../scss/base/variables';
+
+
+#edit-agenda-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .input-datePicker{
+        width: 20%;
+    }
+}
