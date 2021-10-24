@@ -3,19 +3,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import './InitialSpecialty.scss';
 import Nav from '../../../Layout/Nav';
-import { obtenerEspecialistas } from '../../../../actions/index';
+import { obtenerEspecialistas, obtenerEspecialidades } from '../../../../actions/index';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function InitialSpecialty() {
+    const capitalFirstLetter = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1)
+    }
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(obtenerEspecialistas())
+        dispatch(obtenerEspecialidades())
     }, [])
     const specialties = useSelector(state => state.especialistas)
     const [startDate, setStartDate] = useState(new Date());
     const [inputSearch, setInputSearch] = useState({
-        date: { value: startDate.toISOString().replace(/T.*$/, ''), error: null },
+        date: { value: new Date(startDate.toISOString().replace(/T.*$/, '')), error: null },
         name: { value: '', error: null },
         specialty: { value: '', error: 'Campo requerido' }
     })
@@ -24,7 +28,7 @@ function InitialSpecialty() {
 
     let types = [];
     inputSearch.name.value && specialties.map(element => {
-        if (element.persona.name === inputSearch.name.value) {
+        if (element.id === parseInt(inputSearch.name.value)) {
             types = element.specialty.split(', ')
         }
     });
@@ -70,10 +74,16 @@ function InitialSpecialty() {
     return (
         <div id="initialSpecialty-container">
             <Nav />
-            <div className="search-agenda">
+            <div className="initialSpecialty">
                 <div>
-                    <div>
-                        <div>
+                    <div className="boton-crear-search">
+                        <Link to="/createAgenda">
+                            <button className="boton-action">CREAR AGENDA</button>
+                        </Link>
+                    </div>
+                    <div className="searchAgenda">
+                        <label className="label-title-search">FILTRAR AGENDA</label>
+                        <div className="searchAgenda">
                             <label>Seleccione fecha</label>
                             <DatePicker
                                 selected={startDate}
@@ -81,55 +91,58 @@ function InitialSpecialty() {
                                 minDate={startDate}
                             />
                         </div>
-                        <div>
+                        <div className="searchAgenda">
                             <div>
-                                <label>Seleccione especialista médico</label>
+                                <label >Seleccione especialista médico</label>
                             </div>
-                            {inputSearch.name.error && <span>{inputSearch.name.error}</span>}
-                            <select onChange={handleSearchSpecialist}>
-                                <option>Especialista...</option>
-                                {
-                                    specialties.length > 0 && specialties.map(type => {
-                                        return (
-                                            <>
-                                                <option key={type.personaId} id={type.persona.name} value={type.persona.name}>{type.persona.name}</option>
-                                            </>
-                                        )
-                                    })
-                                }
-                            </select>
-                        </div>
-                        <div>
+                            {inputSearch.name.error && <span className="error-label">{inputSearch.name.error}</span>}
+
                             <div>
-                                <label>Seleccione especialidad</label>
+                                <select onChange={handleSearchSpecialist}>
+                                    <option>Especialista...</option>
+                                    {
+                                        specialties.length > 0 && specialties.map(type => {
+                                            return (
+                                                <>
+                                                    <option key={type.id + type.persona.name + 'aa'} id={type.persona.name} value={type.id}>
+                                                        {`${capitalFirstLetter(type.persona.name)} ${capitalFirstLetter(type.persona.lastName)}`}</option>
+                                                </>
+                                            )
+                                        })
+                                    }
+                                </select>
                             </div>
-                            {inputSearch.specialty.error && <span>{inputSearch.specialty.error}</span>}
-                            <select onChange={handleSearchType}>
-                                <option>Especialidad...</option>
-                                {
-                                    types.length > 0 && types.map(element => {
-                                        return (
-                                            <>
-                                                <option key={element} id={element} value={element} >{element}</option>
-                                            </>
-                                        )
-                                    })
-                                }
-                            </select>
+
                         </div>
-                        <div>
-                            {!validation && <span>Completa correctamente el formulario</span>}
-                            <button>BUSCAR</button>
+                        <div className="searchAgenda">
+                            <div>
+                                <label >Seleccione especialidad</label>
+                            </div>
+                            {inputSearch.specialty.error && <span className='error-label'>{inputSearch.specialty.error}</span>}
+                            <div>
+                                <select onChange={handleSearchType}>
+                                    <option>Especialidad...</option>
+                                    {
+                                        types.length > 0 && types.map(element => {
+                                            return (
+                                                <>
+                                                    <option key={element + 'bb'} id={element} value={element} >{element}</option>
+                                                </>
+                                            )
+                                        })
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div className="boton-crear-search">
+                            {!validation && <span className="error-label">Completa correctamente el formulario</span>}
+                            <button className="boton-action">BUSCAR</button>
                         </div>
                     </div>
-                    <div>
-                        <Link to="/createAgenda">
-                            <button>CREAR AGENDA</button>
-                        </Link>
-                    </div>
+
                 </div>
                 <div>
-                    <h4>ACA VA FULL CALENDAR</h4>
+                    <h4>ACA VA la AGENDA</h4>
                 </div>
             </div>
         </div>
