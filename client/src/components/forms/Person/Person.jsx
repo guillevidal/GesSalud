@@ -22,7 +22,7 @@ handleUser, handlePassword}) {
                         value={name.value} onChange={(e)=>handleName(e)}
                         className='input-person'
                     />
-                {name.error&&<span className='error-label'>{name.error}</span>}
+                    {name.error&&<span className='error-label'>{name.error}</span>}
                 </div>
                 <div className='label-input-person'>
                     <label htmlFor="lastName" className='label-person'>Apellido</label>

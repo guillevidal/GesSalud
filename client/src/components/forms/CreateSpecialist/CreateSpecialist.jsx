@@ -217,20 +217,20 @@ export default function CreateSpecialist() {
     const handleChangeTypeSpecialities = (e) => {
         e.preventDefault()
         const { value } = e.target
-        if(!input.specialty.value[0]){
-            setInput({ ...input, specialty: {value: [value], error: null}})
+        if (!input.specialty.value[0]) {
+            setInput({ ...input, specialty: { value: [value], error: null } })
             return
-        }else{
+        } else {
             for (let index = 0; index < input.specialty.value.length; index++) {
 
-                if(input.specialty.value[index].toLowerCase()=== value.toLowerCase()){
+                if (input.specialty.value[index].toLowerCase() === value.toLowerCase()) {
 
-                    setInput({ ...input, specialty: {value: [...input.specialty.value], error: "Ya ha seleccionado esta opcion"}})
+                    setInput({ ...input, specialty: { value: [...input.specialty.value], error: "Ya ha seleccionado esta opcion" } })
                     return
                 }
-                
+
             }
-            setInput({ ...input, specialty: {value: [...input.specialty.value, value], error: null}})
+            setInput({ ...input, specialty: { value: [...input.specialty.value, value], error: null } })
             return
         }
 
@@ -291,8 +291,8 @@ export default function CreateSpecialist() {
                         return
                     } else {
 
-                         dispatch(crearEspecialista(newSpecialist))
-                        
+                        dispatch(crearEspecialista(newSpecialist))
+
                         swal({
                             title: "Especialista médico creado",
                             text: `El especialista ${capitalFirstLetter(input.name.value) + ' '}  ${capitalFirstLetter(input.lastName.value)} se creó correctamente `,
@@ -389,7 +389,7 @@ export default function CreateSpecialist() {
 
         <div id="createSpecialist-container">
 
-            
+
             <div>
                 <form className='form-container'>
                     <div className='form-infoPersonal'>
@@ -420,18 +420,18 @@ export default function CreateSpecialist() {
                         <div className='label-tipo-title'>
                             <label className='label-tipo-title-text'>TIPO DE ESPECIALIDADES</label>
                         </div>
-     
+
                         <div className='lista-especialidades'>
                             <div className='select'>
-                            <select onChange={(e) => { handleChangeTypeSpecialities(e) }} >
-                                <option >Tipos de especialidades</option>
-                                {typeSpecialties && typeSpecialties.map((type, index) => {
-                                    return (
-                                        <option  value={type.name} key={index} id={type.name} name={type.name}>{type.name}</option>
-                                    )
-                                })}
-                            </select>
-            
+                                <select onChange={(e) => { handleChangeTypeSpecialities(e) }} >
+                                    <option >Tipos de especialidades</option>
+                                    {typeSpecialties && typeSpecialties.map((type, index) => {
+                                        return (
+                                            <option value={type.name} key={index} id={type.name} name={type.name}>{type.name}</option>
+                                        )
+                                    })}
+                                </select>
+
                             </div>
 
                             {input.specialty.value[0] ? input.specialty.value.map((type, index) => {
@@ -439,7 +439,7 @@ export default function CreateSpecialist() {
                                     <div className='preview'><span className='text'>{type}</span><button onClick={(e) => handleDeleteTypeSpecialities(e)} value={type} className='eliminar-esp'>X</button></div>
                                 )
                             }) : <span className='error-label-especialidad'>Seleccione un tipo de especialidad</span>}
-                           
+
                             {input.specialty.error && <span className='error-label-especialidad'>{input.specialty.error}</span>}
 
                         </div>

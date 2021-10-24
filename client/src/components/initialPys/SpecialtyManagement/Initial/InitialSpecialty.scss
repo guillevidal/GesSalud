@@ -3,16 +3,52 @@
 #initialSpecialty-container{
     display: flex;
     flex-direction: column;
-    width: 100%;
     align-items: center;
+    width: 100%;
     
-    .search-agenda{
+    .initialSpecialty{
         display: flex;
-        justify-content: center;
-        flex-direction: row;
+        margin-top: 20px;
         flex-wrap: wrap;
-        margin: 20px auto;
-        width: 100%;
+        justify-content: space-around;
 
+        .label-title-search{
+            display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        color:$color-principal;
+            font-size: 1.2em;
+            padding: 5px;
+        }
+
+        .searchAgenda{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px auto;
+
+            .error-label{
+                color: rgb(255, 86, 86);
+                text-align: center;
+                font-size:12px;
+            }
+        }          
+        
+    }
+
+}
+.boton-crear-search{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+
+    .boton-action{
+        @include boton-primario;
+        margin: 0 20px
     }
 }

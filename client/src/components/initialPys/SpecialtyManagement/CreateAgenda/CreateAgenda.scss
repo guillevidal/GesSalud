@@ -1,8 +1,11 @@
 @import '../../../../scss//base/variables'; 
 
-#createAgenda{
+#createAgenda-container{
     display: flex;
     flex-direction: column;
     width: 100%;
-    align-items: center;
+
+    .input-datePicker{
+        width: 20%;
+    }
 }
