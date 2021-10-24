@@ -1,12 +1,10 @@
 const { Router } = require("express");
 const { Persona, Paciente, HistoriaClinica, Diagnostico } = require("../db");
 const router = Router();
-const rutasProtegidas = require('./Middleware/rutasProtegidas.js');
+const rutasProtegidas = require("./Middleware/rutasProtegidas.js");
 // const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 const config = require("../configs/config");
-
-
 
 router.get(
   "/",
@@ -31,8 +29,7 @@ router.get(
         },
         {
           model: HistoriaClinica,
-          attributes: ["creationDate"],
-          include: [{ model: Diagnostico }],
+          attributes: ["id", "creationDate"],
         },
       ],
     });
@@ -81,7 +78,6 @@ router.post(
       );
       const creandoDatosPaciente = await Paciente.create(
         {
-          // id: uuidv4(),
           medication: data.medication,
           emergencyContact: data.emergencyContact,
           disease: data.disease,
@@ -92,37 +88,22 @@ router.post(
       );
       const creandoDatosHistoriaClinica = await HistoriaClinica.create(
         {
-          // id: uuidv4(),
           creationDate: data.creationDate,
         },
         {
           fields: ["creationDate"],
         }
       );
-      const creandoDatosDiagnostico = await Diagnostico.create(
-        {
-          // id: uuidv4(),
-          diagnostic: data.diagnostic,
-          date: data.date,
-          derivation: data.derivation,
-        },
-        {
-          fields: ["diagnostic", "date", "derivation"],
-        }
-      );
+
       await creandoPersona.setPaciente(creandoDatosPaciente);
       await creandoDatosPaciente.setHistoriaClinica(
         creandoDatosHistoriaClinica
       );
-      await creandoDatosHistoriaClinica.addDiagnostico(creandoDatosDiagnostico);
 
-     
-
-      res.send({msg:"Se creo correctamente"});
+      res.send({ msg: "Se creo correctamente" });
     } catch (e) {
       res.status(400).send("no se puedo crear al Paciente");
     }
-
   }
 );
 
@@ -135,14 +116,10 @@ router.get("/consulta/:dni", async (req, res) => {
         where: { dni: dni },
         include: {
           model: Paciente,
-          include: [
-            {
-              model: HistoriaClinica,
-            },
-            {
-              model: Diagnostico,
-            },
-          ],
+          include: {
+            model: HistoriaClinica,
+            attributes: ["id", "creationDate"],
+          },
         },
       });
 
