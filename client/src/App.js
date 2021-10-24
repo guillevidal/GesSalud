@@ -16,6 +16,7 @@ import DetailAdmin from "./components/homeRH/DetailsAdmin.jsx"
 import EditAdmin from "./components/homeRH/EditAdmin/EditAdmin.jsx"
 import InitialSpecialty from "./components/initialPys/SpecialtyManagement/Initial/InitialSpecialty.jsx"
 import CreateAgenda from './components/initialPys/SpecialtyManagement/CreateAgenda/CreateAgenda.jsx';
+import EditAgenda from './components/initialPys/SpecialtyManagement/EditAgenda/EditAgenda.jsx';
 
 
 
@@ -66,6 +67,9 @@ function App() {
       </Route>
       <Route exact path="/createAgenda">
         <CreateAgenda />
+      </Route>
+      <Route exact path="/especialistaPys/agenda/:id">
+        <EditAgenda />
       </Route>
     </div>
   );
