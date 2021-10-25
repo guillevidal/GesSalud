@@ -68,23 +68,8 @@ function CreateAgenda() {
         setInputCreateAgenda({ ...inputCreateAgenda, shiftsDay: { value, error: null } })
     }
 
-   /*
 
-    function clockMinuteAdder(time, min) {
-        let [hours, minutes] = time.split(':');
 
-        let totalMinutes = min + parseInt(minutes);
-        let totalHours = parseInt(hours) + Math.floor(minutes / 60);
-
-        let newHours = ((totalHours - 1) % 24) + 1;
-        let newMinutes = totalMinutes % 60;
-
-        let formatHours = newHours > 9 ? newHours : `0${newHours}`;
-        let formatMinutes = newMinutes > 9 ? newMinutes : `0${newMinutes}`;
-
-        return `${formatHours}:${formatMinutes}`
-    }
-    */
    
     const handleSubmitCreateAgenda = (event) => {
         event.preventDefault();
@@ -106,6 +91,7 @@ function CreateAgenda() {
                     date: inputCreateAgenda.dateStart.value,
                     amount: inputCreateAgenda.shiftsDay.value
                 }
+
 
                 let consulta = false;
 
@@ -133,6 +119,7 @@ function CreateAgenda() {
                 else{
                    
                         dispatch(crearAgenda(newAgenda));
+
 
                         swal({
 
