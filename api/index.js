@@ -4,7 +4,8 @@ const axios = require("axios");
 const { especialidades } = require("./src/configs/specialties.js");
 
 conn.sync({ force: true }).then(async () => {
-  server.listen(process.env.PORT || 3001, async () => {
+  server.listen(process.env.PORT, async () => {
+    console.log(process.env.PORT);
     try {
       let Especialidades = especialidades.sort(function (a, b) {
         if (a.name > b.name) {
