@@ -47,6 +47,9 @@ import {
   RESETEAR_TURNO_DETALLADO,
   MODIFICAR_TURNO,
   ELIMINAR_TURNO,
+  CREAR_DIAGNOSTICO,
+  RESETEAR_DIAGNOSTICO,
+  EDITAR_DIAGNOSTICO,
 } from "./valuesForActions.js";
 
 const token = localStorage["access-token"];
@@ -381,3 +384,32 @@ export const eliminarTurno = (id) => {
     return dispatch({ type: ELIMINAR_TURNO, payload: data });
   };
 };
+
+
+//CREAR DIAGNOSTICO 
+export const crearDiagnostico = (diagnostico) => {
+  return async (dispatch) => {
+    {
+      const result = await axios.post(`/diagnosticos`, diagnostico);
+      const data = result.data;
+      return dispatch({ type: CREAR_DIAGNOSTICO, payload: data });
+    }
+  };
+};
+
+//RESETEAR DIAGNOSTICO
+export const resetearDiagnostico = () => {
+  return { type: RESETEAR_DIAGNOSTICO, payload: [] };
+
+}
+
+//MODIFICAR DIAGNOSTICO
+export const modificarDiagnostico = (diagnostico) => {
+  return async (dispatch) => {
+    {
+      const result = await axios.put(`/diagnosticos/${diagnostico.id}`, diagnostico);
+      const data = result.data;
+      return dispatch({ type: EDITAR_DIAGNOSTICO, payload: data });
+    }
+  };
+}
