@@ -37,6 +37,7 @@ function EditAgenda() {
         if (newHours < 10) newHours = `0${newHours}`;
         if (newMinutes < 10) newMinutes = `0${newMinutes}`;
 
+
         return `${newHours}:${newMinutes}`;
     };
     console.log(agendaId)
@@ -88,6 +89,7 @@ function EditAgenda() {
                 })}
             </table>
             </div>
+
 
         </div>
 

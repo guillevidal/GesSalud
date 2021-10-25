@@ -5,6 +5,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    align-items: center;
 
     .encabezado{
         display: flex;
@@ -28,6 +29,71 @@
         display: flex;
         width: 100%;
         justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        max-width: 900px;
+        margin-top: 20px;
+
+        .titles{
+            width: 100%;
+            max-width: 900px;
+         }
+
+         .subtitle{
+            color: $color-terciario;
+            font-size: 1.3em;
+            
+         }
+
     }
    
+}
+
+.lista{
+    width: 100%;
+    justify-content: center;
+    max-width: 900px;
+    margin-bottom: 20px;
+    text-align: center;
+  
+
+    .td{
+        padding: 5px;
+        &:hover{
+            background-color: white;
+        }
+
+    }
+    
+    .numero{
+     background-color: rgb(210, 255, 255);
+    }
+    .horario{
+        background-color: rgb(226, 226, 255);
+    }
+    .horarioFinal{
+        background-color: rgb(223, 189, 255);
+    }
+    .paciente{
+        background-color: rgb(194, 215, 255);
+    }
+    .historia{
+        background-color: rgb(189, 188, 255);
+    }
+
+    .asignar{
+         background-color: rgb(119, 119, 255);
+        text-align: start;
+         &:hover{
+            background-color: rgb(76, 76, 211);;
+        }
+        }
+    .link{
+        text-decoration: none;
+        font-size: 15px;
+        color: white;
+        
+        
+    }
+    
 }

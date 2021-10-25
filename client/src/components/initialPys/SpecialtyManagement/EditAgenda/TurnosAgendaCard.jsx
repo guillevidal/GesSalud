@@ -1,7 +1,9 @@
 import React from "react";
+
 import { useSelector } from "react-redux";
 import Agendar from '../Agendar/Agendar.jsx'
 import { Link } from "react-router-dom";
+import "./EditAgenda.scss";
 
 
 const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda }) => {
@@ -12,7 +14,8 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda }) => {
 
 
     return (
-        <div>
+
+        
             <tr className='lista'>
 
                 <td className='td numero'><span >{numeroTurno}</span></td>
@@ -22,13 +25,21 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda }) => {
                 <td className='td historia'><span >{"no disponible"}</span></td>
 
                
-            </tr>
+          
 
-            <Link to={`/especialistaPys/agenda/${idAgenda}/agendadetail`} >
-                <button>Asignar turno</button>
+            <Link to={`/especialistaPys/agenda/${idAgenda}/agendadetail`} className='link' >
+               <td className='td asignar'>
+                Asignar turno
+
+            </td>
+           
+          
+
             </Link>
+            
 
-        </div>
+          </tr>
+
     )
 }
 
