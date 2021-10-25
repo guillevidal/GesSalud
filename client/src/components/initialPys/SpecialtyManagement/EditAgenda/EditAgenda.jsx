@@ -54,20 +54,20 @@ function EditAgenda() {
         <div id="edit-agenda-container">
             {console.log(horaI)}
             <Nav />
-            <div>
-                <div>
+                <div className='encabezado'>
                     <div>
-                        <p>FECHA: <span>{agendaId[0]?.date.split('T')[0]}</span></p>
+                        <p className='title'>Fecha: <span className='data'>{agendaId[0]?.date.split('T')[0]}</span></p>
                     </div>
                     <div>
-                        <p>ESPECIALISTA: <span>{agendaId[0] && `${capitalFirstLetter(agendaId[0].especialista_medico.persona.name)} 
+                        <p className='title'>Especialista: <span className='data'>{agendaId[0] && `${capitalFirstLetter(agendaId[0].especialista_medico.persona.name)} 
                         ${capitalFirstLetter(agendaId[0].especialista_medico.persona.lastName)}`}</span></p>
                     </div>
                     <div>
-                    <p>ESPECIALIDAD: <span>{agendaId[0]?.tipo_especialidad.name}</span></p>
+                    <p className='title'>Especialidad: <span className='data'>{agendaId[0]?.tipo_especialidad.name}</span></p>
                     </div>
+                </div>
                   
-                    <div>
+                    <div className='asignaciones'>
                         {arr.map(valor => {
                             return (
                             
@@ -79,9 +79,6 @@ function EditAgenda() {
                         })}
                     </div>
                    
-                </div>
-            </div>
-
         </div>
 
     )

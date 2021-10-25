@@ -6,7 +6,28 @@
     flex-direction: column;
     width: 100%;
 
-    .input-datePicker{
-        width: 20%;
+    .encabezado{
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        flex-wrap: wrap;
+
+        .title{
+            font-size: 1.5em;
+        }
+
+        .data{
+            color: $color-secundario;
+            font-family: $fuente-principal;
+            font-size: 1.1em;
+            font-weight: $regularPlus;
+        }
     }
+
+    .asignaciones{
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+   
 }
