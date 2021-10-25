@@ -22,7 +22,8 @@ import {
     RESETEAR_TURNOS, CREAR_TURNO,
     RESETEAR_TURNO_CREADO, OBTENER_TURNO_DETALLADO,
     RESETEAR_TURNO_DETALLADO, MODIFICAR_TURNO,
-    ELIMINAR_TURNO
+    ELIMINAR_TURNO, CREAR_DIAGNOSTICO,
+    RESETEAR_DIAGNOSTICO, EDITAR_DIAGNOSTICO
 } from "../actions/valuesForActions.js";
 
 const initialState = {
@@ -59,6 +60,8 @@ const Reducer = (state = initialState, action) => {
         case RESETEAR_AGENDA_CREADA:
         case CREAR_TURNO:
         case RESETEAR_TURNO_CREADO:
+        case CREAR_DIAGNOSTICO:
+        case RESETEAR_DIAGNOSTICO:
             return { ...state, creado: action.payload };
 
 
@@ -163,6 +166,7 @@ const Reducer = (state = initialState, action) => {
         case MODIFICAR_AGENDA:
         case MODIFICAR_TURNO:
         case ELIMINAR_TURNO:
+        case EDITAR_DIAGNOSTICO:
             return { ...state, modificado: action.payload}
 
         case OBTENER_ADMINISTRATIVOS:
