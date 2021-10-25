@@ -8,6 +8,8 @@ import { obtenerEspecialistas, obtenerEspecialidades, obtenerAgendas } from '../
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Agenda from '../Agenda/Agenda.jsx';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 function InitialSpecialty() {
     const capitalFirstLetter = (str) => {
@@ -121,13 +123,15 @@ function InitialSpecialty() {
     return (
         <div id="initialSpecialty-container">
             <Nav />
-            <div className="initialSpecialty">
-                <div>
-                    <div className="boton-crear-search">
+
+            <div className="boton-crear-search">
                         <Link to="/createAgenda">
                             <button className="boton-action">CREAR AGENDA</button>
                         </Link>
-                    </div>
+
+                        
+                    <label className='Titulo'>AGENDA MÉDICA</label>
+
                     <div className="searchAgenda">
                         <label className="label-title-search">FILTRAR AGENDA</label>
                         <div>
@@ -138,50 +142,53 @@ function InitialSpecialty() {
                                 value={inputSearchDay.date.value}
                                 onChange={handleSearchDay}
                             />
-                            <button onClick={handleSubmitSearchDay}>BUSCAR</button>
+                            <button onClick={handleSubmitSearchDay} className='boton'>BUSCAR</button>
                         </div>
                         <div>
 
-                            <button onClick={handleAllAgenda}>TODAS LAS AGENDAS</button>
+                            <button onClick={handleAllAgenda} className='botonAll'>TODAS LAS AGENDAS</button>
                         </div>
                     </div>
 
-                </div>
-                <div>
-                    <label>AGENDA MEDICA</label>
+            </div>
+   
+                <div className='agenda'>
 
                     <div className="agenda-header-container">
-                        <div><p>DIA</p></div>
-
-                        <div><p>ESPECIALISTA</p></div>
-                        <div><p>ESPECIALIDAD</p></div>
+                            <div className='bloque'><span className='title'>Fecha</span></div>
+                            <div className='bloque'><span className='title'>Especialista</span></div>
+                            <div className='bloque'><span className='title'>Especialidad</span></div>
 
                     </div>
                     {
                         agendaFilter.length > 0 ? agendaFilter.map(agenda => {
                             return (
-                                <div>
+                                <div className='agendaEnlace'>
                                     <Agenda
                                         date={agenda.date.split('T')[0]} specialist={capitalFirstLetter(agenda.especialista_medico.persona.name)
                                             + ' ' + capitalFirstLetter(agenda.especialista_medico.persona.lastName)}
                                         specialty={agenda.tipo_especialidad.name}
                                     />
+                                    <div className='boton'>
                                     <Link to={`especialistaPys/agenda/${agenda.id}`}>
-                                        <button>VER MAS</button>
+                                        <FontAwesomeIcon icon={faEye} className='boton'/>
                                     </Link>
+                                    </div>
                                 </div>)
                         }) :
                             agendaSort ? agendaSort.map(agenda => {
                                 return (
-                                    <div>
+                                    <div className='agendaEnlace'>
                                         <Agenda date={agenda.date.split('T')[0]} specialist={capitalFirstLetter(agenda.especialista_medico.persona.name)
                                             + ' ' + capitalFirstLetter(agenda.especialista_medico.persona.lastName)}
                                             specialty={agenda.tipo_especialidad.name}
 
                                         />
+                                        <div >
                                         <Link to={`especialistaPys/agenda/${agenda.id}`}>
-                                            <button>VER MAS</button>
+                                        <FontAwesomeIcon icon={faEye} className='boton'/> 
                                         </Link>
+                                        </div>
 
                                     </div>
 
@@ -191,7 +198,6 @@ function InitialSpecialty() {
 
                 </div>
             </div>
-        </div>
     )
 }
 

@@ -1,1 +1,18 @@
-@import '../../../../scss/base/variables'
+@import '../../../../scss/base/variables';
+
+.datos{
+    display: flex;
+    width: 100%;
+    max-width: 800px;
+    justify-content: space-around;
+    border: 1px solid $color-principal;
+    
+    .bloque{
+        display: flex;
+        width: 100%;
+        justify-content: center;
+         padding: 5px;
+                    
+    }
+
+}
