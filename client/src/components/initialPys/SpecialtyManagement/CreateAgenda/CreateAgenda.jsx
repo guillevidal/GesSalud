@@ -80,23 +80,7 @@ function CreateAgenda() {
         //console.log(shiftPerSpecialty)
     }
     */
-   /*
 
-    function clockMinuteAdder(time, min) {
-        let [hours, minutes] = time.split(':');
-
-        let totalMinutes = min + parseInt(minutes);
-        let totalHours = parseInt(hours) + Math.floor(minutes / 60);
-
-        let newHours = ((totalHours - 1) % 24) + 1;
-        let newMinutes = totalMinutes % 60;
-
-        let formatHours = newHours > 9 ? newHours : `0${newHours}`;
-        let formatMinutes = newMinutes > 9 ? newMinutes : `0${newMinutes}`;
-
-        return `${formatHours}:${formatMinutes}`
-    }
-    */
    
     const handleSubmitCreateAgenda = (event) => {
         event.preventDefault();
@@ -121,14 +105,14 @@ function CreateAgenda() {
                 // console.log(newAgenda.date.split('T')[0] + '---------------------')
                 // console.log(newAgenda.date.split('T')[0].toString())
                 // console.log(newAgenda)
-                for (let i = 0; i < agenda.length; i++) {
-                    if (agenda[i].especialista_medico.id === parseInt(newAgenda.idSpecialist)
-                        && agenda[i].tipo_especialidad.id === parseInt(newAgenda.idSpecialties)
-                        && agenda[i].date.split('T')[0] === newAgenda.date.split('T')[0]) {
-                            return alert('La agenda ya existe')
-                        
-                    } 
-                }
+                    // for (let i = 0; i < agenda.length; i++) {
+                    //     if (agenda[i].especialista_medico.id === parseInt(newAgenda.idSpecialist)
+                    //         && agenda[i].tipo_especialidad.id === parseInt(newAgenda.idSpecialties)
+                    //         && agenda[i].date.split('T')[0] === newAgenda.date.split('T')[0]) {
+                    //             return alert('La agenda ya existe')
+                            
+                    //     } 
+                    // }
 
                 dispatch(crearAgenda(newAgenda));
                         swal({
