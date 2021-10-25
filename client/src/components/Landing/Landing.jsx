@@ -31,9 +31,7 @@ export default function Landing() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    //axios.post('/paciente/autenticar', { 
-
-
+/*
      axios.post('/autenticar', { 
 
 
@@ -57,9 +55,11 @@ export default function Landing() {
     }
     }) 
 
-    // })  */
 
-    // dispatch(rol(input.user));
+    */
+
+    dispatch(rol(input.user));
+
   };
 
   return (
