@@ -1,6 +1,9 @@
 const server = require("./src/app.js");
 
+
 const { conn, Tipo_especialidad, Persona } = require("./src/db.js");
+
+
 const axios = require("axios");
 const { especialidades } = require("./src/configs/specialties.js");
 
@@ -25,6 +28,7 @@ conn.sync({ force: false }).then(async () => {
             modulo_atencion: e.modulo,
           }))
       );
+
 
       // //####### PRECARGA DE USUARIOS DE LA APP #######
       // //##############################################

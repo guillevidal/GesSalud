@@ -15,7 +15,7 @@ export default  function ProfileSpecialist(){
     let rol = useSelector(state => state.rol)
 
     let especialista =  useSelector(state => state.especialistaDetallado)
-    let paciente  = useSelector(state => state.pacienteDetallado)
+    const pacienteDetail  = useSelector(state => state.pacienteDetallado)
 
 
     const newData = {...especialista[0]}
@@ -30,20 +30,20 @@ export default  function ProfileSpecialist(){
            ...especialista[0].persona
     } : null)
 
-    const [datosPac, setDatosPac] = useState(paciente.length ?{
-        ...paciente[0],
-        'emergencyContact' : paciente[0].paciente.emergencyContact,
-        'id' : paciente[0].paciente.id
+    const [datosPac, setDatosPac] = useState(pacienteDetail.length ?{
+        ...pacienteDetail[0],
+        'emergencyContact' : pacienteDetail[0].paciente.emergencyContact,
+        'id' : pacienteDetail[0].paciente.id
 }: null)
 
 
  
     useEffect(()=>{
         if(rol === '3'){
-        dispatch(especialistaDetallado(1))
+        dispatch(especialistaDetallado(especialista[0].id))
         }
         else{
-            dispatch(pacienteDetallado(41802066))
+            dispatch(pacienteDetallado(pacienteDetail[0].dni))
        
         }
     },[editar])
@@ -227,22 +227,22 @@ export default  function ProfileSpecialist(){
                 <div className='encabezado'>
                    <div className='image-label'><img src="https://wpdicta-ha-staticfiles-media-v1.s3.amazonaws.com/wp-content/uploads/2019/06/01124533/leonardo-dicaprio-meme.jpg" alt="" className='imagen'/><div className='icon-label'><label onClick={e => handleClick(e,'imagen')} className='icon'><FontAwesomeIcon icon={faEdit} /></label></div></div> 
                    <input className='file' type="file" name="imagen" id="upload" />
-                    <span className='nombre'>{mayus(paciente[0].name) + ' ' + mayus(paciente[0].lastName) }</span>
+                    <span className='nombre'>{mayus(pacienteDetail[0].name) + ' ' + mayus(pacienteDetail[0].lastName) }</span>
                  </div> 
 
                 <div className='informacion'>
                 <div className='info'>
                 <div className='info-edit'><span className='info-title personal'>Información personal</span><div className='icon-label-datos'><label onClick={e => handleClick(e,'datos')} className='button'><FontAwesomeIcon icon={faEdit} className='icon'/></label></div></div>
-                    <div className='data'><span>Telefono: </span>{editar.datos === true ? <input type='text' value={datosPac.phone} onChange={e => handleChange(e)} name='phone'/> : <span className='data-real'>{ paciente[0].phone}</span>}</div>
-                    <div className='data'><span>Email: </span>{editar.datos === true ? <input type='text' value={datosPac.email} onChange={e => handleChange(e)} name='email'/> : <span className='data-real'>{paciente[0].email}</span>}</div>
-                    <div className='data'><span>Dirección: </span>{editar.datos === true ? <input type='text' value={datosPac.adress} onChange={e => handleChange(e)} name='adress' /> : <span className='data-real'>{paciente[0].adress}</span>}</div>
+                    <div className='data'><span>Telefono: </span>{editar.datos === true ? <input type='text' value={datosPac.phone} onChange={e => handleChange(e)} name='phone'/> : <span className='data-real'>{ pacienteDetail[0].phone}</span>}</div>
+                    <div className='data'><span>Email: </span>{editar.datos === true ? <input type='text' value={datosPac.email} onChange={e => handleChange(e)} name='email'/> : <span className='data-real'>{pacienteDetail[0].email}</span>}</div>
+                    <div className='data'><span>Dirección: </span>{editar.datos === true ? <input type='text' value={datosPac.adress} onChange={e => handleChange(e)} name='adress' /> : <span className='data-real'>{pacienteDetail[0].adress}</span>}</div>
 
                 </div>
 
                 <div className='info'>
                 <div className='info-edit'><span className='info-title personal'>Información de cuenta</span><div className='icon-label-datos'><label onClick={e => handleClick(e,'cuenta')} className='button'><FontAwesomeIcon icon={faEdit} className='icon'/></label></div></div>
-                <div className='data'><span>usuario: </span>{editar.cuenta === true ? <input type='text' value={datosPac.user} onChange={e => handleChange(e)} name='user'/> : <span className='data-real'>{paciente[0].user }</span>}</div>
-                <div className='data'><span>Contraseña actual: </span>{editar.cuenta === true ? <input type='password' onChange={e => handleChange(e)} name='passwordActual'/> : <span className='data-real'>{hardCodeo( paciente[0].password.length)}</span>}</div>
+                <div className='data'><span>usuario: </span>{editar.cuenta === true ? <input type='text' value={datosPac.user} onChange={e => handleChange(e)} name='user'/> : <span className='data-real'>{pacienteDetail[0].user }</span>}</div>
+                <div className='data'><span>Contraseña actual: </span>{editar.cuenta === true ? <input type='password' onChange={e => handleChange(e)} name='passwordActual'/> : <span className='data-real'>{hardCodeo( pacienteDetail[0].password.length)}</span>}</div>
                 {validaciones && <label className='error'>La contraseña actual no coincide con la ingresada</label>  }
                 {editar.cuenta === true && <div className='data'><span>Nueva contraseña: </span>  <input type='password' onChange={e => handleChange(e)} name='password'/> </div>}
               

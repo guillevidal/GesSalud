@@ -14,14 +14,17 @@ router.post("/", async (req, res) => {
     register = persona.dataValues;
   }
 
+
   if (persona && persona.dataValues.rol === "3") {
     const datosEspec = await Especialista_medico.findOne({
+
       where: { personaId: persona.dataValues.id },
       attributes: ["id"],
     });
     especialistaId = datosEspec.dataValues.id;
     register = { ...register, especialistaId: especialistaId };
   }
+
 
   if (register) {
     if (register.password === req.body.password) {

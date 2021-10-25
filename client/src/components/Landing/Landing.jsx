@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { rol } from "../../actions";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
+import { especialistaDetallado, pacienteDetallado } from "../../actions"
+
 
 export default function Landing() {
   const dispatch = useDispatch();
@@ -29,9 +31,7 @@ export default function Landing() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    //   axios.post('/paciente/autenticar', { 
-
-
+/*
      axios.post('/autenticar', { 
 
 
@@ -43,12 +43,23 @@ export default function Landing() {
         localStorage.setItem('access-token', data.data.token)
         dispatch(rol(data.data.persona.rol));
 
-    }   else alert(data.data.mensaje)
+        if(data.data.persona.rol === '3'){
+          dispatch(especialistaDetallado(data.data.persona.especialistaId));
+          }
+          else if(data.data.persona.rol === '4'){
+            dispatch(pacienteDetallado(data.data.persona.dni));
+          }
+        }
+    else {
+    alert(data.data.mensaje)
+    }
     }) 
 
-    //})
 
-    //dispatch(rol(input.user));
+    */
+
+    dispatch(rol(input.user));
+
   };
 
   return (

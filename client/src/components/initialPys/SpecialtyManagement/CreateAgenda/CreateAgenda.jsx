@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Nav from '../../../Layout/Nav';
 import './CreateAgenda.scss';
-//import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { crearAgenda } from '../../../../actions/index.js';
 
@@ -14,11 +13,11 @@ function CreateAgenda() {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
 
-    /* dateStart: { value: startDate.toISOString().replace(/T.*$/, ''), error: null },*/
+    
     const specialities = useSelector(state => state.especialidades)
     const specialists = useSelector(state => state.especialistas)
     const agenda = useSelector(state => state.agendas)
-    // const [startDate, setStartDate] = useState(new Date());
+    
 
     const [validation, setValidation] = useState(true)
     const [inputCreateAgenda, setInputCreateAgenda] = useState({
@@ -69,34 +68,8 @@ function CreateAgenda() {
         setInputCreateAgenda({ ...inputCreateAgenda, shiftsDay: { value, error: null } })
     }
 
-    /*
-    let shiftPerSpecialty = 0;
-    if (inputCreateAgenda.specialty.value) {
-        specialities.forEach(type => {
-            if (type.name.toLowerCase() === inputCreateAgenda.specialty.value.toLowerCase()) {
-                shiftPerSpecialty = type.modulo_atencion * 15;
-            }
-        })
-        //console.log(shiftPerSpecialty)
-    }
-    */
-   /*
 
-    function clockMinuteAdder(time, min) {
-        let [hours, minutes] = time.split(':');
 
-        let totalMinutes = min + parseInt(minutes);
-        let totalHours = parseInt(hours) + Math.floor(minutes / 60);
-
-        let newHours = ((totalHours - 1) % 24) + 1;
-        let newMinutes = totalMinutes % 60;
-
-        let formatHours = newHours > 9 ? newHours : `0${newHours}`;
-        let formatMinutes = newMinutes > 9 ? newMinutes : `0${newMinutes}`;
-
-        return `${formatHours}:${formatMinutes}`
-    }
-    */
    
     const handleSubmitCreateAgenda = (event) => {
         event.preventDefault();
@@ -118,9 +91,7 @@ function CreateAgenda() {
                     date: inputCreateAgenda.dateStart.value,
                     amount: inputCreateAgenda.shiftsDay.value
                 }
-                // console.log(newAgenda.date.split('T')[0] + '---------------------')
-                // console.log(newAgenda.date.split('T')[0].toString())
-                // console.log(newAgenda)
+
 
                 let consulta = false;
 
@@ -148,6 +119,7 @@ function CreateAgenda() {
                 else{
                    
                         dispatch(crearAgenda(newAgenda));
+
 
                         swal({
 

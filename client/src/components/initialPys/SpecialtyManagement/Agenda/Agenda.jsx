@@ -1,18 +1,15 @@
 import React from "react";
+import './Agenda.scss'
 
 function Agenda({specialist, date, specialty}) { 
     return(
         
-        <div>
-            <div>
-                <h4>{date}</h4>
-            </div>
-            <div>
+        <div className='datos'>
+                <div className='bloque'><span className='fecha'>{date}</span></div>
                 
-                <p>{specialist}</p>
-                <p>{specialty}</p>
+                <div className='bloque'><span className='especialista'>{specialist}</span></div>
+                <div className='bloque'><span className='especialidad'>{specialty}</span></div>
               
-            </div>
         </div>
     )
 }
