@@ -286,6 +286,7 @@ export const resetearBusquedaAdministrativo = () => {
 
 //CREAR AGENDA
 export const crearAgenda = (agenda) => {
+  console.log(agenda)
   return async (dispatch) => {
     const result = await axios.post(`/agendas`, agenda);
     const data = result.data;

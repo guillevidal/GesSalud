@@ -5,7 +5,66 @@
     flex-direction: column;
     width: 100%;
 
-    .input-datePicker{
-        width: 20%;
+
+    .volver{
+        display: flex;
+        width: 100%;
+        max-width: 100px;
+        justify-content: flex-start;
+        margin: 20px ;
+
+        .elbotonazo{
+            @include boton-primario;
+        }
+
     }
+
+    .formulario{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 500px;
+        align-items: center;
+        background-color: $color-detalle;
+        margin: 10px auto;
+        padding: 20px;
+        border-radius: 10px;
+        font-family: $fuente-principal;
+
+        .seccion{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin: 10px auto;
+
+            .select{
+                padding: 5px;
+            }
+
+            .title{
+                background-color: $color-terciario;
+                padding: 5px;
+                border : 1px solid $color-principal;
+                color : white;
+            }
+
+            .error{
+                color: rgb(255, 119, 119);
+                font-size: 13px;
+            }
+        }
+
+        .error-label{
+            color: red;
+            background-color: rgb(255, 230, 230);
+            padding: 5px;
+            border-radius: 5px;
+            margin: 10px auto;
+        }
+
+        .boton{
+            @include boton-primario;
+        }
+    }
+
 }

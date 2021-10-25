@@ -169,19 +169,17 @@ function CreateAgenda() {
     return (
         <div id="createAgenda-container">
             <Nav />
-            <div>
-                <div>
+                <div className='volver'>
                     <Link to="/especialistaPys" >
-                        <button>VOLVER</button>
+                        <button className='elbotonazo'>VOLVER</button>
                     </Link>
                 </div>
-                <form>
-                    <div>
-                        <label>Seleccione Especialista</label>
-                    </div>
-                    {inputCreateAgenda.specialist.error && <span>{inputCreateAgenda.specialist.error}</span>}
-                    <select onChange={handleCreateAgendaSpecialist}>
-                        <option>Especialista...</option>
+                <form className='formulario'>
+                    <div className='seccion'>
+                        <label className='title'>Seleccione Especialista</label>
+                    
+                   <select onChange={handleCreateAgendaSpecialist} className='select'>
+                       <option>Especialista</option>
                         {
                             specialists.length > 0 && specialists.map(specialist => {
 
@@ -195,12 +193,14 @@ function CreateAgenda() {
                             })
                         }
                     </select>
-                    <div>
-                        <label>Seleccione Especialidad</label>
+                    {inputCreateAgenda.specialist.error && <span className='error'>{inputCreateAgenda.specialist.error}</span>}
+                    
                     </div>
-                    {inputCreateAgenda.specialty.error && <span>{inputCreateAgenda.specialty.error}</span>}
-                    <select onChange={handleCreateAgendaSpecialty}>
-                        <option>Especialidades...</option>
+                    <div className='seccion'>
+                        <label className='title'>Seleccione Especialidad</label>
+                    
+                    <select onChange={handleCreateAgendaSpecialty} className='select'>
+                    <option>Especialidades</option>
                         {
                             types.length > 0 && types.map(type => {
                                 return (
@@ -211,16 +211,22 @@ function CreateAgenda() {
                             })
                         }
                     </select>
-                    <div>
-                        <label htmlFor="dateStart">Fecha y hora inicial de agenda</label>
-                        {inputCreateAgenda.dateStart.error && <span>{inputCreateAgenda.dateStart.error}</span>}
-                        <input
+                    {inputCreateAgenda.specialty.error && <span className='error'>{inputCreateAgenda.specialty.error}</span>}
+                   
+                    </div>
+                    <div className='seccion'>
+                        <label htmlFor="dateStart" className='title'>Fecha y hora inicial de agenda</label>
+                       <input
                             type="datetime-local"
                             min={new Date()}
                             name="dateStart"
                             value={inputCreateAgenda.dateStart.value}
                             onChange={handleCreateAgendaDateStart}
+                            className='select'
                         />
+
+                    {inputCreateAgenda.dateStart.error && <span className='error'>{inputCreateAgenda.dateStart.error}</span>}
+                       
 
                     </div>
                     {/*
@@ -238,26 +244,29 @@ function CreateAgenda() {
                         />
                     </div>
                     */}
-                    <div>
-                        <label htmlFor="shiftsDay">Cantidad de turnos por día</label>
-                        {inputCreateAgenda.shiftsDay.error && <span>{inputCreateAgenda.shiftsDay.error}</span>}
-                        <input
+                    <div className='seccion'>
+                        <label htmlFor="shiftsDay" className='title'>Cantidad de turnos por día</label>
+                         <input
 
                             type="number"
                             min="1"
                             name="shiftsDay"
                             value={inputCreateAgenda.shiftsDay.value}
                             onChange={handleCreateAgendaShift}
+                            className='select'
 
                         />
+                    {inputCreateAgenda.shiftsDay.error && <span className='error'>{inputCreateAgenda.shiftsDay.error}</span>}
+                      
                     </div>
 
+                    {!validation && <span className='error-label'>Completa correctamente el formulario</span>}
+                      
+
                     <div>
-                        {!validation && <span className='error-label'>Completa correctamente el formulario</span>}
-                        <button onClick={handleSubmitCreateAgenda}>CREAR AGENDA</button>
+                         <button onClick={handleSubmitCreateAgenda} className='boton'>CREAR AGENDA</button>
                     </div>
                 </form>
-            </div>
         </div>
     )
 }
