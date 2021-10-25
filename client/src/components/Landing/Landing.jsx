@@ -29,7 +29,7 @@ export default function Landing() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    /*   axios.post('/paciente/autenticar', { 
+    //   axios.post('/paciente/autenticar', { 
 
 
      axios.post('/autenticar', { 
@@ -46,9 +46,9 @@ export default function Landing() {
     }   else alert(data.data.mensaje)
     }) 
 
-    })  */
+    //})
 
-    dispatch(rol(input.user));
+    //dispatch(rol(input.user));
   };
 
   return (

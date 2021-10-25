@@ -58,7 +58,7 @@ router.post(
           user: data.user,
           password: data.password,
           gender: data.gender,
-          rol: "1",
+          rol: "4",
         },
         {
           fields: [
