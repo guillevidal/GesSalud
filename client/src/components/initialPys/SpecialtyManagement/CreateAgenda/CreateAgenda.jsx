@@ -165,9 +165,11 @@ function CreateAgenda() {
                             shiftsDay: { value: "", error: 'Seleccione los turnos por día' }, //Turnos por día
 
                         })
+                    }
 
-            }
-        } else {
+            
+        }
+     } else {
             setValidation(false)
             return
         }
