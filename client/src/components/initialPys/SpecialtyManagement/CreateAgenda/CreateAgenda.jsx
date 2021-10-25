@@ -80,6 +80,7 @@ function CreateAgenda() {
         //console.log(shiftPerSpecialty)
     }
     */
+   /*
 
     function clockMinuteAdder(time, min) {
         let [hours, minutes] = time.split(':');
@@ -95,20 +96,8 @@ function CreateAgenda() {
 
         return `${formatHours}:${formatMinutes}`
     }
-
-    const errorShiftsDay = () => {
-        if (inputCreateAgenda.dateStart.value && inputCreateAgenda.dateEnd.value) {
-            let startShiftDay = inputCreateAgenda.dateStart.value.split('T')[1]
-            let endShiftsDay = '18:00';
-            let shift = 0;
-            while (startShiftDay < endShiftsDay) {
-                clockMinuteAdder(startShiftDay, shiftPerSpecialty);
-                shift++
-            }
-
-        }
-    }
-
+    */
+   
     const handleSubmitCreateAgenda = (event) => {
         event.preventDefault();
 
@@ -133,11 +122,15 @@ function CreateAgenda() {
                 // console.log(newAgenda.date.split('T')[0].toString())
                 // console.log(newAgenda)
                 for (let i = 0; i < agenda.length; i++) {
-                    if (agenda[i].especialista_medico.id !== parseInt(newAgenda.idSpecialist)
-                        && agenda[i].tipo_especialidad.id !== parseInt(newAgenda.idSpecialties)
-                        && agenda[i].date.split('T')[0] !== newAgenda.date.split('T')[0]) {
+                    if (agenda[i].especialista_medico.id === parseInt(newAgenda.idSpecialist)
+                        && agenda[i].tipo_especialidad.id === parseInt(newAgenda.idSpecialties)
+                        && agenda[i].date.split('T')[0] === newAgenda.date.split('T')[0]) {
+                            return alert('La agenda ya existe')
+                        
+                    } 
+                }
 
-                        dispatch(crearAgenda(newAgenda));
+                dispatch(crearAgenda(newAgenda));
                         swal({
 
                             title: "Agenda médica creada",
@@ -155,8 +148,6 @@ function CreateAgenda() {
 
                         })
                         return
-                    } 
-                }
 
             }
         } else {
