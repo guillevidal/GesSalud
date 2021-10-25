@@ -6,8 +6,6 @@ import './HomeSpecialist.scss'
 
 export default function HomeSpecialist(){
 
-    const dispatch = useDispatch()
-    let rol = useSelector(state => state.rol)
 
     return(
         <div className='homeSpecialist'>
