@@ -343,6 +343,7 @@ export const resetearBusquedaAdministrativo = () => {
 
 //CREAR AGENDA
 export const crearAgenda = (agenda) => {
+  console.log(agenda)
   return async (dispatch) => {
     const result = await fetch(
       `http://localhost:3001/agendas`,
