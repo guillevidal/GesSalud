@@ -67,7 +67,15 @@ const Reducer = (state = initialState, action) => {
 
         case OBTENER_ESPECIALIDADES:
         case RESETEAR_ESPECIALIDADES:
-            return { ...state, especialidades: action.payload }
+            let arr=[]
+                for (let index = 0; index < action.payload.length; index++) {
+                    let nameFIltro = action.payload[index].name.normalize('NFD')
+                    .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
+                    .normalize();
+                    arr=[...arr, {name: nameFIltro, modulo_atencion: action.payload[index].modulo_atencion, id: action.payload[index].id}]
+                }
+            
+            return { ...state, especialidades: arr }
 
         case OBTENER_PACIENTES:
         case RESETEAR_PACIENTES:
@@ -99,7 +107,7 @@ const Reducer = (state = initialState, action) => {
                 esp=state.especialistas[index].specialty.toLowerCase().split(", ")
                 
                 for (let index2 = 0; index2 < esp.length; index2++) {
-                    let formart=esp[index2].normalize('NFD').replace(/[\u00C0-\u00FF]/g, '')
+                    let formart=esp[index2]
                     if(formart.startsWith(action.payload.toLowerCase())){
                         if(busquedaEs.length>0){
                             let filtro=busquedaEs.filter( es => es.id===state.especialistas[index].id)
