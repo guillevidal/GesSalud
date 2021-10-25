@@ -132,11 +132,31 @@ function CreateAgenda() {
                 // console.log(newAgenda.date.split('T')[0] + '---------------------')
                 // console.log(newAgenda.date.split('T')[0].toString())
                 // console.log(newAgenda)
-                for (let i = 0; i < agenda.length; i++) {
-                    if (agenda[i].especialista_medico.id !== parseInt(newAgenda.idSpecialist)
-                        && agenda[i].tipo_especialidad.id !== parseInt(newAgenda.idSpecialties)
-                        && agenda[i].date.split('T')[0] !== newAgenda.date.split('T')[0]) {
+                let consulta = false;
 
+                agenda.forEach(elemento => {
+                    let diaAgenda = elemento.date.split('T')
+                    let dia = newAgenda.date.split('T')
+                    let especialistaAgenda = elemento.especialista_medico.id
+                    let especialista = newAgenda.idSpecialist;
+
+                    if(dia[0] === diaAgenda[0] && especialistaAgenda === especialista){
+                        consulta = true;
+                    }
+                
+                })
+
+                if(consulta === true){
+                    swal({
+
+                        title: "Error",
+                        text: `El especialista ya se encuentra registrado el dia seleccionado `,
+                        icon: "warning",
+
+                    })
+                }
+                else{
+                   
                         dispatch(crearAgenda(newAgenda));
                         swal({
 
@@ -154,9 +174,10 @@ function CreateAgenda() {
                             shiftsDay: { value: "", error: 'Seleccione los turnos por día' }, //Turnos por día
 
                         })
-                        return
-                    } 
-                }
+
+                    }
+                    
+                
 
             }
         } else {
