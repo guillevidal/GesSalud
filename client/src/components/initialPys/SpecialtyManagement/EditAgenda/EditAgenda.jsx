@@ -37,9 +37,10 @@ function EditAgenda() {
         if (newHours < 10) newHours = `0${newHours}`;
         if (newMinutes < 10) newMinutes = `0${newMinutes}`;
 
+
         return `${newHours}:${newMinutes}`;
     };
-
+    console.log(agendaId)
 
     let horaI = agendaId[0].date.slice(11, agendaId[0].date.length)
     let horaF = ""
