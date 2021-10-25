@@ -19,44 +19,82 @@ function InitialSpecialty() {
         dispatch(obtenerEspecialidades())
         dispatch(obtenerAgendas())
     }, [])
-    const agenda = useSelector(state => state.agendas)
+    const agenda = useSelector(allAgenda => allAgenda.agendas)
     const agendaSort = agenda.sort((a, b) => {
         if (a.date > b.date) return 1;
         if (a.date < b.date) return -1;
         return 0;
     })
     const specialties = useSelector(state => state.especialistas)
-    const [startDate, setStartDate] = useState(new Date());
-    const [inputSearch, setInputSearch] = useState({
-        date: { value: new Date(startDate.toISOString().replace(/T.*$/, '')), error: null },
-        name: { value: '', error: null },
-        specialty: { value: '', error: 'Campo requerido' }
+    //const [startDate, setStartDate] = useState(new Date());
+    const [agendaFilter, setAgendaFilter] = useState([]);
+    // const [inputSearch, setInputSearch] = useState({
+    //     date: { value: new Date(startDate.toISOString().replace(/T.*$/, '')), error: null },
+    //     name: { value: '', error: null },
+    //     specialty: { value: '', error: 'Campo requerido' }
+    // })
+
+    const [inputSearchDay, setInputSearchDay] = useState({
+        date: { value: '', error: 'Seleccione una fecha' }
     })
 
     const [validation, setValidation] = useState(true)
 
-    let types = [];
-    inputSearch.name.value && specialties.map(element => {
-        if (element.id === parseInt(inputSearch.name.value)) {
-            types = element.specialty.split(', ')
-        }
-    });
+    // let types = [];
+    // inputSearch.name.value && specialties.map(element => {
+    //     if (element.id === parseInt(inputSearch.name.value)) {
+    //         types = element.specialty.split(', ')
+    //     }
+    // });
 
-    const handleSearchSpecialist = (event) => {
+    // const handleSearchSpecialist = (event) => {
+    //     const { value } = event.target
+    //     if (value === "" || value === 'Especialista...') {
+    //         setInputSearch({ ...inputSearch, name: { value, error: "Campo requerido" } })
+    //     } else {
+    //         setInputSearch({ ...inputSearch, name: { value, error: null } })
+    //     }
+    // }
+
+    // const handleSearchType = (event) => {
+    //     const { value } = event.target
+    //     if (value !== 'Especialidad...') {
+    //         setInputSearch({ ...inputSearch, specialty: { value, error: null } })
+    //     }
+    // }
+
+    const handleSearchDay = (event) => {
         const { value } = event.target
-        if (value === "" || value === 'Especialista...') {
-            setInputSearch({ ...inputSearch, name: { value, error: "Campo requerido" } })
-        } else {
-            setInputSearch({ ...inputSearch, name: { value, error: null } })
+        setInputSearchDay({ ...inputSearchDay, date: { value, error: null } })
+    }
+
+
+    const handleSubmitSearchDay = (event) => {
+        event.preventDefault();
+        if (!inputSearchDay.date.error) {
+            if (inputSearchDay.date.value.length === 0) {
+                setValidation(false);
+            } else {
+                let agendas = [];
+                agendas = agenda.filter(agenda => {
+                    return agenda.date.split('T')[0] === inputSearchDay.date.value
+
+                })
+                return setAgendaFilter(
+
+                    agendas
+                )
+
+            }
         }
     }
 
-    const handleSearchType = (event) => {
-        const { value } = event.target
-        if (value !== 'Especialidad...') {
-            setInputSearch({ ...inputSearch, specialty: { value, error: null } })
-        }
+    const handleAllAgenda = (event) => {
+        event.preventDefault();
+        setAgendaFilter([])
+        dispatch(obtenerAgendas())
     }
+
 
     /*
     const handleSubmitSearch = (event) => {
@@ -92,7 +130,75 @@ function InitialSpecialty() {
                     </div>
                     <div className="searchAgenda">
                         <label className="label-title-search">FILTRAR AGENDA</label>
-                        <div className="searchAgenda">
+                        <div>
+
+                            <input
+                                type="date"
+                                min={new Date()}
+                                value={inputSearchDay.date.value}
+                                onChange={handleSearchDay}
+                            />
+                            <button onClick={handleSubmitSearchDay}>BUSCAR</button>
+                        </div>
+                        <div>
+
+                            <button onClick={handleAllAgenda}>TODAS LAS AGENDAS</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <label>AGENDA MEDICA</label>
+
+                    <div className="agenda-header-container">
+                        <div><p>DIA</p></div>
+
+                        <div><p>ESPECIALISTA</p></div>
+                        <div><p>ESPECIALIDAD</p></div>
+
+                    </div>
+                    {
+                        agendaFilter.length > 0 ? agendaFilter.map(agenda => {
+                            return (
+                                <div>
+                                    <Agenda
+                                        date={agenda.date.split('T')[0]} specialist={capitalFirstLetter(agenda.especialista_medico.persona.name)
+                                            + ' ' + capitalFirstLetter(agenda.especialista_medico.persona.lastName)}
+                                        specialty={agenda.tipo_especialidad.name}
+                                    />
+                                    <Link to={`especialistaPys/agenda/${agenda.id}`}>
+                                        <button>VER MAS</button>
+                                    </Link>
+                                </div>)
+                        }) :
+                            agendaSort ? agendaSort.map(agenda => {
+                                return (
+                                    <div>
+                                        <Agenda date={agenda.date.split('T')[0]} specialist={capitalFirstLetter(agenda.especialista_medico.persona.name)
+                                            + ' ' + capitalFirstLetter(agenda.especialista_medico.persona.lastName)}
+                                            specialty={agenda.tipo_especialidad.name}
+
+                                        />
+                                        <Link to={`especialistaPys/agenda/${agenda.id}`}>
+                                            <button>VER MAS</button>
+                                        </Link>
+
+                                    </div>
+
+                                )
+                            }) : <h4>NO HAY AGENDA CREADA</h4>
+                    }
+
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default InitialSpecialty;
+
+/*
+<div className="searchAgenda">
                             <label>Seleccione fecha</label>
                             <DatePicker
                                 selected={startDate}
@@ -100,7 +206,7 @@ function InitialSpecialty() {
                                 minDate={startDate}
                             />
                         </div>
-                        <div className="searchAgenda">
+<div className="searchAgenda">
                             <div>
                                 <label >Seleccione especialista médico</label>
                             </div>
@@ -147,42 +253,4 @@ function InitialSpecialty() {
                             {!validation && <span className="error-label">Completa correctamente el formulario</span>}
                             <button className="boton-action">BUSCAR</button>
                         </div>
-                    </div>
-
-                </div>
-                <div>
-                    <label>AGENDA MEDICA</label>
-
-                    <div className="agenda-header-container">
-                        <div><p>DIA</p></div>
-                        
-                        <div><p>ESPECIALISTA</p></div>
-                        <div><p>ESPECIALIDAD</p></div>
-                        
-                    </div>
-                    {
-                        agendaSort ? agendaSort.map(agenda => {
-                            return (
-                                <div>
-                                    <Agenda date={agenda.date.split('T')[0]} specialist={capitalFirstLetter(agenda.especialista_medico.persona.name)
-                                        + ' ' + capitalFirstLetter(agenda.especialista_medico.persona.lastName)}
-                                        specialty={agenda.tipo_especialidad.name} turno={agenda.turnos.length > 0 ? agenda.turnos[0] : <span>Agenda disponible</span>}
-                                        hour={agenda.date.split('T')[1]}
-                                    />
-                                    <Link to={`especialistaPys/agenda/${agenda.id}`}>
-                                        <button>VER MAS</button>
-                                    </Link>
-                                    
-                                </div>
-
-                            )
-                        }) : <h4>NO HAY AGENDA CREADA</h4>
-                    }
-
-                </div>
-            </div>
-        </div>
-    )
-}
-
-export default InitialSpecialty;
+*/

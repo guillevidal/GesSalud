@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Nav from '../../../Layout/Nav';
 import './CreateAgenda.scss';
-//import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { crearAgenda } from '../../../../actions/index.js';
 
@@ -14,11 +13,11 @@ function CreateAgenda() {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
 
-    /* dateStart: { value: startDate.toISOString().replace(/T.*$/, ''), error: null },*/
+    
     const specialities = useSelector(state => state.especialidades)
     const specialists = useSelector(state => state.especialistas)
     const agenda = useSelector(state => state.agendas)
-    // const [startDate, setStartDate] = useState(new Date());
+    
 
     const [validation, setValidation] = useState(true)
     const [inputCreateAgenda, setInputCreateAgenda] = useState({
@@ -69,17 +68,7 @@ function CreateAgenda() {
         setInputCreateAgenda({ ...inputCreateAgenda, shiftsDay: { value, error: null } })
     }
 
-    /*
-    let shiftPerSpecialty = 0;
-    if (inputCreateAgenda.specialty.value) {
-        specialities.forEach(type => {
-            if (type.name.toLowerCase() === inputCreateAgenda.specialty.value.toLowerCase()) {
-                shiftPerSpecialty = type.modulo_atencion * 15;
-            }
-        })
-        //console.log(shiftPerSpecialty)
-    }
-    */
+
 
    
     const handleSubmitCreateAgenda = (event) => {
@@ -102,7 +91,6 @@ function CreateAgenda() {
                     date: inputCreateAgenda.dateStart.value,
                     amount: inputCreateAgenda.shiftsDay.value
                 }
-
 
 
                 let consulta = false;
