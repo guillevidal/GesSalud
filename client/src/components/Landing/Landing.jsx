@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { rol } from "../../actions";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
+import { especialistaDetallado, pacienteDetallado } from "../../actions"
+
 
 export default function Landing() {
   const dispatch = useDispatch();
@@ -42,6 +44,14 @@ export default function Landing() {
     if(data.data.token) {
         localStorage.setItem('access-token', data.data.token)
         dispatch(rol(data.data.persona.rol));
+
+        if(data.data.persona.rol === '3'){
+          dispatch(especialistaDetallado(id));
+          }
+          else if(data.data.persona.rol === '4'){
+            dispatch(pacienteDetallado(dni));
+          }
+        }
 
     }   else alert(data.data.mensaje)
     }) 
