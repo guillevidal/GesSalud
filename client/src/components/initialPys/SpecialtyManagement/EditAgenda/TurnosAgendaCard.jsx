@@ -11,7 +11,8 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda }) => {
     let agendaDetail = agendas.length > 0 && agendas.filter(agenda => {
         if (agenda.id === parseInt(idAgenda)) return agenda
     })
-
+    console.log(agendas)
+console.log(agendaDetail + '----------')
 
     return (
 
