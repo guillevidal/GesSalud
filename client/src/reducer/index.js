@@ -72,7 +72,6 @@ const Reducer = (state = initialState, action) => {
                     let nameFIltro = action.payload[index].name.normalize('NFD')
                     .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
                     .normalize();
-                    console.log(nameFIltro)
                     arr=[...arr, {name: nameFIltro, modulo_atencion: action.payload[index].modulo_atencion, id: action.payload[index].id}]
                 }
             
