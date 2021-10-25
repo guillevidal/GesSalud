@@ -80,6 +80,7 @@ function CreateAgenda() {
         //console.log(shiftPerSpecialty)
     }
     */
+   /*
 
     function clockMinuteAdder(time, min) {
         let [hours, minutes] = time.split(':');
@@ -95,20 +96,8 @@ function CreateAgenda() {
 
         return `${formatHours}:${formatMinutes}`
     }
-
-    const errorShiftsDay = () => {
-        if (inputCreateAgenda.dateStart.value && inputCreateAgenda.dateEnd.value) {
-            let startShiftDay = inputCreateAgenda.dateStart.value.split('T')[1]
-            let endShiftsDay = '18:00';
-            let shift = 0;
-            while (startShiftDay < endShiftsDay) {
-                clockMinuteAdder(startShiftDay, shiftPerSpecialty);
-                shift++
-            }
-
-        }
-    }
-
+    */
+   
     const handleSubmitCreateAgenda = (event) => {
         event.preventDefault();
 
@@ -132,6 +121,7 @@ function CreateAgenda() {
                 // console.log(newAgenda.date.split('T')[0] + '---------------------')
                 // console.log(newAgenda.date.split('T')[0].toString())
                 // console.log(newAgenda)
+
                 let consulta = false;
 
                 agenda.forEach(elemento => {
@@ -158,6 +148,7 @@ function CreateAgenda() {
                 else{
                    
                         dispatch(crearAgenda(newAgenda));
+
                         swal({
 
                             title: "Agenda médica creada",
@@ -174,10 +165,6 @@ function CreateAgenda() {
                             shiftsDay: { value: "", error: 'Seleccione los turnos por día' }, //Turnos por día
 
                         })
-
-                    }
-                    
-                
 
             }
         } else {

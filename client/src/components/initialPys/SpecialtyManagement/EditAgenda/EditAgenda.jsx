@@ -10,53 +10,39 @@ function EditAgenda() {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
     const agendas = useSelector(state => state.agendas)
-    const specialities = useSelector(state => state.especialidades)
-    const specialists = useSelector(state => state.especialistas)
-    
-    
+
     let agendaId = agendas.length > 0 && agendas.filter(agenda => {
-        if(agenda.id === parseInt(id)) return agenda
+        if (agenda.id === parseInt(id)) return agenda
     })
     console.log(agendaId)
 
-    const [inputEditAgenda, setInputEditAgenda] = useState({
-        dateStart: { value: '', error: null },
-        dateEnd: { value: '', error: 'Seleccione una fecha' },
-        specialty: { value: '', error: 'Campo requerido' }, // Especialidad
-        specialist: { value: '', error: 'Campo requerido' }, // Especialista
-        shiftsDay: { value: "", error: 'Seleccione los turnos por día' }, //Turnos por día
-
-    })
+    
 
     return (
         <div id="edit-agenda-container">
             <Nav />
-            <form>
+            <div>
                 <div>
-                    <label>Seleccione Especialista</label>
+                    <div>
+                        <p>FECHA: <span>{agendaId[0]?.date.split('T')[0]}</span></p>
+                    </div>
+                    <div>
+                        <p>ESPECIALISTA: <span>{agendaId[0] && `${capitalFirstLetter(agendaId[0].especialista_medico.persona.name)} 
+                        ${capitalFirstLetter(agendaId[0].especialista_medico.persona.lastName)}`}</span></p>
+                    </div>
+                    <div>
+                    <p>ESPECIALIDAD: <span>{agendaId[0]?.tipo_especialidad.name}</span></p>
+                    </div>
                 </div>
-                <select>
-                    <option>Especialista...</option>
+                <div>
                     {
-                        specialists.length > 0 && specialists.map(specialist => {
-                            return (
-                                <>
-                                <option key={specialist.personaId} value={specialist.id}>{`${capitalFirstLetter(specialist.persona.name)} ${capitalFirstLetter(specialist.persona.lastName)}`}</option>
-                                </>
-                            )
-                        })
+                        
                     }
-                </select>
-                <div>
-                    <label>Seleccione Especialidad</label>
                 </div>
-                <select>
-                    <option>Especialista...</option>
-                </select>
-            </form>
+            </div>
 
         </div>
-        
+
     )
 };
 
