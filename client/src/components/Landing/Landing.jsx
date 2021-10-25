@@ -46,14 +46,15 @@ export default function Landing() {
         dispatch(rol(data.data.persona.rol));
 
         if(data.data.persona.rol === '3'){
-          dispatch(especialistaDetallado(id));
+          dispatch(especialistaDetallado(data.data.persona.especialistaId));
           }
           else if(data.data.persona.rol === '4'){
-            dispatch(pacienteDetallado(dni));
+            dispatch(pacienteDetallado(data.data.persona.dni));
           }
         }
-
-    }   else alert(data.data.mensaje)
+    else {
+    alert(data.data.mensaje)
+    }
     }) 
 
     // })  */

@@ -31,14 +31,13 @@ const  DetailEspecialista = () => {
             <span className='datodemas'>Direccion: <b>{persona.adress}</b></span>
             <span className='datodemas'>Fecha de nacimiento: <b>{persona.birth}</b></span>
             </div>
-            </div>
             <div className='masDatos'>
             <span className='datodemas'>Genero: <b>{persona.gender}</b></span>  
             <span className='datodemas'>Especialidad: <b>{specialty}</b></span>
             <span className='datodemas'>N° Enrolamiento <b>{enrollment}</b></span>
             </div>
             </div> 
-          
+          </div>
         </div>
       
     )
