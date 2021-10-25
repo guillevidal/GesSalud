@@ -81,7 +81,7 @@ function EditAgenda() {
                 {arr.map((valor) => {
                     return (
 
-                        <TurnosAgendaCard numeroTurno={valor.contador}
+                        <TurnosAgendaCard numeroTurno={valor.contador} idAgenda={agendaId[0].id}
                             horaI={valor.horaI} horaF={valor.horaF}
                         />
 
