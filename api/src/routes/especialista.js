@@ -11,28 +11,25 @@ const router = Router();
 
 router.get("/", async function (req, res, next) {
   let especialistas = await Especialista_medico.findAll({
-
-    include: [{
-      model: Persona,
-      attributes: [
-        "name",
-        "lastName",
-        "dni",
-        "email",
-        "phone",
-        "adress",
-        "birth",
-        "user",
-        "password",
-        "gender",
-        "rol",
-      ]
-    },
-   
-    ]
-
+    include: [
+      {
+        model: Persona,
+        attributes: [
+          "name",
+          "lastName",
+          "dni",
+          "email",
+          "phone",
+          "adress",
+          "birth",
+          "user",
+          "password",
+          "gender",
+          "rol",
+        ],
+      },
+    ],
   });
-
 
   res.send(especialistas);
 });
@@ -54,7 +51,7 @@ router.post("/", async function (req, res) {
         user: data.user,
         password: data.password,
         gender: data.gender,
-        rol: "1",
+        rol: "3",
       },
       {
         fields: [
@@ -68,7 +65,7 @@ router.post("/", async function (req, res) {
           "user",
           "password",
           "gender",
-          "rol"
+          "rol",
         ],
       }
     );
@@ -108,29 +105,27 @@ router.get("/:id", async (req, res) => {
   try {
     if (id) {
       let query = await Especialista_medico.findByPk(id, {
-
-        include: [{
-          model: Persona,
-          attributes: [
-            "name",
-            "lastName",
-            "dni",
-            "email",
-            "phone",
-            "adress",
-            "birth",
-            "user",
-            "password",
-            "gender",
-            "rol"
-          ]
-        },
-        // {
-        //   model: Tipo_especialidad,
-        // }
-        ]
-          
-
+        include: [
+          {
+            model: Persona,
+            attributes: [
+              "name",
+              "lastName",
+              "dni",
+              "email",
+              "phone",
+              "adress",
+              "birth",
+              "user",
+              "password",
+              "gender",
+              "rol",
+            ],
+          },
+          // {
+          //   model: Tipo_especialidad,
+          // }
+        ],
       });
 
       // let queryEspecialista =
