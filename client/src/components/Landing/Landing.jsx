@@ -38,6 +38,7 @@ export default function Landing() {
         usuario: input.user,
         password: input.pass
     })
+    
     .then( data => {
     if(data.data.token) {
         localStorage.setItem('access-token', data.data.token)

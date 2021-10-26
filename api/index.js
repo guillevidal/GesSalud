@@ -47,14 +47,14 @@ conn.sync({ force: false }).then(async () => {
           email: "paciente@gmail.com",
           phone: "44444",
           adress: "Colombia",
-          birth: "04/04/1994",
+          birth: "1994-04-04",
           user: "paciente@gmail.com",
           password: "paciente123",
           gender: "masculino",
           medication: "",
           emergencyContact: "44444",
           disease: "",
-          creationDate: "01/01/2021",
+          creationDate: "2021-01-01",
         });
       }
 
@@ -72,12 +72,12 @@ conn.sync({ force: false }).then(async () => {
           email: "especialista@gmail.com",
           phone: "33333",
           adress: "Ecuador",
-          birth: "03/03/1993",
+          birth: "1993-03-03",
           user: "especialista@gmail.com",
           password: "especialista123",
           gender: "masculino",
           enrollment: "45687",
-          specialty: "clinico",
+          specialty: "Cardiologia",
         });
       }
 
@@ -95,7 +95,7 @@ conn.sync({ force: false }).then(async () => {
           email: "rrhh@gmail.com",
           phone: "22222",
           adress: "Argentina",
-          birth: "02/02/1992",
+          birth: "1992-02-02",
           user: "rrhh@gmail.com",
           password: "rrhh123",
           gender: "masculino",
@@ -118,7 +118,7 @@ conn.sync({ force: false }).then(async () => {
           email: "pys@gmail.com",
           phone: "11111",
           adress: "Colombia",
-          birth: "01/01/1991",
+          birth: "1991-01-01",
           user: "pys@gmail.com",
           password: "pys123",
           gender: "femenino",
