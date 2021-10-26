@@ -26,37 +26,6 @@ function EditAgenda() {
         if (agenda.id === parseInt(id)) return agenda
     })
 
-    let contador = 1;
-    let arr = []
-    function clockMinuteAdder(time, min) {
-        // Escribir la funcion
-        if (!time) throw Error('Espero la hora man');
-        if (!min) return time;
-
-        let [hours, minutes] = time.split(':');
-        if (Number.isNaN(hours) || Number.isNaN(minutes)) throw TypeError('Ingrese un valor válido para time');
-
-        minutes = min + parseInt(minutes);
-        let newMinutes = minutes % 60;
-
-        hours = parseInt(hours) + Math.floor(minutes / 60);
-        let newHours = ((hours - 1) % 24) + 1 || 1;
-
-        if (newHours < 10) newHours = `0${newHours}`;
-        if (newMinutes < 10) newMinutes = `0${newMinutes}`;
-
-
-        return `${newHours}:${newMinutes}`;
-    };
-
-    let horaI = agendaId[0].date.slice(11, agendaId[0].date.length)
-    let horaF = ""
-    for (let index = 0; index < agendaId[0].amount; index++) {
-        horaF = clockMinuteAdder(horaI, agendaId[0].tipo_especialidad.modulo_atencion * 15)
-        arr.push({ contador, horaI, horaF })
-        contador++
-        horaI = horaF
-    }
 
     
     const [validation, setValidation] = useState(true)
@@ -100,6 +69,7 @@ function EditAgenda() {
                         </div>
                         <div>
                             <p className='title'>Especialista: <span className='data'>{agendaId[0] && `${capitalFirstLetter(agendaId[0].especialista_medico.persona.name)} 
+
                         ${capitalFirstLetter(agendaId[0].especialista_medico.persona.lastName)}`}</span></p>
                         </div>
                         <div>
@@ -116,16 +86,16 @@ function EditAgenda() {
                                 <th><span>Paciente:</span></th>
                                 <th><span>Historia clinica</span></th>
                             </tr>
+                    {agendaId[0].turnosPrecargados.map((valor) => {
+                    return (
 
-                            {arr.map((valor) => {
-                                return (
+                          <TurnosAgendaCard numeroTurno={valor.idTurno} idAgenda={agendaId[0].id}
+                              horaI={valor.horaI} horaF={valor.horaF} openFormTurno={openFormTurno}
+                            />
 
-                                    <TurnosAgendaCard numeroTurno={valor.contador} idAgenda={agendaId[0].id}
-                                        horaI={valor.horaI} horaF={valor.horaF} openFormTurno={openFormTurno}
-                                    />
-
-                                )
-                            })}
+                    )
+                })}
+                            
                         </table>
                     </div>
                 </>
@@ -145,10 +115,10 @@ function EditAgenda() {
                                 <select onChange={handleCreateTurnohour}>
                                     <option>Seleccionar...</option>
                                     {
-                                            arr.length > 0 && arr.map( turnoPrev => {
+                                            agendaId[0].turnosPrecargados.length > 0 && agendaId[0].turnosPrecargados.map( turnoPrev => {
                                                 return (
                                                     <>
-                                                        <option key={turnoPrev.contador} value={turnoPrev.horaI} >{turnoPrev.horaI}</option>
+                                                        <option key={turnoPrev.idTurno} value={turnoPrev.horaI} >{turnoPrev.horaI}</option>
                                                     </>
                                                 )
                                             })
@@ -178,6 +148,7 @@ function EditAgenda() {
                     </div>
 
                 </Modal>
+
 
             </div>
 

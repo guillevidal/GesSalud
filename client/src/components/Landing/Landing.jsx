@@ -31,7 +31,7 @@ export default function Landing() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-/*
+
      axios.post('/autenticar', { 
 
 
@@ -56,9 +56,9 @@ export default function Landing() {
     }) 
 
 
-    */
 
     dispatch(rol(input.user));
+
 
   };
 

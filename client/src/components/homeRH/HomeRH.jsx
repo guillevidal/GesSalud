@@ -3,7 +3,7 @@ import React, { useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import Nav from '../Layout/Nav';
 import CardSpeciality from "./CardSpeciality.jsx"
-import { obtenerEspecialistas, paginado, obtenerAdministrativos } from '../../actions/index';
+import { obtenerEspecialistas, paginado, obtenerAdministrativos} from '../../actions/index';
 import './HomeRH.scss'
 import SearchEspecialist from './SearchEspecialist';
 import SearchAdmin from './SearchAmin.jsx';
