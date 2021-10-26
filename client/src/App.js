@@ -18,6 +18,7 @@ import InitialSpecialty from "./components/initialPys/SpecialtyManagement/Initia
 import CreateAgenda from './components/initialPys/SpecialtyManagement/CreateAgenda/CreateAgenda.jsx';
 import EditAgenda from './components/initialPys/SpecialtyManagement/EditAgenda/EditAgenda.jsx';
 import Agendar from './components/initialPys/SpecialtyManagement/Agendar/Agendar.jsx'
+import LandingAdmin from "./components/admin/LandingAdmin";
 
 
 
@@ -75,6 +76,9 @@ function App() {
       </Route>
       <Route exact path="/especialistaPys/agenda/:id/agendadetail">
         <Agendar />
+      </Route>
+      <Route exact path="/LandingAdmin">
+        <LandingAdmin />
       </Route>
     </div>
   );

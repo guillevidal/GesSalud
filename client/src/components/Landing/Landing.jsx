@@ -31,8 +31,8 @@ export default function Landing() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-/*
-     axios.post('/autenticar', { 
+
+      axios.post('/autenticar', { 
 
 
         usuario: input.user,
@@ -54,11 +54,11 @@ export default function Landing() {
     alert(data.data.mensaje)
     }
     }) 
+ 
 
-
-    */
-
-    dispatch(rol(input.user));
+    
+/* 
+     dispatch(rol(input.user));  */
 
   };
 
@@ -67,6 +67,8 @@ export default function Landing() {
       {status === "1" && <Redirect to="/patientPys" />}
       {status === "2" && <Redirect to="/homeRRHH" />}
       {(status === "3" || status === "4") && <Redirect to="/homeUser" />}
+      {status === "5" && <Redirect to="/LandingAdmin" />}
+
 
       <div id="landing-header">
         <div id="landing-title">

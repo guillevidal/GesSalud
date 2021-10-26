@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom"
 import './Nav'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faClinicMedical,faSignOutAlt, faListUl} from '@fortawesome/free-solid-svg-icons'
+import {faClinicMedical,faSignOutAlt, faListUl, faExchangeAlt} from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from "react-redux"
 import { rol, resetearPacienteCreado, resetearEspecialistaCreado,
     resetearPacienteDetallado, resetearEspecialistaDetallado,
@@ -54,6 +54,12 @@ export default function Nav(){
         dispatch(resetearAdministrativos())
     }
 
+    const changeRol = (e) =>{
+        e.preventDefault()
+
+        dispatch(rol('5'))
+    }
+
     const responsive = (e) =>{
         e.preventDefault()
 
@@ -70,12 +76,13 @@ export default function Nav(){
         <div className='nav-bar'>
 
             {status === '' && <Redirect to='/' />}
+            {status === '5' && <Redirect to='/LandingAdmin' />}
             <div className='menu-browser'>
             <div className='nav-elementos'>
                 <div className='boton'>
                 <button onClick={e => responsive(e)} className='boton-responsivo'><FontAwesomeIcon icon={faListUl} className='icon'/></button>
                 </div>
-            {status === '1' &&
+            {(status === '1' || status === '6') &&
                 <div className='nav-link'>
                     <Link onClick={handleResetActionsRol1}to='/patientPys' className='nav-link-ok' >Pacientes</Link>
                     <Link to='/turnoPys' className='nav-link-ok' >Turnos</Link>
@@ -83,7 +90,7 @@ export default function Nav(){
                     <Link to='/consultorioPys' className='nav-link-ok' >Consultorios</Link>
                 </div>
             }
-            {status === '2' &&
+            {(status === '2' || status === '7') &&
                 <div className='nav-link'>
                     <Link onClick={handleResetActionsRol2} to='/homeRRHH' className='nav-link-ok' >Home</Link>
                     <Link to='/createEmployee' className='nav-link-ok' >Crear Empleado</Link>
@@ -95,17 +102,23 @@ export default function Nav(){
                     <Link to='/perfilUser' className='nav-link-ok' >Perfil</Link>
                </div>
             }
-                <div  className='nav-logo'>
+            
+                <div  className={status === '5' ? 'nav-logo-5' : 'nav-logo'}>
                     <FontAwesomeIcon icon={faClinicMedical} className='nav-logo-icon'/>
                     <span className='nav-logo-text'>GesSalud</span>
                 </div>
                 <div  className='nav-exit'>
+                {(status === '6' || status === '7') && 
+                    <div className='nav-exit-conjunto'>
+                    <button  onClick={e => changeRol(e)} className='nav-exit-link'>
+                    <FontAwesomeIcon icon={faExchangeAlt} className='nav-exit-icon'/>Cambiar permisos</button>
+                </div>
+            }
                     <div className='nav-exit-conjunto'>
                     <button  onClick={e => logout(e)} className='nav-exit-link'>
                     <FontAwesomeIcon icon={faSignOutAlt} className='nav-exit-icon'/>Salir</button>
                     </div>
                 </div>
-
             </div>
             </div>
 

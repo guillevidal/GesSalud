@@ -54,6 +54,10 @@
             max-height: 300px;
             max-width: 400px;
 
+            @media (max-width:600px) {
+                margin: 30px auto;
+            }
+
             .landing-form{
                 display: flex;
                 flex-direction: column;
