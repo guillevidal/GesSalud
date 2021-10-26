@@ -60,7 +60,7 @@ function EditAgenda() {
     return (
         <>
             <div id="edit-agenda-container">
-                {console.log(horaI)}
+                
                 <>
                     <Nav />
                     <div className='encabezado'>
