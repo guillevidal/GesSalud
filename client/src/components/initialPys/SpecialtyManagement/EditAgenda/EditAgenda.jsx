@@ -89,7 +89,7 @@ function EditAgenda() {
                     {agendaId[0].turnosPrecargados.map((valor) => {
                     return (
 
-                          <TurnosAgendaCard numeroTurno={valor.idTurno} idAgenda={agendaId[0].id}
+                          <TurnosAgendaCard numeroTurno={valor.idTurnoPre} idAgenda={agendaId[0].id}
                               horaI={valor.horaI} horaF={valor.horaF} openFormTurno={openFormTurno}
                             />
 
@@ -118,7 +118,7 @@ function EditAgenda() {
                                             agendaId[0].turnosPrecargados.length > 0 && agendaId[0].turnosPrecargados.map( turnoPrev => {
                                                 return (
                                                     <>
-                                                        <option key={turnoPrev.idTurno} value={turnoPrev.horaI} >{turnoPrev.horaI}</option>
+                                                        <option key={turnoPrev.idTurnoPre} value={turnoPrev.horaI} >{turnoPrev.horaI}</option>
                                                     </>
                                                 )
                                             })
