@@ -1,18 +1,18 @@
 import React from "react";
-
 import { useSelector } from "react-redux";
-import Agendar from '../Agendar/Agendar.jsx'
-import { Link } from "react-router-dom";
 import "./EditAgenda.scss";
 
 
-const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda }) => {
+
+const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, openFormTurno }) => {
+    
+    
+
     const agendas = useSelector(state => state.agendas)
     let agendaDetail = agendas.length > 0 && agendas.filter(agenda => {
         if (agenda.id === parseInt(idAgenda)) return agenda
     })
-    console.log(agendas)
-console.log(agendaDetail + '----------')
+   
 
     return (
 
@@ -25,22 +25,19 @@ console.log(agendaDetail + '----------')
                 <td className='td paciente'><span >{"no asignado"}</span></td>
                 <td className='td historia'><span >{"no disponible"}</span></td>
 
-               
-          
 
-            <Link to={`/especialistaPys/agenda/${idAgenda}/agendadetail`} className='link' >
-               <td className='td asignar'>
-                Asignar turno
+                <td className='td asignar'>
+                    <button onClick={openFormTurno} >
+                        Asignar turno
+                    </button>
 
-            </td>
+                </td>
+
+
+            </tr>
+
            
-          
-
-            </Link>
-            
-
-          </tr>
-
+      
     )
 }
 
