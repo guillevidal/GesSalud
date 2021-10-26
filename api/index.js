@@ -1,13 +1,9 @@
 const server = require("./src/app.js");
-const {
-  conn,
-  Tipo_especialidad,
-  Persona,
-  Paciente,
-  HistoriaClinica,
-  Especialista_medico,
-  Personal_administrativo,
-} = require("./src/db.js");
+
+
+const { conn, Tipo_especialidad, Persona } = require("./src/db.js");
+
+
 const axios = require("axios");
 const { especialidades } = require("./src/configs/specialties.js");
 
@@ -33,15 +29,18 @@ conn.sync({ force: false }).then(async () => {
           }))
       );
 
-      //####### PRECARGA DE USUARIOS DE LA APP #######
-      //##############################################
+
+      // //####### PRECARGA DE USUARIOS DE LA APP #######
+      // //##############################################
 
       //PACIENTE
-      const paciente = Persona.findOrCreate({
+      const pacienteInit = await Persona.findOne({
         where: {
           id: 1,
         },
-        defaults: {
+      });
+      if (!pacienteInit) {
+        await axios.post("http://localhost:3001/paciente", {
           name: "Jean",
           lastName: "Garzon",
           dni: 44444,
@@ -52,39 +51,21 @@ conn.sync({ force: false }).then(async () => {
           user: "paciente@gmail.com",
           password: "paciente123",
           gender: "masculino",
-          rol: "4",
-        },
-      });
-
-      const creandoDatosPaciente = Paciente.findOrCreate({
-        where: {
-          id: 1,
-        },
-        defaults: {
           medication: "",
           emergencyContact: "44444",
           disease: "",
-          personaId: 1,
-        },
-      });
-
-      const creandoDatosHistoriaClinica = HistoriaClinica.findOrCreate({
-        where: {
-          id: 1,
-        },
-        defaults: {
           creationDate: "01/01/2021",
-          pacienteId: 1,
-        },
-      });
+        });
+      }
 
       //ESPECIALISTA
-
-      const especialista = Persona.findOrCreate({
+      const especialistaInit = await Persona.findOne({
         where: {
           id: 2,
         },
-        defaults: {
+      });
+      if (!especialistaInit) {
+        await axios.post("http://localhost:3001/especialista", {
           name: "Johao",
           lastName: "Lopez",
           dni: 33333,
@@ -95,28 +76,19 @@ conn.sync({ force: false }).then(async () => {
           user: "especialista@gmail.com",
           password: "especialista123",
           gender: "masculino",
-          rol: "3",
-        },
-      });
-
-      const creandoMatriculaEspecialista = Especialista_medico.findOrCreate({
-        where: {
-          id: 1,
-        },
-        defaults: {
           enrollment: "45687",
           specialty: "clinico",
-          personaId: 2,
-        },
-      });
+        });
+      }
 
       //RRHH
-
-      const rrhh = Persona.findOrCreate({
+      const rrhhInit = await Persona.findOne({
         where: {
           id: 3,
         },
-        defaults: {
+      });
+      if (!rrhhInit) {
+        await axios.post("http://localhost:3001/administrativos", {
           name: "Rodrigo",
           lastName: "Navarro",
           dni: 22222,
@@ -128,28 +100,18 @@ conn.sync({ force: false }).then(async () => {
           password: "rrhh123",
           gender: "masculino",
           rol: "2",
-        },
-      });
-
-      const creandoEstadoAdministrativo1 = Personal_administrativo.findOrCreate(
-        {
-          where: {
-            id: 1,
-          },
-          defaults: {
-            status: true,
-            personaId: 3,
-          },
-        }
-      );
+          status: true,
+        });
+      }
 
       //PYS
-
-      const pys = Persona.findOrCreate({
+      const pysInit = await Persona.findOne({
         where: {
           id: 4,
         },
-        defaults: {
+      });
+      if (!pysInit) {
+        await axios.post("http://localhost:3001/administrativos", {
           name: "Natalia",
           lastName: "Ramirez",
           dni: 11111,
@@ -161,38 +123,11 @@ conn.sync({ force: false }).then(async () => {
           password: "pys123",
           gender: "femenino",
           rol: "1",
-        },
-      });
-
-      const creandoEstadoAdministrativo2 = Personal_administrativo.findOrCreate(
-        {
-          where: {
-            id: 2,
-          },
-          defaults: {
-            status: true,
-            personaId: 4,
-          },
-        }
-      );
-
-      //PROMESAS
-
-      Promise.all([
-        paciente,
-        especialista,
-        rrhh,
-        pys,
-        creandoDatosPaciente,
-        creandoDatosHistoriaClinica,
-        creandoMatriculaEspecialista,
-        creandoEstadoAdministrativo1,
-        creandoEstadoAdministrativo2,
-      ]).then((res) => {
-        console.log("Usuarios precargados");
-      });
+          status: true,
+        });
+      }
     } catch (error) {
-      res.send({ msg: error });
+      console.log("ERROR", error);
     }
 
     console.log("%s listening at 3001"); // eslint-disable-line no-console
