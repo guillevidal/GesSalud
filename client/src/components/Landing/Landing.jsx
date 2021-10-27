@@ -13,17 +13,24 @@ import { especialistaDetallado, pacienteDetallado } from "../../actions"
 export default function Landing() {
   const dispatch = useDispatch();
   const status = useSelector((state) => state.rol);
- 
-   useEffect(()=>{
+  
+    useEffect(()=>{
+
     let obtengoToken = localStorage.getItem('access-token')
-    
-    let accessRol = localStorage.getItem('access-rol')
-
-    if(obtengoToken){
-      dispatch(rol(accessRol))
+    axios.get('/whoami', { 
+     headers:  { 
+        authorization : obtengoToken
+      }
+  })
+  .then(res => {
+    if(res.data.rol){
+      dispatch(rol(res.data.rol))
     }
-
   }) 
+    
+ 
+
+   },[])   
  
   const [input, setInput] = useState({
     user: "",
@@ -52,7 +59,6 @@ export default function Landing() {
     if(data.data.token) {
         localStorage.setItem('access-token', data.data.token)
         
-        localStorage.setItem('access-rol', data.data.persona.rol)
         dispatch(rol(data.data.persona.rol));
 
         if(data.data.persona.rol === '3'){

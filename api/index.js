@@ -5,7 +5,7 @@ const { conn, Tipo_especialidad, Persona } = require("./src/db.js");
 const axios = require("axios");
 const { especialidades } = require("./src/configs/specialties.js");
 
-conn.sync({ force: false }).then(async () => {
+conn.sync({ force: true }).then(async () => {
   server.listen(process.env.PORT, async () => {
     console.log(process.env.PORT);
     try {

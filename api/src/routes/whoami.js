@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const config = require("../configs/config");
 // const { Persona } = require("../db");
 
-router.post("/", async (req, res) => {
+router.get("/", async (req, res) => {
   const token = req.headers.authorization;
   if (token) {
     jwt.verify(token, config.masterKeyGesSalud, (err, decoded) => {
