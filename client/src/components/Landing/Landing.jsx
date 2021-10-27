@@ -2,7 +2,7 @@
 import "./Landing";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClinicMedical, faUserMd } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { rol } from "../../actions";
 import { Redirect } from "react-router-dom";
@@ -13,7 +13,18 @@ import { especialistaDetallado, pacienteDetallado } from "../../actions"
 export default function Landing() {
   const dispatch = useDispatch();
   const status = useSelector((state) => state.rol);
+ 
+   useEffect(()=>{
+    let obtengoToken = localStorage.getItem('access-token')
+    
+    let accessRol = localStorage.getItem('access-rol')
 
+    if(obtengoToken){
+      dispatch(rol(accessRol))
+    }
+
+  }) 
+ 
   const [input, setInput] = useState({
     user: "",
     pass: "",
@@ -38,9 +49,11 @@ export default function Landing() {
         usuario: input.user,
         password: input.pass
     })
-    .then( data => {
+    .then(data => {
     if(data.data.token) {
         localStorage.setItem('access-token', data.data.token)
+        
+        localStorage.setItem('access-rol', data.data.persona.rol)
         dispatch(rol(data.data.persona.rol));
 
         if(data.data.persona.rol === '3'){

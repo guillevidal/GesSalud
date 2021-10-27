@@ -35,6 +35,7 @@ export default function Nav(){
         dispatch(resetearAdministrativoDetallado())
         dispatch(resetearAdministrativoCreado())
         dispatch(resetearAdministrativos())
+        localStorage.clear();
     }
 
     const handleResetActionsRol1 = () => {

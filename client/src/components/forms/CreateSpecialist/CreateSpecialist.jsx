@@ -320,24 +320,43 @@ export default function CreateSpecialist() {
                     for (let index = 0; index < especialistas.length; index++) {
 
                         if (especialistas[index].persona.dni === newSpecialist.dni) {
+                            swal({
 
-                            alert("El DNI ya esta registado")
-                            setValidation(false)
+                                title: "Error",
+                                text: `El dni ${newSpecialist.dni} ya se encuentra registrado `,
+                                icon: "error",
+    
+                            })
                             return
                         }
                         if (especialistas[index].persona.email === newSpecialist.email) {
-                            alert("El EMAIL ya esta registado")
-                            setValidation(false)
+                            swal({
+
+                                title: "Error",
+                                text: `El correo ${newSpecialist.email} ya se encuentra registrado `,
+                                icon: "error",
+    
+                            })
                             return
                         }
                         if (especialistas[index].persona.user === newSpecialist.user) {
-                            alert("El USUARIO ya esta registado")
-                            setValidation(false)
+                            swal({
+
+                                title: "Error",
+                                text: `El usuario ${newSpecialist.user} ya se encuentra registrado `,
+                                icon: "error",
+    
+                            })
                             return
                         }
                         if (especialistas[index].enrollment === newSpecialist.enrollment) {
-                            alert("La identificacion profesional ya esta registada")
-                            setValidation(false)
+                            swal({
+
+                                title: "Error",
+                                text: `El ID ${newSpecialist.enrollment} ya se encuentra registrado `,
+                                icon: "error",
+    
+                            })
                             return
                         }
                     }
