@@ -6,37 +6,34 @@ const rutasProtegidas = require("./Middleware/rutasProtegidas.js");
 const jwt = require("jsonwebtoken");
 const config = require("../configs/config");
 
-router.get(
-  "/",
-  /* rutasProtegidas, */ async function (req, res, next) {
-    let dataPacientes = await Paciente.findAll({
-      include: [
-        {
-          model: Persona,
-          attributes: [
-            "name",
-            "lastName",
-            "dni",
-            "email",
-            "phone",
-            "adress",
-            "birth",
-            "user",
-            "password",
-            "gender",
-            "rol",
-          ],
-        },
-        {
-          model: HistoriaClinica,
-          attributes: ["id", "creationDate"],
-        },
-      ],
-    });
+router.get("/", rutasProtegidas, async function (req, res, next) {
+  let dataPacientes = await Paciente.findAll({
+    include: [
+      {
+        model: Persona,
+        attributes: [
+          "name",
+          "lastName",
+          "dni",
+          "email",
+          "phone",
+          "adress",
+          "birth",
+          "user",
+          "password",
+          "gender",
+          "rol",
+        ],
+      },
+      {
+        model: HistoriaClinica,
+        attributes: ["id", "creationDate"],
+      },
+    ],
+  });
 
-    res.send(dataPacientes);
-  }
-);
+  res.send(dataPacientes);
+});
 
 module.exports = router;
 

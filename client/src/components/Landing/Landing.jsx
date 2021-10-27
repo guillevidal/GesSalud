@@ -58,7 +58,7 @@ export default function Landing() {
 
 
 
-    dispatch(rol(input.user));
+    // dispatch(rol(input.user));
 
 
   };

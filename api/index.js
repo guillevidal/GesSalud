@@ -1,8 +1,6 @@
 const server = require("./src/app.js");
 
-
 const { conn, Tipo_especialidad, Persona } = require("./src/db.js");
-
 
 const axios = require("axios");
 const { especialidades } = require("./src/configs/specialties.js");
@@ -28,7 +26,6 @@ conn.sync({ force: false }).then(async () => {
             modulo_atencion: e.modulo,
           }))
       );
-
 
       // //####### PRECARGA DE USUARIOS DE LA APP #######
       // //##############################################
@@ -123,6 +120,29 @@ conn.sync({ force: false }).then(async () => {
           password: "pys123",
           gender: "femenino",
           rol: "1",
+          status: true,
+        });
+      }
+
+      //ADMIN
+      const adminInit = await Persona.findOne({
+        where: {
+          id: 5,
+        },
+      });
+      if (!adminInit) {
+        await axios.post("http://localhost:3001/administrativos", {
+          name: "Fernando",
+          lastName: "De Maio",
+          dni: 55555,
+          email: "admin@gmail.com",
+          phone: "55555",
+          adress: "Argentina",
+          birth: "1995-05-05",
+          user: "admin@gmail.com",
+          password: "admin123",
+          gender: "masculino",
+          rol: "5",
           status: true,
         });
       }
