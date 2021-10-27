@@ -209,21 +209,7 @@ function CreateAgenda() {
 
 
                 </div>
-                {/*
-                    <div>
-                        <label htmlFor="dateEnd">Fecha final de agenda</label>
-                        {inputCreateAgenda.dateEnd.error && <span>{inputCreateAgenda.dateEnd.error}</span>}
-                        <input
 
-                            type="date"
-                            min={new Date()}
-                            name="dateEnd"
-                            value={inputCreateAgenda.dateEnd.value}
-                            onChange={handleCreateAgendaDateEnd}
-
-                        />
-                    </div>
-                    */}
                 <div className='seccion'>
                     <label htmlFor="shiftsDay" className='title'>Cantidad de turnos por día</label>
                     <input
@@ -253,14 +239,3 @@ function CreateAgenda() {
 
 export default CreateAgenda;
 
-/*
-<DatePicker
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                        minDate={startDate}
-                        showTimeSelect
-                        dateFormat="MMMM d, yyyy h:mm aa"
-                        className="input-datePicker"
-
-                    />
-*/
