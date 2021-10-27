@@ -19,7 +19,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }
         agendaId: { value: idAgenda, error: null },
         pacienteId: { value: '', error: 'Campo requerido' },
         status: { value: 'pendiente', error: null },
-        hora: { value: `${date}T${horaI}`, error: null },
+        hora: { value: `${date}T${horaI}&${horaF}`, error: null },
         modules: { value: modules, error: null }
 
     })
