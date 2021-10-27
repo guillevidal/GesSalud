@@ -17,7 +17,6 @@ import EditAdmin from "./components/homeRH/EditAdmin/EditAdmin.jsx"
 import InitialSpecialty from "./components/initialPys/SpecialtyManagement/Initial/InitialSpecialty.jsx"
 import CreateAgenda from './components/initialPys/SpecialtyManagement/CreateAgenda/CreateAgenda.jsx';
 import EditAgenda from './components/initialPys/SpecialtyManagement/EditAgenda/EditAgenda.jsx';
-import Agendar from './components/initialPys/SpecialtyManagement/Agendar/Agendar.jsx'
 import LandingAdmin from "./components/admin/LandingAdmin";
 import TurnoPys from "./components/initialPys/TurnoManagement/InicialTurno.jsx";
 
