@@ -52,7 +52,7 @@ import {
   EDITAR_DIAGNOSTICO,
 } from "./valuesForActions.js";
 
-const token = localStorage["access-token"];
+// const token = localStorage["access-token"];
 
 //CREAR ESPECIALISTA
 export const crearEspecialista = (especialista) => {
@@ -98,9 +98,10 @@ export const obtenerEspecialistas = () => {
 
 //OBTENER PACIENTE
 export const obtenerPacientes = () => {
+  const token = localStorage["access-token"];
   return async (dispatch) => {
     const result = await axios.get("/paciente", {
-      headers: { accept: token },
+      headers: { authorization: token },
     });
     const data = result.data;
     return dispatch({ type: OBTENER_PACIENTES, payload: data });
@@ -289,7 +290,7 @@ export const resetearBusquedaAdministrativo = () => {
 
 //CREAR AGENDA
 export const crearAgenda = (agenda) => {
-  console.log(agenda)
+  console.log(agenda);
   return async (dispatch) => {
     const result = await axios.post(`/agendas`, agenda);
     const data = result.data;
@@ -385,8 +386,7 @@ export const eliminarTurno = (id) => {
   };
 };
 
-
-//CREAR DIAGNOSTICO 
+//CREAR DIAGNOSTICO
 export const crearDiagnostico = (diagnostico) => {
   return async (dispatch) => {
     {
@@ -400,16 +400,18 @@ export const crearDiagnostico = (diagnostico) => {
 //RESETEAR DIAGNOSTICO
 export const resetearDiagnostico = () => {
   return { type: RESETEAR_DIAGNOSTICO, payload: [] };
-
-}
+};
 
 //MODIFICAR DIAGNOSTICO
 export const modificarDiagnostico = (diagnostico) => {
   return async (dispatch) => {
     {
-      const result = await axios.put(`/diagnosticos/${diagnostico.id}`, diagnostico);
+      const result = await axios.put(
+        `/diagnosticos/${diagnostico.id}`,
+        diagnostico
+      );
       const data = result.data;
       return dispatch({ type: EDITAR_DIAGNOSTICO, payload: data });
     }
   };
-}
+};
