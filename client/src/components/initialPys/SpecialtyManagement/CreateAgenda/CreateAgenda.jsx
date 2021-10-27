@@ -115,11 +115,10 @@ function CreateAgenda() {
                         icon: "warning",
 
                     })
-                }
-                else {
+                } else {
 
                     dispatch(crearAgenda(newAgenda));
-                    
+
                     swal({
 
                         title: "Agenda médica creada",
