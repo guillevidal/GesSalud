@@ -1,8 +1,6 @@
 const server = require("./src/app.js");
 
-
 const { conn, Tipo_especialidad, Persona } = require("./src/db.js");
-
 
 const axios = require("axios");
 const { especialidades } = require("./src/configs/specialties.js");
@@ -29,7 +27,6 @@ conn.sync({ force: false }).then(async () => {
           }))
       );
 
-
       // //####### PRECARGA DE USUARIOS DE LA APP #######
       // //##############################################
 
@@ -47,14 +44,14 @@ conn.sync({ force: false }).then(async () => {
           email: "paciente@gmail.com",
           phone: "44444",
           adress: "Colombia",
-          birth: "04/04/1994",
+          birth: "1994-04-04",
           user: "paciente@gmail.com",
           password: "paciente123",
           gender: "masculino",
           medication: "",
           emergencyContact: "44444",
           disease: "",
-          creationDate: "01/01/2021",
+          creationDate: "2021-01-01",
         });
       }
 
@@ -72,12 +69,12 @@ conn.sync({ force: false }).then(async () => {
           email: "especialista@gmail.com",
           phone: "33333",
           adress: "Ecuador",
-          birth: "03/03/1993",
+          birth: "1993-03-03",
           user: "especialista@gmail.com",
           password: "especialista123",
           gender: "masculino",
           enrollment: "45687",
-          specialty: "clinico",
+          specialty: "Cardiologia",
         });
       }
 
@@ -95,7 +92,7 @@ conn.sync({ force: false }).then(async () => {
           email: "rrhh@gmail.com",
           phone: "22222",
           adress: "Argentina",
-          birth: "02/02/1992",
+          birth: "1992-02-02",
           user: "rrhh@gmail.com",
           password: "rrhh123",
           gender: "masculino",
@@ -118,11 +115,34 @@ conn.sync({ force: false }).then(async () => {
           email: "pys@gmail.com",
           phone: "11111",
           adress: "Colombia",
-          birth: "01/01/1991",
+          birth: "1991-01-01",
           user: "pys@gmail.com",
           password: "pys123",
           gender: "femenino",
           rol: "1",
+          status: true,
+        });
+      }
+
+      //ADMIN
+      const adminInit = await Persona.findOne({
+        where: {
+          id: 5,
+        },
+      });
+      if (!adminInit) {
+        await axios.post("http://localhost:3001/administrativos", {
+          name: "Fernando",
+          lastName: "De Maio",
+          dni: 55555,
+          email: "admin@gmail.com",
+          phone: "55555",
+          adress: "Argentina",
+          birth: "1995-05-05",
+          user: "admin@gmail.com",
+          password: "admin123",
+          gender: "masculino",
+          rol: "5",
           status: true,
         });
       }
