@@ -32,8 +32,7 @@ export default  function ProfileSpecialist(){
 
     const [datosPac, setDatosPac] = useState(pacienteDetail.length ?{
         ...pacienteDetail[0],
-        'emergencyContact' : pacienteDetail[0].paciente.emergencyContact,
-        'id' : pacienteDetail[0].paciente.id
+        "id" : pacienteDetail[0].paciente.id
 }: null)
 
 
