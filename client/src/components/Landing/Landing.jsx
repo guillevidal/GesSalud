@@ -2,7 +2,7 @@
 import "./Landing";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClinicMedical, faUserMd } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { rol } from "../../actions";
 import { Redirect } from "react-router-dom";
@@ -13,7 +13,18 @@ import { especialistaDetallado, pacienteDetallado } from "../../actions"
 export default function Landing() {
   const dispatch = useDispatch();
   const status = useSelector((state) => state.rol);
+ 
+   useEffect(()=>{
+    let obtengoToken = localStorage.getItem('access-token')
+    
+    let accessRol = localStorage.getItem('access-rol')
 
+    if(obtengoToken){
+      dispatch(rol(accessRol))
+    }
+
+  }) 
+ 
   const [input, setInput] = useState({
     user: "",
     pass: "",
@@ -31,17 +42,17 @@ export default function Landing() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
-     axios.post('/autenticar', { 
-
+      axios.post('/autenticar', { 
 
         usuario: input.user,
         password: input.pass
     })
-    
-    .then( data => {
+    .then(data => {
+
     if(data.data.token) {
         localStorage.setItem('access-token', data.data.token)
+        
+        localStorage.setItem('access-rol', data.data.persona.rol)
         dispatch(rol(data.data.persona.rol));
 
         if(data.data.persona.rol === '3'){
@@ -55,10 +66,11 @@ export default function Landing() {
     alert(data.data.mensaje)
     }
     }) 
+ 
 
-
-
-    // dispatch(rol(input.user));
+    
+/* 
+     dispatch(rol(input.user));  */
 
 
   };
@@ -68,6 +80,8 @@ export default function Landing() {
       {status === "1" && <Redirect to="/patientPys" />}
       {status === "2" && <Redirect to="/homeRRHH" />}
       {(status === "3" || status === "4") && <Redirect to="/homeUser" />}
+      {status === "5" && <Redirect to="/LandingAdmin" />}
+
 
       <div id="landing-header">
         <div id="landing-title">

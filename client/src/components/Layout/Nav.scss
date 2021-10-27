@@ -56,7 +56,7 @@
         .nav-link{
             display: flex;
             width: 100%;
-            max-width: 33%;
+            max-width: 100%;
             justify-content: flex-start;
 
             @media (max-width:1000px) {
@@ -79,12 +79,22 @@
 
         }
 
+        .nav-logo-5{
+            display: flex;
+            width: 100%;
+            max-width: 100%;
+            align-items: center;
+            justify-content: flex-start;
+            margin: 0 10px;
+        }  
+
         .nav-logo{
             display: flex;
             width: 100%;
-            max-width: 33%;
+            max-width: 100%;
             justify-content: center;
             align-items: center;
+        }
 
             @media (max-width:1000px) {
                     max-width: 100%;
@@ -98,12 +108,12 @@
             .nav-logo-text{
                 font-size: 2.5em;
             }
-        }
+        
 
         .nav-exit{
             display: flex;
             width: 100%;
-            max-width: 33%;
+            max-width: 100%;
             justify-content: flex-end;
             align-items: center;
             
