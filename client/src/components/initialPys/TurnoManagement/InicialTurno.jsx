@@ -20,15 +20,15 @@ function InicialTurno(){
             <Nav />
             {estado === "turnos" && !turnos[0]?
             <h1>No se han registrado turnos</h1>:turnos.map(t => {
+                return(
                 <Turnos 
                 key={t.id} 
                 id={t.id}
-                pacienteId={t.pacienteId}
-                agendaId={t.agendaId}
-                modules={t.modules}
+                paciente={t.paciente}
+                agenda={t.agenda}
                 hour={t.hour}
-                status={t.status}
-                />
+             
+                />)
             })}
         </div>
     )
