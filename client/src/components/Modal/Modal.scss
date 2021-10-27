@@ -9,9 +9,7 @@
     display: none;
     justify-content: center;
     align-items: center;
-    //visibility: hidden;
-   // opacity: 0;
-    //transition: visibility 0s opacity 0.5s;
+  
 }
 
 .modal-container.is-open{
@@ -35,22 +33,3 @@
     right: 1rem;
 }
 
-/*
-.modal{
-    background-color: white;
-    width: 30%;
-    height: 85%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: column;
-}
-*/
-
-/*
-
-.container-active{
-    visibility: visible;
-    opacity: 1;
-}
-*/
