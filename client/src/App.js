@@ -19,7 +19,7 @@ import CreateAgenda from './components/initialPys/SpecialtyManagement/CreateAgen
 import EditAgenda from './components/initialPys/SpecialtyManagement/EditAgenda/EditAgenda.jsx';
 import Agendar from './components/initialPys/SpecialtyManagement/Agendar/Agendar.jsx'
 import LandingAdmin from "./components/admin/LandingAdmin";
-
+import TurnoPys from "./components/initialPys/TurnoManagement/InicialTurno.jsx";
 
 
 
@@ -74,8 +74,8 @@ function App() {
       <Route exact path="/especialistaPys/agenda/:id">
         <EditAgenda />
       </Route>
-      <Route exact path="/especialistaPys/agenda/:id/agendadetail">
-        <Agendar />
+      <Route exact path="/turnoPys">
+        <TurnoPys/>
       </Route>
       <Route exact path="/LandingAdmin">
         <LandingAdmin />

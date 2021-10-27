@@ -11,6 +11,7 @@ const agendas = require("./agendas");
 const diagnosticos = require("./diagnosticos");
 
 const autenticar = require("./autenticar.js");
+const whoami = require("./whoami.js");
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
@@ -20,9 +21,9 @@ router.use("/especialidades", especialidades);
 router.use("/administrativos", administrativos);
 router.use("/agendas", agendas);
 router.use("/diagnosticos", diagnosticos);
-router.use("/turnos", turnos );
-
+router.use("/turnos", turnos);
 
 router.use("/autenticar", autenticar);
+router.use("/whoami", whoami);
 
 module.exports = router;

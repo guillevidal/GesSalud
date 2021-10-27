@@ -14,10 +14,8 @@ router.post("/", async (req, res) => {
     register = persona.dataValues;
   }
 
-
   if (persona && persona.dataValues.rol === "3") {
     const datosEspec = await Especialista_medico.findOne({
-
       where: { personaId: persona.dataValues.id },
       attributes: ["id"],
     });
@@ -25,11 +23,14 @@ router.post("/", async (req, res) => {
     register = { ...register, especialistaId: especialistaId };
   }
 
-
   if (register) {
     if (register.password === req.body.password) {
+      let data = { dni: register.dni, rol: register.rol };
+      if (register.especialistaId) {
+        data = { especialistaId: register.especialistaId, rol: register.rol };
+      }
       const payload = {
-        check: true,
+        data: data,
       };
       const token = jwt.sign(payload, config.masterKeyGesSalud, {
         expiresIn: 1440,

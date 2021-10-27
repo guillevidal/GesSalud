@@ -1,17 +1,17 @@
 const { Router } = require("express");
-const rutasProtegidas = Router();
+const router = Router();
 const jwt = require("jsonwebtoken");
-const config = require("../../configs/config.js");
+const config = require("../configs/config");
+// const { Persona } = require("../db");
 
-rutasProtegidas.use((req, res, next) => {
+router.post("/", async (req, res) => {
   const token = req.headers.authorization;
   if (token) {
     jwt.verify(token, config.masterKeyGesSalud, (err, decoded) => {
       if (err) {
         return res.json({ mensaje: "Token inválida" });
       } else {
-        req.decoded = decoded;
-        next();
+        res.status(200).json(decoded.data);
       }
     });
   } else {
@@ -21,4 +21,4 @@ rutasProtegidas.use((req, res, next) => {
   }
 });
 
-module.exports = rutasProtegidas;
+module.exports = router;

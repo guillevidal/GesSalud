@@ -13,11 +13,11 @@ function CreateAgenda() {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
 
-    
+
     const specialities = useSelector(state => state.especialidades)
     const specialists = useSelector(state => state.especialistas)
     const agenda = useSelector(state => state.agendas)
-    
+
 
     const [validation, setValidation] = useState(true)
     const [inputCreateAgenda, setInputCreateAgenda] = useState({
@@ -70,7 +70,7 @@ function CreateAgenda() {
 
 
 
-   
+
     const handleSubmitCreateAgenda = (event) => {
         event.preventDefault();
 
@@ -101,13 +101,13 @@ function CreateAgenda() {
                     let especialistaAgenda = elemento.especialista_medico.id
                     let especialista = newAgenda.idSpecialist;
 
-                    if(dia[0] === diaAgenda[0] && especialistaAgenda === especialista){
+                    if (dia[0] === diaAgenda[0] && especialistaAgenda === especialista) {
                         consulta = true;
                     }
-                
+
                 })
 
-                if(consulta === true){
+                if (consulta === true) {
                     swal({
 
                         title: "Error",
@@ -115,33 +115,31 @@ function CreateAgenda() {
                         icon: "warning",
 
                     })
+                } else {
+
+                    dispatch(crearAgenda(newAgenda));
+
+                    swal({
+
+                        title: "Agenda médica creada",
+                        text: `La agenda del especialista se creó correctamente `,
+                        icon: "success",
+
+                    })
+
+                    setInputCreateAgenda({
+                        dateStart: { value: '', error: 'Seleccione una fecha y hora' },
+                        dateEnd: { value: '', error: 'Seleccione una fecha' },
+                        specialty: { value: '', error: 'Campo requerido' }, // Especialidad
+                        specialist: { value: '', error: 'Campo requerido' }, // Especialista
+                        shiftsDay: { value: "", error: 'Seleccione los turnos por día' }, //Turnos por día
+
+                    })
                 }
-                else{
-                   
-                        dispatch(crearAgenda(newAgenda));
 
 
-                        swal({
-
-                            title: "Agenda médica creada",
-                            text: `La agenda del especialista se creó correctamente `,
-                            icon: "success",
-
-                        })
-
-                        setInputCreateAgenda({
-                            dateStart: { value: '', error: 'Seleccione una fecha y hora' },
-                            dateEnd: { value: '', error: 'Seleccione una fecha' },
-                            specialty: { value: '', error: 'Campo requerido' }, // Especialidad
-                            specialist: { value: '', error: 'Campo requerido' }, // Especialista
-                            shiftsDay: { value: "", error: 'Seleccione los turnos por día' }, //Turnos por día
-
-                        })
-                    }
-
-            
-        }
-     } else {
+            }
+        } else {
             setValidation(false)
             return
         }
@@ -151,17 +149,17 @@ function CreateAgenda() {
     return (
         <div id="createAgenda-container">
             <Nav />
-                <div className='volver'>
-                    <Link to="/especialistaPys" >
-                        <button className='elbotonazo'>VOLVER</button>
-                    </Link>
-                </div>
-                <form className='formulario'>
-                    <div className='seccion'>
-                        <label className='title'>Seleccione Especialista</label>
-                    
-                   <select onChange={handleCreateAgendaSpecialist} className='select'>
-                       <option>Especialista</option>
+            <div className='volver'>
+                <Link to="/especialistaPys" >
+                    <button className='elbotonazo'>VOLVER</button>
+                </Link>
+            </div>
+            <form className='formulario'>
+                <div className='seccion'>
+                    <label className='title'>Seleccione Especialista</label>
+
+                    <select onChange={handleCreateAgendaSpecialist} className='select'>
+                        <option>Especialista</option>
                         {
                             specialists.length > 0 && specialists.map(specialist => {
 
@@ -176,13 +174,13 @@ function CreateAgenda() {
                         }
                     </select>
                     {inputCreateAgenda.specialist.error && <span className='error'>{inputCreateAgenda.specialist.error}</span>}
-                    
-                    </div>
-                    <div className='seccion'>
-                        <label className='title'>Seleccione Especialidad</label>
-                    
+
+                </div>
+                <div className='seccion'>
+                    <label className='title'>Seleccione Especialidad</label>
+
                     <select onChange={handleCreateAgendaSpecialty} className='select'>
-                    <option>Especialidades</option>
+                        <option>Especialidades</option>
                         {
                             types.length > 0 && types.map(type => {
                                 return (
@@ -194,75 +192,50 @@ function CreateAgenda() {
                         }
                     </select>
                     {inputCreateAgenda.specialty.error && <span className='error'>{inputCreateAgenda.specialty.error}</span>}
-                   
-                    </div>
-                    <div className='seccion'>
-                        <label htmlFor="dateStart" className='title'>Fecha y hora inicial de agenda</label>
-                       <input
-                            type="datetime-local"
-                            min={new Date()}
-                            name="dateStart"
-                            value={inputCreateAgenda.dateStart.value}
-                            onChange={handleCreateAgendaDateStart}
-                            className='select'
-                        />
+
+                </div>
+                <div className='seccion'>
+                    <label htmlFor="dateStart" className='title'>Fecha y hora inicial de agenda</label>
+                    <input
+                        type="datetime-local"
+                        min={new Date()}
+                        name="dateStart"
+                        value={inputCreateAgenda.dateStart.value}
+                        onChange={handleCreateAgendaDateStart}
+                        className='select'
+                    />
 
                     {inputCreateAgenda.dateStart.error && <span className='error'>{inputCreateAgenda.dateStart.error}</span>}
-                       
 
-                    </div>
-                    {/*
-                    <div>
-                        <label htmlFor="dateEnd">Fecha final de agenda</label>
-                        {inputCreateAgenda.dateEnd.error && <span>{inputCreateAgenda.dateEnd.error}</span>}
-                        <input
 
-                            type="date"
-                            min={new Date()}
-                            name="dateEnd"
-                            value={inputCreateAgenda.dateEnd.value}
-                            onChange={handleCreateAgendaDateEnd}
+                </div>
 
-                        />
-                    </div>
-                    */}
-                    <div className='seccion'>
-                        <label htmlFor="shiftsDay" className='title'>Cantidad de turnos por día</label>
-                         <input
+                <div className='seccion'>
+                    <label htmlFor="shiftsDay" className='title'>Cantidad de turnos por día</label>
+                    <input
 
-                            type="number"
-                            min="1"
-                            name="shiftsDay"
-                            value={inputCreateAgenda.shiftsDay.value}
-                            onChange={handleCreateAgendaShift}
-                            className='select'
+                        type="number"
+                        min="1"
+                        name="shiftsDay"
+                        value={inputCreateAgenda.shiftsDay.value}
+                        onChange={handleCreateAgendaShift}
+                        className='select'
 
-                        />
+                    />
                     {inputCreateAgenda.shiftsDay.error && <span className='error'>{inputCreateAgenda.shiftsDay.error}</span>}
-                      
-                    </div>
 
-                    {!validation && <span className='error-label'>Completa correctamente el formulario</span>}
-                      
+                </div>
 
-                    <div>
-                         <button onClick={handleSubmitCreateAgenda} className='boton'>CREAR AGENDA</button>
-                    </div>
-                </form>
+                {!validation && <span className='error-label'>Completa correctamente el formulario</span>}
+
+
+                <div>
+                    <button onClick={handleSubmitCreateAgenda} className='boton'>CREAR AGENDA</button>
+                </div>
+            </form>
         </div>
     )
 }
 
 export default CreateAgenda;
 
-/*
-<DatePicker
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                        minDate={startDate}
-                        showTimeSelect
-                        dateFormat="MMMM d, yyyy h:mm aa"
-                        className="input-datePicker"
-
-                    />
-*/

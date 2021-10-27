@@ -42,14 +42,13 @@ export default function Landing() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
       axios.post('/autenticar', { 
-
 
         usuario: input.user,
         password: input.pass
     })
     .then(data => {
+
     if(data.data.token) {
         localStorage.setItem('access-token', data.data.token)
         
@@ -72,6 +71,7 @@ export default function Landing() {
     
 /* 
      dispatch(rol(input.user));  */
+
 
   };
 
