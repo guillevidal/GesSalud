@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./EditAgenda.scss";
 import { useModal } from "../../../Modal/useModal.js";
@@ -7,8 +7,9 @@ import { crearTurno } from '../../../../actions/index';
 import { eliminarTurno } from '../../../../actions/index.js';
 
 
-const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, especialista, especialidad }) => {
-    const dispatch = useDispatch()
+const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }) => {
+    const dispatch = useDispatch();
+    
 
     const pacientes = useSelector(state => state.pacientes)
     const turnos = useSelector(state => state.turnos)
@@ -17,7 +18,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
         if (agenda.id === idAgenda) return agenda
     })
 
-    
+
 
     const [validation, setValidation] = useState(true)
     const [inputFormTurno, setInputFormTurno] = useState({
@@ -31,6 +32,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
 
     const [isOpenFormTurno, openFormTurno, closeFormTurno] = useModal(false)
     const [isOpenCancelarTurno, openCancelarTurno, closeCancelarTurno] = useModal(false)
+    const [inputEliminarTurno, setInputEliminarTurno] = useState(false)
 
     const handleSubmitFormTurno = (event) => {
         event.preventDefault();
@@ -89,6 +91,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
 
     }
 
+
     const confirmacionButton = () => {
         let entrar = false
         agendaId[0].turnos.length > 0 && agendaId[0].turnos.map(turno => {
@@ -102,8 +105,8 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
 
         if (entrar === true) {
             return <>
-            <button>MODIFICAR</button>
-            <button onClick={openCancelarTurno}>ELIMINAR</button>
+                <button>MODIFICAR</button>
+                <button onClick={openCancelarTurno} >ELIMINAR</button>
             </>
         }
         else {
@@ -116,9 +119,9 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
         agendaId[0].turnos.length > 0 && agendaId[0].turnos.map(turno => {
 
             if (turno.hour === `${date}T${horaI}&${horaF}`) {
-               
-                namePaciente = `${turno.paciente.persona.name} ${turno.paciente.persona.lastName}` 
-                
+
+                namePaciente = `${turno.paciente.persona.name} ${turno.paciente.persona.lastName}`
+
             }
         })
     }
@@ -143,25 +146,29 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
         }
     }
 
-    var idTurnoEliminar = null;
+    let turnoId = null; // resultado del filter
+    var idTurnoEliminar = null; // id a eliminar
     const idTurno = () => {
-        agendaId[0].turnos.length > 0 && agendaId[0].turnos.map(turno => {
-
-            if (turno.hour === `${date}T${horaI}&${horaF}`) {
-               
-                idTurnoEliminar = turno.id;
+        agendaId[0].turnos.length > 0 && agendaId[0].turnos.forEach(turnoA => {
+            
+            if (turnoA.hour === `${date}T${horaI}&${horaF}`) {
                 
-                
+                turnoId = turnos.length > 0 && turnos.filter(turno => {
+                   return  turno.id === turnoA.id
+                })
             }
+            
         })
+
+        if(turnoId[0]){
+
+            idTurnoEliminar = turnoId[0].id  
+        }
     }
-    idTurno()
-    console.log(idTurnoEliminar)
-    const handleEliminarTurno = (id) => {
-        dispatch(eliminarTurno(id))
-    }
+   idTurno()
     
-    const confirmacionIdTurno = () => {
+    
+    const confirmacionId = () => {
         let entrar = false
         agendaId[0].turnos.length > 0 && agendaId[0].turnos.map(turno => {
 
@@ -173,15 +180,30 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
         })
 
         if (entrar === true) {
-            return <button >ELIMINAR TURNO</button>
+            return idTurnoEliminar
         }
        
+    }
+    confirmacionId()
+    
+
+
+    const handleChangeEliminarTurno = () => {
+        
+        setInputEliminarTurno(true)
+    }
+
+    const handleSubmitEliminarTurno = (event) => {
+        event.preventDefault();
+        if(inputEliminarTurno === true) {
+            dispatch(eliminarTurno(idTurnoEliminar))
+        }
     }
 
     return (
 
         <>
-            
+
             <tr className='lista'>
 
                 <td className='td numero'><span >{numeroTurno}</span></td>
@@ -231,29 +253,31 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
 
             </Modal>
             <Modal isOpen={isOpenCancelarTurno} closeModal={closeCancelarTurno}>
-        
-            <div>
-                <span>CONFIRMA ELIMINAR TURNO</span>
-                <span>PACIENTE</span>
-                {
-                    confirmacionPaciente()
-                }
-                <span>FECHA</span>
-                <span>{date}</span>
-                <span>HORA</span>
-                <span>{horaI}</span>
-                <span>ESPECIALISTA</span>
-                <span>{especialista}</span>
-                <span>ESPECIALIDAD</span>
-                <span>{especialidad}</span>
-                {
-                    confirmacionIdTurno()
-                }
-              
+                <div>
+                    <label>Confirma eliminar el turno del paciente</label>
+                    <label>{confirmacionPaciente()}</label>
+                    <div>
+                        <div>
+                            <label htmlFor="inputEliminarTurno">Confirmar</label>
+                            <input
+                                name="inputEliminarTurno"
+                                type="checkbox"
+                                value={inputEliminarTurno}
+                                onChange={handleChangeEliminarTurno}
+                            />
+                        </div>
+                        <div>
+                            <button onClick={handleSubmitEliminarTurno}>ACEPTAR</button>
+                        </div>
+                    </div>
 
 
-            </div>
+                </div>
+
+
             </Modal>
+
+
 
         </>
 

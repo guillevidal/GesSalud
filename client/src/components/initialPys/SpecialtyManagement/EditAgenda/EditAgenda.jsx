@@ -4,26 +4,28 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
 import Nav from "../../../Layout/Nav"
 import TurnosAgendaCard from "./TurnosAgendaCard.jsx";
-import { obtenerTurnos } from '../../../../actions/index'
+import { obtenerTurnos } from '../../../../actions/index.js';
 
 
 function EditAgenda() {
     const dispatch = useDispatch();
-    useEffect(() => { 
-    dispatch(obtenerTurnos())
+    useEffect(() => {
+        dispatch(obtenerTurnos())
     },[])
+    
     let { id } = useParams()
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
-    }  
+    }
 
     const agendas = useSelector(state => state.agendas)
-    
+
 
     let agendaId = agendas.length > 0 && agendas.filter(agenda => {
         if (agenda.id === parseInt(id)) return agenda
     })
 
+    
 
     return (
         <>
@@ -52,23 +54,23 @@ function EditAgenda() {
                                 <th><span>Inicio</span></th>
                                 <th> <span>Fin</span></th>
                                 <th><span>Paciente:</span></th>
-                              
+
                             </tr>
                             {agendaId[0].turnosPrecargados.map((valor) => {
                                 return (
 
                                     <TurnosAgendaCard numeroTurno={valor.idTurnoPre} idAgenda={valor.idAgenda}
                                         horaI={valor.horaI} horaF={valor.horaF} date={agendaId[0].date.split('T')[0]}
-                                        modules={agendaId[0].tipo_especialidad.modulo_atencion} 
+                                        modules={agendaId[0].tipo_especialidad.modulo_atencion}
                                         especialista={`${agendaId[0].especialista_medico.persona.name} ${agendaId[0].especialista_medico.persona.lastName}`}
                                         especialidad={agendaId[0].tipo_especialidad.name}
-                                       
+
                                     />
 
                                 )
                             })}
 
-                        
+
 
                         </table>
                     </div>
