@@ -423,7 +423,8 @@ export const modificarDiagnostico = (diagnostico) => {
 };
 
 //SUBIR IMAGEN
-export const uploadAction = async (image) => {
+export const uploadAction =  (image) => {
+
   const fd = new FormData();
   fd.append("image", image);
 
@@ -434,7 +435,9 @@ export const uploadAction = async (image) => {
   };
 
   try {
+    return async function(){
     const res = await axios.post("http://localhost:3001/images", fd, config);
+  }
   } catch (err) {
     console.log(err);
   }

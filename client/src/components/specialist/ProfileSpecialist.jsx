@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEdit } from "@fortawesome/free-solid-svg-icons"
-import {rol, modificarEspecialistas, especialistaDetallado, modificarPaciente, pacienteDetallado } from "../../actions"
+import {rol, modificarEspecialistas, especialistaDetallado, modificarPaciente, pacienteDetallado, uploadAction } from "../../actions"
 import { useEffect } from "react"
 import swal from 'sweetalert';
 import imagen from './images/user.png'
@@ -22,6 +22,7 @@ export default  function ProfileSpecialist(){
     let especialista =  useSelector(state => state.especialistaDetallado)
     const pacienteDetail  = useSelector(state => state.pacienteDetallado)
 
+ 
 
     const newData = {...especialista[0]}
 
@@ -73,10 +74,16 @@ export default  function ProfileSpecialist(){
 
     },[editar])
 
-
+    const [image, setImage] = useState('');
+    const [preview, setPreview] = useState(false);
 
 
     const [validaciones, setValidaciones] = useState(false)
+
+    const handleImageUpload = (e) => {
+        setImage(e.target.files[0]);
+        setPreview(true);
+      }
 
 
     const mayus = (string) => {
@@ -132,8 +139,36 @@ export default  function ProfileSpecialist(){
        
     }
 
+    const handleClear = (e) => {
+        e.preventDefault()
+        setPreview(false);
+        setImage('');
+        setEditar({
+            imagen :false,
+            datos : false,
+            cuenta : false
+        })
+    }
+
     const handleSubmit =   (e) =>{
         e.preventDefault()
+    if(image !== ''){
+        
+        let myNewFile = '';
+        
+        if(roles === '4'){
+         myNewFile = new File([image], datosPac.dni-datosPac.name-image.name, {type: image.type});
+        }
+        else{
+            myNewFile = new File([image], `${datosEsp.dni}-${datosEsp.name}`, {type: image.type});
+       
+        }
+        
+        dispatch(uploadAction(myNewFile))
+    }
+
+/*   
+ */
 
         if(roles === '4'){
 
@@ -143,7 +178,6 @@ export default  function ProfileSpecialist(){
 
             let newObject = datosPac;
 
-            console.log(newObject)
 
             dispatch(modificarPaciente(newObject))
        
@@ -209,8 +243,18 @@ export default  function ProfileSpecialist(){
 
             {roles === '3' && <div className='card-profile'>
                 <div className='encabezado'>
-                   <div className='image-label'><img src={imagen} alt="" className='imagen'/><div className='icon-label'><label onClick={e => handleClick(e,'imagen')} className='icon'><FontAwesomeIcon icon={faEdit} /></label></div></div> 
-                   <input className='file' type="file" name="imagen" id="upload" />
+                   <div className='image-label'>
+                       
+                       {preview ?
+                       <img src={URL.createObjectURL(image)} alt="" className='imagen'/>
+                       :
+                       <img src={imagen} alt="" className='imagen'/>
+                       
+                       }
+                       
+                   <div className='icon-label'>
+                    <label  onClick={e => handleClick(e,'imagen')} className='icon'><FontAwesomeIcon icon={faEdit} /></label></div></div> 
+                   <input className='file' type="file" name="imagen" id="upload" onChange={(e) => handleImageUpload(e)}/>
                     <span className='nombre'>{mayus(especialista[0].persona.name) + ' ' + mayus(especialista[0].persona.lastName) }</span>
                    <span className='especialidad'>{especialista[0].specialty}</span>
                 </div> 
@@ -276,8 +320,9 @@ export default  function ProfileSpecialist(){
 
                 
 
-                 {(editar.imagen === true) || (editar.datos === true) || (editar.cuenta === true) ? <button onClick={e => handleSubmit(e)} name='saveImage' className='button-change'>Guardar cambios</button> : null} 
-                   
+                 {(editar.imagen === true) || (editar.datos === true) || (editar.cuenta === true) ? <button onClick={e => handleSubmit(e)} name='save' className='button-change'>Guardar cambios</button> : null} 
+                 {(editar.imagen === true) || (editar.datos === true) || (editar.cuenta === true) ? <button onClick={e => handleClear(e)} name='clean' className='button-change'>Descartar cambios</button> : null} 
+                  
             </div>}
 
 
