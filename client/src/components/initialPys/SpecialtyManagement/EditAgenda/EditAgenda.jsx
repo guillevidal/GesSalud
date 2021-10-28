@@ -1,13 +1,17 @@
 import './EditAgenda.scss';
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
 import Nav from "../../../Layout/Nav"
 import TurnosAgendaCard from "./TurnosAgendaCard.jsx";
-
+import { obtenerTurnos } from '../../../../actions/index'
 
 
 function EditAgenda() {
+    const dispatch = useDispatch();
+    useEffect(() => { 
+    dispatch(obtenerTurnos())
+    },[])
     let { id } = useParams()
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
@@ -48,14 +52,17 @@ function EditAgenda() {
                                 <th><span>Inicio</span></th>
                                 <th> <span>Fin</span></th>
                                 <th><span>Paciente:</span></th>
-                                <th><span>Historia clinica</span></th>
+                              
                             </tr>
                             {agendaId[0].turnosPrecargados.map((valor) => {
                                 return (
 
-                                    <TurnosAgendaCard numeroTurno={valor.idTurnoPre} idAgenda={agendaId[0].id}
+                                    <TurnosAgendaCard numeroTurno={valor.idTurnoPre} idAgenda={valor.idAgenda}
                                         horaI={valor.horaI} horaF={valor.horaF} date={agendaId[0].date.split('T')[0]}
-                                        modules={agendaId[0].tipo_especialidad.modulo_atencion}
+                                        modules={agendaId[0].tipo_especialidad.modulo_atencion} 
+                                        especialista={`${agendaId[0].especialista_medico.persona.name} ${agendaId[0].especialista_medico.persona.lastName}`}
+                                        especialidad={agendaId[0].tipo_especialidad.name}
+                                       
                                     />
 
                                 )
