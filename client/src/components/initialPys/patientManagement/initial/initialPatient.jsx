@@ -6,11 +6,10 @@ import {Link} from "react-router-dom";
 import SearchPatient from "./searchPatient.jsx";
 import Nav from "../../../Layout/Nav.jsx";
 import "./initialPatient.scss";
-import { rol, obtenerPacientes, paginado } from "../../../../actions/index.js";
+import { obtenerPacientes, paginado } from "../../../../actions/index.js";
 import Paginado from "./Paginado.jsx";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import axios from "axios";
 
 
 const InitialPatient = () => {
