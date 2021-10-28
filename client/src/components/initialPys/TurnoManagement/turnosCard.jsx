@@ -2,7 +2,7 @@ import React from "react"
 
 
 const TurnosCard = ({paciente, agenda,  hour, status}) => {
-    let fecha=hour.slice(0, 9)
+    let fecha=hour.slice(0, 10)
     let horaI=hour.slice(11, 16)
     let horaF=hour.slice(17, hour.length)
     return (
