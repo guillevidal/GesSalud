@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { transporter } = require("../configs/nodemailer");
 const {
   Agenda,
   Turno,
@@ -25,6 +26,8 @@ router.post("/", async function (req, res) {
     );
 
     const asignandoAgenda = await Agenda.findByPk(agendaId);
+    let { date } = asignandoAgenda.dataValues;
+
     asignandoAgenda
       ? await crearTurno.setAgenda(asignandoAgenda)
       : res
@@ -32,6 +35,7 @@ router.post("/", async function (req, res) {
           .send({ msg: "No se pudo encontrar la agenda indicada" });
 
     const asignandoPaciente = await Paciente.findByPk(pacienteId);
+
     asignandoPaciente
       ? await crearTurno.setPaciente(asignandoPaciente)
       : res.status(400).send({ msg: "No se pudo encontrar el paciente" });
@@ -45,6 +49,26 @@ router.post("/", async function (req, res) {
     //     html: `<b> Hola ${obj.name} ${obj.lastName}🩺 , tu usuario es: ${obj.user} y tu contraseña: ${obj.password} </b>`,
     //   });
     // }
+
+    let datosPersona = await Persona.findByPk(
+      asignandoPaciente.dataValues.personaId
+    );
+    let { name, lastName, email } = datosPersona.dataValues;
+
+    let datosAgenda = await Tipo_especialidad.findByPk(
+      asignandoAgenda.dataValues.tipoEspecialidadId
+    );
+    let nameSpecialties = datosAgenda.dataValues.name;
+
+    if (email) {
+      await transporter.sendMail({
+        from: '"GesSalud💉" <ges.salud.04@gmail.com>',
+        to: email,
+        subject: "Turno asignado ✔",
+        html: `<b> Hola ${name} ${lastName}🩺 , </br>
+        tu tunrno para: ${nameSpecialties} fue asignado para el ${date} a las ${hour} </b>`,
+      });
+    }
 
     res.status(200).send(crearTurno);
   } catch (e) {

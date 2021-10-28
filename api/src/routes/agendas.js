@@ -1,5 +1,6 @@
 const { default: axios } = require("axios");
 const { Router } = require("express");
+const { transporter } = require("../configs/nodemailer");
 const {
   Agenda,
   Especialista_medico,
@@ -14,33 +15,29 @@ const router = Router();
 router.post("/", async function (req, res) {
   let { date, amount, idSpecialist, idSpecialties } = req.body;
   try {
-    if (date && amount && idSpecialist && idSpecialties) {
-      const crearAgenda = await Agenda.create(
+    date.forEach(async (element) => {
+      let crearAgendas = await Agenda.create(
         {
-          date,
-          amount,
+          date: element,
+          amount: amount,
         },
         {
           fields: ["date", "amount"],
         }
       );
+
       const asignandoMedico = await Especialista_medico.findByPk(idSpecialist);
-      asignandoMedico
-        ? await crearAgenda.setEspecialista_medico(asignandoMedico)
-        : res.status(400).send({ msg: "Falta el medico especialista" });
+
+      await crearAgendas.setEspecialista_medico(asignandoMedico);
 
       const asignandoEspecialidad = await Tipo_especialidad.findByPk(
         idSpecialties
       );
-      asignandoEspecialidad
-        ? await crearAgenda.setTipo_especialidad(asignandoEspecialidad)
-        : res.status(400).send({ msg: "Falta la especialidad" });
-      res.status(200).send(crearAgenda);
-    } else {
-      res.status(400).send({ msg: "No se pudo crear la agenda" });
-    }
+      await crearAgendas.setTipo_especialidad(asignandoEspecialidad);
+    });
+    res.status(200).send({ msg: "Agendas creadas" });
   } catch (e) {
-    res.status(400).send({ msg: "No se pudo crear la agenda" });
+    res.status(400).send({ msg: "No se puedo crear el grupo de agendas" });
   }
 });
 
