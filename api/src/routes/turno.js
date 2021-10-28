@@ -45,7 +45,7 @@ router.post("/", async function (req, res) {
 router.get("/", async function (req, res, next) {
   try {
     let turnosAll = await Turno.findAll({
-      attributes: ["id", "hour"],
+      attributes: ["id", "hour", "status"],
       include: [
         {
           model: Agenda,
@@ -60,7 +60,7 @@ router.get("/", async function (req, res, next) {
               attributes: ["id"],
               include: {
                 model: Persona,
-                attributes: ["name", "lastName"],
+                attributes: ["name", "lastName", "dni"],
               },
             },
           ],
@@ -71,7 +71,7 @@ router.get("/", async function (req, res, next) {
           include: [
             {
               model: Persona,
-              attributes: ["name", "lastName"],
+              attributes: ["name", "lastName","dni"],
             },
             {
               model: HistoriaClinica,

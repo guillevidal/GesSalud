@@ -1,35 +1,63 @@
-import React, { useState, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Nav from "../../Layout/Nav"
 import "./InicialTurno.scss"
-import {obtenerTurnos, obtenerEspecialistas, obtenerPacientes, obtenerAgendas} from "../../../actions/index.js"
-import Turnos from "./turnos.jsx";
-
-function InicialTurno(){
+import { obtenerTurnos, obtenerEspecialistas, obtenerPacientes, obtenerAgendas } from "../../../actions/index.js"
+import Turnos from "./turnosCard.jsx";
+import SearchTurno from "./SearchTurno";
+function InicialTurno() {
     const dispatch = useDispatch();
-    const [estado, setEStado]= useState("turnos")
-    const turnos= useSelector( state => state.turnos)
-    useEffect(()=> {
+    const turnos = useSelector(state => state.turnos)
+    const [estado, setEstado] = useState("turnos")
+    const [busquedaTurnos, setBusquedaTurnos] = useState([])
+    useEffect(() => {
         dispatch(obtenerTurnos())
-        dispatch(obtenerPacientes())
-        dispatch(obtenerAgendas())
     }, [])
-    
-    return(
+
+    useEffect(()=>{ 
+        
+    }, [busquedaTurnos])
+    return (
         <div class="container-turnospys">
             <Nav />
-            {estado === "turnos" && !turnos[0]?
-            <h1>No se han registrado turnos</h1>:turnos.map(t => {
-                return(
-                <Turnos 
-                key={t.id} 
-                id={t.id}
-                paciente={t.paciente}
-                agenda={t.agenda}
-                hour={t.hour}
-             
-                />)
-            })}
+            <SearchTurno busquedaTurnos={busquedaTurnos}
+                setBusquedaTurnos={setBusquedaTurnos}
+                estado={estado} setEstado={setEstado} turnos={turnos}
+            />
+
+            {!busquedaTurnos[0] 
+            ?
+                turnos[0]
+                ?
+                    turnos.map(t => {
+                        return (
+                            <Turnos
+                                key={t.id}
+                                id={t.id}
+                                paciente={t.paciente}
+                                agenda={t.agenda}
+                                hour={t.hour}
+                                status={t.status}
+                            />)}) 
+                :
+                    <h1>No se han registrado turnos</h1>
+            :   
+            typeof(busquedaTurnos[0])==="string"
+                ?
+                <h1>{busquedaTurnos[0]}</h1> 
+                :
+                busquedaTurnos.map(t => {
+                    return (
+                        <Turnos
+                            key={t.id}
+                            id={t.id}
+                            paciente={t.paciente}
+                            agenda={t.agenda}
+                            hour={t.hour}
+                            status={t.status}
+
+                        />)
+                })}
         </div>
     )
 
