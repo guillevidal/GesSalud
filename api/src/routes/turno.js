@@ -35,6 +35,16 @@ router.post("/", async function (req, res) {
     asignandoPaciente
       ? await crearTurno.setPaciente(asignandoPaciente)
       : res.status(400).send({ msg: "No se pudo encontrar el paciente" });
+    // console.log(asignandoPaciente);
+
+    // if () {
+    //   await transporter.sendMail({
+    //     from: '"GesSalud💉" <ges.salud.04@gmail.com>',
+    //     to: obj.email,
+    //     subject: "Creacion de cuenta exitosa ✔",
+    //     html: `<b> Hola ${obj.name} ${obj.lastName}🩺 , tu usuario es: ${obj.user} y tu contraseña: ${obj.password} </b>`,
+    //   });
+    // }
 
     res.status(200).send(crearTurno);
   } catch (e) {
