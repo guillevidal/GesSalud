@@ -48,10 +48,10 @@ function EditAgenda() {
                     <div className='asignaciones'>
                         <table className='titles'>
                             <tr className='subtitle'>
-                                <th><span>Turno n°</span></th>
+                                <th><span>Turno</span></th>
                                 <th><span>Inicio</span></th>
                                 <th> <span>Fin</span></th>
-                                <th><span>Paciente:</span></th>
+                                <th><span>Paciente</span></th>
                               
                             </tr>
                             {agendaId[0].turnosPrecargados.map((valor) => {

@@ -20,9 +20,9 @@ const InitialPatient = () => {
     const [details, setDetails]=useState(false);
     const dispatch = useDispatch()
 
-    useEffect(() => {
+    useEffect( () => {
 
-        dispatch(paginado(0))
+         dispatch(paginado(0))
         dispatch(obtenerPacientes())
 
     },[])
@@ -44,8 +44,9 @@ const InitialPatient = () => {
             {busquedaPaciente && busquedaPaciente.length > 6 ? <Paginado/> :null}
             {!busquedaPaciente.length && pacientes && pacientes.length > 6 ? <Paginado/> :null}
         
-            <div id="prueba">       
-            {!busquedaPaciente[0]?!pacientes[0]?<span className='empty'><FontAwesomeIcon icon={faTimesCircle} /> No se encontraron pacientes registrados</span>:pacientes.slice(valorPaginado, valorPaginado+6).map((pa) => {
+            <div id="prueba">
+            {(pacientes[0] && pacientes[0].length < 1) && <span className='empty'><FontAwesomeIcon icon={faTimesCircle} /> No se encontraron pacientes registrados</span>}          
+            {!busquedaPaciente[0]?pacientes[0] && pacientes.slice(valorPaginado, valorPaginado+6).map((pa) => {
                 return (
                     <PatientCard pa={pa}/>
                 )
@@ -55,7 +56,7 @@ const InitialPatient = () => {
                     <PatientCard  pa={pa}/> 
                 )
                 
-            }):<h1>{busquedaPaciente[0]}</h1>
+            }):<span className='empty'><FontAwesomeIcon icon={faTimesCircle} /> No se encontraron pacientes</span>
             }
             </div>
         </div>

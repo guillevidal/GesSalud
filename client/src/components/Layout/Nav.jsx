@@ -87,9 +87,8 @@ export default function Nav(){
                 <div className='nav-link'>
                     <Link onClick={handleResetActionsRol1}to='/patientPys' className='nav-link-ok' >Pacientes</Link>
                     <Link to='/turnoPys' className='nav-link-ok' >Turnos</Link>
-                    <Link to='/especialistaPys' className='nav-link-ok' >Especialistas</Link>
-                    <Link to='/consultorioPys' className='nav-link-ok' >Consultorios</Link>
-                </div>
+                    <Link to='/especialistaPys' className='nav-link-ok' >Agendas</Link>
+               </div>
             }
             {(status === '2' || status === '7') &&
                 <div className='nav-link'>

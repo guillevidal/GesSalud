@@ -14,6 +14,10 @@ import swal from "sweetalert";
 export default function Landing() {
   const dispatch = useDispatch();
   const status = useSelector((state) => state.rol);
+
+  
+  const [error, setError] = useState(false)
+
   
     useEffect(()=>{
 
@@ -84,10 +88,9 @@ export default function Landing() {
           }
         }
     else {
-    swal({
-      icon : 'error',
-      title : data.data.mensaje
-    })
+    
+    setError(data.data.mensaje)
+
     }
     }) 
  
@@ -146,6 +149,7 @@ export default function Landing() {
               />
             </div>
           </div>
+          {error && <span className='error'>{error}</span>}
           <button className="boton-login" onClick={(e) => handleSubmit(e)}>
             Ingresar
           </button>
