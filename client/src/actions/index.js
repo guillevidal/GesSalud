@@ -66,9 +66,14 @@ export const crearEspecialista = (especialista) => {
 };
 //CREAR PACIENTE
 export const crearPaciente = (paciente) => {
+  const token = localStorage["access-token"];
   return async (dispatch) => {
     {
-      const result = await axios.post("/paciente", paciente);
+      const result = await axios.post("/paciente", paciente, {
+        headers: {
+          authorization: token,
+        },
+      });
       const data = result.data;
       return dispatch({ type: CREAR_PACIENTE, payload: data });
     }
@@ -144,6 +149,7 @@ export const pacienteDetallado = (dni) => {
 
 //PARA MANEJO DE ROLES
 export const rol = (rol) => {
+  console.log(rol)
   return { type: ROL, payload: rol };
 };
 
@@ -414,4 +420,25 @@ export const modificarDiagnostico = (diagnostico) => {
       return dispatch({ type: EDITAR_DIAGNOSTICO, payload: data });
     }
   };
+};
+
+//SUBIR IMAGEN
+export const uploadAction =  (image) => {
+
+  const fd = new FormData();
+  fd.append("image", image);
+
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+
+  try {
+    return async function(){
+    const res = await axios.post("http://localhost:3001/images", fd, config);
+  }
+  } catch (err) {
+    console.log(err);
+  }
 };

@@ -6,6 +6,21 @@
     align-items: center;
     width: 100%;
 
+    .division{
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .empty{
+        font-size: 2em;
+        color: red;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+
     .label-title-search{
         display: flex;
          width: 100%;
@@ -25,6 +40,12 @@
         margin-left: 20px;
         padding: 10px;
         border-radius: 10px;
+
+        .select{
+            margin-left: 10px;
+            background-color: $color-principal;
+            color: white;
+        }
 
 
         .error-label{
@@ -51,30 +72,33 @@
         .agenda{
             display: flex;
             flex-direction: column;
+            align-items: center;
             width: 100%;
             margin-top: 20px;
-            max-width: 850px;
+            max-width: 800px;
+
+            .titulo{
+                font-size: 2em;
+                margin-bottom: 20px;
+                font-family: $fuente-principal;
+                color: $color-principal;
+                font-weight: $bold;
+            }
             
             .agenda-header-container{
-                display: flex;
-                 justify-content: space-between;
                  width: 100%;
                  max-width: 800px;
-                background-color: $color-terciario;
-                border: 1px solid $color-principal;
 
-                .bloque{
-                    display: flex;
-                    width: 100%;
-                    justify-content: center;
-                    padding: 5px;
-                    border-right: 1px solid $color-principal;
-                    
+                .encabezado{
+                   background-color: $color-principal;
+                   
+                }
                 .title{
                     color: white;
                     font-size: 1.2em;
+                    padding: 5px;
                 }
-                }
+                
 
         }
 
@@ -84,16 +108,7 @@
             max-width: 900px;
             align-items: center;
 
-             .boton{
-                 cursor: pointer;
-                 font-size: 1.2em;
-                 margin-left: 5px;
-                 color: $color-terciario;
-
-                 &:hover{
-                     color: $color-principal;
-                 }
-             }   
+       
         }
 
         }
@@ -106,16 +121,17 @@
 
 .boton-crear-search{
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: column-reverse;
     width: 100%;
+    max-width: 400px;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     margin-bottom: 20px;
     margin-top: 20px;
 
     .boton-action{
         @include boton-primario;
-        margin: 0 20px
+        margin: 30px 0;
     }
 
     .Titulo{

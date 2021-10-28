@@ -5,18 +5,24 @@ import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEdit } from "@fortawesome/free-solid-svg-icons"
-import { modificarEspecialistas, especialistaDetallado, modificarPaciente, pacienteDetallado } from "../../actions"
+import {rol, modificarEspecialistas, especialistaDetallado, modificarPaciente, pacienteDetallado, uploadAction } from "../../actions"
 import { useEffect } from "react"
 import swal from 'sweetalert';
 import imagen from './images/user.png'
+import axios from "axios"
 
 export default  function ProfileSpecialist(){
+ 
+    const user = localStorage.getItem('user')
 
-    let rol = useSelector(state => state.rol)
+    const dispatch = useDispatch()
+
+    let roles = useSelector(state => state.rol)
 
     let especialista =  useSelector(state => state.especialistaDetallado)
     const pacienteDetail  = useSelector(state => state.pacienteDetallado)
 
+ 
 
     const newData = {...especialista[0]}
 
@@ -38,20 +44,46 @@ export default  function ProfileSpecialist(){
 
  
     useEffect(()=>{
-        if(rol === '3'){
-        dispatch(especialistaDetallado(especialista[0].id))
+
+        let obtengoToken = localStorage.getItem('access-token')
+        axios.get('/whoami', { 
+         headers:  { 
+            authorization : obtengoToken
+          }
+      })
+      .then(res => {
+        console.log(res.data)
+        if(res.data.rol){
+            dispatch(rol(res.data.rol))
+    
         }
         else{
-            dispatch(pacienteDetallado(pacienteDetail[0].dni))
+          return
+        }
+      }) 
+
+
+        if(roles === '3'){
+        dispatch(especialistaDetallado(user))
+        }
+        else{
+            dispatch(pacienteDetallado(user))
        
         }
-    },[editar])
-    
-    const dispatch = useDispatch()
 
+
+    },[editar])
+
+    const [image, setImage] = useState('');
+    const [preview, setPreview] = useState(false);
 
 
     const [validaciones, setValidaciones] = useState(false)
+
+    const handleImageUpload = (e) => {
+        setImage(e.target.files[0]);
+        setPreview(true);
+      }
 
 
     const mayus = (string) => {
@@ -76,7 +108,7 @@ export default  function ProfileSpecialist(){
     }
 
     const handleChange = async (e) =>{
-        if(rol === '3'){
+        if(roles === '3'){
          setDatos({
             ...datosEsp,
             [e.target.name] : e.target.value
@@ -107,10 +139,38 @@ export default  function ProfileSpecialist(){
        
     }
 
+    const handleClear = (e) => {
+        e.preventDefault()
+        setPreview(false);
+        setImage('');
+        setEditar({
+            imagen :false,
+            datos : false,
+            cuenta : false
+        })
+    }
+
     const handleSubmit =   (e) =>{
         e.preventDefault()
+    if(image !== ''){
+        
+        let myNewFile = '';
+        
+        if(roles === '4'){
+         myNewFile = new File([image], datosPac.dni-datosPac.name-image.name, {type: image.type});
+        }
+        else{
+            myNewFile = new File([image], `${datosEsp.dni}-${datosEsp.name}`, {type: image.type});
+       
+        }
+        
+        dispatch(uploadAction(myNewFile))
+    }
 
-        if(rol === '4'){
+/*   
+ */
+
+        if(roles === '4'){
 
             delete(datosPac.paciente)
             delete(datosPac.rol)
@@ -118,7 +178,6 @@ export default  function ProfileSpecialist(){
 
             let newObject = datosPac;
 
-            console.log(newObject)
 
             dispatch(modificarPaciente(newObject))
        
@@ -182,10 +241,20 @@ export default  function ProfileSpecialist(){
             <Nav />
 
 
-            {rol === '3' && <div className='card-profile'>
+            {roles === '3' && <div className='card-profile'>
                 <div className='encabezado'>
-                   <div className='image-label'><img src={imagen} alt="" className='imagen'/><div className='icon-label'><label onClick={e => handleClick(e,'imagen')} className='icon'><FontAwesomeIcon icon={faEdit} /></label></div></div> 
-                   <input className='file' type="file" name="imagen" id="upload" />
+                   <div className='image-label'>
+                       
+                       {preview ?
+                       <img src={URL.createObjectURL(image)} alt="" className='imagen'/>
+                       :
+                       <img src={imagen} alt="" className='imagen'/>
+                       
+                       }
+                       
+                   <div className='icon-label'>
+                    <label  onClick={e => handleClick(e,'imagen')} className='icon'><FontAwesomeIcon icon={faEdit} /></label></div></div> 
+                   <input className='file' type="file" name="imagen" id="upload" onChange={(e) => handleImageUpload(e)}/>
                     <span className='nombre'>{mayus(especialista[0].persona.name) + ' ' + mayus(especialista[0].persona.lastName) }</span>
                    <span className='especialidad'>{especialista[0].specialty}</span>
                 </div> 
@@ -222,7 +291,7 @@ export default  function ProfileSpecialist(){
                    
             </div>}
 
-            {rol === '4' &&   <div className='card-profile'>
+            {roles === '4' &&   <div className='card-profile'>
                 <div className='encabezado'>
                    <div className='image-label'><img src="https://wpdicta-ha-staticfiles-media-v1.s3.amazonaws.com/wp-content/uploads/2019/06/01124533/leonardo-dicaprio-meme.jpg" alt="" className='imagen'/><div className='icon-label'><label onClick={e => handleClick(e,'imagen')} className='icon'><FontAwesomeIcon icon={faEdit} /></label></div></div> 
                    <input className='file' type="file" name="imagen" id="upload" />
@@ -251,8 +320,9 @@ export default  function ProfileSpecialist(){
 
                 
 
-                 {(editar.imagen === true) || (editar.datos === true) || (editar.cuenta === true) ? <button onClick={e => handleSubmit(e)} name='saveImage' className='button-change'>Guardar cambios</button> : null} 
-                   
+                 {(editar.imagen === true) || (editar.datos === true) || (editar.cuenta === true) ? <button onClick={e => handleSubmit(e)} name='save' className='button-change'>Guardar cambios</button> : null} 
+                 {(editar.imagen === true) || (editar.datos === true) || (editar.cuenta === true) ? <button onClick={e => handleClear(e)} name='clean' className='button-change'>Descartar cambios</button> : null} 
+                  
             </div>}
 
 

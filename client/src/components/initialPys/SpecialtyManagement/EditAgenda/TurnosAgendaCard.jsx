@@ -5,6 +5,7 @@ import { useModal } from "../../../Modal/useModal.js";
 import Modal from '../../../Modal/Modal.js';
 import { crearTurno } from '../../../../actions/index';
 import { eliminarTurno } from '../../../../actions/index.js';
+import swal from "sweetalert";
 
 
 const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }) => {
@@ -50,7 +51,11 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }
 
 
                 if (pacienteDetail.length === 0) {
-                    alert('Paciente no encontrado')
+                    swal({
+                        icon : 'warning',
+                        title : 'Paciente no encontrado',
+                        text : 'Verifica los datos ingresados'
+                    })
                 } else {
 
                     let newTurno = {
@@ -63,7 +68,11 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }
 
                     dispatch(crearTurno(newTurno))
 
-                    alert('Turno creado con exito')
+                    swal({
+                        icon : 'success',
+                        title : 'Turno creado',
+                        text : 'El turno se genero satisfactoriamente'
+                    })
 
                     setInputFormTurno({
                         agendaId: { value: idAgenda, error: null },
@@ -104,13 +113,17 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }
         })
 
         if (entrar === true) {
-            return <>
-                <button>MODIFICAR</button>
-                <button onClick={openCancelarTurno} >ELIMINAR</button>
-            </>
+
+         
+
+            return <div className='botones'>
+            <button className='button editar'>Editar</button>
+            <button className='button eliminar' onClick={openCancelarTurno}>Eliminar</button>
+            </div>
+
         }
         else {
-            return <button onClick={openFormTurno}>Asignar turno</button>
+            return <button onClick={openFormTurno} className='button assign'>Asignar turno</button>
         }
     }
 
