@@ -123,21 +123,31 @@ export default function Nav(){
             </div>
             </div>
 
-            {mobile && status === '1' &&
+            {mobile && (status === '1' || status === '6') &&
                     <div className='nav-link-mobile'>
                         <Link onClick={handleResetActionsRol1}to='/patientPys' className='nav-link-ok-mobile' >Pacientes</Link>
                         <Link to='/turnoPys' className='nav-link-ok-mobile' >Turnos</Link>
                         <Link to='/especialistaPys' className='nav-link-ok-mobile' >Especialistas</Link>
                         <Link to='/consultorioPys' className='nav-link-ok-mobile' >Consultorios</Link>
+                        {(status === '6' || status === '7') &&
+                     <div  onClick={e => changeRol(e)} className='nav-link-ok-mobile'>
+                     <FontAwesomeIcon icon={faExchangeAlt} className='nav-exit-icon'/>
+                     <span>Cambiar permisos</span>
+                     </div>}
                         <div className='nav-link-ok-mobile' onClick={e => logout(e)}>
                          <FontAwesomeIcon icon={faSignOutAlt}/><span>  Salir</span>
                         </div>
                         </div>}
                 
-                    {mobile && status === '2' &&
+                    {mobile && (status === '2' || status === '7') &&
                     <div className='nav-link-mobile'>
                         <Link onClick={handleResetActionsRol2} to='/homeRRHH' className='nav-link-ok-mobile' >Home</Link>
                         <Link to='/createEmployee' className='nav-link-ok-mobile' >Crear Empleado</Link>
+                        {(status === '6' || status === '7') &&
+                     <div  onClick={e => changeRol(e)} className='nav-link-ok-mobile'>
+                     <FontAwesomeIcon icon={faExchangeAlt} className='nav-exit-icon'/>
+                     <span>Cambiar permisos</span>
+                     </div>}
                         <div className='nav-link-ok-mobile' onClick={e => logout(e)}>
                          <FontAwesomeIcon icon={faSignOutAlt}/><span>  Salir</span>
                         </div>
@@ -147,11 +157,24 @@ export default function Nav(){
                     <div className='nav-link-mobile'>
                         <Link to='/homeUser' className='nav-link-ok-mobile' >Home</Link>
                     <Link to='/perfilUser' className='nav-link-ok-mobile' >Perfil</Link>
-                        <div className='nav-link-ok-mobile' onClick={e => logout(e)}>
-                         <FontAwesomeIcon icon={faSignOutAlt}/><span>  Salir</span>
+                    <div className='nav-link-ok-mobile' onClick={e => logout(e)}>
+                         <FontAwesomeIcon icon={faSignOutAlt} className='nav-exit-icon'/><span>  Salir</span>
                         </div>
                     </div>
-                }
+                    
+                    }
+                     {mobile &&  status === '5' &&
+                    <div className='nav-link-mobile'>
+                   <div className='nav-link-ok-mobile' onClick={e => logout(e)}>
+                         <FontAwesomeIcon icon={faSignOutAlt} className='nav-exit-icon'/><span>  Salir</span>
+                        </div>
+                    </div>
+                    
+                    }
+                    
+                        
+               
+               
             
             
         </div>        
