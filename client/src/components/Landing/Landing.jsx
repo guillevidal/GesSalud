@@ -23,8 +23,22 @@ export default function Landing() {
       }
   })
   .then(res => {
+    console.log(res.data)
     if(res.data.rol){
       dispatch(rol(res.data.rol))
+
+      if(res.data.dni){
+        dispatch(pacienteDetallado(res.data.dni))
+        localStorage.setItem('user',res.data.dni)
+      }
+      if(res.data.id){
+        dispatch(especialistaDetallado(res.data.especialistaId))
+        localStorage.setItem('user',res.data.especialistaId)
+      }
+
+    }
+    else{
+      return
     }
   }) 
     
