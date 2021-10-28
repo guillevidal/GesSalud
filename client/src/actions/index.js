@@ -66,9 +66,14 @@ export const crearEspecialista = (especialista) => {
 };
 //CREAR PACIENTE
 export const crearPaciente = (paciente) => {
+  const token = localStorage["access-token"];
   return async (dispatch) => {
     {
-      const result = await axios.post("/paciente", paciente);
+      const result = await axios.post("/paciente", paciente, {
+        headers: {
+          authorization: token,
+        },
+      });
       const data = result.data;
       return dispatch({ type: CREAR_PACIENTE, payload: data });
     }
