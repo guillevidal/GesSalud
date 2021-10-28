@@ -3,17 +3,22 @@ import { useSelector, useDispatch } from "react-redux";
 import "./EditAgenda.scss";
 import { useModal } from "../../../Modal/useModal.js";
 import Modal from '../../../Modal/Modal.js';
-import { crearTurno } from '../../../../actions/index'
+import { crearTurno } from '../../../../actions/index';
+import { eliminarTurno } from '../../../../actions/index.js';
 
 
-const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }) => {
+const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, especialista, especialidad }) => {
     const dispatch = useDispatch()
-    const capitalFirstLetter = (str) => {
-        return str.charAt(0).toUpperCase() + str.slice(1)
-    }
-    const pacientes = useSelector(state => state.pacientes)
 
-    const [inputPatientDni, setinputPatientDni] = useState('')
+    const pacientes = useSelector(state => state.pacientes)
+    const turnos = useSelector(state => state.turnos)
+    const agendas = useSelector(state => state.agendas)
+    let agendaId = agendas.length > 0 && agendas.filter(agenda => {
+        if (agenda.id === idAgenda) return agenda
+    })
+
+    
+
     const [validation, setValidation] = useState(true)
     const [inputFormTurno, setInputFormTurno] = useState({
         agendaId: { value: idAgenda, error: null },
@@ -23,8 +28,9 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }
         modules: { value: modules, error: null }
 
     })
-    
+
     const [isOpenFormTurno, openFormTurno, closeFormTurno] = useModal(false)
+    const [isOpenCancelarTurno, openCancelarTurno, closeCancelarTurno] = useModal(false)
 
     const handleSubmitFormTurno = (event) => {
         event.preventDefault();
@@ -52,8 +58,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }
                         hour: inputFormTurno.hora.value,
                         modules: inputFormTurno.modules.value.toString(),
                     }
-                    console.log(pacienteDetail)
-                    console.log(newTurno)
+
                     dispatch(crearTurno(newTurno))
 
                     alert('Turno creado con exito')
@@ -69,14 +74,11 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }
 
                 }
 
-
-
             }
         } else {
             setValidation(false)
             return
         }
-
 
     }
 
@@ -87,27 +89,120 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }
 
     }
 
+    const confirmacionButton = () => {
+        let entrar = false
+        agendaId[0].turnos.length > 0 && agendaId[0].turnos.map(turno => {
+
+            if (turno.hour === `${date}T${horaI}&${horaF}`) {
+
+                entrar = true
+
+            }
+        })
+
+        if (entrar === true) {
+            return <>
+            <button>MODIFICAR</button>
+            <button onClick={openCancelarTurno}>ELIMINAR</button>
+            </>
+        }
+        else {
+            return <button onClick={openFormTurno}>Asignar turno</button>
+        }
+    }
+
+    var namePaciente = '';
+    const fullNamePaciente = () => {
+        agendaId[0].turnos.length > 0 && agendaId[0].turnos.map(turno => {
+
+            if (turno.hour === `${date}T${horaI}&${horaF}`) {
+               
+                namePaciente = `${turno.paciente.persona.name} ${turno.paciente.persona.lastName}` 
+                
+            }
+        })
+    }
+    fullNamePaciente()
+
+    const confirmacionPaciente = () => {
+        let entrar = false
+        agendaId[0].turnos.length > 0 && agendaId[0].turnos.map(turno => {
+
+            if (turno.hour === `${date}T${horaI}&${horaF}`) {
+
+                entrar = true
+
+            }
+        })
+
+        if (entrar === true) {
+            return <span>{namePaciente}</span>
+        }
+        else {
+            return <span>No asignado</span>
+        }
+    }
+
+    var idTurnoEliminar = null;
+    const idTurno = () => {
+        agendaId[0].turnos.length > 0 && agendaId[0].turnos.map(turno => {
+
+            if (turno.hour === `${date}T${horaI}&${horaF}`) {
+               
+                idTurnoEliminar = turno.id;
+                
+                
+            }
+        })
+    }
+    idTurno()
+    console.log(idTurnoEliminar)
+    const handleEliminarTurno = (id) => {
+        dispatch(eliminarTurno(id))
+    }
+    
+    const confirmacionIdTurno = () => {
+        let entrar = false
+        agendaId[0].turnos.length > 0 && agendaId[0].turnos.map(turno => {
+
+            if (turno.hour === `${date}T${horaI}&${horaF}`) {
+
+                entrar = true
+
+            }
+        })
+
+        if (entrar === true) {
+            return <button >ELIMINAR TURNO</button>
+        }
+       
+    }
+
     return (
 
         <>
+            
             <tr className='lista'>
 
                 <td className='td numero'><span >{numeroTurno}</span></td>
                 <td className='td horario'><span >{horaI}</span></td>
                 <td className='td horarioFinal'><span>{horaF}</span></td>
-                <td className='td paciente'><span >{"no asignado"}</span></td>
-                <td className='td historia'><span >{"no disponible"}</span></td>
-
-
+                <td className='td paciente'>
+                    {
+                        confirmacionPaciente()
+                    }
+                </td>
                 <td className='td asignar'>
-                    <button onClick={openFormTurno} >
-                        Asignar turno
-                    </button>
+                    {
+                        confirmacionButton()
+                    }
 
                 </td>
 
 
             </tr>
+
+
             <Modal isOpen={isOpenFormTurno} closeModal={closeFormTurno}>
 
                 <div >
@@ -134,6 +229,30 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }
 
                 </div>
 
+            </Modal>
+            <Modal isOpen={isOpenCancelarTurno} closeModal={closeCancelarTurno}>
+        
+            <div>
+                <span>CONFIRMA ELIMINAR TURNO</span>
+                <span>PACIENTE</span>
+                {
+                    confirmacionPaciente()
+                }
+                <span>FECHA</span>
+                <span>{date}</span>
+                <span>HORA</span>
+                <span>{horaI}</span>
+                <span>ESPECIALISTA</span>
+                <span>{especialista}</span>
+                <span>ESPECIALIDAD</span>
+                <span>{especialidad}</span>
+                {
+                    confirmacionIdTurno()
+                }
+              
+
+
+            </div>
             </Modal>
 
         </>
