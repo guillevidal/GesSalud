@@ -21,7 +21,7 @@ function InitialSpecialty() {
         dispatch(obtenerEspecialidades())
         dispatch(obtenerAgendas())
     }, [])
-    const agenda = useSelector(allAgenda => allAgenda.agendas)
+    const agenda = useSelector(state => state.agendas)
     const agendaSort = agenda.sort((a, b) => {
         if (a.date > b.date) return 1;
         if (a.date < b.date) return -1;
@@ -30,42 +30,102 @@ function InitialSpecialty() {
     const specialties = useSelector(state => state.especialistas)
   
     const [agendaFilter, setAgendaFilter] = useState([]);
-
-    const [inputSearchDay, setInputSearchDay] = useState({
-        date: { value: '', error: 'Seleccione una fecha' }
-    })
-
-    const [validation, setValidation] = useState(true)
-
-
-    const handleSearchDay = (event) => {
+    const [estado, setEstado]=useState("especialista")
+    const [input, setInput]=useState("")
+    const [placeHolder, setPlaceHolder]= useState("Buscar por nombre")
+    const handleChange = (event) => {
         const { value } = event.target
-        setInputSearchDay({ ...inputSearchDay, date: { value, error: null } })
+        setInput(value)
+        if(value.length === 0){
+            setAgendaFilter([])
+        }else{
+            if(estado==="especialista"){
+                let filtroE=[]
+                agenda.forEach(element=>{
+                    console.log(element)
+                    if(element.especialista_medico.persona.name.toLowerCase().startsWith(value.toLowerCase()) || 
+                    element.especialista_medico.persona.lastName.toLowerCase().startsWith(value.toLowerCase())){
+                        filtroE.push(element)
+                    }
+                })
+                if(!filtroE[0]){
+                    filtroE.push("No se encontro agenda con el especialista")
+                }
+                setAgendaFilter(filtroE)
+            }
+
+            if(estado==="especialidad"){
+                let filtroEsp=[]
+                agenda.forEach(element=>{
+                    if(element.tipo_especialidad.name.toLowerCase().normalize('NFD')
+                    .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi, "$1")
+                    .normalize().startsWith(value.toLowerCase())){
+                        filtroEsp.push(element)
+                    }
+                })
+                if(!filtroEsp[0]){
+                    filtroEsp.push("No se encontro agenda con la especialidad")
+                }
+                setAgendaFilter(filtroEsp)
+            }
+            if(estado==="fecha"){
+                let filtroF=[]
+                agenda.forEach(element=>{
+                    if(element.date.slice(0,10).startsWith(value)){
+                        filtroF.push(element)
+                    }
+                })
+                if(!filtroF[0]){
+                    filtroF.push("No se encontro agenda con la fecha")
+                }
+                setAgendaFilter(filtroF)
+            }
+        }
+        
+    }
+
+    const handleSelect= (event) => {
+        const { value } = event.target
+        if(value==="especialista"){
+            setInput("")
+            setEstado(value)
+            setPlaceHolder("Buscar por nombre")
+        }
+        if (value==="especialidad") {
+            setInput("")
+            setEstado(value)
+            setPlaceHolder("Buscar por especialidad")
+        }
+        if(value==="fecha"){
+            setInput("")
+            setEstado(value)
+        }
     }
 
 
     const handleSubmitSearchDay = (event) => {
-        event.preventDefault();
-        if (!inputSearchDay.date.error) {
-            if (inputSearchDay.date.value.length === 0) {
-                setValidation(false);
-            } else {
-                let agendas = [];
-                agendas = agenda.filter(agenda => {
-                    return agenda.date.split('T')[0] === inputSearchDay.date.value
+        // event.preventDefault();
+        // if (!inputSearchDay.date.error) {
+        //     if (inputSearchDay.date.value.length === 0) {
+        //         setValidation(false);
+        //     } else {
+        //         let agendas = [];
+        //         agendas = agenda.filter(agenda => {
+        //             return agenda.date.split('T')[0] === inputSearchDay.date.value
 
-                })
-                return setAgendaFilter(
+        //         })
+        //         return setAgendaFilter(
 
-                    agendas
-                )
+        //             agendas
+        //         )
 
-            }
-        }
+        //     }
+        // }
     }
 
     const handleAllAgenda = (event) => {
         event.preventDefault();
+        setInput("")
         setAgendaFilter([])
         dispatch(obtenerAgendas())
     }
@@ -88,13 +148,27 @@ function InitialSpecialty() {
                         <label className="label-title-search">FILTRAR AGENDA</label>
                         <div>
 
+                            {estado==="fecha"
+                            ?
                             <input
                                 type="date"
                                 min={new Date()}
-                                value={inputSearchDay.date.value}
-                                onChange={handleSearchDay}
-                            />
-                            <button onClick={handleSubmitSearchDay} className='boton'>BUSCAR</button>
+                                value={input}
+                                onChange={(e)=>handleChange(e)}
+                                />
+                            :
+                            <input 
+                                value={input} 
+                                onChange={(e)=>handleChange(e)}
+                                placeholder={placeHolder}
+                                />}
+
+                            <select onChange={(e)=>handleSelect(e)}>
+                                <option value="especialista">Especialista</option>
+                                <option value="especialidad">Especialidad</option>
+                                <option value="fecha">Fecha</option>
+                            </select>
+                            
                         </div>
                         <div>
 
@@ -113,7 +187,13 @@ function InitialSpecialty() {
 
                     </div>
                     {
-                        agendaFilter.length > 0 ? agendaFilter.map(agenda => {
+                        agendaFilter.length > 0
+                        ?
+                        typeof(agendaFilter[0]) === "string"
+                        ?
+                        <h1>{agendaFilter[0]}</h1>
+                        :
+                        agendaFilter.map(agenda => {
                             return (
                                 <div className='agendaEnlace'>
                                     <Agenda
@@ -127,8 +207,11 @@ function InitialSpecialty() {
                                     </Link>
                                     </div>
                                 </div>)
-                        }) :
-                            agendaSort ? agendaSort.map(agenda => {
+                        }) 
+                        :
+                        agendaSort
+                        ? 
+                        agendaSort.map(agenda => {
                                 return (
                                     <div className='agendaEnlace'>
                                         <Agenda date={agenda.date.split('T')[0]} specialist={capitalFirstLetter(agenda.especialista_medico.persona.name)
@@ -145,7 +228,9 @@ function InitialSpecialty() {
                                     </div>
 
                                 )
-                            }) : <h4>NO HAY AGENDA CREADA</h4>
+                            })
+                        : 
+                        <h4>No se han registrado agendas</h4>
                     }
 
                 </div>
