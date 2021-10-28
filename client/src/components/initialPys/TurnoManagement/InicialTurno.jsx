@@ -1,8 +1,9 @@
+/* eslint-disable */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Nav from "../../Layout/Nav"
 import "./InicialTurno.scss"
-import { obtenerTurnos, obtenerEspecialistas, obtenerPacientes, obtenerAgendas } from "../../../actions/index.js"
+import { obtenerTurnos} from "../../../actions/index.js"
 import Turnos from "./turnosCard.jsx";
 import SearchTurno from "./SearchTurno";
 function InicialTurno() {

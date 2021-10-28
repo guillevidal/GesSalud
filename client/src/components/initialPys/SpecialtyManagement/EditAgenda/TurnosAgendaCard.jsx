@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable */
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./EditAgenda.scss";
 import { useModal } from "../../../Modal/useModal.js";
@@ -11,7 +12,6 @@ import swal from "sweetalert";
 const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }) => {
     const dispatch = useDispatch();
     
-
     const pacientes = useSelector(state => state.pacientes)
     const turnos = useSelector(state => state.turnos)
     const agendas = useSelector(state => state.agendas)
@@ -173,7 +173,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }
             
         })
 
-        if(turnoId[0]){
+        if(turnoId){
 
             idTurnoEliminar = turnoId[0].id  
         }

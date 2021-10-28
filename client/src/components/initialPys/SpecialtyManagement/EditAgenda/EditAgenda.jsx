@@ -1,17 +1,14 @@
+/* eslint-disable */
 import './EditAgenda.scss';
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
 import Nav from "../../../Layout/Nav"
 import TurnosAgendaCard from "./TurnosAgendaCard.jsx";
-import { obtenerTurnos } from '../../../../actions/index.js';
+
 
 
 function EditAgenda() {
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(obtenerTurnos())
-    },[])
     
     let { id } = useParams()
     const capitalFirstLetter = (str) => {

@@ -1,7 +1,8 @@
+/* eslint-disable */
 import React, {useState} from "react";
 import {useSelector} from "react-redux";
 
-const SearchTurno = ({busquedaTurnos, setBusquedaTurnos, estado, setEstado, }) => {
+const SearchTurno = ({ setBusquedaTurnos, estado, setEstado, }) => {
     const [input, setInput]=useState("")
     const turnos= useSelector(state => state.turnos)
     const [placeHolder, setPlaceHolder]= useState("Buscar por nombres")
