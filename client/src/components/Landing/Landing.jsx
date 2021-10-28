@@ -8,6 +8,7 @@ import { rol } from "../../actions";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 import { especialistaDetallado, pacienteDetallado } from "../../actions"
+import swal from "sweetalert";
 
 
 export default function Landing() {
@@ -83,7 +84,10 @@ export default function Landing() {
           }
         }
     else {
-    alert(data.data.mensaje)
+    swal({
+      icon : 'error',
+      title : data.data.mensaje
+    })
     }
     }) 
  
