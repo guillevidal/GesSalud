@@ -9,7 +9,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Agenda from '../Agenda/Agenda.jsx';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 
 function InitialSpecialty() {
     const capitalFirstLetter = (str) => {
@@ -135,14 +135,11 @@ function InitialSpecialty() {
     return (
         <div id="initialSpecialty-container">
             <Nav />
-
+            <div className='division'>
             <div className="boton-crear-search">
                         <Link to="/createAgenda">
                             <button className="boton-action">CREAR AGENDA</button>
                         </Link>
-
-                        
-                    <label className='Titulo'>AGENDA MÉDICA</label>
 
                     <div className="searchAgenda">
                         <label className="label-title-search">FILTRAR AGENDA</label>
@@ -163,7 +160,7 @@ function InitialSpecialty() {
                                 placeholder={placeHolder}
                                 />}
 
-                            <select onChange={(e)=>handleSelect(e)}>
+                            <select onChange={(e)=>handleSelect(e)} className='select'>
                                 <option value="especialista">Especialista</option>
                                 <option value="especialidad">Especialidad</option>
                                 <option value="fecha">Fecha</option>
@@ -180,59 +177,53 @@ function InitialSpecialty() {
    
                 <div className='agenda'>
 
-                    <div className="agenda-header-container">
-                            <div className='bloque'><span className='title'>Fecha</span></div>
-                            <div className='bloque'><span className='title'>Especialista</span></div>
-                            <div className='bloque'><span className='title'>Especialidad</span></div>
+                    <label className='titulo'>Agendas Médicas</label>
 
-                    </div>
+                    <table className="agenda-header-container">
+                            <tr className='encabezado'>
+                            <th className='title'>Fecha</th>
+                            <th className='title'>Especialista</th>
+                            <th className='title'>Especialidad</th>
+                            <th className='title'>Ver</th>
+                            </tr>
+
                     {
                         agendaFilter.length > 0
                         ?
                         typeof(agendaFilter[0]) === "string"
                         ?
-                        <h1>{agendaFilter[0]}</h1>
+                        <span className='empty'><FontAwesomeIcon icon={faTimesCircle} />{agendaFilter[0]}</span>
                         :
                         agendaFilter.map(agenda => {
                             return (
-                                <div className='agendaEnlace'>
                                     <Agenda
                                         date={agenda.date.split('T')[0]} specialist={capitalFirstLetter(agenda.especialista_medico.persona.name)
                                             + ' ' + capitalFirstLetter(agenda.especialista_medico.persona.lastName)}
-                                        specialty={agenda.tipo_especialidad.name}
+                                        specialty={agenda.tipo_especialidad.name} id={agenda.id}
                                     />
-                                    <div className='boton'>
-                                    <Link to={`especialistaPys/agenda/${agenda.id}`}>
-                                        <FontAwesomeIcon icon={faEye} className='boton'/>
-                                    </Link>
-                                    </div>
-                                </div>)
+                            )
+                                   
                         }) 
                         :
                         agendaSort
                         ? 
                         agendaSort.map(agenda => {
                                 return (
-                                    <div className='agendaEnlace'>
                                         <Agenda date={agenda.date.split('T')[0]} specialist={capitalFirstLetter(agenda.especialista_medico.persona.name)
                                             + ' ' + capitalFirstLetter(agenda.especialista_medico.persona.lastName)}
-                                            specialty={agenda.tipo_especialidad.name}
+                                            specialty={agenda.tipo_especialidad.name} id={agenda.id}
 
                                         />
-                                        <div >
-                                        <Link to={`especialistaPys/agenda/${agenda.id}`}>
-                                        <FontAwesomeIcon icon={faEye} className='boton'/> 
-                                        </Link>
-                                        </div>
-
-                                    </div>
 
                                 )
                             })
                         : 
-                        <h4>No se han registrado agendas</h4>
+                        <span className='empty'><FontAwesomeIcon icon={faTimesCircle} />No se han registrado agendas</span>
+                        
                     }
+                    </table>
 
+                </div>
                 </div>
             </div>
     )
