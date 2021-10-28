@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import './InitialSpecialty.scss';
 import Nav from '../../../Layout/Nav';
-import { obtenerEspecialistas, obtenerEspecialidades, obtenerAgendas } from '../../../../actions/index';
-import DatePicker from "react-datepicker";
+import { obtenerEspecialistas, obtenerEspecialidades, obtenerAgendas, obtenerTurnos } from '../../../../actions/index';
 import "react-datepicker/dist/react-datepicker.css";
 import Agenda from '../Agenda/Agenda.jsx';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,6 +19,7 @@ function InitialSpecialty() {
         dispatch(obtenerEspecialistas())
         dispatch(obtenerEspecialidades())
         dispatch(obtenerAgendas())
+        dispatch(obtenerTurnos())
     }, [])
     const agenda = useSelector(state => state.agendas)
     const agendaSort = agenda.sort((a, b) => {
@@ -27,7 +27,6 @@ function InitialSpecialty() {
         if (a.date < b.date) return -1;
         return 0;
     })
-    const specialties = useSelector(state => state.especialistas)
   
     const [agendaFilter, setAgendaFilter] = useState([]);
     const [estado, setEstado]=useState("especialista")
@@ -102,26 +101,6 @@ function InitialSpecialty() {
         }
     }
 
-
-    const handleSubmitSearchDay = (event) => {
-        // event.preventDefault();
-        // if (!inputSearchDay.date.error) {
-        //     if (inputSearchDay.date.value.length === 0) {
-        //         setValidation(false);
-        //     } else {
-        //         let agendas = [];
-        //         agendas = agenda.filter(agenda => {
-        //             return agenda.date.split('T')[0] === inputSearchDay.date.value
-
-        //         })
-        //         return setAgendaFilter(
-
-        //             agendas
-        //         )
-
-        //     }
-        // }
-    }
 
     const handleAllAgenda = (event) => {
         event.preventDefault();
