@@ -39,7 +39,7 @@ conn.sync({ force: false }).then(async () => {
       });
       if (!pacienteInit) {
         await axios.post(
-          "http://localhost:3001/paciente",
+          "https://gessalud.herokuapp.com/paciente",
           {
             name: "Jean",
             lastName: "Garzon",
@@ -72,7 +72,7 @@ conn.sync({ force: false }).then(async () => {
       });
       if (!especialistaInit) {
         await axios.post(
-          "http://localhost:3001/especialista",
+          "https://gessalud.herokuapp.com/especialista",
           {
             name: "Johao",
             lastName: "Lopez",
@@ -103,7 +103,7 @@ conn.sync({ force: false }).then(async () => {
       });
       if (!rrhhInit) {
         await axios.post(
-          "http://localhost:3001/administrativos",
+          "https://gessalud.herokuapp.com/administrativos",
           {
             name: "Rodrigo",
             lastName: "Navarro",
@@ -134,7 +134,7 @@ conn.sync({ force: false }).then(async () => {
       });
       if (!pysInit) {
         await axios.post(
-          "http://localhost:3001/administrativos",
+          "https://gessalud.herokuapp.com/administrativos",
           {
             name: "Natalia",
             lastName: "Ramirez",
@@ -165,7 +165,7 @@ conn.sync({ force: false }).then(async () => {
       });
       if (!adminInit) {
         await axios.post(
-          "http://localhost:3001/administrativos",
+          "https://gessalud.herokuapp.com/administrativos",
           {
             name: "Fernando",
             lastName: "De Maio",
