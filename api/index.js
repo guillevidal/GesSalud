@@ -6,9 +6,13 @@ const axios = require("axios");
 const { especialidades } = require("./src/configs/specialties.js");
 const { tokenAuth } = require("./src/configs/tokenAuth.js");
 
-conn.sync({ force: false }).then(async () => {
+conn.sync({ force: true }).then(async () => {
   server.listen(process.env.PORT, async () => {
     console.log(process.env.PORT);
+    let url;
+    process.env.NODE_ENV === "production"
+      ? (url = process.env.BASE_URL)
+      : (url = "http://localhost:3001");
     try {
       let Especialidades = especialidades.sort(function (a, b) {
         if (a.name > b.name) {
@@ -39,7 +43,7 @@ conn.sync({ force: false }).then(async () => {
       });
       if (!pacienteInit) {
         await axios.post(
-          "https://gessalud.herokuapp.com/paciente",
+          url + "/paciente",
           {
             name: "Jean",
             lastName: "Garzon",
@@ -72,7 +76,7 @@ conn.sync({ force: false }).then(async () => {
       });
       if (!especialistaInit) {
         await axios.post(
-          "https://gessalud.herokuapp.com/especialista",
+          url + "/especialista",
           {
             name: "Johao",
             lastName: "Lopez",
@@ -103,7 +107,7 @@ conn.sync({ force: false }).then(async () => {
       });
       if (!rrhhInit) {
         await axios.post(
-          "https://gessalud.herokuapp.com/administrativos",
+          url + "/administrativos",
           {
             name: "Rodrigo",
             lastName: "Navarro",
@@ -134,7 +138,7 @@ conn.sync({ force: false }).then(async () => {
       });
       if (!pysInit) {
         await axios.post(
-          "https://gessalud.herokuapp.com/administrativos",
+          url + "/administrativos",
           {
             name: "Natalia",
             lastName: "Ramirez",
@@ -165,7 +169,7 @@ conn.sync({ force: false }).then(async () => {
       });
       if (!adminInit) {
         await axios.post(
-          "https://gessalud.herokuapp.com/administrativos",
+          url + "/administrativos",
           {
             name: "Fernando",
             lastName: "De Maio",
