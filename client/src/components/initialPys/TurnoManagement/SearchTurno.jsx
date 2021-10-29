@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, {useState} from "react";
 import {useSelector} from "react-redux";
+import './InicialTurno.scss'
 
 const SearchTurno = ({ setBusquedaTurnos, estado, setEstado, }) => {
     const [input, setInput]=useState("")
@@ -62,7 +63,7 @@ const SearchTurno = ({ setBusquedaTurnos, estado, setEstado, }) => {
 
                 })
                 if(!filtroE[0]){
-                    filtroE.push("No se econtro turno con el especialista")
+                    filtroE.push("No se encontro turno con el especialista")
                 }
                 setBusquedaTurnos(filtroE)
             }
@@ -117,12 +118,12 @@ const SearchTurno = ({ setBusquedaTurnos, estado, setEstado, }) => {
         
     }
     return (
-        <div>
-            {estado!=="fecha"? <input value={input} onChange={(e)=>handleChange(e)} 
-            placeholder={placeHolder}/>:<input value={input} onChange={(e)=>handleChange(e)} type="date"/>}
+        <div className='buscar'>
+            {estado!=="fecha"? <input className='input' value={input} onChange={(e)=>handleChange(e)} 
+            placeholder={placeHolder}/>:<input className='input' value={input} onChange={(e)=>handleChange(e)} type="date"/>}
             
             
-            <select onChange={(e) => handleSelect(e)}>
+            <select onChange={(e) => handleSelect(e)} className='select'>
                 <option value="turnos">Paciente</option>
                 <option value="dni_paciente">DNI Paciente</option>
                 <option value="especialidad">Especialidad</option>
