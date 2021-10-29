@@ -48,7 +48,11 @@ module.exports = (sequelize) => {
       },
       rol: {
         type: DataTypes.STRING,
-      }
+      },
+      imgProfile: {
+        type: DataTypes.STRING,
+        defaultValue: "",
+      },
     },
     { timestamps: false }
   );
