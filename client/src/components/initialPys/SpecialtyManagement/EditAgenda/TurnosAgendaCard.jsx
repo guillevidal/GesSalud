@@ -9,16 +9,16 @@ import { eliminarTurno } from '../../../../actions/index.js';
 import swal from "sweetalert";
 
 
-const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }) => {
+const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, }) => {
     const dispatch = useDispatch();
     
     const pacientes = useSelector(state => state.pacientes)
     const turnos = useSelector(state => state.turnos)
     const agendas = useSelector(state => state.agendas)
+    
     let agendaId = agendas.length > 0 && agendas.filter(agenda => {
         if (agenda.id === idAgenda) return agenda
     })
-
 
 
     const [validation, setValidation] = useState(true)
@@ -33,7 +33,6 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }
 
     const [isOpenFormTurno, openFormTurno, closeFormTurno] = useModal(false)
     const [isOpenCancelarTurno, openCancelarTurno, closeCancelarTurno] = useModal(false)
-    const [inputEliminarTurno, setInputEliminarTurno] = useState(false)
 
     const handleSubmitFormTurno = (event) => {
         event.preventDefault();
@@ -65,15 +64,18 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }
                         hour: inputFormTurno.hora.value,
                         modules: inputFormTurno.modules.value.toString(),
                     }
+                    const funct = async ()=>{
+                        await dispatch(crearTurno(newTurno))
 
-                    dispatch(crearTurno(newTurno))
+                        swal({
+                            icon : 'success',
+                            title : 'Turno creado',
+                            text : 'El turno se genero satisfactoriamente'
+                        })
+                        
+                    }
 
-                    swal({
-                        icon : 'success',
-                        title : 'Turno creado',
-                        text : 'El turno se genero satisfactoriamente'
-                    })
-
+                    funct()
                     setInputFormTurno({
                         agendaId: { value: idAgenda, error: null },
                         pacienteId: { value: '', error: 'Campo requerido' },
@@ -82,7 +84,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }
                         modules: { value: modules, error: null }
 
                     })
-
+                    location.reload()
                 }
 
             }
@@ -133,7 +135,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }
 
             if (turno.hour === `${date}T${horaI}&${horaF}`) {
 
-                namePaciente = `${turno.paciente.persona.name} ${turno.paciente.persona.lastName}`
+                namePaciente=(`${turno.paciente.persona.name} ${turno.paciente.persona.lastName}`)
 
             }
         })
@@ -175,7 +177,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }
 
         if(turnoId){
 
-            idTurnoEliminar = turnoId[0].id  
+             idTurnoEliminar = turnoId[0]?.id  
         }
     }
    idTurno()
@@ -201,16 +203,15 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }
     
 
 
-    const handleChangeEliminarTurno = () => {
-        
-        setInputEliminarTurno(true)
-    }
-
     const handleSubmitEliminarTurno = (event) => {
         event.preventDefault();
-        if(inputEliminarTurno === true) {
-            dispatch(eliminarTurno(idTurnoEliminar))
+        const fun = async() => {
+            await dispatch(eliminarTurno(idTurnoEliminar))
+            location.reload()
         }
+        fun()
+            
+
     }
 
     return (
@@ -270,15 +271,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules }
                     <label>Confirma eliminar el turno del paciente</label>
                     <label>{confirmacionPaciente()}</label>
                     <div>
-                        <div>
-                            <label htmlFor="inputEliminarTurno">Confirmar</label>
-                            <input
-                                name="inputEliminarTurno"
-                                type="checkbox"
-                                value={inputEliminarTurno}
-                                onChange={handleChangeEliminarTurno}
-                            />
-                        </div>
+                    
                         <div>
                             <button onClick={handleSubmitEliminarTurno}>ACEPTAR</button>
                         </div>

@@ -1,28 +1,31 @@
 /* eslint-disable */
 import './EditAgenda.scss';
-import React from "react";
-import { useSelector } from "react-redux";
+import React, {useEffect, useState} from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
 import Nav from "../../../Layout/Nav"
 import TurnosAgendaCard from "./TurnosAgendaCard.jsx";
-
+import {obtenerAgendas, obtenerTurnos} from "../../../../actions/index.js"
 
 
 function EditAgenda() {
-    
+    const dispatch = useDispatch();
     let { id } = useParams()
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
-
     const agendas = useSelector(state => state.agendas)
-
+  
 
     let agendaId = agendas.length > 0 && agendas.filter(agenda => {
         if (agenda.id === parseInt(id)) return agenda
     })
 
-    
+    useEffect(async()=>{
+        await dispatch(obtenerAgendas())
+        await dispatch(obtenerTurnos())
+        
+    }, [])
 
     return (
         <>
