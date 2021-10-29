@@ -75,7 +75,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                     }
                     const funct = async () => {
                         await dispatch(crearTurno(newTurno))
-                        
+
                         swal({
                             icon: 'success',
                             title: 'Turno creado',
@@ -99,7 +99,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                         modules: { value: modules, error: null }
 
                     })
-                    
+
                 }
 
             }
@@ -115,7 +115,21 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
     const handleChangeSearchPatient = (event) => {
 
         const { value } = event.target
-        setInputFormTurno({ ...inputFormTurno, pacienteId: { value, error: null } })
+        if (value === "") {
+            setInputFormTurno({ ...inputFormTurno, pacienteId: { value, error: "Se requiere DNI" } })
+        };
+        if (value > 0) {
+
+            let paciente = pacientes.length > 0 && pacientes.filter(paciente => {
+                return paciente.persona.dni === parseInt(value)
+            })
+
+            if (paciente.length === 0) {
+                setInputFormTurno({ ...inputFormTurno, pacienteId: { value, error: "Paciente no encontrado" } })
+            } else {
+                setInputFormTurno({ ...inputFormTurno, pacienteId: { value, error: null } })
+            }
+        }
 
     }
 
@@ -287,7 +301,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                                 });
 
                             } else {
-                                
+
                                 let editarTurno = {
                                     id: inputEditarTurno.turnoId.value, // id del turno
                                     agendaId: inputEditarTurno.agendaId.value,
@@ -295,7 +309,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                                     hour: inputEditarTurno.hora.value,
 
                                 }
-                                 
+
                                 const ajuste = async () => {
                                     await dispatch(modificarTurno(editarTurno))
 
@@ -307,12 +321,12 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
 
                                     setTimeout(() => {
                                         location.reload()
-                        
+
                                     }, 1000);
                                 }
 
                                 ajuste()
-                               
+
 
                                 setInputEditarTurno({
 
@@ -345,14 +359,14 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
 
                             setTimeout(() => {
                                 location.reload()
-                
+
                             }, 1000);
 
                         }
 
                         ajuste()
 
-                       
+
 
                         setInputEditarTurno({
 
@@ -372,6 +386,8 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
         }
     }
 
+   
+
     const handleEditarTurnoPatient = (event) => {
 
         const { value } = event.target
@@ -389,13 +405,15 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
             } else if (paciente[0].persona.dni === turno[0].paciente.persona.dni) {
                 setInputEditarTurno({ ...inputEditarTurno, pacienteId: { value, error: "DNI de paciente igual al anterior" } })
             } else {
+                
                 setInputEditarTurno({ ...inputEditarTurno, pacienteId: { value, error: null } })
             }
         }
 
 
-        
+
     }
+   
 
     return (
 
@@ -474,9 +492,9 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                         <label>CAMBIAR PACIENTE DEL TURNO</label>
 
                         <label>A:</label>
+
                     </div>
                     <div>
-
                         <input
                             type="text"
                             placeholder="DNI Paciente..."
