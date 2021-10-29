@@ -88,7 +88,7 @@ function CreateAgenda() {
                 let newAgenda = {
                     idSpecialist: parseInt(inputCreateAgenda.specialist.value),
                     idSpecialties: idSpecialty[0].id,
-                    date: [inputCreateAgenda.dateStart.value],
+                    date: inputCreateAgenda.dateStart.value,
                     amount: inputCreateAgenda.shiftsDay.value
                 }
 
