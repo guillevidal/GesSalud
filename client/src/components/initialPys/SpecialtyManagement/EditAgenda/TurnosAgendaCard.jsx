@@ -16,7 +16,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
     const pacientes = useSelector(state => state.pacientes)
     const turnos = useSelector(state => state.turnos)
     const agendas = useSelector(state => state.agendas)
-    
+
     let agendaId = agendas.length > 0 && agendas.filter(agenda => {
         if (agenda.id === idAgenda) return agenda
     })
@@ -39,7 +39,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
     const [isOpenCancelarTurno, openCancelarTurno, closeCancelarTurno] = useModal(false)
 
     const [isOpenChangeTurno, openChangeTurno, closeChangeTurno] = useModal(false)
-   
+
 
     const handleSubmitFormTurno = (event) => {
         event.preventDefault();
@@ -71,22 +71,20 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                         hour: inputFormTurno.hora.value,
                         modules: inputFormTurno.modules.value.toString(),
                     }
-                    const funct = async ()=>{
+                    const funct = async () => {
                         await dispatch(crearTurno(newTurno))
-
                         
-                    swal({
-                        icon: 'success',
-                        title: 'Turno creado',
-                        text: `El turno para ${pacienteDetail[0].persona.name} ${pacienteDetail[0].persona.lastName} se genero satisfactoriamente`
-                    })
+                        swal({
+                            icon: 'success',
+                            title: 'Turno creado',
+                            text: `El turno para ${pacienteDetail[0].persona.name} ${pacienteDetail[0].persona.lastName} se genero satisfactoriamente`
+                        })
 
-                        
+                        setTimeout(() => {
+                            location.reload()
+
+                        }, 1000);
                     }
-
-
-              
-
 
 
                     funct()
@@ -99,7 +97,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                         modules: { value: modules, error: null }
 
                     })
-                    location.reload()
+                    
                 }
 
             }
@@ -152,7 +150,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
 
             if (turno.hour === `${date}T${horaI}&${horaF}`) {
 
-                namePaciente=(`${turno.paciente.persona.name} ${turno.paciente.persona.lastName}`)
+                namePaciente = (`${turno.paciente.persona.name} ${turno.paciente.persona.lastName}`)
 
             }
         })
@@ -196,7 +194,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
 
 
 
-             idTurnoEliminar = turnoId[0]?.id  
+            idTurnoEliminar = turnoId[0]?.id
 
         }
     }
@@ -223,8 +221,8 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
 
 
 
-   
-   
+
+
 
     let turno = turnos.length > 0 && turnos.filter(element => {
         return element.id === idTurnoEliminar
@@ -239,36 +237,20 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
     })
     //console.log(inputEditarTurno)
 
-    const handleEditarTurnoPatient = (event) => {
-
-        const { value } = event.target
-        if (value === "") {
-            setInputEditarTurno({ ...inputEditarTurno, pacienteId: { value, error: "Se requiere DNI" } })
-        };
-        if (value > 0) {
-
-            let paciente = pacientes.length > 0 && pacientes.filter(paciente => {
-                return paciente.persona.dni === parseInt(value)
-            })
-
-            if (paciente.length === 0) {
-                setInputEditarTurno({ ...inputEditarTurno, pacienteId: { value, error: "Paciente no encontrado" } })
-            } else if (paciente[0].persona.dni === turno[0].paciente.persona.dni) {
-                setInputEditarTurno({ ...inputEditarTurno, pacienteId: { value, error: "DNI de paciente igual al anterior" } })
-            } else {
-                setInputEditarTurno({ ...inputEditarTurno, pacienteId: { value, error: null } })
-            }
-        }
-
-
     const handleSubmitEliminarTurno = (event) => {
         event.preventDefault();
-        const fun = async() => {
+        const fun = async () => {
             await dispatch(eliminarTurno(idTurnoEliminar))
-            location.reload()
+
+            alert('Turno eliminado')
+
+            setTimeout(() => {
+                location.reload()
+
+            }, 1000);
         }
         fun()
-            
+
 
 
     }
@@ -311,15 +293,24 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                                     hour: inputEditarTurno.hora.value,
 
                                 }
+                                 
+                                const ajuste = async () => {
+                                    await dispatch(modificarTurno(editarTurno))
 
-                                dispatch(modificarTurno(editarTurno))
-                               location.reload()
+                                    swal({
+                                        icon: 'success',
+                                        title: 'Turno modificado',
+                                        text: `El turno se modificó para ${pacienteDetail[0].persona.name} ${pacienteDetail[0].persona.lastName} satisfactoriamente`
+                                    })
 
-                                swal({
-                                    icon: 'success',
-                                    title: 'Turno modificado',
-                                    text: `El turno se modificó para ${pacienteDetail[0].persona.name} ${pacienteDetail[0].persona.lastName} satisfactoriamente`
-                                })
+                                    setTimeout(() => {
+                                        location.reload()
+                        
+                                    }, 1000);
+                                }
+
+                                ajuste()
+                               
 
                                 setInputEditarTurno({
 
@@ -341,14 +332,25 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
 
                         }
 
-                        dispatch(modificarTurno(editarTurno))
-                       location.reload()
+                        const ajuste = async () => {
+                            await dispatch(modificarTurno(editarTurno))
 
-                        swal({
-                            icon: 'success',
-                            title: 'Turno modificado',
-                            text: `El turno se modificó para ${pacienteDetail[0].persona.name} ${pacienteDetail[0].persona.lastName} satisfactoriamente`
-                        })
+                            swal({
+                                icon: 'success',
+                                title: 'Turno modificado',
+                                text: `El turno se modificó para ${pacienteDetail[0].persona.name} ${pacienteDetail[0].persona.lastName} satisfactoriamente`
+                            })
+
+                            setTimeout(() => {
+                                location.reload()
+                
+                            }, 1000);
+
+                        }
+
+                        ajuste()
+
+                       
 
                         setInputEditarTurno({
 
@@ -368,6 +370,30 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
         }
     }
 
+    const handleEditarTurnoPatient = (event) => {
+
+        const { value } = event.target
+        if (value === "") {
+            setInputEditarTurno({ ...inputEditarTurno, pacienteId: { value, error: "Se requiere DNI" } })
+        };
+        if (value > 0) {
+
+            let paciente = pacientes.length > 0 && pacientes.filter(paciente => {
+                return paciente.persona.dni === parseInt(value)
+            })
+
+            if (paciente.length === 0) {
+                setInputEditarTurno({ ...inputEditarTurno, pacienteId: { value, error: "Paciente no encontrado" } })
+            } else if (paciente[0].persona.dni === turno[0].paciente.persona.dni) {
+                setInputEditarTurno({ ...inputEditarTurno, pacienteId: { value, error: "DNI de paciente igual al anterior" } })
+            } else {
+                setInputEditarTurno({ ...inputEditarTurno, pacienteId: { value, error: null } })
+            }
+        }
+
+
+        
+    }
 
     return (
 
@@ -429,7 +455,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                     <label>ELIMINAR TURNO DEL PACIENTE</label>
                     <label>{confirmacionPaciente()}</label>
                     <div>
-                    
+
                         <div>
                             <button onClick={handleSubmitEliminarTurno}>ACEPTAR</button>
                         </div>
@@ -471,6 +497,6 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
 
     )
 }
-}
+
 export default TurnosAgendaCard
 
