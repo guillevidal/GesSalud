@@ -8,7 +8,11 @@ import { rol, resetearPacienteCreado, resetearEspecialistaCreado,
     resetearPacienteDetallado, resetearEspecialistaDetallado,
     resetearBusquedaPaciente, resetearBusquedaEspecialista,
     resetearPacientes, resetearEspecialistas, resetearModificado,
-    resetearAdministrativos, resetearAdministrativoCreado, resetearAdministrativoDetallado} from "../../actions"
+    resetearAdministrativos, resetearAdministrativoCreado, resetearAdministrativoDetallado,
+    resetearBusquedaAdministrativo, resetearAgendaCreada, 
+    resetearAgendas, resetearTurnos, resetearTurnoCreado, 
+    resetearEspecialidades,
+    resetearTurnoDetallado, resetearDiagnostico} from "../../actions"
 import { Redirect } from "react-router"
 import { useState } from "react"
 
@@ -35,6 +39,14 @@ export default function Nav(){
         dispatch(resetearAdministrativoDetallado())
         dispatch(resetearAdministrativoCreado())
         dispatch(resetearAdministrativos())
+        dispatch(resetearBusquedaAdministrativo())
+        dispatch(resetearAgendaCreada())
+        dispatch(resetearAgendas())
+        dispatch(resetearTurnos())
+        dispatch(resetearTurnoCreado())
+        dispatch(resetearTurnoDetallado())
+        dispatch(resetearDiagnostico())
+        dispatch(resetearEspecialidades())
         localStorage.clear();
     }
 
@@ -53,6 +65,7 @@ export default function Nav(){
         dispatch(resetearAdministrativoDetallado())
         dispatch(resetearAdministrativoCreado())
         dispatch(resetearAdministrativos())
+        dispatch(resetearEspecialidades())
     }
 
     const changeRol = (e) =>{
@@ -92,7 +105,7 @@ export default function Nav(){
             }
             {(status === '2' || status === '7') &&
                 <div className='nav-link'>
-                    <Link onClick={handleResetActionsRol2} to='/homeRRHH' className='nav-link-ok' >Home</Link>
+                    <Link onClick={handleResetActionsRol2} to='/homeRRHH' className='nav-link-ok' >Empleados</Link>
                     <Link to='/createEmployee' className='nav-link-ok' >Crear Empleado</Link>
                 </div>
             }
@@ -126,8 +139,7 @@ export default function Nav(){
                     <div className='nav-link-mobile'>
                         <Link onClick={handleResetActionsRol1}to='/patientPys' className='nav-link-ok-mobile' >Pacientes</Link>
                         <Link to='/turnoPys' className='nav-link-ok-mobile' >Turnos</Link>
-                        <Link to='/especialistaPys' className='nav-link-ok-mobile' >Especialistas</Link>
-                        <Link to='/consultorioPys' className='nav-link-ok-mobile' >Consultorios</Link>
+                        <Link to='/especialistaPys' className='nav-link-ok-mobile' >Agenda</Link>
                         {(status === '6' || status === '7') &&
                      <div  onClick={e => changeRol(e)} className='nav-link-ok-mobile'>
                      <FontAwesomeIcon icon={faExchangeAlt} className='nav-exit-icon'/>
@@ -140,7 +152,7 @@ export default function Nav(){
                 
                     {mobile && (status === '2' || status === '7') &&
                     <div className='nav-link-mobile'>
-                        <Link onClick={handleResetActionsRol2} to='/homeRRHH' className='nav-link-ok-mobile' >Home</Link>
+                        <Link onClick={handleResetActionsRol2} to='/homeRRHH' className='nav-link-ok-mobile' >Empleados</Link>
                         <Link to='/createEmployee' className='nav-link-ok-mobile' >Crear Empleado</Link>
                         {(status === '6' || status === '7') &&
                      <div  onClick={e => changeRol(e)} className='nav-link-ok-mobile'>
