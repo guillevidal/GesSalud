@@ -6,6 +6,9 @@ import "./InicialTurno.scss"
 import { obtenerTurnos} from "../../../actions/index.js"
 import Turnos from "./turnosCard.jsx";
 import SearchTurno from "./SearchTurno";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+
 function InicialTurno() {
     const dispatch = useDispatch();
     const turnos = useSelector(state => state.turnos)
@@ -21,10 +24,14 @@ function InicialTurno() {
     return (
         <div class="container-turnospys">
             <Nav />
+            <div className='buscador'>
             <SearchTurno busquedaTurnos={busquedaTurnos}
                 setBusquedaTurnos={setBusquedaTurnos}
                 estado={estado} setEstado={setEstado} turnos={turnos}
             />
+            </div>
+
+            <div className='turnos'>
 
             {!busquedaTurnos[0] 
             ?
@@ -41,11 +48,11 @@ function InicialTurno() {
                                 status={t.status}
                             />)}) 
                 :
-                    <h1>No se han registrado turnos</h1>
+                    <span className='error'><FontAwesomeIcon icon={faTimesCircle} /> No se han registrado turnos</span>
             :   
             typeof(busquedaTurnos[0])==="string"
                 ?
-                <h1>{busquedaTurnos[0]}</h1> 
+                <span className='error'><FontAwesomeIcon icon={faTimesCircle} /> {busquedaTurnos[0]}</span> 
                 :
                 busquedaTurnos.map(t => {
                     return (
@@ -59,6 +66,7 @@ function InicialTurno() {
 
                         />)
                 })}
+                </div>
         </div>
     )
 
