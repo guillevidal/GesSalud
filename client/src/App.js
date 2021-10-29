@@ -19,67 +19,93 @@ import CreateAgenda from './components/initialPys/SpecialtyManagement/CreateAgen
 import EditAgenda from './components/initialPys/SpecialtyManagement/EditAgenda/EditAgenda.jsx';
 import LandingAdmin from "./components/admin/LandingAdmin";
 import TurnoPys from "./components/initialPys/TurnoManagement/InicialTurno.jsx";
+import { Fragment, useEffect} from "react";
+import { useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router";
 
 
 
-function App() {
+ function App() {
+
+  const rol = useSelector(state => state.rol)
+
+
   return (
     <div className="App">
-      <Route exact path="/">
-        <Landing />
+
+    {rol === '' && <Redirect to='/' />}
+    
+    {rol === '5' && <Redirect to='/LandingAdmin' />}
+     
+     <Route exact path="/">
+       <Landing />
       </Route>
-      <Route exact path="/createPatient">
-        <CreatePatient />
+
+     
+          <Route exact path="/createPatient">
+          {(rol === '1' || rol === '6') && <CreatePatient />}
+          </Route>
+          <Route exact path="/patientPys" >
+           {(rol === '1' || rol === '6') &&  <InitialPatient />}
+          </Route>
+          <Route exact path="/patientDetails">
+            {(rol === '1' || rol === '6') && <PatientDetails />}
+          </Route>
+          <Route exact path="/patientEdit">
+           {(rol === '1' || rol === '6') &&  <PatientEdit />}
+          </Route>
+          <Route exact path="/turnoPys">
+            {(rol === '1' || rol === '6') && <TurnoPys />}
+          </Route>
+          <Route exact path="/especialistaPys">
+            {(rol === '1' || rol === '6') && <InitialSpecialty />}
+          </Route>
+          <Route exact path="/createAgenda">
+            {(rol === '1' || rol === '6') && <CreateAgenda />}
+          </Route>
+          <Route exact path="/especialistaPys/agenda/:id">
+            {(rol === '1' || rol === '6') && <EditAgenda />}
+          </Route>
+        
+      
+         <Route exact path="/AdminEdit">
+         {(rol === '2' || rol === '7') &&   <EditAdmin />}
+          </Route>
+          <Route exact path="/detailAdmin">
+       {(rol === '2' || rol === '7') &&  <DetailAdmin />}
       </Route>
-      <Route exact path="/patientPys">
-        <InitialPatient />
+          <Route exact path="/homeRRHH">
+         {(rol === '2' || rol === '7') &&  <HomeRRHH />}
+        </Route>
+        <Route exact path="/specialtyEdit">
+         {(rol === '2' || rol === '7') &&  <SpecialtyEdit />}
+        </Route>
+        <Route exact path="/detailEspecialista" >
+        {(rol === '2' || rol === '7') &&   <DetailEspecialista />}
+        </Route>
+        <Route exact path="/createEmployee">
+       {(rol === '2' || rol === '7') &&  <CreateEmployee />}
       </Route>
-      <Route exact path="/patientDetails">
-        <PatientDetails />
-      </Route>
-      <Route exact path="/homeRRHH">
-        <HomeRRHH />
-      </Route>
-      <Route exact path="/patientEdit">
-        <PatientEdit />
-      </Route>
-      <Route exact path="/specialtyEdit">
-        <SpecialtyEdit />
-      </Route>
-      <Route exact path="/detailEspecialista" >     
-        <DetailEspecialista />
-      </Route>
+      
+
+      
+      
+      
       <Route exact path="/homeUser">
-        <HomeSpecialist /> 
+      {(rol === '3' || rol === '4') &&  <HomeSpecialist />}
       </Route>
       <Route exact path="/perfilUser">
-        <ProfileSpecialist /> 
+       {(rol === '3' || rol === '4') &&  <ProfileSpecialist />}
       </Route>
-      <Route exact path="/createEmployee">
-       <CreateEmployee />
-      </Route>
-      <Route exact path="/detailAdmin">
-        <DetailAdmin/>
-      </Route>
-      <Route exact path="/AdminEdit">
-        <EditAdmin/>
-      </Route>
-      <Route exact path="/especialistaPys">
-        <InitialSpecialty />
-      </Route>
-      <Route exact path="/createAgenda">
-        <CreateAgenda />
-      </Route>
-      <Route exact path="/especialistaPys/agenda/:id">
-        <EditAgenda />
-      </Route>
-      <Route exact path="/turnoPys">
-        <TurnoPys/>
-      </Route>
+      
+
+     
       <Route exact path="/LandingAdmin">
-        <LandingAdmin />
+      {(rol === '5' || rol === '6' || rol === '7') && <LandingAdmin />}
       </Route>
-    </div>
+    
+      </div>
   );
 }
 

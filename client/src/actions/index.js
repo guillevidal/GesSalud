@@ -149,7 +149,6 @@ export const pacienteDetallado = (dni) => {
 
 //PARA MANEJO DE ROLES
 export const rol = (rol) => {
-  console.log(rol)
   return { type: ROL, payload: rol };
 };
 
