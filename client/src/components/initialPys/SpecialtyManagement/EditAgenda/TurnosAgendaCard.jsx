@@ -11,7 +11,9 @@ import swal from "sweetalert";
 
 const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, }) => {
     const dispatch = useDispatch();
-
+    const capitalFirstLetter = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1)
+    }
 
     const pacientes = useSelector(state => state.pacientes)
     const turnos = useSelector(state => state.turnos)
@@ -77,7 +79,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                         swal({
                             icon: 'success',
                             title: 'Turno creado',
-                            text: `El turno para ${pacienteDetail[0].persona.name} ${pacienteDetail[0].persona.lastName} se genero satisfactoriamente`
+                            text: `El turno para ${capitalFirstLetter(pacienteDetail[0].persona.name)} ${capitalFirstLetter(pacienteDetail[0].persona.lastName)} se genero satisfactoriamente`
                         })
 
                         setTimeout(() => {
@@ -150,7 +152,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
 
             if (turno.hour === `${date}T${horaI}&${horaF}`) {
 
-                namePaciente = (`${turno.paciente.persona.name} ${turno.paciente.persona.lastName}`)
+                namePaciente = (`${capitalFirstLetter(turno.paciente.persona.name)} ${capitalFirstLetter(turno.paciente.persona.lastName)}`)
 
             }
         })
@@ -242,7 +244,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
         const fun = async () => {
             await dispatch(eliminarTurno(idTurnoEliminar))
 
-            alert('Turno eliminado')
+            alert(`Turno de paciente ${namePaciente} eliminado`)
 
             setTimeout(() => {
                 location.reload()
@@ -300,7 +302,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                                     swal({
                                         icon: 'success',
                                         title: 'Turno modificado',
-                                        text: `El turno se modificó para ${pacienteDetail[0].persona.name} ${pacienteDetail[0].persona.lastName} satisfactoriamente`
+                                        text: `El turno se modificó para ${capitalFirstLetter(pacienteDetail[0].persona.name)} ${capitalFirstLetter(pacienteDetail[0].persona.lastName)} satisfactoriamente`
                                     })
 
                                     setTimeout(() => {
@@ -338,7 +340,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                             swal({
                                 icon: 'success',
                                 title: 'Turno modificado',
-                                text: `El turno se modificó para ${pacienteDetail[0].persona.name} ${pacienteDetail[0].persona.lastName} satisfactoriamente`
+                                text: `El turno se modificó para ${capitalFirstLetter(pacienteDetail[0].persona.name)} ${capitalFirstLetter(pacienteDetail[0].persona.lastName)} satisfactoriamente`
                             })
 
                             setTimeout(() => {
