@@ -471,6 +471,6 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
 
     )
 }
-
+}
 export default TurnosAgendaCard
 
