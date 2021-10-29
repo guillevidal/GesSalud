@@ -15,17 +15,17 @@ const router = Router();
 router.post("/", async function (req, res) {
   let { date, amount, idSpecialist, idSpecialties } = req.body;
   try {
-    date.forEach(async (element) => {
+    
       let crearAgendas = await Agenda.create(
         {
-          date: element,
-          amount: amount,
+          date,
+          amount,
         },
         {
           fields: ["date", "amount"],
-        }
-      );
-
+        })
+      
+        
       const asignandoMedico = await Especialista_medico.findByPk(idSpecialist);
 
       await crearAgendas.setEspecialista_medico(asignandoMedico);
@@ -34,7 +34,6 @@ router.post("/", async function (req, res) {
         idSpecialties
       );
       await crearAgendas.setTipo_especialidad(asignandoEspecialidad);
-    });
     res.status(200).send({ msg: "Agendas creadas" });
   } catch (e) {
     res.status(400).send({ msg: "No se puedo crear el grupo de agendas" });
