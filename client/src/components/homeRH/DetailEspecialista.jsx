@@ -21,7 +21,7 @@ const  DetailEspecialista = () => {
                 <Link to="/specialtyEdit" className='boton'>Modificar</Link>
             </div>
 
-            <div className='card-detail'>
+            <div className='detallecitos'>
             <div className='datos'>
                  <span className='nombre'>{persona.name.charAt(0).toUpperCase() + persona.name.slice(1) + " " + persona.lastName.charAt(0).toUpperCase() + persona.lastName.slice(1)}</span>
             <div className='data'>

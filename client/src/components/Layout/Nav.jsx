@@ -24,9 +24,11 @@ export default function Nav(){
 
     const status = useSelector(state => state.rol);
 
-    const logout = async (e) => {
+    const logout =  (e) => {
         e.preventDefault()
-        await dispatch(rol(''))
+        
+        dispatch(rol(''))
+         localStorage.clear();
         dispatch(resetearPacienteCreado())
         dispatch(resetearPacienteDetallado())
         dispatch(resetearEspecialistaCreado())
@@ -47,7 +49,6 @@ export default function Nav(){
         dispatch(resetearTurnoDetallado())
         dispatch(resetearDiagnostico())
         dispatch(resetearEspecialidades())
-        localStorage.clear();
     }
 
     const handleResetActionsRol1 = () => {
@@ -70,7 +71,6 @@ export default function Nav(){
 
     const changeRol = (e) =>{
         e.preventDefault()
-
         dispatch(rol('5'))
     }
 
@@ -87,10 +87,10 @@ export default function Nav(){
     }   
 
     return(
+        <>
+        
+        {status === '' && <Redirect to='/' />}
         <div className='nav-bar'>
-
-            {status === '' && <Redirect to='/' />}
-            {status === '5' && <Redirect to='/LandingAdmin' />}
             <div className='menu-browser'>
             <div className='nav-elementos'>
                 <div className='boton'>
@@ -188,6 +188,8 @@ export default function Nav(){
                
             
             
-        </div>        
+        </div>     
+
+        </>   
     )
 }
