@@ -1,5 +1,105 @@
+@import '../../../scss/base/variables';
+
 .container-turnospys{
     display: flex;
     width: 100%;
     flex-flow: column;
+
+    .buscador{
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        margin-top: 20px;
+
+        .buscar{
+            display: flex;
+            width: 100%;
+            max-width: 500px;
+            justify-content: space-evenly;
+
+            .input{
+                display: flex;
+                width: 300px;
+                padding: 5px;
+                border-radius: 10px;
+                border:none;
+                border: 2px solid $color-terciario;
+
+            }
+            .select{
+                background-color: $color-detalle;
+                color: $color-principal;
+            }
+
+
+        }
+    }
+
+    .turnos{
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .error{
+            font-size: 2em;
+            margin-top: 40px;
+            color: crimson;
+        }
+        
+    }
+}
+
+
+.container-info-turnos{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    background-color: rgb(199, 219, 255);
+    margin: 20px;
+    padding: 15px;
+    align-items: center;
+    color: rgb(37, 195, 248);
+    border-radius: 10px;
+
+    .apartado{
+        display: flex;
+        width: 100%;
+        justify-content: flex-start;
+        margin: 3px auto;
+        font-size: 1.1em;
+        background-color: rgb(231, 236, 255);
+        padding: 5px;
+
+        .subtitle{
+            margin-right: 10px;
+            font-family: $fuente-principal;
+        }
+        .data{
+            
+            color: $color-principal;
+        }
+    }
+    .botones{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 10px;
+
+        .boton{
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+            background-color: $color-principal;
+            color: white;
+            cursor: pointer;
+
+            &:hover{
+                background-color: $color-secundario;
+                
+            }
+        }
+    }
+
 }
