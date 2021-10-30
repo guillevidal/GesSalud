@@ -88,8 +88,6 @@ export default function Nav(){
 
     return(
         <>
-        
-        {status === '' && <Redirect to='/' />}
         <div className='nav-bar'>
             <div className='menu-browser'>
             <div className='nav-elementos'>

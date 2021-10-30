@@ -45,21 +45,28 @@
             
          }
 
+         
+
     }
    
 }
 
-.lista{
+.listasss{
     width: 100%;
     justify-content: center;
     max-width: 900px;
     margin-bottom: 20px;
     text-align: center;
+
+   
+
   
 
     .td{
         padding: 5px;
-
+        &:hover{
+            background-color: rgb(223, 223, 223);
+        }
     }
     
     .numero{
@@ -109,6 +116,7 @@
         background-color: $color-principal;
         color: white;
         font-size: 1.1em;
+        margin: 5px auto;
         
     }
     .eliminar:hover{
@@ -120,5 +128,7 @@
     .assign:hover{
         background-color: rgb(103, 197, 90);
     }
+
+
     
 }

@@ -1,0 +1,80 @@
+@import '../../../../scss/base/variables';
+
+.confirmacionDiv{
+       display: flex;
+       justify-content: center;
+       width: 100%;
+       margin-top: 30px;
+       margin-bottom: -20px;
+       
+       .boton{
+           @include boton-primario;
+       }
+}
+
+.asignacionTurno, .cancelacion, .eliminacion{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+
+    .icon{
+        
+        font-size: 3.5em;
+        margin-bottom: 20px ;
+
+        .more{
+            color: rgb(103, 197, 90);
+        }
+        .edit{
+            color: rgb(216, 185, 12);
+        }
+        .delete{
+            color: rgb(219, 27, 27);
+    
+        }
+
+    }
+
+    .horario, .cambioPac{
+
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 30px;
+
+        .title{
+            font-size: 2em;
+            margin-right: 10px;
+        }
+
+        .content{
+            font-size: 2em;
+            color: $color-terciario;
+        }
+    }
+
+    .busquedaConf{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .input{
+            width: 250px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 2px solid $color-terciario;
+        }
+
+        .error{
+            color: rgb(255, 121, 121);
+            margin-top: 3px;
+        }
+
+        
+
+
+    }
+
+
+}
