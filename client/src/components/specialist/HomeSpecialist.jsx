@@ -1,4 +1,5 @@
 /* eslint-disable */
+
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom";
@@ -7,14 +8,44 @@ import { obtenerAgendas } from '../../actions/index.js';
 import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
-
-
-
 import Nav from "../Layout/Nav"
 import './HomeSpecialist.scss'
+import axios  from "axios"
+import { useEffect } from "react"
+import { rol, especialistaDetallado, pacienteDetallado } from "../../actions"
+
 
 export default function HomeSpecialist(){
     const dispatch = useDispatch()
+    useEffect(()=>{
+
+        let obtengoToken = localStorage.getItem('access-token')
+        axios.get('/whoami', { 
+         headers:  { 
+            authorization : obtengoToken
+          }
+      })
+      .then(res => {
+        console.log(res.data)
+        if(res.data.rol){
+            dispatch(rol(res.data.rol))
+    
+          if(res.data.dni){
+            dispatch(pacienteDetallado(res.data.dni))
+          }
+          if(res.data.especialistaId){
+            dispatch(especialistaDetallado(res.data.especialistaId))
+          }
+    
+        }
+        else{
+          return
+        }
+      }) 
+        
+     
+    
+       },[])  
     useEffect(() => {
 
         dispatch(obtenerAgendas())
@@ -157,10 +188,12 @@ export default function HomeSpecialist(){
                                         <div key={turno.id}>
                                             <p>Paciente:</p>
 
+
                                             <div>
                                             <span>{turno.paciente.persona.name}</span>
                                             <span>{turno.paciente.persona.lastName}</span>
                                             </div>
+
 
                                             <span>{turno.hour.slice(11, 16)}</span>
                                             <span>{turno.hour.slice(0, 10)}</span>

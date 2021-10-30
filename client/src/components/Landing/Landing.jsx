@@ -2,17 +2,20 @@
 import "./Landing";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClinicMedical, faUserMd } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { rol } from "../../actions";
-import { Redirect } from "react-router-dom";
 import axios from "axios";
 import { especialistaDetallado, pacienteDetallado } from "../../actions"
-
+import { Redirect } from "react-router-dom";
 
 export default function Landing() {
   const dispatch = useDispatch();
-  const status = useSelector((state) => state.rol);
+  const roles = useSelector((state) => state.rol);
+
+  
+  const [error, setError] = useState(false)
+
   
     useEffect(()=>{
 
@@ -23,8 +26,22 @@ export default function Landing() {
       }
   })
   .then(res => {
+    console.log(res.data)
     if(res.data.rol){
       dispatch(rol(res.data.rol))
+
+      if(res.data.dni){
+        dispatch(pacienteDetallado(res.data.dni))
+        localStorage.setItem('user',res.data.dni)
+      }
+      if(res.data.id){
+        dispatch(especialistaDetallado(res.data.especialistaId))
+        localStorage.setItem('user',res.data.especialistaId)
+      }
+
+    }
+    else{
+      return
     }
   }) 
     
@@ -69,7 +86,9 @@ export default function Landing() {
           }
         }
     else {
-    alert(data.data.mensaje)
+    
+    setError(data.data.mensaje)
+
     }
     }) 
  
@@ -82,12 +101,16 @@ export default function Landing() {
   };
 
   return (
-    <div id="landing-container">
-      {status === "1" && <Redirect to="/patientPys" />}
-      {status === "2" && <Redirect to="/homeRRHH" />}
-      {(status === "3" || status === "4") && <Redirect to="/homeUser" />}
-      {status === "5" && <Redirect to="/LandingAdmin" />}
+    <Fragment>
+      {(roles === "1" || roles === "6") && <Redirect to="/patientPys" />}
+      {(roles === "2" || roles === "7")&& <Redirect to="/homeRRHH" />}
+      {(roles === "3" || roles === "4") && <Redirect to="/homeUser" />}
+      {roles === "5" && <Redirect to="/LandingAdmin" />}
+      {roles === '' && <Redirect to='/' />}
 
+    <div id="landing-container">
+
+    
 
       <div id="landing-header">
         <div id="landing-title">
@@ -128,11 +151,13 @@ export default function Landing() {
               />
             </div>
           </div>
+          {error && <span className='error'>{error}</span>}
           <button className="boton-login" onClick={(e) => handleSubmit(e)}>
             Ingresar
           </button>
         </form>
       </div>
     </div>
+    </Fragment>
   );
 }

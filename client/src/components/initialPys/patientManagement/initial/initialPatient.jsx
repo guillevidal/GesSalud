@@ -14,21 +14,22 @@ import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 const InitialPatient = () => {
     const pacientes = useSelector(state => state.pacientes)
-    const busquedaPaciente = useSelector(state => state.busquedaPaciente)
     const valorPaginado = useSelector( state => state.paginado)
-    const [details, setDetails]=useState(false);
+    const [busquedaPaciente1, setBusquedaPaciente1]= useState([])
     const dispatch = useDispatch()
+    useEffect( () => {
 
-    useEffect(() => {
-        dispatch(paginado(0))
+         dispatch(paginado(0))
         dispatch(obtenerPacientes())
+
     },[])
 
     return (
         <div id="initialPatient-container">
             <Nav/>
             <div className='header-paciente'>
-            <SearchPatient/>
+            <SearchPatient busquedaPaciente1={busquedaPaciente1} setBusquedaPaciente1={setBusquedaPaciente1}
+            pacientes={pacientes}/>
 
            
 
@@ -38,21 +39,22 @@ const InitialPatient = () => {
             </div>
             </div>
 
-            {busquedaPaciente && busquedaPaciente.length > 6 ? <Paginado/> :null}
-            {!busquedaPaciente.length && pacientes && pacientes.length > 6 ? <Paginado/> :null}
+            {busquedaPaciente1 && busquedaPaciente1.length > 6 ? <Paginado busquedaPaciente1={busquedaPaciente1}/> :null}
+            {!busquedaPaciente1.length && pacientes && pacientes.length > 6 ? <Paginado busquedaPaciente1={busquedaPaciente1}/> :null}
         
-            <div id="prueba">       
-            {!busquedaPaciente[0]?!pacientes[0]?<span className='empty'><FontAwesomeIcon icon={faTimesCircle} /> No se encontraron pacientes registrados</span>:pacientes.slice(valorPaginado, valorPaginado+6).map((pa) => {
+            <div id="prueba">
+            {(pacientes[0] && pacientes[0].length < 1) && <span className='empty'><FontAwesomeIcon icon={faTimesCircle} /> No se encontraron pacientes registrados</span>}          
+            {!busquedaPaciente1[0]?pacientes[0] && pacientes.slice(valorPaginado, valorPaginado+6).map((pa) => {
                 return (
                     <PatientCard pa={pa}/>
                 )
             }):
-            typeof busquedaPaciente[0]!=="string"?busquedaPaciente.slice(valorPaginado, valorPaginado+6).map((pa) => {
+            typeof busquedaPaciente1[0]!=="string"?busquedaPaciente1.slice(valorPaginado, valorPaginado+6).map((pa) => {
                 return (
                     <PatientCard  pa={pa}/> 
                 )
                 
-            }):<h1>{busquedaPaciente[0]}</h1>
+            }):<span className='empty'><FontAwesomeIcon icon={faTimesCircle} /> No se encontraron pacientes</span>
             }
             </div>
         </div>

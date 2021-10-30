@@ -56,7 +56,9 @@
             background-color: $color-terciario;
             padding: 5px;
             border-radius: 10px;
+            border: none;
             color:white;
+            cursor: pointer;
 
             &:hover{
                 background-color: $color-secundario;

@@ -9,9 +9,11 @@ const turnos = require("./turno.js");
 const administrativos = require("./administrativos");
 const agendas = require("./agendas");
 const diagnosticos = require("./diagnosticos");
+// const images = require("./images");
 
 const autenticar = require("./autenticar.js");
 const whoami = require("./whoami.js");
+const mercadopago1 = require("./mercadopago");
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
@@ -22,6 +24,8 @@ router.use("/administrativos", administrativos);
 router.use("/agendas", agendas);
 router.use("/diagnosticos", diagnosticos);
 router.use("/turnos", turnos);
+router.use("/pago", mercadopago1);
+// router.use("/images", images);
 
 router.use("/autenticar", autenticar);
 router.use("/whoami", whoami);

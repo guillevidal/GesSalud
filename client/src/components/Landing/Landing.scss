@@ -65,6 +65,12 @@
                 align-items: center;
                 width: 100%;
 
+                .error{
+                    font-size: 14px;
+                    font-weight: $regularPlus;
+                    color: rgb(255, 85, 85);
+                }
+
                 .icon-login{
                     color: rgb(255, 255, 255);
                     font-size: 3em;
@@ -83,9 +89,10 @@
                     .label-input{
                         display: flex;
                         width: 100%;
-                        max-width: 300px;
+                        max-width: 320px;
                         margin: 10px auto;
                         justify-content: space-between;
+                        align-items: center;
                     
                         .label{
                             color: white;
@@ -93,7 +100,7 @@
                         }
 
                         .input{
-                            height: 20px;
+                            padding: 3px;
                         }
 
                     }

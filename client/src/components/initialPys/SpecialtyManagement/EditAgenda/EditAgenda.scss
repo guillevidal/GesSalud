@@ -45,24 +45,28 @@
             
          }
 
+         
+
     }
    
 }
 
-.lista{
+.listasss{
     width: 100%;
     justify-content: center;
     max-width: 900px;
     margin-bottom: 20px;
     text-align: center;
+
+   
+
   
 
     .td{
         padding: 5px;
         &:hover{
-            background-color: white;
+            background-color: rgb(223, 223, 223);
         }
-
     }
     
     .numero{
@@ -82,11 +86,8 @@
     }
 
     .asignar{
-         background-color: rgb(119, 119, 255);
-        text-align: start;
-         &:hover{
-            background-color: rgb(76, 76, 211);;
-        }
+         background-color: rgb(184, 189, 255);
+        width: 20%;
         }
     .link{
         text-decoration: none;
@@ -95,5 +96,39 @@
         
         
     }
+
+    .botones{
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        .button{
+            border-radius: 5px;
+            width: 80px;
+        }
+    }
+    .button{
+        font-size: 15px;
+        border-radius: 5px;
+        width: 100%;
+        cursor: pointer;
+        border: 1px solid $color-terciario; 
+        padding: 3px;
+        background-color: $color-principal;
+        color: white;
+        font-size: 1.1em;
+        margin: 5px auto;
+        
+    }
+    .eliminar:hover{
+        background-color: rgb(219, 27, 27);
+    }
+    .editar:hover{
+        background-color: rgb(216, 185, 12);
+    }
+    .assign:hover{
+        background-color: rgb(103, 197, 90);
+    }
+
+
     
 }

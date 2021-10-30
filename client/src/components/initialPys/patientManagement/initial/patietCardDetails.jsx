@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import {resetearPacienteDetallado} from "../../../../actions/index.js"
 import Nav from "../../../Layout/Nav.jsx";
 import './patientCardDetails.scss';
-
+import HistoriaClinica from "./historiaClinica.jsx"
 
 const PatientCardDetails = () => {
     const dispatch = useDispatch()
@@ -39,15 +39,18 @@ const PatientCardDetails = () => {
                         <span className='data-info'>Genero: <b className='data-detail'>{gender}</b></span>
                     </div>
                     <div className='data'>
-                        <span className='data-info'>Historia clinica: <b className='data-detail'>{paciente.historiaClinica.creationDate}</b></span>
-                        <span className='data-info'>Medicacion: <b className='data-detail'>{paciente.medication}</b></span>
+                        
                         <span className='data-info'>Contacto de emergencia: <b className='data-detail'> {paciente.emergencyContact}</b></span>
-                        <span className='data-info'>Enfermedades: <b className='data-detail'>{paciente.disease}</b></span>
+                        
                     </div>
                 </div>
                
             </div>
-            
+            <HistoriaClinica 
+            medication={paciente.medication}
+            disease={paciente.disease}
+            historiaClinica={paciente.historiaClinica}
+            />
         </div>
 
     )
