@@ -7,6 +7,9 @@ import Modal from '../../../Modal/Modal.js';
 import { crearTurno } from '../../../../actions/index';
 import { eliminarTurno, modificarTurno } from '../../../../actions/index.js';
 import swal from "sweetalert";
+import './modales.scss'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus, faUserEdit, faUserTimes } from "@fortawesome/free-solid-svg-icons";
 
 
 const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, }) => {
@@ -75,19 +78,17 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                         hour: inputFormTurno.hora.value,
                         modules: inputFormTurno.modules.value.toString(),
                     }
-                    const funct = async () => {
-                        await dispatch(crearTurno(newTurno))
+                    const funct =  async() => {
+                         dispatch(crearTurno(newTurno))
 
-                        swal({
+                        await swal({
                             icon: 'success',
                             title: 'Turno creado',
                             text: `El turno para ${capitalFirstLetter(pacienteDetail[0].persona.name)} ${capitalFirstLetter(pacienteDetail[0].persona.lastName)} se genero satisfactoriamente`
                         })
 
-                        setTimeout(() => {
                             location.reload()
 
-                        }, 1000);
                     }
 
 
@@ -260,12 +261,14 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
         const fun = async () => {
             await dispatch(eliminarTurno(idTurnoEliminar))
 
-            alert(`Turno de paciente ${namePaciente} eliminado`)
+            await swal({
+                icon: 'success',
+                title: 'Turno eliminado',
+                text: `El turno de ${namePaciente} se elimino satisfactoriamente`
+            })
 
-            setTimeout(() => {
                 location.reload()
 
-            }, 1000);
         }
         fun()
 
@@ -313,18 +316,16 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                                 }
 
                                 const ajuste = async () => {
-                                    await dispatch(modificarTurno(editarTurno))
+                                     dispatch(modificarTurno(editarTurno))
 
-                                    swal({
+                                    await swal({
                                         icon: 'success',
                                         title: 'Turno modificado',
-                                        text: `El turno se modificó para ${capitalFirstLetter(pacienteDetail[0].persona.name)} ${capitalFirstLetter(pacienteDetail[0].persona.lastName)} satisfactoriamente`
+                                        text: `El turno de ${capitalFirstLetter(pacienteDetail[0].persona.name)} ${capitalFirstLetter(pacienteDetail[0].persona.lastName)} se modifico satisfactoriamente`
                                     })
 
-                                    setTimeout(() => {
                                         location.reload()
 
-                                    }, 1000);
                                 }
 
                                 ajuste()
@@ -420,8 +421,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
     return (
 
         <>
-
-            <tr className='lista'>
+            <tr className='listasss'>
 
                 <td className='td numero'><span >{numeroTurno}</span></td>
                 <td className='td horario'><span >{horaI}</span></td>
@@ -443,27 +443,30 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
 
 
             <Modal isOpen={isOpenFormTurno} closeModal={closeFormTurno}>
-
-                <div >
-                    <span>HORA DE TURNO</span>
-                    <h4>{horaI}</h4>
-                    <form>
-                        <div>
+                    
+                <div className='asignacionTurno'>
+                    
+                <div className='icon'><FontAwesomeIcon className='more' icon={faUserPlus}></FontAwesomeIcon></div>
+                    <div className='horario'>
+                    <span className='title'>Hora de turno</span>
+                    <span className='content'>{horaI}</span>
+                    </div>
+                    <form className='busquedaConf'>
 
                             <input
                                 type="text"
                                 onChange={handleChangeSearchPatient}
                                 value={inputFormTurno.pacienteId.value}
                                 placeholder="DNI Paciente..."
+                                className='input'
 
 
                             />
-                            {inputFormTurno.pacienteId.error && <span>{inputFormTurno.pacienteId.error}</span>}
-                        </div>
-                        {!validation && <span>Completar campo de paciente</span>}
-                        <div>
+                            {inputFormTurno.pacienteId.error && <span className='error'>{inputFormTurno.pacienteId.error}</span>}
+                      
+                       <div className='confirmacionDiv'>
 
-                            <button onClick={handleSubmitFormTurno} >CREAR TURNO</button>
+                            <button onClick={handleSubmitFormTurno} className='boton'>CREAR TURNO</button>
 
                         </div>
                     </form>
@@ -473,13 +476,16 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
 
             </Modal>
             <Modal isOpen={isOpenCancelarTurno} closeModal={closeCancelarTurno}>
-                <div>
-                    <label>ELIMINAR TURNO DEL PACIENTE</label>
-                    <label>{confirmacionPaciente()}</label>
+                <div className='eliminacion'>
+                <div className='icon'><FontAwesomeIcon className='delete' icon={faUserTimes}></FontAwesomeIcon></div>
+                    <div className='horario'>
+                    <label className='title'>Eliminar turno del paciente</label>
+                    <label className='content'>{confirmacionPaciente()}</label>
+                    </div>
                     <div>
 
-                        <div>
-                            <button onClick={handleSubmitEliminarTurno}>ACEPTAR</button>
+                        <div className='confirmacionDiv'>
+                            <button className='boton' onClick={handleSubmitEliminarTurno}>ACEPTAR</button>
                         </div>
                     </div>
 
@@ -489,25 +495,27 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
 
             </Modal>
             <Modal isOpen={isOpenChangeTurno} closeModal={closeChangeTurno}>
-                <div>
-                    <div>
-                        <label>CAMBIAR PACIENTE DEL TURNO</label>
-
-                        <label>A:</label>
+                <div className='cancelacion'>
+                <div className='icon'><FontAwesomeIcon className='edit' icon={faUserEdit}></FontAwesomeIcon></div>
+                 
+                    <div className='cambioPac'>
+                        <label className='title'>Cambiar paciente del turno</label>
 
                     </div>
-                    <div>
+                    <div className='busquedaConf'>
                         <input
                             type="text"
                             placeholder="DNI Paciente..."
                             onChange={handleEditarTurnoPatient}
                             value={inputEditarTurno.pacienteId.value}
+                            className='input'
 
 
                         />
-                        <div>
-                            {inputEditarTurno.pacienteId.error && <span>{inputEditarTurno.pacienteId.error}</span>}
-                            <button onClick={handleSubmitEditarTurno}>MODIFICAR</button>
+                         {inputEditarTurno.pacienteId.error && <span className='error'>{inputEditarTurno.pacienteId.error}</span>}
+                           
+                        <div className='confirmacionDiv'>
+                            <button className='boton' onClick={handleSubmitEditarTurno}>MODIFICAR</button>
                         </div>
                     </div>
 

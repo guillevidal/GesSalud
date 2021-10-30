@@ -2,7 +2,6 @@ const { Router } = require("express");
 const { Persona, Paciente, HistoriaClinica, Diagnostico } = require("../db");
 const router = Router();
 const rutasProtegidas = require("./Middleware/rutasProtegidas.js");
-// const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 const config = require("../configs/config");
 
@@ -42,7 +41,6 @@ router.post("/", rutasProtegidas, async function (req, res) {
   try {
     const creandoPersona = await Persona.create(
       {
-        // id: uuidv4(),
         name: data.name,
         lastName: data.lastName,
         dni: data.dni,

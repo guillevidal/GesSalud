@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function Agenda({specialist, date, specialty, id}) { 
     return(
         
-        <tr className='datos'>
+        <tr className='datosAgenda'>
                 <td className='bloque fecha'><span>{date}</span></td>
                 
                 <td className='bloque especialista' ><span >{specialist}</span></td>

@@ -6,12 +6,11 @@ import {faClinicMedical,faSignOutAlt, faListUl, faExchangeAlt} from '@fortawesom
 import { useDispatch, useSelector } from "react-redux"
 import { rol, resetearPacienteCreado, resetearEspecialistaCreado,
     resetearPacienteDetallado, resetearEspecialistaDetallado,
-    resetearBusquedaPaciente, resetearBusquedaEspecialista,
-    resetearPacientes, resetearEspecialistas, resetearModificado,
-    resetearAdministrativos, resetearAdministrativoCreado, resetearAdministrativoDetallado,
-    resetearBusquedaAdministrativo, resetearAgendaCreada, 
-    resetearAgendas, resetearTurnos, resetearTurnoCreado, 
-    resetearEspecialidades,
+    resetearBusquedaEspecialista,resetearPacientes, 
+    resetearEspecialistas, resetearModificado,
+    resetearAdministrativos, resetearAdministrativoCreado, resetearAdministrativoDetallado, 
+    resetearAgendaCreada, resetearAgendas, resetearTurnos, 
+    resetearTurnoCreado, resetearEspecialidades,
     resetearTurnoDetallado, resetearDiagnostico} from "../../actions"
 import { Redirect } from "react-router"
 import { useState } from "react"
@@ -24,14 +23,15 @@ export default function Nav(){
 
     const status = useSelector(state => state.rol);
 
-    const logout = async (e) => {
+    const logout =  (e) => {
         e.preventDefault()
-        await dispatch(rol(''))
+        
+        dispatch(rol(''))
+         localStorage.clear();
         dispatch(resetearPacienteCreado())
         dispatch(resetearPacienteDetallado())
         dispatch(resetearEspecialistaCreado())
         dispatch(resetearEspecialistaDetallado())
-        dispatch(resetearBusquedaPaciente())
         dispatch(resetearBusquedaEspecialista())
         dispatch(resetearEspecialistas())
         dispatch(resetearPacientes())
@@ -39,7 +39,6 @@ export default function Nav(){
         dispatch(resetearAdministrativoDetallado())
         dispatch(resetearAdministrativoCreado())
         dispatch(resetearAdministrativos())
-        dispatch(resetearBusquedaAdministrativo())
         dispatch(resetearAgendaCreada())
         dispatch(resetearAgendas())
         dispatch(resetearTurnos())
@@ -47,13 +46,11 @@ export default function Nav(){
         dispatch(resetearTurnoDetallado())
         dispatch(resetearDiagnostico())
         dispatch(resetearEspecialidades())
-        localStorage.clear();
     }
 
     const handleResetActionsRol1 = () => {
         dispatch(resetearPacienteCreado())
         dispatch(resetearPacienteDetallado())
-        dispatch(resetearBusquedaPaciente())
         dispatch(resetearModificado())
     }
 
@@ -70,7 +67,6 @@ export default function Nav(){
 
     const changeRol = (e) =>{
         e.preventDefault()
-
         dispatch(rol('5'))
     }
 
@@ -87,10 +83,8 @@ export default function Nav(){
     }   
 
     return(
+        <>
         <div className='nav-bar'>
-
-            {status === '' && <Redirect to='/' />}
-            {status === '5' && <Redirect to='/LandingAdmin' />}
             <div className='menu-browser'>
             <div className='nav-elementos'>
                 <div className='boton'>
@@ -188,6 +182,8 @@ export default function Nav(){
                
             
             
-        </div>        
+        </div>     
+
+        </>   
     )
 }

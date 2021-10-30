@@ -1,13 +1,9 @@
 @import '../../../../scss/base/variables';
 
-.datos{
+.datosAgenda{
     width: 100%;
     justify-content: center;
-    
-    &:hover{
-        background-color: black;
-    }
-    
+
     .bloque{
          padding: 5px;
         text-align: center;
