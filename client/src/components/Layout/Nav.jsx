@@ -6,12 +6,11 @@ import {faClinicMedical,faSignOutAlt, faListUl, faExchangeAlt} from '@fortawesom
 import { useDispatch, useSelector } from "react-redux"
 import { rol, resetearPacienteCreado, resetearEspecialistaCreado,
     resetearPacienteDetallado, resetearEspecialistaDetallado,
-    resetearBusquedaPaciente, resetearBusquedaEspecialista,
-    resetearPacientes, resetearEspecialistas, resetearModificado,
-    resetearAdministrativos, resetearAdministrativoCreado, resetearAdministrativoDetallado,
-    resetearBusquedaAdministrativo, resetearAgendaCreada, 
-    resetearAgendas, resetearTurnos, resetearTurnoCreado, 
-    resetearEspecialidades,
+    resetearBusquedaEspecialista,resetearPacientes, 
+    resetearEspecialistas, resetearModificado,
+    resetearAdministrativos, resetearAdministrativoCreado, resetearAdministrativoDetallado, 
+    resetearAgendaCreada, resetearAgendas, resetearTurnos, 
+    resetearTurnoCreado, resetearEspecialidades,
     resetearTurnoDetallado, resetearDiagnostico} from "../../actions"
 import { Redirect } from "react-router"
 import { useState } from "react"
@@ -33,7 +32,6 @@ export default function Nav(){
         dispatch(resetearPacienteDetallado())
         dispatch(resetearEspecialistaCreado())
         dispatch(resetearEspecialistaDetallado())
-        dispatch(resetearBusquedaPaciente())
         dispatch(resetearBusquedaEspecialista())
         dispatch(resetearEspecialistas())
         dispatch(resetearPacientes())
@@ -41,7 +39,6 @@ export default function Nav(){
         dispatch(resetearAdministrativoDetallado())
         dispatch(resetearAdministrativoCreado())
         dispatch(resetearAdministrativos())
-        dispatch(resetearBusquedaAdministrativo())
         dispatch(resetearAgendaCreada())
         dispatch(resetearAgendas())
         dispatch(resetearTurnos())
@@ -54,7 +51,6 @@ export default function Nav(){
     const handleResetActionsRol1 = () => {
         dispatch(resetearPacienteCreado())
         dispatch(resetearPacienteDetallado())
-        dispatch(resetearBusquedaPaciente())
         dispatch(resetearModificado())
     }
 

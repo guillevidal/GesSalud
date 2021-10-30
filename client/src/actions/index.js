@@ -8,13 +8,11 @@ import {
   OBTENER_PACIENTES,
   OBTENER_ESPECIALISTA_POR_NOMBRE,
   ESPECIALISTA_DETALLADO,
-  OBTENER_PACIENTE_POR_NOMBRE,
   PACIENTE_DETALLADO,
   OBTENER_ESPECIALISTA_POR_ESPECIALIDAD,
   RESETEAR_BUSQUEDA_ESPECIALISTA,
   PAGINADO,
   ROL,
-  RESETEAR_BUSQUEDA_PACIENTE,
   RESETEAR_ESPECIALISTA_CREADO,
   RESETEAR_PACIENTE_CREADO,
   RESETEAR_PACIENTE_DETALLADO,
@@ -31,8 +29,6 @@ import {
   MODIFICAR_ADMINISTRATIVO,
   OBTENER_ADMINISTRATIVO_DETALLADO,
   RESETEAR_ADMINISTRATIVO_DETALLADO,
-  BUSQUEDA_ADMINSTRATIVO,
-  RESETEAR_BUSQUEDA_ADMINISTRATIVO,
   RESETEAR_ESPECIALIDADES,
   CREAR_AGENDA,
   RESETEAR_AGENDA_CREADA,
@@ -133,10 +129,6 @@ export const especialistaDetallado = (id) => {
   };
 };
 
-//OBTENER UNO O VARIOS PACIENTE(S) BUSCANDO POR NOMBRE
-export const obtenerPacientePorNombre = (nombre) => {
-  return { type: OBTENER_PACIENTE_POR_NOMBRE, payload: nombre };
-};
 
 //OBTENER INFORMACION DETALLADA DE PACIENTE POR DNI
 export const pacienteDetallado = (dni) => {
@@ -157,10 +149,7 @@ export const resetearBusquedaEspecialista = () => {
   return { type: RESETEAR_BUSQUEDA_ESPECIALISTA, payload: [] };
 };
 
-//RESETEAR ESTADO DE BUSQUEDA DE PACIENTE
-export const resetearBusquedaPaciente = () => {
-  return { type: RESETEAR_BUSQUEDA_PACIENTE, payload: [] };
-};
+
 //PARA MANEJO DEL PAGINADO
 export const paginado = (valor) => {
   return { type: PAGINADO, payload: valor };
@@ -283,15 +272,6 @@ export const resetearAdministrativoDetallado = () => {
   return { type: RESETEAR_ADMINISTRATIVO_DETALLADO, payload: [] };
 };
 
-//BUSQUEDA ADMINISTRATIVO
-export const busquedaAdminstrativo = (value) => {
-  return { type: BUSQUEDA_ADMINSTRATIVO, payload: value };
-};
-
-//RESETEAR BUSQUEDA ADMINISTRATIVO
-export const resetearBusquedaAdministrativo = () => {
-  return { type: RESETEAR_BUSQUEDA_ADMINISTRATIVO, payload: [] };
-};
 
 //CREAR AGENDA
 export const crearAgenda = (agenda) => {

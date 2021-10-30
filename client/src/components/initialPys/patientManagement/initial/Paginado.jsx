@@ -7,16 +7,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleRight,faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
 
-const Paginado = ()=> {
+const Paginado = ({busquedaPaciente1})=> {
 
     const dispatch = useDispatch();
     const valorPaginado = useSelector( state => state.paginado);
     const pacientes = useSelector( state => state.pacientes)
-    const busquedaPaciente = useSelector(state => state.busquedaPaciente);
     const count = useSelector(state => state.paginado)
     const paginaSIguiente = () => {
-        if(!busquedaPaciente[0]?pacientes.slice(valorPaginado, valorPaginado+6).length > pacientes.length%6:
-        busquedaPaciente.slice(valorPaginado, valorPaginado+6).length > busquedaPaciente.length%6) {
+        if(!busquedaPaciente1[0]?pacientes.slice(valorPaginado, valorPaginado+6).length > pacientes.length%6:
+        busquedaPaciente1.slice(valorPaginado, valorPaginado+6).length > busquedaPaciente1.length%6) {
             dispatch(paginado(valorPaginado+6))
         }
     }
@@ -28,7 +27,7 @@ const Paginado = ()=> {
     return (
         <div className='paginado'>
             <button className='boton' onClick={paginaAnterior}><FontAwesomeIcon icon={faArrowCircleLeft} className='flecha'/></button>
-            <span className='indicacion'>Página {count / 6 === 0 ? 1 : count / 6 + 1} / {Math.ceil(busquedaPaciente.length / 6) || Math.ceil(pacientes.length / 6)}</span>
+            <span className='indicacion'>Página {count / 6 === 0 ? 1 : count / 6 + 1} / {Math.ceil(busquedaPaciente1.length / 6) || Math.ceil(pacientes.length / 6)}</span>
             <button className='boton' onClick={paginaSIguiente}><FontAwesomeIcon icon={faArrowCircleRight} className='flecha'/></button>
         </div>
     )

@@ -173,7 +173,7 @@ conn.sync({ force: true }).then(async () => {
           {
             name: "Fernando",
             lastName: "De Maio",
-            dni: 55555,
+            dni: 0,
             email: "admin@gmail.com",
             phone: "55555",
             adress: "Argentina",
