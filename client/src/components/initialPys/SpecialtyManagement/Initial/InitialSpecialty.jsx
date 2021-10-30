@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import './InitialSpecialty.scss';
 import Nav from '../../../Layout/Nav';
-import { obtenerEspecialistas, obtenerEspecialidades, obtenerAgendas, obtenerTurnos } from '../../../../actions/index';
+import { obtenerEspecialistas, obtenerEspecialidades, obtenerAgendas, obtenerTurnos, obtenerPacientes} from '../../../../actions/index';
 import "react-datepicker/dist/react-datepicker.css";
 import Agenda from '../Agenda/Agenda.jsx';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,6 +20,7 @@ function InitialSpecialty() {
         dispatch(obtenerEspecialidades())
         dispatch(obtenerAgendas())
         dispatch(obtenerTurnos())
+        dispatch(obtenerPacientes())
     }, [])
     const agenda = useSelector(state => state.agendas)
     const agendaSort = agenda.sort((a, b) => {
