@@ -46,6 +46,7 @@ import {
   CREAR_DIAGNOSTICO,
   RESETEAR_DIAGNOSTICO,
   EDITAR_DIAGNOSTICO,
+  CREAR_MULTIPLE_AGENDA
 } from "./valuesForActions.js";
 
 // const token = localStorage["access-token"];
@@ -280,6 +281,16 @@ export const crearAgenda = (agenda) => {
     const result = await axios.post(`/agendas`, agenda);
     const data = result.data;
     return dispatch({ type: CREAR_AGENDA, payload: data });
+  };
+};
+
+//CREAR MULTIPLES AGENDAS
+export const crearMultipleAgenda = (agenda) => {
+  console.log(agenda);
+  return async (dispatch) => {
+    const result = await axios.post(`/agendas/grupoagendas`, agenda);
+    const data = result.data;
+    return dispatch({ type: CREAR_MULTIPLE_AGENDA, payload: data });
   };
 };
 

@@ -22,6 +22,7 @@ import {
     RESETEAR_TURNO_DETALLADO, MODIFICAR_TURNO,
     ELIMINAR_TURNO, CREAR_DIAGNOSTICO,
     RESETEAR_DIAGNOSTICO, EDITAR_DIAGNOSTICO,
+    CREAR_MULTIPLE_AGENDA
 } from "../actions/valuesForActions.js";
 
 const initialState = {
@@ -58,6 +59,7 @@ const Reducer = (state = initialState, action) => {
         case RESETEAR_TURNO_CREADO:
         case CREAR_DIAGNOSTICO:
         case RESETEAR_DIAGNOSTICO:
+        case CREAR_MULTIPLE_AGENDA:
             return { ...state, creado: action.payload };
 
 
