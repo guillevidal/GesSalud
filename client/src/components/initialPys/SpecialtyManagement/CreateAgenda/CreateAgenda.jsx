@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Nav from '../../../Layout/Nav';
 import './CreateAgenda.scss';
 import "react-datepicker/dist/react-datepicker.css";
-import { crearAgenda } from '../../../../actions/index.js';
+import { crearAgenda, crearMultipleAgenda } from '../../../../actions/index.js';
 
 function CreateAgenda() {
     const dispatch = useDispatch();
@@ -298,6 +298,24 @@ function CreateAgenda() {
 
     }
 
+    const arrayCreateAgendaSinFestivos = (array) => {
+        
+        var arrayFinal = [];
+        var aux = null
+        array.forEach(date => {
+            aux = new Date(date.split('T')[0]).getUTCDay()
+            if (aux === 6 || aux === 0) {
+                
+                
+            }else{
+                arrayFinal.push(date);
+            }
+        })
+         
+        return arrayFinal;
+    
+    }
+
     const handleSubmitCreateAgenda = (event) => {
         event.preventDefault();
 
@@ -313,43 +331,37 @@ function CreateAgenda() {
                 });
 
                 var newCreateAgendasConFestivos = agendasMultiples(inputCreateAgenda.dateStart.value, inputCreateAgenda.dateEnd.value)
-                console.log(newCreateAgendasConFestivos)
+                //console.log(newCreateAgendasConFestivos)
+
+                var agendaSinFestivos = arrayCreateAgendaSinFestivos(newCreateAgendasConFestivos);
                 
-               // console.log(new Date(newCreateAgendasConFestivos[0].split('T')[0]).getUTCDay())
-
-
-
-                var agendaSinFestivos = [];
-                
-                newCreateAgendasConFestivos.map(date => {
-                    console.log(new Date(date.split('T')[0]).getUTCDay())
-                    if(new Date(date.split('T')[0]).getUTCDay() !== 0 || new Date(date.split('T')[0]).getUTCDay() !== 6) {
-                        agendaSinFestivos.push(date)
-                    };
-                })
-                console.log(agendaSinFestivos)
+                //console.log(agendaSinFestivos)
 
                 let newAgenda = {
                     idSpecialist: parseInt(inputCreateAgenda.specialist.value),
                     idSpecialties: idSpecialty[0].id,
-                    date: inputCreateAgenda.dateStart.value,
+                    date: agendaSinFestivos,
                     amount: inputCreateAgenda.shiftsDay.value
                 }
 
-
+                
                 let consulta = false;
-
+                /*
                 agenda.forEach(elemento => {
-                    let diaAgenda = elemento.date.split('T')
-                    let dia = newAgenda.date.split('T')
+                    let diaAgenda = elemento.date.split('T')[0]
+                    // let dia = newAgenda.date.split('T')[0]
                     let especialistaAgenda = elemento.especialista_medico.id
                     let especialista = newAgenda.idSpecialist;
 
-                    if (dia[0] === diaAgenda[0] && especialistaAgenda === especialista) {
-                        consulta = true;
-                    }
+                    agendaSinFestivos.forEach(date => {
+                        if (dia === diaAgenda && especialistaAgenda === especialista) {
+                            consulta = true;
+                        }
+                    })
 
-                })
+
+
+                })*/
 
                 if (consulta === true) {
                     swal({
@@ -361,7 +373,7 @@ function CreateAgenda() {
                     })
                 } else {
 
-                    dispatch(crearAgenda(newAgenda));
+                    dispatch(crearMultipleAgenda(newAgenda));
 
                     swal({
 
