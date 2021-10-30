@@ -12,28 +12,33 @@ mercadopago.configure({
 });
 
 router.get("/", function (req, res) {
+  let preference = req.body;
+  console.log(preference);
   // Crea un objeto de preferencia
-  let preference = {
-    items: [
-      {
-        title: `test`,
-        unit_price: 100,
-        quantity: 1,
-      },
-    ],
-  };
+  // let preference = {
+  //   items: [
+  //     {
+  //       title,
+  //       unit_price,
+  //       quantity,
+  //     },
 
-  mercadopago.preferences
-    .create(preference)
-    .then(function (response) {
-      // Este valor reemplazará el string "<%= global.id %>" en tu HTML
-      // global.id = response.body.id;
+  //   ],
+  // };
+  if (preference) {
+    mercadopago.preferences
+      .create(preference)
+      .then(function (response) {
+        // Este valor reemplazará el string "<%= global.id %>" en tu HTML
+        // global.id = response.body.id;
 
-      res.redirect(response.body.init_point);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+        res.redirect(response.body.init_point);
+        console.log(response.body.init_point);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 });
 
 module.exports = router;
