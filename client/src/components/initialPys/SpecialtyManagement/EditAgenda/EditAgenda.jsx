@@ -1,11 +1,11 @@
 /* eslint-disable */
 import './EditAgenda.scss';
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
 import Nav from "../../../Layout/Nav"
 import TurnosAgendaCard from "./TurnosAgendaCard.jsx";
-import {obtenerAgendas, obtenerTurnos} from "../../../../actions/index.js"
+import { obtenerAgendas, obtenerTurnos } from "../../../../actions/index.js"
 
 
 function EditAgenda() {
@@ -15,16 +15,16 @@ function EditAgenda() {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
     const agendas = useSelector(state => state.agendas)
-  
+
 
     let agendaId = agendas.length > 0 && agendas.filter(agenda => {
         if (agenda.id === parseInt(id)) return agenda
     })
 
-    useEffect(async()=>{
+    useEffect(async () => {
         await dispatch(obtenerAgendas())
         await dispatch(obtenerTurnos())
-        
+
     }, [])
 
     return (
@@ -49,17 +49,19 @@ function EditAgenda() {
 
                     <div className='asignaciones'>
                         <table className='titles'>
-                            <tr className='subtitle'>
-                                <th><span>Turno</span></th>
-                                <th><span>Inicio</span></th>
-                                <th> <span>Fin</span></th>
+                            <thead>
+                                <tr className='subtitle'>
+                                    <th><span>Turno</span></th>
+                                    <th><span>Inicio</span></th>
+                                    <th> <span>Fin</span></th>
 
 
 
-                                <th><span>Paciente</span></th>
-                              
+                                    <th><span>Paciente</span></th>
 
-                            </tr>
+
+                                </tr>
+                            </thead>
                             {agendaId[0].turnosPrecargados.map((valor) => {
                                 return (
 
