@@ -3,19 +3,17 @@ import {
     CREAR_ESPECIALISTA, CREAR_PACIENTE,
     OBTENER_ESPECIALIDADES, OBTENER_ESPECIALISTAS,
     OBTENER_PACIENTES, OBTENER_ESPECIALISTA_POR_NOMBRE,
-    ESPECIALISTA_DETALLADO, OBTENER_PACIENTE_POR_NOMBRE,
-    PACIENTE_DETALLADO, OBTENER_ESPECIALISTA_POR_ESPECIALIDAD,
+    ESPECIALISTA_DETALLADO, PACIENTE_DETALLADO, 
+    OBTENER_ESPECIALISTA_POR_ESPECIALIDAD,
     RESETEAR_BUSQUEDA_ESPECIALISTA, PAGINADO,
-    ROL, RESETEAR_BUSQUEDA_PACIENTE,
-    RESETEAR_ESPECIALISTA_CREADO, RESETEAR_PACIENTE_CREADO,
+    ROL, RESETEAR_ESPECIALISTA_CREADO, RESETEAR_PACIENTE_CREADO,
     RESETEAR_PACIENTE_DETALLADO, RESETEAR_ESPECIALISTA_DETALLADO,
     RESETEAR_ESPECIALISTAS, RESETEAR_PACIENTES, MODIFICAR_PACIENTE,
     MODIFICAR_ESPECIALISTA, RESETEAR_MODIFICADO,
     RESETAR_ADMINISTRATIVO_CREADO, RESETEAR_ADMINISTRATIVOS,
     MODIFICAR_ADMINISTRATIVO, OBTENER_ADMINISTRATIVO_DETALLADO,
     RESETEAR_ADMINISTRATIVO_DETALLADO, OBTENER_ADMINISTRATIVOS,
-    CREAR_ADMINISTRATIVO, BUSQUEDA_ADMINSTRATIVO,
-    RESETEAR_BUSQUEDA_ADMINISTRATIVO, RESETEAR_ESPECIALIDADES,
+    CREAR_ADMINISTRATIVO, RESETEAR_ESPECIALIDADES,
     CREAR_AGENDA, RESETEAR_AGENDA_CREADA,
     OBTENER_AGENDAS, RESETEAR_AGENDAS,
     MODIFICAR_AGENDA, OBTENER_TURNOS,
@@ -24,6 +22,7 @@ import {
     RESETEAR_TURNO_DETALLADO, MODIFICAR_TURNO,
     ELIMINAR_TURNO, CREAR_DIAGNOSTICO,
     RESETEAR_DIAGNOSTICO, EDITAR_DIAGNOSTICO,
+    CREAR_MULTIPLE_AGENDA
 } from "../actions/valuesForActions.js";
 
 const initialState = {
@@ -38,9 +37,7 @@ const initialState = {
     especialistaDetallado: [],
     administrativoDetallado: [],
     turnoDetallado: [],
-    busquedaPaciente: [],
     busquedaEspecialista: [],
-    busquedaAdministrativo: [],
     creado: [],
     modificado: "",
     rol: "",
@@ -62,6 +59,7 @@ const Reducer = (state = initialState, action) => {
         case RESETEAR_TURNO_CREADO:
         case CREAR_DIAGNOSTICO:
         case RESETEAR_DIAGNOSTICO:
+        case CREAR_MULTIPLE_AGENDA:
             return { ...state, creado: action.payload };
 
 
@@ -130,21 +128,6 @@ const Reducer = (state = initialState, action) => {
         case RESETEAR_BUSQUEDA_ESPECIALISTA:
             return { ...state, busquedaEspecialista: action.payload }
 
-        case OBTENER_PACIENTE_POR_NOMBRE:
-            let busquedaP = [];
-            for (let index = 0; index < state.pacientes.length; index++) {
-                if (state.pacientes[index].persona.name.toLowerCase().includes(action.payload.toLowerCase()) ||
-                    state.pacientes[index].persona.lastName.toLowerCase().includes(action.payload.toLowerCase())) {
-                    busquedaP = [...busquedaP, state.pacientes[index]];
-                }
-            }
-            if (!busquedaP[0]) {
-                busquedaP = ["No se encontro paciente"];
-            }
-            return { ...state, busquedaPaciente: busquedaP }
-
-        case RESETEAR_BUSQUEDA_PACIENTE:
-            return { ...state, busquedaPaciente: action.payload }
 
         case ESPECIALISTA_DETALLADO:
             return { ...state, especialistaDetallado: [action.payload] }
@@ -178,30 +161,18 @@ const Reducer = (state = initialState, action) => {
             return { ...state, modificado: action.payload }
 
         case OBTENER_ADMINISTRATIVOS:
+            let filter=action.payload.filter(element=>element.persona.dni!==0)
+            return { ...state, administrativos: filter }
+            
         case RESETEAR_ADMINISTRATIVOS:
             return { ...state, administrativos: action.payload }
-
+            
         case OBTENER_ADMINISTRATIVO_DETALLADO:
             return { ...state, administrativoDetallado: state.administrativos.filter(adm => adm.id === action.payload) }
 
         case RESETEAR_ADMINISTRATIVO_DETALLADO:
             return { ...state, administrativoDetallado: action.payload }
 
-        case BUSQUEDA_ADMINSTRATIVO:
-            let busquedaAdmin = [];
-            for (let index = 0; index < state.administrativos.length; index++) {
-                if (state.administrativos[index].persona.name.toLowerCase().includes(action.payload.toLowerCase()) ||
-                    state.administrativos[index].persona.lastName.toLowerCase().includes(action.payload.toLowerCase())) {
-                    busquedaAdmin = [...busquedaAdmin, state.administrativos[index]];
-                }
-            }
-            if (!busquedaAdmin[0]) {
-                busquedaAdmin = ["No se encontro Administrativo"];
-            }
-            return { ...state, busquedaAdministrativo: busquedaAdmin }
-
-        case RESETEAR_BUSQUEDA_ADMINISTRATIVO:
-            return { ...state, busquedaAdministrativo: action.payload }
 
         case OBTENER_AGENDAS:
             const clockMinuteAdder = (time, min) => {

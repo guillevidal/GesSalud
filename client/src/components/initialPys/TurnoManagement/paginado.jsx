@@ -1,20 +1,20 @@
-/* eslint-disable */
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {paginado} from "../../actions/index.js";
+import {paginado} from "../../../actions/index.js";
+import '../../homeRH/Paginado.scss'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleRight,faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
-import './Paginado.scss'
 
-const PaginadoAdmin = ({busquedaAdministrativo2})=> {
+
+const Paginado = ({busquedaTurnos})=> {
 
     const dispatch = useDispatch();
     const valorPaginado = useSelector( state => state.paginado);
-    const administrativos = useSelector( state => state.administrativos)
+    const turnos = useSelector( state => state.turnos)
     const count = useSelector(state => state.paginado)
     const paginaSIguiente = () => {
-        if(!busquedaAdministrativo2[0]?administrativos.slice(valorPaginado, valorPaginado+6).length > administrativos.length%6:
-        busquedaAdministrativo2.slice(valorPaginado, valorPaginado+6).length > busquedaAdministrativo2.length%6) {
+        if(!busquedaTurnos[0]?turnos.slice(valorPaginado, valorPaginado+6).length > turnos.length%6:
+        busquedaTurnos.slice(valorPaginado, valorPaginado+6).length > busquedaTurnos.length%6) {
             dispatch(paginado(valorPaginado+6))
         }
     }
@@ -26,10 +26,10 @@ const PaginadoAdmin = ({busquedaAdministrativo2})=> {
     return (
         <div className='paginado'>
             <button className='boton' onClick={paginaAnterior}><FontAwesomeIcon icon={faArrowCircleLeft} className='flecha'/></button>
-            <span className='indicacion'>Página {count / 6 === 0 ? 1 : count / 6 + 1} / {Math.ceil(busquedaAdministrativo2.length / 6) || Math.ceil(administrativos.length / 6)}</span>
+            <span className='indicacion'>Página {count / 6 === 0 ? 1 : count / 6 + 1} / {Math.ceil(busquedaTurnos.length / 6) || Math.ceil(turnos.length / 6)}</span>
             <button className='boton' onClick={paginaSIguiente}><FontAwesomeIcon icon={faArrowCircleRight} className='flecha'/></button>
         </div>
     )
 }
 
-export default PaginadoAdmin;
+export default Paginado;

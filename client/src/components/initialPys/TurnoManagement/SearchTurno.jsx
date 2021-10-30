@@ -1,14 +1,18 @@
 /* eslint-disable */
 import React, {useState} from "react";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import './InicialTurno.scss'
+import {paginado} from "../../../actions/index.js";
 
 const SearchTurno = ({ setBusquedaTurnos, estado, setEstado, }) => {
+    const dispatch = useDispatch();
     const [input, setInput]=useState("")
     const turnos= useSelector(state => state.turnos)
     const [placeHolder, setPlaceHolder]= useState("Buscar por nombres")
+
     const handleChange = (event) => {
         const { value} = event.target
+        dispatch(paginado(0))
         if(value.length === 0){
             setInput(value)
             setBusquedaTurnos([])
