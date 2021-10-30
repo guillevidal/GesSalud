@@ -22,12 +22,32 @@ function CreateAgenda() {
     const [validation, setValidation] = useState(true)
     const [inputCreateAgenda, setInputCreateAgenda] = useState({
         dateStart: { value: '', error: 'Seleccione una fecha y hora' },
-        //dateEnd: { value: '', error: 'Seleccione una fecha' },  // VA A PERMITIR CREAR AGENDAS POR MULTIPLES DÍAS CONSECUTIVOS
+        dateEnd: { value: '', error: null },  // VA A PERMITIR CREAR AGENDAS POR MULTIPLES DÍAS CONSECUTIVOS
         specialty: { value: '', error: 'Campo requerido' }, // Especialidad
         specialist: { value: '', error: 'Campo requerido' }, // Especialista
         shiftsDay: { value: "", error: 'Seleccione los turnos por día' }, //Turnos por día
 
     })
+
+
+    const dateMin = () => {
+        var today = new Date();
+        var day = today.getDate();
+        var mounth = today.getMonth() + 1;
+        var year = today.getFullYear();
+
+        if (day < 10) {
+            day = '0' + day;
+        }
+        if (mounth < 10) {
+            mounth = '0' + mounth;
+        }
+
+        today = `${year}-${mounth}-${day}T00:00`
+
+        return today;
+    }
+
 
     let types = [];
     inputCreateAgenda.specialist.value && specialists.map(element => {
@@ -56,20 +76,227 @@ function CreateAgenda() {
         setInputCreateAgenda({ ...inputCreateAgenda, dateStart: { value, error: null } })
     }
 
-    /*
+
     const handleCreateAgendaDateEnd = (event) => {
         const { value } = event.target;
         setInputCreateAgenda({ ...inputCreateAgenda, dateEnd: { value, error: null } })
     }
-    */
+
 
     const handleCreateAgendaShift = (event) => {
         const { value } = event.target;
         setInputCreateAgenda({ ...inputCreateAgenda, shiftsDay: { value, error: null } })
     }
 
+    const agendasMultiples = (dateStart, dateEnd) => {
+
+        if (!dateEnd) return [dateStart]
+        if (dateStart.split('T')[0] === dateEnd) return [dateStart]
+
+        let hourAgenda = dateStart.split('T')[1]
+
+        let dayStart = parseInt(dateStart.split('T')[0].split('-')[2])
+        let mounthStart = parseInt(dateStart.split('T')[0].split('-')[1])
+        let yearStart = parseInt(dateStart.split('T')[0].split('-')[0])
+
+        let dayEnd = parseInt(dateEnd.split('T')[0].split('-')[2])
+        let mounthEnd = parseInt(dateEnd.split('T')[0].split('-')[1])
+        let yearEnd = parseInt(dateEnd.split('T')[0].split('-')[0])
+
+        let newDay = 1;
+        let newsAgendas = [];
+
+        
+        if (yearStart === yearEnd) {
+            let newDateMounthOne = [];
+            let newDateMounthTwo = [];
+            let formatMount = '';
+            let formatDay = '';
+
+            if (mounthStart < mounthEnd) {
+                if (mounthStart === 8 || mounthStart === 9 || mounthStart === 10 || mounthStart === 11 || mounthStart === 12) {
+
+                    if (mounthStart % 2 === 1) {
+                        while (dayStart <= 30) {
+
+                            if (mounthStart < 10) {
+                                formatMount = `0${mounthStart}`
+                            } else {
+                                formatMount = `${mounthStart}`
+                            }
+
+                            if (dayStart < 10) {
+                                formatDay = `0${dayStart}`
+                            } else {
+                                formatDay = `${dayStart}`
+                            }
+
+                            newDateMounthOne.push(`${formatMount}-${formatDay}`)
+                            dayStart++
+                        }
+                        mounthStart++
+
+                    } else if (mounthStart % 2 === 0) {
+                        while (dayStart <= 31) {
+
+                            if (mounthStart < 10) {
+                                formatMount = `0${mounthStart}`
+                            } else {
+                                formatMount = `${mounthStart}`
+                            }
+
+                            if (dayStart < 10) {
+                                formatDay = `0${dayStart}`
+                            } else {
+                                formatDay = `${dayStart}`
+                            }
+
+                            newDateMounthOne.push(`${formatMount}-${formatDay}`)
+                            dayStart++
+                        }
+                        mounthStart++
+
+                    }
+
+                }else {
+                    if (mounthStart % 2 === 1) {
+                        while (dayStart <= 31) {
+
+                            if (mounthStart < 10) {
+                                formatMount = `0${mounthStart}`
+                            } else {
+                                formatMount = `${mounthStart}`
+                            }
+
+                            if (dayStart < 10) {
+                                formatDay = `0${dayStart}`
+                            } else {
+                                formatDay = `${dayStart}`
+                            }
+
+                            newDateMounthOne.push(`${formatMount}-${formatDay}`)
+                            dayStart++
+                        }
+                        mounthStart++
+
+                    } else if (mounthStart % 2 === 0 && mounthStart !== 2) {
+                        while (dayStart <= 30) {
+
+                            if (mounthStart < 10) {
+                                formatMount = `0${mounthStart}`
+                            } else {
+                                formatMount = `${mounthStart}`
+                            }
+
+                            if (dayStart < 10) {
+                                formatDay = `0${dayStart}`
+                            } else {
+                                formatDay = `${dayStart}`
+                            }
+
+                            newDateMounthOne.push(`${formatMount}-${formatDay}`)
+                            dayStart++
+                        }
+                        mounthStart++
+
+                    } else if (mounthStart === 2) {
+                        while (dayStart <= 28) {
+
+                            if (mounthStart < 10) {
+                                formatMount = `0${mounthStart}`
+                            } else {
+                                formatMount = `${mounthStart}`
+                            }
+
+                            if (dayStart < 10) {
+                                formatDay = `0${dayStart}`
+                            } else {
+                                formatDay = `${dayStart}`
+                            }
+
+                            newDateMounthOne.push(`${formatMount}-${formatDay}`)
+                            dayStart++
+                        }
+                        mounthStart++
+
+                    }
 
 
+                }
+            }
+
+            if (mounthStart === mounthEnd) {
+
+                if (mounthStart % 2 === 1) {
+                    while (newDay <= dayEnd) {
+                        if (mounthStart < 10) {
+                            formatMount = `0${mounthStart}`
+                        } else {
+                            formatMount = `${mounthStart}`
+                        }
+
+                        if (newDay < 10) {
+                            formatDay = `0${newDay}`
+                        } else {
+                            formatDay = `${newDay}`
+                        }
+                        newDateMounthTwo.push(`${formatMount}-${formatDay}`)
+                        newDay++
+                    }
+
+                } else if (mounthStart % 2 === 0 && mounthStart !== 2) {
+                    while (newDay <= dayEnd) {
+                        if (mounthStart < 10) {
+                            formatMount = `0${mounthStart}`
+                        } else {
+                            formatMount = `${mounthStart}`
+                        }
+
+                        if (newDay < 10) {
+                            formatDay = `0${newDay}`
+                        } else {
+                            formatDay = `${newDay}`
+                        }
+                        newDateMounthTwo.push(`${formatMount}-${formatDay}`)
+                        newDay++
+                    }
+
+                } else if (mounthStart === 2) {
+                    while (newDay <= dayEnd) {
+                        if (mounthStart < 10) {
+                            formatMount = `0${mounthStart}`
+                        } else {
+                            formatMount = `${mounthStart}`
+                        }
+
+                        if (newDay < 10) {
+                            formatDay = `0${newDay}`
+                        } else {
+                            formatDay = `${newDay}`
+                        }
+                        newDateMounthTwo.push(`${formatMount}-${formatDay}`);
+                        newDay++
+                    }
+
+                }
+
+
+            }
+
+            newDateMounthOne.forEach(date => {
+                newsAgendas.push(`${yearStart}-${date}T${hourAgenda}`)
+            })
+
+            newDateMounthTwo.forEach(date => {
+                newsAgendas.push(`${yearStart}-${date}T${hourAgenda}`)
+            })
+        }
+
+        
+
+        return newsAgendas;
+
+    }
 
     const handleSubmitCreateAgenda = (event) => {
         event.preventDefault();
@@ -84,6 +311,23 @@ function CreateAgenda() {
                 let idSpecialty = specialities.filter(types => {
                     return types.name.toLowerCase() === inputCreateAgenda.specialty.value.toLowerCase()
                 });
+
+                var newCreateAgendasConFestivos = agendasMultiples(inputCreateAgenda.dateStart.value, inputCreateAgenda.dateEnd.value)
+                console.log(newCreateAgendasConFestivos)
+                
+               // console.log(new Date(newCreateAgendasConFestivos[0].split('T')[0]).getUTCDay())
+
+
+
+                var agendaSinFestivos = [];
+                
+                newCreateAgendasConFestivos.map(date => {
+                    console.log(new Date(date.split('T')[0]).getUTCDay())
+                    if(new Date(date.split('T')[0]).getUTCDay() !== 0 || new Date(date.split('T')[0]).getUTCDay() !== 6) {
+                        agendaSinFestivos.push(date)
+                    };
+                })
+                console.log(agendaSinFestivos)
 
                 let newAgenda = {
                     idSpecialist: parseInt(inputCreateAgenda.specialist.value),
@@ -129,7 +373,7 @@ function CreateAgenda() {
 
                     setInputCreateAgenda({
                         dateStart: { value: '', error: 'Seleccione una fecha y hora' },
-                        dateEnd: { value: '', error: 'Seleccione una fecha' },
+                        dateEnd: { value: '', error: null },
                         specialty: { value: '', error: 'Campo requerido' }, // Especialidad
                         specialist: { value: '', error: 'Campo requerido' }, // Especialista
                         shiftsDay: { value: "", error: 'Seleccione los turnos por día' }, //Turnos por día
@@ -198,7 +442,7 @@ function CreateAgenda() {
                     <label htmlFor="dateStart" className='title'>Fecha y hora inicial de agenda</label>
                     <input
                         type="datetime-local"
-                        min={new Date()}
+                        min={dateMin()}
                         name="dateStart"
                         value={inputCreateAgenda.dateStart.value}
                         onChange={handleCreateAgendaDateStart}
@@ -206,6 +450,21 @@ function CreateAgenda() {
                     />
 
                     {inputCreateAgenda.dateStart.error && <span className='error'>{inputCreateAgenda.dateStart.error}</span>}
+
+
+                </div>
+                <div className='seccion'>
+                    <label htmlFor="dateEnd" className='title'>Fecha final de agenda (Opcional)</label>
+                    <input
+                        type="date"
+                        min={inputCreateAgenda.dateStart.value.split('T')[0]}
+                        name="dateEnd"
+                        value={inputCreateAgenda.dateEnd.value}
+                        onChange={handleCreateAgendaDateEnd}
+                        className='select'
+                    />
+
+
 
 
                 </div>
