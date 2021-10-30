@@ -11,7 +11,6 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import Nav from "../Layout/Nav"
 import './HomeSpecialist.scss'
 import axios  from "axios"
-import { useEffect } from "react"
 import { rol, especialistaDetallado, pacienteDetallado } from "../../actions"
 
 
