@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { rol } from "../../actions";
 import axios from "axios";
 import { especialistaDetallado, pacienteDetallado } from "../../actions"
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 export default function Landing() {
   const dispatch = useDispatch();
@@ -152,9 +152,12 @@ export default function Landing() {
             </div>
           </div>
           {error && <span className='error'>{error}</span>}
+          <div>
           <button className="boton-login" onClick={(e) => handleSubmit(e)}>
             Ingresar
           </button>
+          <Link to="/registrar"><button className="boton-login">Registrarse</button></Link>
+          </div>
         </form>
       </div>
     </div>

@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import './InicialTurno.scss'
 import {paginado} from "../../../actions/index.js";
+import {Link} from "react-router-dom";
 
 const SearchTurno = ({ setBusquedaTurnos, estado, setEstado, }) => {
     const dispatch = useDispatch();
@@ -134,6 +135,7 @@ const SearchTurno = ({ setBusquedaTurnos, estado, setEstado, }) => {
                 <option value="especialista">Especialista</option>
                 <option value="fecha">Fecha</option>
             </select>
+            <Link to="especialistaPys"><button>Crear turno</button></Link>
         </div>
     )
 }
