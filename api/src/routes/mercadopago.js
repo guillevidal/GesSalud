@@ -51,7 +51,7 @@ router.post("/", function (req, res) {
         Authorization:'Bearer'+APP_USR-1036676948843093-103000-03b2fdd1a27093603c20d8ef93bd87bb-1009396366
       }}`);
     console.log(info.data);
-    res.status(200);
+    res.sendStatus(200);
   } catch (err) {}
   res.status(400);
 });
