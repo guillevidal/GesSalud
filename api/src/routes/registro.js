@@ -6,12 +6,13 @@ router.post("/", async function (req, res) {
   const data = req.body;
 
   try {
-    const [yaExisteDni, yaExisteCorreo] = await Promise.all([
+    const [yaExisteDni, yaExisteCorreo, yaExisteUsuario] = await Promise.all([
       Persona.findOne({ where: { dni: data.dni } }),
       Persona.findOne({ where: { email: data.email } }),
+      Persona.findOne({ where: { user: data.user } }),
     ]);
 
-    if (yaExisteDni || yaExisteCorreo) {
+    if (yaExisteDni || yaExisteCorreo || yaExisteUsuario) {
       res
         .status(400)
         .send({ msg: `El dni o el email ingresado ya esta registrado` });
