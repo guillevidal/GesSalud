@@ -23,7 +23,7 @@ import { Fragment, useEffect} from "react";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { useHistory } from "react-router";
-
+import RegistroPatient from "./components/Landing/RegistroPatient.jsx";
 
 
  function App() {
@@ -104,7 +104,9 @@ import { useHistory } from "react-router";
       <Route exact path="/LandingAdmin">
       {(rol === '5' || rol === '6' || rol === '7') && <LandingAdmin />}
       </Route>
-    
+      <Route exact path="/registrar">
+        <RegistroPatient/>
+      </Route>
       </div>
   );
 }

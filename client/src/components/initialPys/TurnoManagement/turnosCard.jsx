@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus, faUserEdit, faUserTimes } from "@fortawesome/free-solid-svg-icons";
 import {modificarTurno} from "../../../actions/index.js";
 import {useDispatch} from "react-redux";
+import '../SpecialtyManagement/EditAgenda/modales.scss';
+
 const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos }) => {
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
