@@ -80,6 +80,7 @@ router.post("/", rutasProtegidas, async function (req, res) {
     const creandoDatosHistoriaClinica = await HistoriaClinica.create(
       {
         creationDate: data.creationDate,
+        text: data.text,
       },
       {
         fields: ["creationDate", "text"],
