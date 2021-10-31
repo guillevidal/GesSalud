@@ -14,6 +14,7 @@ const diagnosticos = require("./diagnosticos");
 const autenticar = require("./autenticar.js");
 const whoami = require("./whoami.js");
 const mercadopago1 = require("./mercadopago");
+const registro = require("./registro.js");
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
@@ -29,5 +30,6 @@ router.use("/pago", mercadopago1);
 
 router.use("/autenticar", autenticar);
 router.use("/whoami", whoami);
+router.use("/registro", registro);
 
 module.exports = router;
