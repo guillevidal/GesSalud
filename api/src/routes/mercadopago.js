@@ -50,7 +50,7 @@ router.post("/", async function (req, res) {
 
     let info =
       await axios.get(`https://api.mercadopago.com//v1/payments/${id},{headers:{
-        Authorization:'Bearer'+APP_USR-1036676948843093-103000-03b2fdd1a27093603c20d8ef93bd87bb-1009396366
+        Authorization:Bearer APP_USR-1036676948843093-103000-03b2fdd1a27093603c20d8ef93bd87bb-1009396366
       }}`);
 
     arrelgo.push(info);
