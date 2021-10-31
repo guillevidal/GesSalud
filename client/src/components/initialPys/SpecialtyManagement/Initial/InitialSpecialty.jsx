@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import './InitialSpecialty.scss';
 import Nav from '../../../Layout/Nav';
-import { obtenerEspecialistas, obtenerEspecialidades, obtenerAgendas, obtenerTurnos, obtenerPacientes} from '../../../../actions/index';
+import { obtenerEspecialistas, obtenerEspecialidades, obtenerAgendas, obtenerTurnos,
+     obtenerPacientes, modificarTurno} from '../../../../actions/index';
 import "react-datepicker/dist/react-datepicker.css";
 import Agenda from '../Agenda/Agenda.jsx';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
