@@ -26,7 +26,7 @@ router.get("/", rutasProtegidas, async function (req, res, next) {
       },
       {
         model: HistoriaClinica,
-        attributes: ["id", "creationDate"],
+        attributes: ["id", "creationDate", "text"],
       },
     ],
   });
@@ -108,7 +108,7 @@ router.get("/consulta/:dni", async (req, res) => {
           model: Paciente,
           include: {
             model: HistoriaClinica,
-            attributes: ["id", "creationDate"],
+            attributes: ["id", "creationDate", "text"],
           },
         },
       });
