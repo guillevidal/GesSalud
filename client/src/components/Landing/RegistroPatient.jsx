@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom"
 import Person from "../forms/Person/Person.jsx";
-import { crearPaciente, obtenerPacientes, resetearPacientes } from '../../actions/index.js'
+import { crearRegistroPaciente, obtenerPacientesRegistro, resetearPacientes } from '../../actions/index.js'
 import '../forms/CreatePatient/CreatePatient.scss'
 import '../forms/Person/Person.scss'
 import swal from 'sweetalert';
@@ -34,7 +34,7 @@ const RegistroPatient = () => {
 
     })
     useEffect(()=>{
-        dispatch(obtenerPacientes())
+        dispatch(obtenerPacientesRegistro())
     }, [])
 
     const pacientes = useSelector(state => state.pacientes)
@@ -293,7 +293,7 @@ const RegistroPatient = () => {
                     derivation: ""
                 }
                 if(!pacientes[0]){
-                     dispatch(crearPaciente(newPatient))
+                     dispatch(crearRegistroPaciente(newPatient))
                     
                     swal({
                         title: "Paciente creado",
@@ -344,7 +344,7 @@ const RegistroPatient = () => {
  
                     } 
 
-                     dispatch(crearPaciente(newPatient))
+                     dispatch(crearRegistroPaciente(newPatient))
                     swal({
                         title: "Paciente creado",
                         text: `El paciente ${capitalFirstLetter(input.name.value) + ' '}  ${capitalFirstLetter(input.lastName.value)} se creó correctamente `,

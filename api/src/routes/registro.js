@@ -84,4 +84,33 @@ router.post("/", async function (req, res) {
   }
 });
 
+router.get("/", async function (req, res, next) {
+  let dataPacientes = await Paciente.findAll({
+    include: [
+      {
+        model: Persona,
+        attributes: [
+          "name",
+          "lastName",
+          "dni",
+          "email",
+          "phone",
+          "adress",
+          "birth",
+          "user",
+          "password",
+          "gender",
+          "rol",
+        ],
+      },
+      {
+        model: HistoriaClinica,
+        attributes: ["id", "creationDate", "text"],
+      },
+    ],
+  });
+
+  res.send(dataPacientes);
+});
+
 module.exports = router;
