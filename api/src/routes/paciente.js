@@ -34,8 +34,6 @@ router.get("/", rutasProtegidas, async function (req, res, next) {
   res.send(dataPacientes);
 });
 
-module.exports = router;
-
 router.post("/", rutasProtegidas, async function (req, res) {
   const data = req.body;
 
