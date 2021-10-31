@@ -1,8 +1,7 @@
 const axios = require("axios");
 const { Router } = require("express");
 //const { transporter } = require("../configs/nodemailer");
-//const db = require("../db");
-// const { } = require("../db");
+
 const router = Router();
 // SDK de Mercado Pago
 const mercadopago = require("mercadopago");
@@ -47,7 +46,7 @@ let arrelgo = [];
 router.post("/", async function (req, res) {
   let { id, topic } = req.query;
   try {
-    arrelgo.push(id);
+    //arrelgo.push(id);
 
     let info =
       await axios.get(`https://api.mercadopago.com//v1/payments/${id},{headers:{
