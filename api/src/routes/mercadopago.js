@@ -46,6 +46,8 @@ router.get("/", function (req, res) {
 router.post("/", function (req, res) {
   let { id, topic } = req.query;
   try {
+    console.log(id);
+
     let info =
       axios.get(`https://api.mercadopago.com//v1/payments/${id},{headers:{
         Authorization:'Bearer'+APP_USR-1036676948843093-103000-03b2fdd1a27093603c20d8ef93bd87bb-1009396366
