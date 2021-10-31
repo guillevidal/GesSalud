@@ -17,6 +17,9 @@ module.exports = (sequelize) => {
       derivation: {
         type: DataTypes.STRING,
       },
+      text: {
+        type: DataTypes.TEXT,
+      },
     },
     { timestamps: false }
   );

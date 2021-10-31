@@ -26,7 +26,7 @@ router.get("/", rutasProtegidas, async function (req, res, next) {
       },
       {
         model: HistoriaClinica,
-        attributes: ["id", "creationDate", "text"],
+        attributes: ["id", "creationDate"],
         include: Diagnostico,
       },
     ],
