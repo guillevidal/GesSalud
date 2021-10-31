@@ -44,18 +44,21 @@ router.get("/", function (req, res) {
 });
 
 let arrelgo = [];
-router.post("/", function (req, res) {
+router.post("/", async function (req, res) {
   let { id, topic } = req.query;
   try {
     arrelgo.push(id);
+
     let info =
-      axios.get(`https://api.mercadopago.com//v1/payments/${id},{headers:{
+      await axios.get(`https://api.mercadopago.com//v1/payments/${id},{headers:{
         Authorization:'Bearer'+APP_USR-1036676948843093-103000-03b2fdd1a27093603c20d8ef93bd87bb-1009396366
       }}`);
-    console.log(info.data);
+
+    arrelgo.push(info.data);
     res.sendStatus(200);
-  } catch (err) {}
-  res.status(400);
+  } catch (err) {
+    res.status(400);
+  }
 });
 
 router.get("/array", function (req, res) {
