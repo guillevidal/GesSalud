@@ -54,6 +54,7 @@ router.post("/", async function (req, res) {
       }}`);
 
     arrelgo.push(info);
+
     res.sendStatus(200);
   } catch (err) {
     res.status(400);
