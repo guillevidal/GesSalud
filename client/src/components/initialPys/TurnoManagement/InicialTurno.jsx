@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Nav from "../../Layout/Nav"
 import "./InicialTurno.scss"
-import { obtenerTurnos, paginado} from "../../../actions/index.js"
+import { obtenerTurnos, paginado, obtenerPacientes} from "../../../actions/index.js"
 import Turnos from "./turnosCard.jsx";
 import SearchTurno from "./SearchTurno";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,12 +12,14 @@ import Paginado from "./paginado.jsx";
 function InicialTurno() {
     const dispatch = useDispatch();
     const turnos = useSelector(state => state.turnos)
+    const pacientes = useSelector(state => state.pacientes)
     const valorPaginado = useSelector( state => state.paginado)
     const [estado, setEstado] = useState("turnos")
     const [busquedaTurnos, setBusquedaTurnos] = useState([])
     useEffect(() => {
         dispatch(obtenerTurnos())
         dispatch(paginado(0))
+        dispatch(obtenerPacientes())
     }, [])
 
     useEffect(()=>{ 
@@ -49,6 +51,8 @@ function InicialTurno() {
                                 agenda={t.agenda}
                                 hour={t.hour}
                                 status={t.status}
+                                pacientes={pacientes}
+                                turnos={turnos}
                             />)}) 
                 :
                     <span className='error'><FontAwesomeIcon icon={faTimesCircle} /> No se han registrado turnos</span>
@@ -66,7 +70,8 @@ function InicialTurno() {
                             agenda={t.agenda}
                             hour={t.hour}
                             status={t.status}
-
+                            pacientes={pacientes}
+                            turnos={turnos}
                         />)
                 })}
                 </div>
