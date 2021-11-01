@@ -93,26 +93,31 @@
         justify-content: center;
         flex-direction: column;
         align-items: center;
-        margin-bottom: 20px;
 
         .errors{
             display: flex;
             justify-content: center;
             background-color: rgb(255, 218, 218);
             border-radius: 5px;
-            margin-top: 5px;
+            margin: 10px auto;
     
             .error-label{
                 padding: 5px;
                 color: red;
             }
         }
+        
 
         .boton-crear{
             @include boton-primario;
             margin: 0 20px;
         }
+        .cancel{
+            background-color: rgb(202, 41, 41);
+           
+        }
     }
 
 }
+
 

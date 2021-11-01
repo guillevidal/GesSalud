@@ -178,9 +178,21 @@
         }
 
     }
+    .buttons{
+        display: flex;
+        width: 100%;
+        max-width: 500px;
+        flex-wrap: wrap;
+        justify-content: space-around;
+
+    }
 
     .button-change{
-        @include boton-primario
+        @include boton-primario;
+        margin: 10px;
+    }
+    .discard{
+        background-color: rgb(202, 41, 41);
     }
 
 }

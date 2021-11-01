@@ -293,7 +293,15 @@ export default  function ProfileSpecialist(){
 
             {roles === '4' &&   <div className='card-profile'>
                 <div className='encabezado'>
-                   <div className='image-label'><img src="https://wpdicta-ha-staticfiles-media-v1.s3.amazonaws.com/wp-content/uploads/2019/06/01124533/leonardo-dicaprio-meme.jpg" alt="" className='imagen'/><div className='icon-label'><label onClick={e => handleClick(e,'imagen')} className='icon'><FontAwesomeIcon icon={faEdit} /></label></div></div> 
+                   <div className='image-label'>
+
+                   {preview ?
+                       <img src={URL.createObjectURL(image)} alt="" className='imagen'/>
+                       :
+                       <img src={imagen} alt="" className='imagen'/>
+                       
+                       }
+                       <div className='icon-label'><label onClick={e => handleClick(e,'imagen')} className='icon'><FontAwesomeIcon icon={faEdit} /></label></div></div> 
                    <input className='file' type="file" name="imagen" id="upload" />
                     <span className='nombre'>{mayus(pacienteDetail[0].name) + ' ' + mayus(pacienteDetail[0].lastName) }</span>
                  </div> 
@@ -320,8 +328,8 @@ export default  function ProfileSpecialist(){
 
                 
 
-                 {(editar.imagen === true) || (editar.datos === true) || (editar.cuenta === true) ? <button onClick={e => handleSubmit(e)} name='save' className='button-change'>Guardar cambios</button> : null} 
-                 {(editar.imagen === true) || (editar.datos === true) || (editar.cuenta === true) ? <button onClick={e => handleClear(e)} name='clean' className='button-change'>Descartar cambios</button> : null} 
+                 {(editar.imagen === true) || (editar.datos === true) || (editar.cuenta === true) ? <div className='buttons'><button onClick={e => handleSubmit(e)} name='save' className='button-change save'>Guardar cambios</button> 
+                   <button onClick={e => handleClear(e)} name='clean' className='button-change discard'>Descartar cambios</button></div> : null} 
                   
             </div>}
 
