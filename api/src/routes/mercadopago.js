@@ -81,8 +81,8 @@ router.post("/", async function (req, res) {
         }
       );
     });
-    arreglo2.push(arrayTest2);
-    arrelgo.push(arrayTest);
+    arreglo2.push(arrayTest2.dataValues);
+    arrelgo.push(arrayTest.dataValues);
 
     res.sendStatus(200);
   } catch (err) {
