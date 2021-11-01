@@ -48,6 +48,7 @@ router.get("/", function (req, res) {
 
 let arrelgo = [];
 let arreglo2 = [];
+
 router.post("/", async function (req, res) {
   let { id, topic } = req.query;
   try {
@@ -60,9 +61,9 @@ router.post("/", async function (req, res) {
         },
       }
     );
-    let { additional_info, id, status_detail, transaction_amount } = info.data;
+    let { additional_info, status_detail, transaction_amount } = info.data;
     let arrayTest2 = await Historial_pagos.create({
-      id: id,
+      id: info.data.id,
       status: status_detail,
       price: transaction_amount,
     });
@@ -73,7 +74,7 @@ router.post("/", async function (req, res) {
           title: e.title,
           unit_price: e.unit_price,
           patient_id: e.category_id,
-          historialPagoId: id,
+          historialPagoId: info.data.id,
         },
         {
           fields: ["title", "unit_price", "patient_id"],
