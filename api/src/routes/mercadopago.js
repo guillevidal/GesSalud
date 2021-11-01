@@ -22,7 +22,6 @@ router.get("/", function (req, res) {
       pending: "",
     },
     auto_return: "approved",
-    client_id: 999999,
   };
 
   console.log(preference);
