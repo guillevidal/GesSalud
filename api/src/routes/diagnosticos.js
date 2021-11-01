@@ -11,10 +11,17 @@ router.post("/", async function (req, res) {
         diagnostic: data.diagnostic,
         date: data.date,
         derivation: data.derivation,
+        text: data.text,
         historiaClinicaId: data.historiaClinicaId,
       },
       {
-        fields: ["diagnostic", "date", "derivation", "historiaClinicaId"],
+        fields: [
+          "diagnostic",
+          "date",
+          "derivation",
+          "historiaClinicaId",
+          "text",
+        ],
       }
     );
     res.status(201).send("Creacion exitosa");
@@ -26,9 +33,9 @@ router.post("/", async function (req, res) {
 router.put("/:id", async function (req, res) {
   try {
     const { id } = req.params;
-    let { diagnostic, date, derivation } = req.body;
+    let { diagnostic, date, derivation, text } = req.body;
     await Diagnostico.update(
-      { diagnostic, date, derivation },
+      { diagnostic, date, derivation, text },
       { where: { id } }
     );
 

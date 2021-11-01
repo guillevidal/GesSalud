@@ -25,12 +25,8 @@ import { Redirect, Switch } from "react-router-dom";
 import RegistroPatient from "./components/Landing/RegistroPatient.jsx";
 import NotFound from "./components/Landing/NotFound";
 
-
- function App() {
-
-  const rol = useSelector(state => state.rol)
-
-
+function App() {
+  const rol = useSelector((state) => state.rol);
 
   return (
     <div className="App">
@@ -95,13 +91,14 @@ import NotFound from "./components/Landing/NotFound";
       </Route>
       <Route exact path="/homeUser/patientHistory/:dni">
         {(rol === "3" || rol === "4") ? <PatientHistory /> : <NotFound />}
+        
       </Route>
 
       <Route exact path="/LandingAdmin">
         {(rol === "5" || rol === "6" || rol === "7") ? <LandingAdmin /> : <NotFound />}
       </Route>
       <Route exact path="/registrar">
-        <RegistroPatient/>
+        <RegistroPatient />
       </Route>
 
       <Route  path='/*'>
@@ -109,8 +106,7 @@ import NotFound from "./components/Landing/NotFound";
         </Route> 
         </Switch>
 
-      </div>
-
+    </div>
   );
 }
 
