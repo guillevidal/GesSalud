@@ -3,36 +3,67 @@
 .container-turnospys{
     display: flex;
     width: 100%;
-    flex-flow: column;
+    flex-direction: column;
+    
+    align-items: center;
 
     .buscador{
         display: flex;
         width: 100%;
-        justify-content: center;
-        margin-top: 20px;
+        max-width: 800px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        flex-wrap: wrap;
 
-        .buscar{
+        .boton-crear{
+            .botoncito{
+                text-decoration: none;
+                @include boton-primario;
+                margin-right: 20px;
+            }
+        }
+    }
+
+    .input-buscador{
+        display: flex;
+        width: 100%;
+        max-width: 400px;
+        margin: 40px auto;
+        justify-content: center;
+        align-items: center;
+
+
+            .select{
+                display: flex;
+                margin-left: 20px;
+                padding: 3px;
+                background-color: $color-principal;
+                color: $color-terciario;
+                border: none;
+            }
+        
+    
+        .icon-search{
+            display: flex;
+            background-color: $color-secundario;
+            height: 100%;
+            width: 30px;
+            color: white;
+            padding: 5px;
+            border-radius: 3px;
+            margin-right: 5px;
+        }
+    
+        .input-search{
             display: flex;
             width: 100%;
-            max-width: 500px;
-            justify-content: space-evenly;
-
-            .input{
-                display: flex;
-                width: 300px;
-                padding: 5px;
-                border-radius: 10px;
-                border:none;
-                border: 2px solid $color-terciario;
-
-            }
-            .select{
-                background-color: $color-detalle;
-                color: $color-principal;
-            }
-
-
+            max-width: 300px;
+            height: 100%;
+            padding: 3px;
         }
+    
+    
     }
 
     .turnos{

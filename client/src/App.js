@@ -19,10 +19,8 @@ import CreateAgenda from './components/initialPys/SpecialtyManagement/CreateAgen
 import EditAgenda from './components/initialPys/SpecialtyManagement/EditAgenda/EditAgenda.jsx';
 import LandingAdmin from "./components/admin/LandingAdmin";
 import TurnoPys from "./components/initialPys/TurnoManagement/InicialTurno.jsx";
-import { Fragment, useEffect} from "react";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { useHistory } from "react-router";
 import RegistroPatient from "./components/Landing/RegistroPatient.jsx";
 
 

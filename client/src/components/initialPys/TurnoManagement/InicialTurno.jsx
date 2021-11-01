@@ -9,6 +9,8 @@ import SearchTurno from "./SearchTurno";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import Paginado from "./paginado.jsx";
+import { Link } from "react-router-dom";
+
 function InicialTurno() {
     const dispatch = useDispatch();
     const turnos = useSelector(state => state.turnos)
@@ -33,6 +35,10 @@ function InicialTurno() {
                 setBusquedaTurnos={setBusquedaTurnos}
                 estado={estado} setEstado={setEstado} turnos={turnos}
             />
+            <div className='boton-crear'>
+            <Link to="especialistaPys"><button className='botoncito'>Crear turno</button></Link>
+  
+            </div>
             </div>
             {busquedaTurnos && busquedaTurnos.length > 6 ? <Paginado busquedaTurnos={busquedaTurnos}/> :null}
             {!busquedaTurnos.length && turnos && turnos.length > 6 ? <Paginado busquedaTurnos={busquedaTurnos}/> :null}

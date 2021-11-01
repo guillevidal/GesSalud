@@ -1,7 +1,7 @@
 /* eslint-disable */
 import "./Landing";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClinicMedical, faUserMd } from "@fortawesome/free-solid-svg-icons";
+import { faClinicMedical, faUserMd, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { rol } from "../../actions";
@@ -9,12 +9,15 @@ import axios from "axios";
 import { especialistaDetallado, pacienteDetallado } from "../../actions"
 import { Redirect, Link } from "react-router-dom";
 
+
 export default function Landing() {
   const dispatch = useDispatch();
   const roles = useSelector((state) => state.rol);
+  
 
   
   const [error, setError] = useState(false)
+  const [olvidado, setOlvidado] = useState(false)
 
   
     useEffect(()=>{
@@ -53,6 +56,11 @@ export default function Landing() {
     user: "",
     pass: "",
   });
+
+  const [inputLost, setInputLost] = useState({
+    value : '',
+    error : false
+  })
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -100,6 +108,36 @@ export default function Landing() {
 
   };
 
+  const handleChangePass = (e) =>{
+    e.preventDefault()
+    
+    if(olvidado === false){
+      setOlvidado(true)
+    }
+    else{
+      
+      setOlvidado(false)
+    }
+
+  }
+
+  const handleInputLost =  (e) => {
+    
+
+
+       if (e.target.value.includes(" ")) {
+          setInputLost({value : e.target.value, error: "No debe contener espacios"  }) 
+        }
+        else if (!/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(e.target.value)) {
+          setInputLost({value : e.target.value,  error: "No es una direccion de correo valida" } )
+        } 
+        
+        else {
+          setInputLost({value : e.target.value, error: false  })
+        }
+
+  }
+
   return (
     <Fragment>
       {(roles === "1" || roles === "6") && <Redirect to="/patientPys" />}
@@ -120,6 +158,7 @@ export default function Landing() {
       </div>
 
       <div id="landing-login">
+        {!olvidado &&
         <form className="landing-form">
           <FontAwesomeIcon icon={faUserMd} className="icon-login" />
           <label htmlFor="" className="form-title">
@@ -152,13 +191,53 @@ export default function Landing() {
             </div>
           </div>
           {error && <span className='error'>{error}</span>}
-          <div>
+          
+         <div>
           <button className="boton-login" onClick={(e) => handleSubmit(e)}>
             Ingresar
           </button>
-          <Link to="/registrar"><button className="boton-login">Registrarse</button></Link>
           </div>
-        </form>
+         
+          <div className='registro'>
+            <div>
+          <label className='olvidar' onClick={e => handleChangePass(e)}>¿Olvidaste tu contraseña?</label>
+          </div>
+          <div className='notengo'>
+            <span className='text'>¿No tienes cuenta?</span>
+          <Link to="/registrar" className='link'>Registrarse</Link>
+          </div>
+          </div>
+        </form>}
+
+        
+        {olvidado && 
+         <form className="landing-form">
+         <FontAwesomeIcon icon={faUserMd} className="icon-login" />
+         <label htmlFor="" className="form-title">
+            Ingrese su email
+          </label>
+          <div className="landing-form-inputs">
+              <input
+                type="text"
+                name='lostpass'
+                className="inputlost"
+                value={inputLost.value}
+                onChange={e => handleInputLost(e)}
+              />
+            </div>
+            {inputLost.error && <span className='error-mail'>{inputLost.error}</span>}
+          <div>
+          <button className="boton-login" onClick={(e) => handleSubmit(e)}>
+            Solicitar
+          </button>
+          </div>
+          <div className='volver'>
+              <label className='link' onClick={e => handleChangePass(e)}>
+          <FontAwesomeIcon icon={faArrowLeft} className='flecha'/> 
+          <span className='text'>Volver</span>
+          </label>
+          </div>
+          </form>}
       </div>
     </div>
     </Fragment>
