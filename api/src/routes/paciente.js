@@ -98,10 +98,9 @@ router.post("/", rutasProtegidas, async function (req, res) {
         HistoriaClinica.create(
           {
             creationDate: data.creationDate,
-            text: data.text,
           },
           {
-            fields: ["creationDate", "text"],
+            fields: ["creationDate"],
           }
         ),
       ]);
@@ -129,7 +128,8 @@ router.get("/consulta/:dni", async (req, res) => {
           model: Paciente,
           include: {
             model: HistoriaClinica,
-            attributes: ["id", "creationDate", "text"],
+            attributes: ["id", "creationDate"],
+            include: Diagnostico,
           },
         },
       });
