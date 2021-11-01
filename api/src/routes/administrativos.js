@@ -70,7 +70,7 @@ router.post("/", async function (req, res) {
         html: `<b> Hola ${obj.name} ${obj.lastName}🩺 , tu usuario es: ${obj.user} y tu contraseña: ${obj.password} </b>`,
       });
     }
-    console.log(obj);
+
     res.status(201).send(obj);
   } catch (e) {
     res.status(400).send("no se puedo crear al especialista");
@@ -110,7 +110,7 @@ router.put("/:id", async function (req, res) {
   try {
     let id = req.params.id;
     let queryy = await Personal_administrativo.findByPk(id);
-    console.log(queryy);
+
     let { personaId } = queryy;
     let {
       name,

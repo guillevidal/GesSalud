@@ -39,16 +39,6 @@ router.post("/", async function (req, res) {
     asignandoPaciente
       ? await crearTurno.setPaciente(asignandoPaciente)
       : res.status(400).send({ msg: "No se pudo encontrar el paciente" });
-    // console.log(asignandoPaciente);
-
-    // if () {
-    //   await transporter.sendMail({
-    //     from: '"GesSalud💉" <ges.salud.04@gmail.com>',
-    //     to: obj.email,
-    //     subject: "Creacion de cuenta exitosa ✔",
-    //     html: `<b> Hola ${obj.name} ${obj.lastName}🩺 , tu usuario es: ${obj.user} y tu contraseña: ${obj.password} </b>`,
-    //   });
-    // }
 
     let datosPersona = await Persona.findByPk(
       asignandoPaciente.dataValues.personaId
@@ -66,7 +56,7 @@ router.post("/", async function (req, res) {
         to: email,
         subject: "Turno asignado ✔",
         html: `<b> Hola ${name} ${lastName}🩺 , </br>
-        tu tunrno para: ${nameSpecialties} fue asignado para el ${date} a las ${hour} </b>`,
+        tu turno para: ${nameSpecialties} fue asignado para el ${date} a las ${hour} </b>`,
       });
     }
 
@@ -105,7 +95,7 @@ router.get("/", async function (req, res, next) {
           include: [
             {
               model: Persona,
-              attributes: ["name", "lastName","dni"],
+              attributes: ["name", "lastName", "dni"],
             },
             {
               model: HistoriaClinica,

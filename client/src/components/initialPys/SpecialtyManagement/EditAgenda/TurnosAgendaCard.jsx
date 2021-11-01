@@ -69,6 +69,8 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                     })
                 } else {
 
+                    
+
                     let newTurno = {
                         agendaId: parseInt(inputFormTurno.agendaId.value),
                         pacienteId: pacienteDetail[0].id,
