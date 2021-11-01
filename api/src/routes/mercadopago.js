@@ -61,33 +61,22 @@ router.post("/", async function (req, res) {
     );
 
     let { additional_info, status_detail, transaction_amount } = info.data;
-    arreglo2.push(
-      additional_info.items,
-      ifno.data.id,
-      status_detail,
-      transaction_amount
-    );
-    Historial_pagos.create(
+    arreglo2.push(additional_info.items);
+    arreglo2.push(status_detail);
+    arreglo2.push(transaction_amount);
+    arreglo2.push(info.data.id);
+    let test = await Historial_pagos.create(
       {
         id: info.data.id,
         status: status_detail,
-        price: transaction_amount,
+        price: transacticon_amount,
       },
       {
         fields: ["id", "status", "price"],
       }
-    )
-      .then(function (response) {
-        arreglo.push(response);
-        res.json({
-          response: response,
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    );
 
-    arreglo.push(arrayTest2);
+    arreglo.push(test);
     // let arrayTest = additional_info.items.map(async (e) => {
     //   await Items_pagos.create(
     //     {
@@ -103,7 +92,7 @@ router.post("/", async function (req, res) {
     // });
     // arreglo2.push(additional_info.items);
 
-    //res.sendStatus(200);
+    res.sendStatus(200);
   } catch (err) {
     res.status(400);
   }
