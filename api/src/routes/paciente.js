@@ -26,7 +26,8 @@ router.get("/", rutasProtegidas, async function (req, res, next) {
       },
       {
         model: HistoriaClinica,
-        attributes: ["id", "creationDate", "text"],
+        attributes: ["id", "creationDate"],
+        include: Diagnostico,
       },
     ],
   });
@@ -45,11 +46,9 @@ router.post("/", rutasProtegidas, async function (req, res) {
     ]);
 
     if (yaExisteDni || yaExisteCorreo || yaExisteUsuario) {
-      res
-        .status(400)
-        .send({
-          msg: `El dni, usuario o el email ingresado ya esta registrado`,
-        });
+      res.status(400).send({
+        msg: `El dni, usuario o el email ingresado ya esta registrado`,
+      });
     } else {
       const [
         creandoPersona,
