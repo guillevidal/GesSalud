@@ -72,9 +72,11 @@ router.post("/", async function (req, res) {
         fields: ["id", "status", "price"],
       }
     );
+    if (test) {
+      arreglo.push(test.dataValues);
+      arreglo2.push(test);
+    }
 
-    arreglo.push(test.dataVaulues);
-    arreglo2.push(test);
     // let arrayTest = additional_info.items.map(async (e) => {
     //   await Items_pagos.create(
     //     {
