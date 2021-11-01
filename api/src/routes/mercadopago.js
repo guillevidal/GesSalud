@@ -1,8 +1,7 @@
 const axios = require("axios");
 const { Router } = require("express");
 //const { transporter } = require("../configs/nodemailer");
-//const db = require("../db");
-// const { } = require("../db");
+
 const router = Router();
 // SDK de Mercado Pago
 const mercadopago = require("mercadopago");
@@ -51,10 +50,11 @@ router.post("/", async function (req, res) {
 
     let info =
       await axios.get(`https://api.mercadopago.com//v1/payments/${id},{headers:{
-        Authorization:'Bearer'+APP_USR-1036676948843093-103000-03b2fdd1a27093603c20d8ef93bd87bb-1009396366
+        Authorization:Bearer APP_USR-1036676948843093-103000-03b2fdd1a27093603c20d8ef93bd87bb-1009396366
       }}`);
 
-    arrelgo.push(info.data);
+    arrelgo.push(info);
+
     res.sendStatus(200);
   } catch (err) {
     res.status(400);

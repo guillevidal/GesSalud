@@ -46,7 +46,9 @@ import {
   CREAR_DIAGNOSTICO,
   RESETEAR_DIAGNOSTICO,
   EDITAR_DIAGNOSTICO,
-  CREAR_MULTIPLE_AGENDA
+  CREAR_MULTIPLE_AGENDA,
+  CREAR_REGISTRO_PACIENTE,
+  OBTENER_PACIENTES_REGISTRO
 } from "./valuesForActions.js";
 
 // const token = localStorage["access-token"];
@@ -431,4 +433,24 @@ export const uploadAction =  (image) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+//CREAR PACIENTES DESDE EL LANDING 
+export const crearRegistroPaciente = (paciente) => {
+  return async (dispatch) => {
+    {
+      const result = await axios.post("/registro", paciente);
+      const data = result.data;
+      return dispatch({ type: CREAR_REGISTRO_PACIENTE, payload: data });
+    }
+  };
+};
+
+//OBTENER PACIENTES DESDE EL LANDING
+export const obtenerPacientesRegistro = () => {
+  return async (dispatch) => {
+    const result = await axios.get("/registro");
+    const data = result.data;
+    return dispatch({ type: OBTENER_PACIENTES_REGISTRO, payload: data });
+  };
 };

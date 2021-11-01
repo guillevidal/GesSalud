@@ -22,7 +22,8 @@ import {
     RESETEAR_TURNO_DETALLADO, MODIFICAR_TURNO,
     ELIMINAR_TURNO, CREAR_DIAGNOSTICO,
     RESETEAR_DIAGNOSTICO, EDITAR_DIAGNOSTICO,
-    CREAR_MULTIPLE_AGENDA
+    CREAR_MULTIPLE_AGENDA, CREAR_REGISTRO_PACIENTE,
+    OBTENER_PACIENTES_REGISTRO
 } from "../actions/valuesForActions.js";
 
 const initialState = {
@@ -60,6 +61,7 @@ const Reducer = (state = initialState, action) => {
         case CREAR_DIAGNOSTICO:
         case RESETEAR_DIAGNOSTICO:
         case CREAR_MULTIPLE_AGENDA:
+        case CREAR_REGISTRO_PACIENTE:
             return { ...state, creado: action.payload };
 
 
@@ -77,6 +79,7 @@ const Reducer = (state = initialState, action) => {
 
         case OBTENER_PACIENTES:
         case RESETEAR_PACIENTES:
+        case OBTENER_PACIENTES_REGISTRO:
             return { ...state, pacientes: action.payload }
 
         case OBTENER_ESPECIALISTAS:
