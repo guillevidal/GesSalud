@@ -61,15 +61,21 @@ router.post("/", async function (req, res) {
         },
       }
     );
-    arreglo.push(info.data);
-    arreglo2.push(info.data.additional_info.items);
-    // let { additional_info, status_detail, transaction_amount } = info.data;
-    // let arrayTest2 = await Historial_pagos.create({
-    //   id: info.data.id,
-    //   status: status_detail,
-    //   price: transaction_amount,
-    // });
 
+    arreglo2.push(info.data.additional_info.items);
+
+    let { additional_info, status_detail, transaction_amount } = info.data;
+    let arrayTest2 = await Historial_pagos.create(
+      {
+        id: info.data.id,
+        status: status_detail,
+        price: transaction_amount,
+      },
+      {
+        fields: ["id", "status", "price"],
+      }
+    );
+    arreglo.push(arrayTest2.dataValues);
     // let arrayTest = additional_info.items.map(async (e) => {
     //   await Items_pagos.create(
     //     {
