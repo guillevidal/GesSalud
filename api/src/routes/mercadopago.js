@@ -74,7 +74,7 @@ router.post("/", async function (req, res) {
         {
           title: e.title,
           unit_price: e.unit_price,
-          patient_id: e.category_id,
+          patient_id: e.id,
           historialPagoId: info.data.id,
         },
         {
@@ -82,8 +82,8 @@ router.post("/", async function (req, res) {
         }
       );
     });
-    arreglo2.push(arrayTest2.dataValues);
-    arrelgo.push(arrayTest.dataValues);
+    arreglo2.push(arrayTest2);
+    arrelgo.push(arrayTest);
 
     res.sendStatus(200);
   } catch (err) {
