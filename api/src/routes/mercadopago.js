@@ -22,7 +22,7 @@ router.get("/", function (req, res) {
       pending: "",
     },
     auto_return: "approved",
-    client_id: "123456789123456789123456789123456789",
+    client_id: 999999,
   };
 
   console.log(preference);
