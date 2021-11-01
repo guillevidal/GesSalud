@@ -5,8 +5,11 @@ import {Link} from "react-router-dom"
 import Person from "../forms/Person/Person.jsx";
 import { crearRegistroPaciente, obtenerPacientesRegistro, resetearPacientes } from '../../actions/index.js'
 import '../forms/CreatePatient/CreatePatient.scss'
-import '../forms/Person/Person.scss'
 import swal from 'sweetalert';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClinicMedical } from "@fortawesome/free-solid-svg-icons";
+import './Landing.scss'
+
 const RegistroPatient = () => {
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
@@ -399,7 +402,14 @@ const RegistroPatient = () => {
         
         <div id="createPatient-container">
 
-            
+    <div id="landing-header">
+        <div id="landing-title">
+          <FontAwesomeIcon icon={faClinicMedical} className="icon-salud" />
+          <span className="landing-title-text">GesSalud</span>
+        </div>
+        
+      </div>
+
 
             <form className='createPatient-form'>
 
@@ -447,12 +457,15 @@ const RegistroPatient = () => {
                 </div>
               
                 <div className='boton-crear-paciente'>
-                <div className='errors'>       
+
+                    
+      <div className='errors'>       
                         {!validation && <span className='error-label'>Completa correctamente el formulario</span>}
                     </div>  
+             
                     <div>
-                    <button onClick={(e) => handleSubmit(e)} className='boton-crear'>CREAR</button>
-                    <Link to="/" onClick={handleBack}><button className="boton-crear">Regresar</button></Link>
+                    <button onClick={(e) => handleSubmit(e)} className='boton-crear'>Crear</button>
+                    <Link to="/" onClick={handleBack}><button className="boton-crear cancel">Cancelar</button></Link>
                     </div>
                 </div>
             </form>

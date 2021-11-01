@@ -124,7 +124,7 @@ const Reducer = (state = initialState, action) => {
             }
             if (!busquedaEs[0]) {
 
-                busquedaEs = ["No se encontro especalista"];
+                busquedaEs = ["No se encontro especialista"];
             }
             return { ...state, busquedaEspecialista: busquedaEs }
 

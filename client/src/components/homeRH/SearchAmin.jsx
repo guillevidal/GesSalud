@@ -67,7 +67,7 @@ const SearchEspecialist = ({setBusquedaAdministrativo2}) => {
                     }
                 })
                 if(!filtroC[0]){
-                    filtroC.push("No se encontro administrativos")
+                    filtroC.push("No se encontraron administrativos")
                 }
                 setBusquedaAdministrativo2(filtroC)
             }

@@ -21,8 +21,9 @@ import LandingAdmin from "./components/admin/LandingAdmin";
 import TurnoPys from "./components/initialPys/TurnoManagement/InicialTurno.jsx";
 import PatientHistory from "./components/initialPys/patientManagement/patientClinicalData/PatientHistory.jsx";
 import { useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, Switch } from "react-router-dom";
 import RegistroPatient from "./components/Landing/RegistroPatient.jsx";
+import NotFound from "./components/Landing/NotFound";
 
 
  function App() {
@@ -37,70 +38,77 @@ import RegistroPatient from "./components/Landing/RegistroPatient.jsx";
 
       {rol === "5" && <Redirect to="/LandingAdmin" />}
 
+      <Switch>
       <Route exact path="/">
         <Landing />
       </Route>
 
       <Route exact path="/createPatient">
-        {(rol === "1" || rol === "6") && <CreatePatient />}
+        {(rol === "1" || rol === "6") ? <CreatePatient /> : <NotFound />} 
       </Route>
       <Route exact path="/patientPys">
-        {(rol === "1" || rol === "6") && <InitialPatient />}
+        {(rol === "1" || rol === "6") ? <InitialPatient /> : <NotFound />}
       </Route>
       <Route exact path="/patientDetails">
-        {(rol === "1" || rol === "6") && <PatientDetails />}
+        {(rol === "1" || rol === "6") ? <PatientDetails /> : <NotFound />}
       </Route>
       <Route exact path="/patientEdit">
-        {(rol === "1" || rol === "6") && <PatientEdit />}
+        {(rol === "1" || rol === "6") ? <PatientEdit /> : <NotFound />}
       </Route>
       <Route exact path="/turnoPys">
-        {(rol === "1" || rol === "6") && <TurnoPys />}
+        {(rol === "1" || rol === "6") ? <TurnoPys /> : <NotFound />}
       </Route>
       <Route exact path="/especialistaPys">
-        {(rol === "1" || rol === "6") && <InitialSpecialty />}
+        {(rol === "1" || rol === "6") ? <InitialSpecialty /> : <NotFound />}
       </Route>
       <Route exact path="/createAgenda">
-        {(rol === "1" || rol === "6") && <CreateAgenda />}
+        {(rol === "1" || rol === "6") ? <CreateAgenda /> : <NotFound />}
       </Route>
       <Route exact path="/especialistaPys/agenda/:id">
-        {(rol === "1" || rol === "6") && <EditAgenda />}
+        {(rol === "1" || rol === "6") ? <EditAgenda /> : <NotFound />}
       </Route>
 
       <Route exact path="/AdminEdit">
-        {(rol === "2" || rol === "7") && <EditAdmin />}
+        {(rol === "2" || rol === "7") ? <EditAdmin /> : <NotFound />}
       </Route>
       <Route exact path="/detailAdmin">
-        {(rol === "2" || rol === "7") && <DetailAdmin />}
+        {(rol === "2" || rol === "7") ? <DetailAdmin /> : <NotFound />}
       </Route>
       <Route exact path="/homeRRHH">
-        {(rol === "2" || rol === "7") && <HomeRRHH />}
+        {(rol === "2" || rol === "7") ? <HomeRRHH /> : <NotFound />}
       </Route>
       <Route exact path="/specialtyEdit">
-        {(rol === "2" || rol === "7") && <SpecialtyEdit />}
+        {(rol === "2" || rol === "7") ? <SpecialtyEdit /> : <NotFound />}
       </Route>
       <Route exact path="/detailEspecialista">
-        {(rol === "2" || rol === "7") && <DetailEspecialista />}
+        {(rol === "2" || rol === "7") ? <DetailEspecialista /> : <NotFound />}
       </Route>
       <Route exact path="/createEmployee">
-        {(rol === "2" || rol === "7") && <CreateEmployee />}
+        {(rol === "2" || rol === "7") ? <CreateEmployee /> : <NotFound />}
       </Route>
 
       <Route exact path="/homeUser">
-        {(rol === "3" || rol === "4") && <HomeSpecialist />}
+        {(rol === "3" || rol === "4") ? <HomeSpecialist /> : <NotFound />}
       </Route>
       <Route exact path="/perfilUser">
-        {(rol === "3" || rol === "4") && <ProfileSpecialist />}
+        {(rol === "3" || rol === "4") ? <ProfileSpecialist /> : <NotFound />}
       </Route>
       <Route exact path="/homeUser/patientHistory/:dni">
-        {(rol === "3" || rol === "4") && <PatientHistory />}
+        {(rol === "3" || rol === "4") ? <PatientHistory /> : <NotFound />}
       </Route>
 
       <Route exact path="/LandingAdmin">
-        {(rol === "5" || rol === "6" || rol === "7") && <LandingAdmin />}
+        {(rol === "5" || rol === "6" || rol === "7") ? <LandingAdmin /> : <NotFound />}
       </Route>
       <Route exact path="/registrar">
         <RegistroPatient/>
       </Route>
+
+      <Route  path='/*'>
+          <NotFound />
+        </Route> 
+        </Switch>
+
       </div>
 
   );
