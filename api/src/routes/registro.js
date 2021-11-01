@@ -65,10 +65,9 @@ router.post("/", async function (req, res) {
         HistoriaClinica.create(
           {
             creationDate: data.creationDate,
-            text: data.text,
           },
           {
-            fields: ["creationDate", "text"],
+            fields: ["creationDate"],
           }
         ),
       ]);
@@ -106,7 +105,7 @@ router.get("/", async function (req, res, next) {
       },
       {
         model: HistoriaClinica,
-        attributes: ["id", "creationDate", "text"],
+        attributes: ["id", "creationDate"],
       },
     ],
   });

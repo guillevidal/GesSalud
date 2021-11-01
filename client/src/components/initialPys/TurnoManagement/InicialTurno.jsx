@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import Paginado from "./paginado.jsx";
 import { Link } from "react-router-dom";
+import CarroCompras from "./CarroCompras.jsx";
 
 function InicialTurno() {
     const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function InicialTurno() {
     const valorPaginado = useSelector( state => state.paginado)
     const [estado, setEstado] = useState("turnos")
     const [busquedaTurnos, setBusquedaTurnos] = useState([])
+    const [carro, setCarro]= useState({items:[]})
     useEffect(() => {
         dispatch(obtenerTurnos())
         dispatch(paginado(0))
@@ -59,6 +61,8 @@ function InicialTurno() {
                                 status={t.status}
                                 pacientes={pacientes}
                                 turnos={turnos}
+                                carro={carro}
+                                setCarro={setCarro}
                             />)}) 
                 :
                     <span className='error'><FontAwesomeIcon icon={faTimesCircle} /> No se han registrado turnos</span>
@@ -78,9 +82,12 @@ function InicialTurno() {
                             status={t.status}
                             pacientes={pacientes}
                             turnos={turnos}
+                            carro={carro}
+                            setCarro={setCarro}
                         />)
                 })}
                 </div>
+                <CarroCompras carro={carro} setCarro={setCarro} />
         </div>
     )
 
