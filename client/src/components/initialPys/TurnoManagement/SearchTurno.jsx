@@ -4,7 +4,8 @@ import {useSelector, useDispatch} from "react-redux";
 import './InicialTurno.scss'
 import {paginado} from "../../../actions/index.js";
 import {Link} from "react-router-dom";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 const SearchTurno = ({ setBusquedaTurnos, estado, setEstado, }) => {
     const dispatch = useDispatch();
     const [input, setInput]=useState("")
@@ -123,9 +124,11 @@ const SearchTurno = ({ setBusquedaTurnos, estado, setEstado, }) => {
         
     }
     return (
-        <div className='buscar'>
-            {estado!=="fecha"? <input className='input' value={input} onChange={(e)=>handleChange(e)} 
-            placeholder={placeHolder}/>:<input className='input' value={input} onChange={(e)=>handleChange(e)} type="date"/>}
+        <div className='input-buscador'>
+             <FontAwesomeIcon icon={faSearch} className='icon-search'/>
+        
+            {estado!=="fecha"? <input className='input-search' value={input} onChange={(e)=>handleChange(e)} 
+            placeholder={placeHolder}/>:<input className='input-search' value={input} onChange={(e)=>handleChange(e)} type="date"/>}
             
             
             <select onChange={(e) => handleSelect(e)} className='select'>
@@ -135,7 +138,7 @@ const SearchTurno = ({ setBusquedaTurnos, estado, setEstado, }) => {
                 <option value="especialista">Especialista</option>
                 <option value="fecha">Fecha</option>
             </select>
-            <Link to="especialistaPys"><button>Crear turno</button></Link>
+          
         </div>
     )
 }

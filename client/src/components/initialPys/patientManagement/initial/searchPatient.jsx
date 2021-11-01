@@ -57,7 +57,7 @@ const SearchPatient = ({ setBusquedaPaciente1, pacientes}) => {
         <div className='input-buscador'>
         <FontAwesomeIcon icon={faSearch} className='icon-search'/>
         <input className='input-search' placeholder='Buscar paciente' value={input} onChange={(e)=>{handleChange(e)}}></input>
-        <select onChange={(e) =>handleSelect(e)}>
+        <select onChange={(e) =>handleSelect(e)} className='select'>
             <option value="nombre">Nombre</option>
             <option value="dni">DNI</option>
         </select>
