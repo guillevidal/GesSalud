@@ -3,6 +3,7 @@ const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 const { default: axios } = require("axios");
+const items_pagos = require("./models/items_pagos");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 
 let sequelize =
@@ -82,9 +83,12 @@ const {
   Servicio,
   Tipo_especialidad,
   Turno,
+  Historial_pagos,
+  Items_pagos,
 } = sequelize.models;
 
 // Aca vendrian las relaciones
+
 Especialista_medico.belongsTo(Persona);
 Persona.hasOne(Especialista_medico);
 
@@ -106,6 +110,15 @@ Turno.belongsTo(Agenda);
 
 Paciente.hasMany(Turno);
 Turno.belongsTo(Paciente);
+
+Paciente.hasMany(Historial_pagos);
+Historial_pagos.belongsTo(Paciente);
+
+Historial_pagos.belongsTo(Turno);
+Turno.hasMany(Historial_pagos);
+
+Items_pagos.belongsTo(Historial_pagos);
+Historial_pagos.hasMany(Items_pagos);
 
 Persona.hasOne(Paciente);
 Paciente.belongsTo(Persona);
