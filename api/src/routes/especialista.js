@@ -58,62 +58,76 @@ module.exports = router;
 router.post("/", async function (req, res) {
   const data = req.body;
   try {
-    const creandoEspecialista = await Persona.create(
-      {
-        name: data.name,
-        lastName: data.lastName,
-        dni: data.dni,
-        email: data.email,
-        phone: data.phone,
-        adress: data.adress,
-        birth: data.birth,
-        user: data.user,
-        password: data.password,
-        gender: data.gender,
-        rol: "3",
-      },
-      {
-        fields: [
-          "name",
-          "lastName",
-          "dni",
-          "email",
-          "phone",
-          "adress",
-          "birth",
-          "user",
-          "password",
-          "gender",
-          "rol",
-        ],
-      }
-    );
-    const creandoMatriculaEspecialista = await Especialista_medico.create(
-      {
-        enrollment: data.enrollment,
-        specialty: data.specialty,
-      },
-      {
-        fields: ["enrollment", "specialty"],
-      }
-    );
-
-    await creandoEspecialista.setEspecialista_medico(
-      creandoMatriculaEspecialista
-    );
-    let obj = {
-      ...creandoEspecialista.dataValues,
-      ...creandoMatriculaEspecialista.dataValues,
-    };
-    if (obj.email && obj.name && obj.lastName && obj.user && obj.password) {
-      await transporter.sendMail({
-        from: '"GesSalud💉" <ges.salud.04@gmail.com>',
-        to: obj.email,
-        subject: "Creacion de cuenta exitosa ✔",
-        html: `<b> Hola ${obj.name} ${obj.lastName}🩺 , tu usuario es: ${obj.user} y tu contraseña: ${obj.password} </b>`,
+    const [yaExisteDni, yaExisteCorreo, yaExisteUsuario] = await Promise.all([
+      Persona.findOne({ where: { dni: data.dni } }),
+      Persona.findOne({ where: { email: data.email } }),
+      Persona.findOne({ where: { user: data.user } }),
+    ]);
+    if (yaExisteUsuario || yaExisteCorreo || yaExisteDni) {
+      res.status(400).send({
+        msg: `El dni, usuario o el email ingresado ya esta registrado`,
       });
+    } else {
+      const [creandoEspecialista, creandoMatriculaEspecialista] =
+        await Promise.all([
+          Persona.create(
+            {
+              name: data.name,
+              lastName: data.lastName,
+              dni: data.dni,
+              email: data.email,
+              phone: data.phone,
+              adress: data.adress,
+              birth: data.birth,
+              user: data.user,
+              password: data.password,
+              gender: data.gender,
+              rol: "3",
+            },
+            {
+              fields: [
+                "name",
+                "lastName",
+                "dni",
+                "email",
+                "phone",
+                "adress",
+                "birth",
+                "user",
+                "password",
+                "gender",
+                "rol",
+              ],
+            }
+          ),
+          Especialista_medico.create(
+            {
+              enrollment: data.enrollment,
+              specialty: data.specialty,
+            },
+            {
+              fields: ["enrollment", "specialty"],
+            }
+          ),
+        ]);
+
+      await creandoEspecialista.setEspecialista_medico(
+        creandoMatriculaEspecialista
+      );
+      let obj = {
+        ...creandoEspecialista.dataValues,
+        ...creandoMatriculaEspecialista.dataValues,
+      };
+      if (obj.email && obj.name && obj.lastName && obj.user && obj.password) {
+        await transporter.sendMail({
+          from: '"GesSalud💉" <ges.salud.04@gmail.com>',
+          to: obj.email,
+          subject: "Creacion de cuenta exitosa ✔",
+          html: `<b> Hola ${obj.name} ${obj.lastName}🩺 , tu usuario es: ${obj.user} y tu contraseña: ${obj.password} </b>`,
+        });
+      }
+      res.send(obj);
     }
-    res.send(obj);
   } catch (e) {
     res.status(400).send("no se puedo crear al especialista");
   }
