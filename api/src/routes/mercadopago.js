@@ -46,7 +46,7 @@ router.get("/", function (req, res) {
   }
 });
 
-let arrelgo = [];
+let arreglo = [];
 let arreglo2 = [];
 
 router.post("/", async function (req, res) {
@@ -82,8 +82,8 @@ router.post("/", async function (req, res) {
         }
       );
     });
-    arreglo2.push(arrayTest2);
-    arrelgo.push(arrayTest);
+    arreglo2.push(additional_info.items);
+    arreglo.push(arrayTest);
 
     res.sendStatus(200);
   } catch (err) {
