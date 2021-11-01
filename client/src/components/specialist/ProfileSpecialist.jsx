@@ -95,14 +95,19 @@ export default  function ProfileSpecialist(){
         e.preventDefault()
 
             
-            setEditar({
-                ...editar,
-                [op] : true
-            })
-
+          
            if(op === 'imagen'){
             document.getElementById('upload').click()
            }
+           if(op === 'imagenPac'){
+            document.getElementById('uploadPac').click()
+           }
+
+           setEditar({
+            ...editar,
+            [op] : true
+        })
+
         
 
     }
@@ -157,11 +162,10 @@ export default  function ProfileSpecialist(){
         let myNewFile = '';
         
         if(roles === '4'){
-         myNewFile = new File([image], datosPac.dni-datosPac.name-image.name, {type: image.type});
+         myNewFile = new File([image], `${datosPac.dni}-${datosPac.name}`, {type: image.type});
         }
         else{
             myNewFile = new File([image], `${datosEsp.dni}-${datosEsp.name}`, {type: image.type});
-       
         }
         
         dispatch(uploadAction(myNewFile))
@@ -287,8 +291,9 @@ export default  function ProfileSpecialist(){
 
                 
 
-                 {(editar.imagen === true) || (editar.datos === true) || (editar.cuenta === true) ? <button onClick={e => handleSubmit(e)} name='saveImage' className='button-change'>Guardar cambios</button> : null} 
-                   
+                {(editar.imagen === true) || (editar.datos === true) || (editar.cuenta === true) ? <div className='buttons'><button onClick={e => handleSubmit(e)} name='save' className='button-change save'>Guardar cambios</button> 
+                   <button onClick={e => handleClear(e)} name='clean' className='button-change discard'>Descartar cambios</button></div> : null} 
+               
             </div>}
 
             {roles === '4' &&   <div className='card-profile'>
@@ -301,8 +306,8 @@ export default  function ProfileSpecialist(){
                        <img src={imagen} alt="" className='imagen'/>
                        
                        }
-                       <div className='icon-label'><label onClick={e => handleClick(e,'imagen')} className='icon'><FontAwesomeIcon icon={faEdit} /></label></div></div> 
-                   <input className='file' type="file" name="imagen" id="upload" />
+                       <div className='icon-label'><label onClick={e => handleClick(e,'imagenPac')} className='icon'><FontAwesomeIcon icon={faEdit} /></label></div></div> 
+                   <input className='file' type="file" name="imagen" id="uploadPac" onChange={(e) => handleImageUpload(e)}/>
                     <span className='nombre'>{mayus(pacienteDetail[0].name) + ' ' + mayus(pacienteDetail[0].lastName) }</span>
                  </div> 
 
@@ -328,7 +333,7 @@ export default  function ProfileSpecialist(){
 
                 
 
-                 {(editar.imagen === true) || (editar.datos === true) || (editar.cuenta === true) ? <div className='buttons'><button onClick={e => handleSubmit(e)} name='save' className='button-change save'>Guardar cambios</button> 
+                 {(editar.imagenPac === true) || (editar.datos === true) || (editar.cuenta === true) ? <div className='buttons'><button onClick={e => handleSubmit(e)} name='save' className='button-change save'>Guardar cambios</button> 
                    <button onClick={e => handleClear(e)} name='clean' className='button-change discard'>Descartar cambios</button></div> : null} 
                   
             </div>}
