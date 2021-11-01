@@ -24,12 +24,8 @@ import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import RegistroPatient from "./components/Landing/RegistroPatient.jsx";
 
-
- function App() {
-
-  const rol = useSelector(state => state.rol)
-
-
+function App() {
+  const rol = useSelector((state) => state.rol);
 
   return (
     <div className="App">
@@ -91,7 +87,7 @@ import RegistroPatient from "./components/Landing/RegistroPatient.jsx";
       <Route exact path="/perfilUser">
         {(rol === "3" || rol === "4") && <ProfileSpecialist />}
       </Route>
-      <Route exact path="/homeUser/patientHistory/:dni">
+      <Route exact path="/patientHistory/:dni">
         {(rol === "3" || rol === "4") && <PatientHistory />}
       </Route>
 
@@ -99,10 +95,9 @@ import RegistroPatient from "./components/Landing/RegistroPatient.jsx";
         {(rol === "5" || rol === "6" || rol === "7") && <LandingAdmin />}
       </Route>
       <Route exact path="/registrar">
-        <RegistroPatient/>
+        <RegistroPatient />
       </Route>
-      </div>
-
+    </div>
   );
 }
 
