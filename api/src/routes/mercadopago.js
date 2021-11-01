@@ -27,8 +27,6 @@ router.get("/", function (req, res) {
     auto_return: "approved",
   };
 
-  console.log(preference);
-
   if (preference) {
     mercadopago.preferences
       .create(preference)
@@ -62,9 +60,8 @@ router.post("/", async function (req, res) {
       }
     );
 
-    arreglo2.push(info.data.additional_info.items);
-
     let { additional_info, status_detail, transaction_amount } = info.data;
+    arreglo2.push(additional_info.items);
     let arrayTest2 = await Historial_pagos.create(
       {
         id: info.data.id,
