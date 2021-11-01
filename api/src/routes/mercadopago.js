@@ -5,6 +5,9 @@ const { Router } = require("express");
 const router = Router();
 // SDK de Mercado Pago
 const mercadopago = require("mercadopago");
+const historial_pagos = require("../models/historial_pagos");
+const { Historial_pagos, Items_pagos } = require("../db");
+const items_pagos = require("../models/items_pagos");
 // Agrega credenciales
 mercadopago.configure({
   access_token:
@@ -33,8 +36,9 @@ router.get("/", function (req, res) {
         // Este valor reemplazará el string "<%= global.id %>" en tu HTML
         // global.id = response.body.id;
         //console.log(mercadopago.preferences);
-        res.redirect(response.body.init_point);
+        //res.redirect(response.body.init_point);
         console.log(response.body.init_point);
+        res.redirect(response.body.init_point);
       })
       .catch(function (error) {
         console.log(error);
@@ -43,6 +47,7 @@ router.get("/", function (req, res) {
 });
 
 let arrelgo = [];
+let arreglo2 = [];
 router.post("/", async function (req, res) {
   let { id, topic } = req.query;
   try {
@@ -55,8 +60,28 @@ router.post("/", async function (req, res) {
         },
       }
     );
+    let { additional_info, id, status_detail, transaction_amount } = info.data;
+    let arrayTest2 = await Historial_pagos.create({
+      id: id,
+      status: status_detail,
+      price: transaction_amount,
+    });
 
-    arrelgo.push(info.data);
+    let arrayTest = additional_info.items.map((e) => {
+      await Items_pagos.create(
+        {
+          title: e.title,
+          unit_price: e.unit_price,
+          patient_id: e.category_id,
+          historialPagoId: id,
+        },
+        {
+          fields: ["title", "unit_price", "patient_id"],
+        }
+      );
+    });
+    arreglo2.push(arrayTest2);
+    arrelgo.push(arrayTest);
 
     res.sendStatus(200);
   } catch (err) {
@@ -65,7 +90,7 @@ router.post("/", async function (req, res) {
 });
 
 router.get("/array", function (req, res) {
-  res.status(200).send({ arrelgo });
+  res.status(200).send({ arrelgo, arreglo2 });
 });
 
 module.exports = router;
