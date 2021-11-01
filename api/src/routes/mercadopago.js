@@ -61,10 +61,7 @@ router.post("/", async function (req, res) {
     );
 
     let { additional_info, status_detail, transaction_amount } = info.data;
-    arreglo2.push(additional_info.items);
-    arreglo2.push(status_detail);
-    arreglo2.push(transaction_amount);
-    arreglo2.push(info.data.id);
+
     let test = await Historial_pagos.create(
       {
         id: info.data.id,
@@ -76,7 +73,8 @@ router.post("/", async function (req, res) {
       }
     );
 
-    arreglo.push(test);
+    arreglo.push(test.dataVaulues);
+    arreglo2.push(test);
     // let arrayTest = additional_info.items.map(async (e) => {
     //   await Items_pagos.create(
     //     {
