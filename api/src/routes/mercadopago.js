@@ -68,7 +68,7 @@ router.post("/", async function (req, res) {
       price: transaction_amount,
     });
 
-    let arrayTest = additional_info.items.map((e) => {
+    let arrayTest = additional_info.items.map(async (e) => {
       await Items_pagos.create(
         {
           title: e.title,
