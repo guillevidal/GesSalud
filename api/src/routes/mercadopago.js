@@ -66,7 +66,7 @@ router.post("/", async function (req, res) {
       {
         id: info.data.id,
         status: status_detail,
-        price: transacticon_amount,
+        price: transaction_amount,
       },
       {
         fields: ["id", "status", "price"],
