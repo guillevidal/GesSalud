@@ -92,7 +92,7 @@ router.post("/", async function (req, res) {
 });
 
 router.get("/array", function (req, res) {
-  res.status(200).send({ arrelgo, arreglo2 });
+  res.status(200).send({ arreglo, arreglo2 });
 });
 
 module.exports = router;
