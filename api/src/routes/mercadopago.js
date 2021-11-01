@@ -53,7 +53,7 @@ router.post("/", async function (req, res) {
   let { id, topic } = req.query;
   try {
     let info = await axios.get(
-      `https://api.mercadopago.com//v1/payments/${id}`,
+      `https://api.mercadopago.com/v1/payments/${id}`,
       {
         headers: {
           Authorization:
@@ -61,6 +61,7 @@ router.post("/", async function (req, res) {
         },
       }
     );
+    arreglo2.push(info.data);
     let { additional_info, status_detail, transaction_amount } = info.data;
     let arrayTest2 = await Historial_pagos.create({
       id: info.data.id,
