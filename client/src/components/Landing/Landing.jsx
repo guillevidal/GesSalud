@@ -138,6 +138,10 @@ export default function Landing() {
 
   }
 
+  const handleSubmitLost = (e) =>{
+      e.preventDefault()
+  }
+
   return (
     <Fragment>
       {(roles === "1" || roles === "6") && <Redirect to="/patientPys" />}
@@ -227,7 +231,7 @@ export default function Landing() {
             </div>
             {inputLost.error && <span className='error-mail'>{inputLost.error}</span>}
           <div>
-          <button className="boton-login" onClick={(e) => handleSubmit(e)}>
+          <button className="boton-login" onClick={(e) => handleSubmitLost(e)}>
             Solicitar
           </button>
           </div>

@@ -24,6 +24,7 @@ const PatientCardDetails = () => {
                 <Link to="/patientPys" onClick={handleReset} className='boton'>Volver</Link>
                 <Link to="/patientEdit" className='boton'>Modificar</Link>
             </div>
+            <div className='division'>
             <div className='lista-detalles'>
 
                 <div className='detalles'>
@@ -44,6 +45,7 @@ const PatientCardDetails = () => {
                         
                     </div>
                 </div>
+                
                
             </div>
             <HistoriaClinica 
@@ -51,6 +53,8 @@ const PatientCardDetails = () => {
             disease={paciente.disease}
             historiaClinica={paciente.historiaClinica}
             />
+        </div>
+           
         </div>
 
     )

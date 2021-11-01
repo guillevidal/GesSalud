@@ -6,10 +6,11 @@ import Modal from '../../Modal/Modal.js';
 import swal from "sweetalert";
 import '../SpecialtyManagement/EditAgenda/modales.scss'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserPlus, faUserEdit, faUserTimes } from "@fortawesome/free-solid-svg-icons";
+import {  faUserEdit, faEdit} from "@fortawesome/free-solid-svg-icons";
 import {modificarTurno} from "../../../actions/index.js";
 import {useDispatch} from "react-redux";
 import '../SpecialtyManagement/EditAgenda/modales.scss';
+import ImagenMP from '../../Landing/images/mercadopago.png'
 
 const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos }) => {
     const capitalFirstLetter = (str) => {
@@ -182,8 +183,9 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos }) =
 
             </div>
             <div className='botones'>
-                <button className='boton' onClick={openChangeTurno}>Modificar</button>
-                <button className='boton'>Realizar Pago</button>
+                <button className='boton' onClick={openChangeTurno}><FontAwesomeIcon icon={faEdit} className='icon'/></button>
+                <button className='boton MP'><img src={ImagenMP} alt="" className='logoMP'/></button>
+                
             </div>
             <Modal isOpen={isOpenChangeTurno} closeModal={closeChangeTurno}>
                 <div className='cancelacion'>
