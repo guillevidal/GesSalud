@@ -72,7 +72,7 @@ router.post("/", async function (req, res) {
         fields: ["id", "status", "price"],
       }
     );
-    arreglo.push(historialPagos.dataValues);
+    arreglo.push(additional_info.items);
 
     let ItemsPagos = additional_info.items.map(async (e) => {
       arreglo2.push(e);
