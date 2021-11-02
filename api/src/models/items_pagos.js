@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
       },
       turno_id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
       },
     },
     { timestamps: false }
