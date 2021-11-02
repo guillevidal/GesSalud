@@ -77,20 +77,20 @@ router.post("/", async function (req, res) {
       arreglo2.push(info.data.id);
     }
 
-    // let arrayTest = additional_info.items.map(async (e) => {
-    //   await Items_pagos.create(
-    //     {
-    //       title: e.title,
-    //       unit_price: e.unit_price,
-    //       patient_id: e.id,
-    //       historialPagoId: info.data.id,
-    //     },
-    //     {
-    //       fields: ["title", "unit_price", "patient_id"],
-    //     }
-    //   );
-    // });
-    // arreglo2.push(additional_info.items);
+    let arrayTest = additional_info.items.map(async (e) => {
+      await Items_pagos.create(
+        {
+          title: e.title,
+          unit_price: e.unit_price,
+          patient_id: e.id,
+          historialPagoId: info.data.id,
+        },
+        {
+          fields: ["title", "unit_price", "patient_id", "historialPagoId"],
+        }
+      );
+    });
+    arreglo2.push(additional_info.items);
 
     res.sendStatus(200);
   } catch (err) {
