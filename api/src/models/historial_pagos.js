@@ -7,9 +7,8 @@ module.exports = (sequelize) => {
   sequelize.define(
     "historial_pagos",
     {
-      id: {
+      id_c: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
       },
       status: {
         type: DataTypes.STRING,
