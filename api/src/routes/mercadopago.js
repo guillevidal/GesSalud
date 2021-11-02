@@ -89,6 +89,7 @@ router.post("/", async function (req, res) {
           ],
         }
       );
+      itemPagos.setHistorial_pagos(historialPagos);
     });
 
     res.sendStatus(200);
