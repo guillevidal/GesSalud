@@ -9,24 +9,6 @@ const {
 } = require("../db");
 const router = Router();
 
-//######################
-//-------MULTER---------
-
-const multer = require("multer");
-const path = require("path");
-const { Console } = require("console");
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads"); //en null se podria manejar el error
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-
-const uploads = multer({ storage });
-
 router.get("/", async function (req, res, next) {
   let especialistas = await Especialista_medico.findAll({
     include: [
@@ -214,69 +196,6 @@ router.put("/:id", async (req, res) => {
     res.status(200).send("Se actualizaron los datos correctamente");
   } catch (e) {
     res.status(400).send("No se pudieron actualizar los datos.");
-  }
-});
-
-// // ############
-// // PUT CON MULTER
-// router.put("/:id", uploads.single("image"), async (req, res) => {
-//   try {
-//     let id = req.params.id;
-//     let query = await Especialista_medico.findByPk(id);
-//     let { personaId } = query;
-//     let {
-//       name,
-//       lastName,
-//       dni,
-//       email,
-//       phone,
-//       adress,
-//       birth,
-//       user,
-//       password,
-//       specialty,
-//       gender,
-//       enrollment,
-//     } = req.body;
-
-//     let imgProfile = req.file.originalname;
-
-//     await Especialista_medico.update(
-//       { enrollment, specialty },
-//       { where: { id } }
-//     );
-//     await Persona.update(
-//       {
-//         name,
-//         lastName,
-//         dni,
-//         email,
-//         phone,
-//         adress,
-//         birth,
-//         user,
-//         password,
-//         gender,
-//         imgProfile,
-//       },
-//       { where: { id: personaId } }
-//     );
-
-//     res.status(200).send("Se actualizaron los datos correctamente");
-//   } catch (e) {
-//     res.status(400).send("No se pudieron actualizar los datos.");
-//   }
-// });
-
-//PARA EXTRAER LA IMAGEN DESDE EL DISKSTORAGE
-router.get("/uploads/:filename", (req, res) => {
-  const { filename } = req.params;
-  try {
-    const dirname = path.resolve();
-    const fullfilepath = path.join(dirname, "uploads/" + filename);
-    return res.sendFile(fullfilepath);
-  } catch (e) {
-    res.status(400).send({ error: e });
   }
 });
 
