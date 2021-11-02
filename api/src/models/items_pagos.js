@@ -8,13 +8,13 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
       },
       unit_price: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
       },
       patient_id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
       },
       turno_id: {
-        type: DataTypes.STRING,
+        type: DataTypes.BIGINT,
       },
     },
     { timestamps: false }

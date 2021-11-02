@@ -74,9 +74,9 @@ router.post("/", async function (req, res) {
       let itemPagos = await Items_pagos.create(
         {
           title: e.title,
-          unit_price: e.unit_price,
-          patient_id: e.id,
-          turno_id: e.category_id,
+          unit_price: Number(e.unit_price),
+          patient_id: Number(e.id),
+          turno_id: Number(e.category_id),
           historialPagoId: Number(info.data.id),
         },
         {
@@ -89,7 +89,7 @@ router.post("/", async function (req, res) {
           ],
         }
       );
-      itemPagos.setHistorial_pagos(historialPagos);
+      //itemPagos.setHistorial_pagos()
     });
 
     res.sendStatus(200);
