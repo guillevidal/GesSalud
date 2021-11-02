@@ -18,9 +18,13 @@ router.get("/", async function (req, res) {
       //   // },
       // },
     });
+
+    let items = await Items_pagos.findAll();
+
     let array = [];
-    array.push(historial);
-    res.status(200).send({ historial });
+
+    array.push(items);
+    res.status(200).send({ historial, items });
   } catch (error) {
     res.status(400).send({ msg: "No se encuentra el historial" });
   }

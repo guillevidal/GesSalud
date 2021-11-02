@@ -46,6 +46,8 @@ router.get("/", function (req, res) {
 
 let arreglo = [];
 let arreglo2 = [];
+let arreglo3 = [];
+let arreglo4 = [];
 
 router.post("/", async function (req, res) {
   let { id, topic } = req.query;
@@ -75,6 +77,7 @@ router.post("/", async function (req, res) {
     arreglo.push(additional_info.items);
 
     let ItemsPagos = additional_info.items.map(async (e) => {
+      arreglo2.push(e);
       let itemPago = await Items_pagos.create(
         {
           title: e.title,
@@ -93,8 +96,9 @@ router.post("/", async function (req, res) {
           ],
         }
       );
-      arreglo2.push(itemPago);
-      await historialPagos.setItems_pagos(itemPago);
+      arreglo3.push(itemPago);
+      let historialItems = await historialPagos.setItems_pagos(itemPago);
+      arreglo4.push(historialItems);
     });
 
     res.sendStatus(200);
@@ -104,7 +108,7 @@ router.post("/", async function (req, res) {
 });
 
 router.get("/array", function (req, res) {
-  res.status(200).send({ arreglo, arreglo2 });
+  res.status(200).send({ arreglo, arreglo2, arreglo3, arreglo4 });
 });
 
 module.exports = router;
