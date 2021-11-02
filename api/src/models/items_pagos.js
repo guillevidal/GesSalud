@@ -11,10 +11,10 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
       },
       patient_id: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
       },
       turno_id: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
       },
     },
     { timestamps: false }
