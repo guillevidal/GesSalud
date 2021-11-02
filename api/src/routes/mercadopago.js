@@ -62,7 +62,7 @@ router.post("/", async function (req, res) {
 
     let { additional_info, status_detail, transaction_amount } = info.data;
 
-    let test = await Historial_pagos.create(
+    let historialPagos = await Historial_pagos.create(
       {
         id: info.data.id,
         status: status_detail,
@@ -72,13 +72,11 @@ router.post("/", async function (req, res) {
         fields: ["id", "status", "price"],
       }
     );
-    if (test) {
-      arreglo.push(test.dataValues);
-      arreglo2.push(info.data.id);
-    }
+    arreglo.push(historialPagos.dataValues);
+    arreglo2.push(info.data.id);
 
-    let arrayTest = additional_info.items.map(async (e) => {
-      await Items_pagos.create(
+    let ItemsPagos = additional_info.items.map(async (e) => {
+      let item = await Items_pagos.create(
         {
           title: e.title,
           unit_price: e.unit_price,
@@ -96,7 +94,9 @@ router.post("/", async function (req, res) {
           ],
         }
       );
+      await historialPagos.setItems_pagos(item);
     });
+
     arreglo2.push(additional_info.items);
 
     res.sendStatus(200);
