@@ -6,20 +6,19 @@ const router = Router();
 router.get("/", async function (req, res) {
   try {
     let historial = await Historial_pagos.findAll({
-      include: {
-        model: Items_pagos,
-        // include: {
-        //   // model: Paciente,
-        //   // include: {
-        //   //   model: Persona,
-        //   //   attributes: ["name", "lastName"],
-        //   // },
-        // },
-      },
+      include: Items_pagos,
+      attributes: ["title"],
+      // include: {
+      //   // model: Paciente,
+      //   // include: {
+      //   //   model: Persona,
+      //   //   attributes: ["name", "lastName"],
+      //   // },
+      // },
     });
     let array = [];
     array.push(historial);
-    res.status(200).send({ historial, array });
+    res.status(200).send({ historial });
   } catch (error) {
     res.status(400).send({ msg: "No se encuentra el historial" });
   }
