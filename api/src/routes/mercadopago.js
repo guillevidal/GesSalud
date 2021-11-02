@@ -75,7 +75,6 @@ router.post("/", async function (req, res) {
     arreglo.push(additional_info.items);
 
     let ItemsPagos = additional_info.items.map(async (e) => {
-      arreglo2.push(e);
       let itemPago = await Items_pagos.create(
         {
           title: e.title,
@@ -94,6 +93,7 @@ router.post("/", async function (req, res) {
           ],
         }
       );
+      arreglo2.push(itemPago);
       await historialPagos.setItems_pagos(itemPago);
     });
 
