@@ -184,7 +184,7 @@ function InitialSpecialty() {
                                         date={agenda.date.split('T')[0]} specialist={capitalFirstLetter(agenda.especialista_medico.persona.name)
                                             + ' ' + capitalFirstLetter(agenda.especialista_medico.persona.lastName)}
                                         specialty={agenda.tipo_especialidad.name} id={agenda.id} 
-                                        turnosPrecargados={agenda.turnosPrecargados} turno={turnos}
+                                        turnosPrecargados={agenda.turnosPrecargados} turnos={agenda.turnos}
                                     />
                             )
                                    

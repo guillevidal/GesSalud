@@ -5,19 +5,28 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Agenda({specialist, date, specialty, id, turnosPrecargados, turnos}) { 
-    const [estado, setEstado]=useState({fecha: "fecha", especialista: "especialista", especialidad: "especialidad" })
-    useEffect(()=> {
-        if(turnos.length===turnosPrecargados.length){
-            setEstado({fecha: "fecha2", especialista: "especialista2", especialidad: "especialidad2" })
+    
+    let fecha="fecha"
+    let especialista="especialista"
+    let especialidad="especialidad"
+    const prueba = ()=>{
+
+        if(turnosPrecargados.length=turnos.length){
+            
+            fecha="fecha2"
+            especialista="especialista2"
+            especialidad="especialidad2"
         }
-    })
+    }
+    prueba()
+   
     return(
         
         <tr className='datosAgenda'>
-                <td className={`bloque ${estado.fecha}`}><span>{date}</span></td>
+                <td className={`bloque ${fecha}`}><span>{date}</span></td>
                 
-                <td className={`bloque ${estado.especialista}`} ><span >{specialist}</span></td>
-                <td className={`bloque ${estado.especialidad}`}><span >{specialty}</span></td>
+                <td className={`bloque ${especialista}`} ><span >{specialist}</span></td>
+                <td className={`bloque ${especialidad}`}><span >{specialty}</span></td>
                 <td className='bloque ver'>
                 <Link to={`especialistaPys/agenda/${id}`}>
                 <FontAwesomeIcon icon={faEye} className='boton'/>
