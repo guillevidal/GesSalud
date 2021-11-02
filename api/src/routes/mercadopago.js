@@ -84,14 +84,14 @@ router.post("/", async function (req, res) {
           // unit_price: e.unit_price,
           // patient_id: e.id,
           // turno_id: e.category_id,
-          //historialPagoId: info.data.id,
+          historialPagoId: Number(info.data.id),
         },
         {
           fields: [
             "title",
             "unit_price",
             "patient_id",
-            //"historialPagoId",
+            "historialPagoId",
             "turno_id",
           ],
         }
