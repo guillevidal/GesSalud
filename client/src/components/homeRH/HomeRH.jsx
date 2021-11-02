@@ -30,6 +30,8 @@ const HomeRH = () => {
     const [busquedaAdministrativo2, setBusquedaAdministrativo2] = useState([])
     const handleEmpleados = (e) => {
         const { value } = e.target
+        dispatch(obtenerAdministrativos())
+        dispatch(obtenerEspecialistas())
         setEmpleados(value)
     }
     return (
