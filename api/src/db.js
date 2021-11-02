@@ -114,8 +114,8 @@ Turno.belongsTo(Paciente);
 // Paciente.hasMany(Historial_pagos);
 // Historial_pagos.belongsTo(Paciente);
 
-// Items_pagos.belongsTo(Historial_pagos);
-// Historial_pagos.hasMany(Items_pagos);
+Items_pagos.belongsTo(Historial_pagos);
+Historial_pagos.hasMany(Items_pagos);
 
 Persona.hasOne(Paciente);
 Paciente.belongsTo(Persona);
