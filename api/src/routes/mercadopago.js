@@ -81,9 +81,9 @@ router.post("/", async function (req, res) {
       let itemPago = await Items_pagos.create(
         {
           title: e.title,
-          unit_price: e.unit_price,
-          patient_id: e.id,
-          turno_id: e.category_id,
+          // unit_price: e.unit_price,
+          // patient_id: e.id,
+          // turno_id: e.category_id,
           //historialPagoId: info.data.id,
         },
         {
