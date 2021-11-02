@@ -97,8 +97,8 @@ router.post("/", async function (req, res) {
         }
       );
       arreglo3.push(itemPagos);
-      let historialItems = await historialPagos.setItems_pagos(itemPago);
-      arreglo4.push(historialItems);
+      let itemPago = await Items_pagos.setHistorial_pagos(historialPagos);
+      arreglo4.push(itemPago);
     });
 
     res.sendStatus(200);
