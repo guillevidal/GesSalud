@@ -17,7 +17,9 @@ router.get("/", async function (req, res) {
         },
       },
     });
-    res.sendStatus(200).send(historial);
+    let array = [];
+    array.push(historial);
+    res.status(200).send({ historial, array });
   } catch (error) {
     res.status(400).send({ msg: "No se encuentra el historial" });
   }
