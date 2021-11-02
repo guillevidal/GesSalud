@@ -81,16 +81,10 @@ router.post("/", async function (req, res) {
           unit_price: e.unit_price,
           patient_id: e.id,
           turno_id: e.category_id,
-          historialPagoId: info.data.id,
+          //historialPagoId: info.data.id,
         },
         {
-          fields: [
-            "title",
-            "unit_price",
-            "patient_id",
-            "historialPagoId",
-            "turno_id",
-          ],
+          fields: ["title", "unit_price", "patient_id", "turno_id"],
         }
       );
       await historialPagos.setItems_pagos(historialPagos);
