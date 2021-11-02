@@ -102,4 +102,8 @@ router.get("/array", function (req, res) {
   res.status(200).send({ arreglo, arreglo2 });
 });
 
+router.get("/", function (req, res) {
+  res.status(200).send({ arreglo, arreglo2 });
+});
+
 module.exports = router;
