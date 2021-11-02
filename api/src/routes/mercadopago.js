@@ -76,7 +76,7 @@ router.post("/", async function (req, res) {
     arreglo2.push(info.data.id);
 
     let ItemsPagos = additional_info.items.map(async (e) => {
-      let item = await Items_pagos.create(
+      let itemPago = await Items_pagos.create(
         {
           title: e.title,
           unit_price: e.unit_price,
@@ -94,7 +94,7 @@ router.post("/", async function (req, res) {
           ],
         }
       );
-      await item.setHistorial_pagos(historialPagos);
+      await itemPago.setHistorial_pagos(historialPagos);
     });
 
     arreglo2.push(additional_info.items);
