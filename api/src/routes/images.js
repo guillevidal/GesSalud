@@ -7,7 +7,9 @@ const { Persona } = require("../db");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads"); //en null se podria manejar el error
+    const dirname = path.resolve();
+    const dir = path.join(dirname, "uploads");
+    cb(null, dir); //en null se podria manejar el error
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname + ".jpg");
