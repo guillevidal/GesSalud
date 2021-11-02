@@ -225,7 +225,7 @@ export const resetearModificado = () => {
 export const crearAdministrativo = (administrativo) => {
   return async (dispatch) => {
     {
-      const result = await axios.put(`/administrativos`, administrativo);
+      const result = await axios.post(`/administrativos`, administrativo);
       const data = result.data;
       return dispatch({ type: CREAR_ADMINISTRATIVO, payload: data });
     }

@@ -61,7 +61,6 @@ export default function Nav(){
         dispatch(resetearModificado())
         dispatch(resetearAdministrativoDetallado())
         dispatch(resetearAdministrativoCreado())
-        dispatch(resetearAdministrativos())
         dispatch(resetearEspecialidades())
     }
 
