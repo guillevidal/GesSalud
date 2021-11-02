@@ -1,6 +1,9 @@
 import React from "react";
-
+import Checkout from "./SDK-MercadoPago.jsx"
+import {useDispatch} from "react-redux"
+//import { enviarPago } from "../../../actions/index.js";
 const CarroCompras = ({carro, setCarro})=> {
+    const dispatch= useDispatch();
     return (
         <div>
             <h1>Carrito</h1>
@@ -16,7 +19,8 @@ const CarroCompras = ({carro, setCarro})=> {
                     </div>
                 )
             })}
-            {carro.items[0]?<button>Ir a pagar</button>: null}
+            {carro.items[0] && <Checkout/>}
+            
         </div>
     )
 }
