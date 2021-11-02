@@ -6,8 +6,10 @@ const router = Router();
 router.get("/", async function (req, res) {
   try {
     let historial = await Historial_pagos.findAll({
-      include: Items_pagos,
-      attributes: ["title"],
+      include: {
+        model: Items_pagos,
+        attributes: ["title"],
+      },
       // include: {
       //   // model: Paciente,
       //   // include: {
