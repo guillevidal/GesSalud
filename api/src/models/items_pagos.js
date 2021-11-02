@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
       },
       patient_id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
       },
       turno_id: {
         type: DataTypes.STRING,
