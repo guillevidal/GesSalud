@@ -64,7 +64,7 @@ router.post("/", async function (req, res) {
 
     let test = await Historial_pagos.create(
       {
-        id: info.data.id,
+        id_c: info.data.id,
         status: status_detail,
         price: transaction_amount,
       },
@@ -99,10 +99,6 @@ router.post("/", async function (req, res) {
 });
 
 router.get("/array", function (req, res) {
-  res.status(200).send({ arreglo, arreglo2 });
-});
-
-router.get("/", function (req, res) {
   res.status(200).send({ arreglo, arreglo2 });
 });
 
