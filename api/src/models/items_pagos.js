@@ -13,6 +13,9 @@ module.exports = (sequelize) => {
       patient_id: {
         type: DataTypes.INTEGER,
       },
+      turno_id: {
+        type: DataTypes.INTEGER,
+      },
     },
     { timestamps: false }
   );
