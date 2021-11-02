@@ -70,7 +70,7 @@ export default function HomeSpecialist(){
         idTurno: t.id,
         dniPaciente: t.paciente.persona.dni,
         name: t.paciente.persona.name,
-        lastname: t.paciente.persona.lastName,
+        lastName: t.paciente.persona.lastName,
         horaTurno: t.hour.slice(11, 16),
         fechaTurno: t.hour.slice(0,10),
         idEspecialista: t.agenda.especialista_medico.id,
@@ -87,7 +87,6 @@ export default function HomeSpecialist(){
         return turnosSort;
     }
     const turnosHoy = filtrarTurnos(short)
-    console.log('turnosHoy', turnosHoy)
 
     const [turnos, setTurnos] = useState(turnosDiaIndiv);
 
@@ -116,9 +115,6 @@ export default function HomeSpecialist(){
         
     }
 
-    const handleOnClick = () => {
-
-    }
 
     let turnosRend = turnosHoy[0]?.fechaTurno === inputDia ? turnosHoy : turnos;
 
@@ -148,7 +144,7 @@ export default function HomeSpecialist(){
                             turnosRend?.map((turno) => {
                                     return (
     
-                                        <div key={turno.idTurno}>
+                                        <div key={turno.idTurno} id={turno.idTurno}>
                                             <p>Paciente:</p>
 
                                             <div>
@@ -165,7 +161,6 @@ export default function HomeSpecialist(){
                                             onClick={()=>{handleDataPaciente(turno.dniPaciente)}}/>
                                             </Link>
                                             
-                                            <button onClick={handleOnClick}>Atendido</button>
                                         </div>
     
                                     )
