@@ -10,15 +10,12 @@ module.exports = (sequelize) => {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        allowNull: false,
       },
       status: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
       price: {
         type: DataTypes.INTEGER,
-        allowNull: false,
       },
     },
     { timestamps: false }
