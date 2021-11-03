@@ -48,8 +48,8 @@ router.get("/profile/:dni", async (req, res) => {
       where: { dni: dni },
       attributes: ["imgProfile"],
     });
-    res.contentType("image/jpeg");
-    return res.send(query.dataValues.imgProfile);
+    // res.contentType("image/jpeg");
+    return res.contentType("image/jpeg").send(query.dataValues.imgProfile);
   } catch (e) {
     res.status(400).send({ error: e });
   }
