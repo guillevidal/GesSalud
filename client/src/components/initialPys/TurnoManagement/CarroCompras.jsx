@@ -4,6 +4,11 @@ import {useDispatch} from "react-redux"
 import { enviarPago } from "../../../actions/index.js";
 const CarroCompras = ({carro, setCarro})=> {
     const dispatch= useDispatch();
+    const handleSubmit = () => {
+        console.log(carro)
+        dispatch(enviarPago(carro))
+    }
+    
     return (
         <div>
             <h1>Carrito</h1>
@@ -19,7 +24,7 @@ const CarroCompras = ({carro, setCarro})=> {
                     </div>
                 )
             })}
-            {carro.items[0] && <button onClick={()=>dispatch(enviarPago(carro))}>Pagar</button>}
+            {carro.items[0] && <button onClick={()=>handleSubmit()}>Pagar</button>}
             
         </div>
     )
