@@ -20,7 +20,7 @@ router.post("/pago", function (req, res) {
   let preference = {
     ...servicios,
     back_urls: {
-      success: "https://ges-salud.vercel.app/patientPys",
+      success: "https://ges-salud.vercel.app/turnoPys",
       failure: "",
       pending: "",
     },

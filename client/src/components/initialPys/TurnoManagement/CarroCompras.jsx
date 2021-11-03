@@ -1,12 +1,14 @@
 import React from "react";
 import Checkout from "./SDK-MercadoPago.jsx"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import { enviarPago } from "../../../actions/index.js";
 const CarroCompras = ({carro, setCarro})=> {
     const dispatch= useDispatch();
-    const handleSubmit = () => {
-        console.log(carro)
-        dispatch(enviarPago(carro))
+    const li = useSelector( state => state.creado)
+    const handleSubmit = async() => {
+        
+        await dispatch(enviarPago(carro))
+       
     }
     
     return (
@@ -24,7 +26,8 @@ const CarroCompras = ({carro, setCarro})=> {
                     </div>
                 )
             })}
-            {carro.items[0] && <button onClick={()=>handleSubmit()}>Pagar</button>}
+            {carro.items[0] && <button  onClick={()=>handleSubmit()}>Pagar</button>}
+            
             
         </div>
     )
