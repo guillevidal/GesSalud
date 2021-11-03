@@ -17,6 +17,7 @@ import MisTurnosCard from './MisTurnosCard.jsx';
 import Agenda from './Agenda.jsx';
 import { useModal } from "../Modal/useModal.js";
 import Modal from '../Modal/Modal.js';
+import ModalHistoriaClinica from '../Modal/ModalHistoriaClínica.js'
 import CarroCompras from "../initialPys/TurnoManagement/CarroCompras.jsx"
 
 export default function HomeSpecialist() {
@@ -161,6 +162,7 @@ export default function HomeSpecialist() {
     const [placeHolder, setPlaceHolder] = useState("Buscar por especialidad...")
     const [carro, setCarro] = useState({ items: [] })
     const [isOpenChangeTurno, openChangeTurno, closeChangeTurno] = useModal(false)
+    const [isOpenHistoriaClinica, openHistoriaClinica, closeHistoriaClinica] = useModal(false)
 
     const handleChange = (event) => {
         const { value } = event.target
@@ -343,7 +345,29 @@ export default function HomeSpecialist() {
                                     </select>
                                 </div>
                             </div>
-                            <button>Consultar Historia Clínica</button>
+                            <button onClick={openHistoriaClinica}>Consultar Historia Clínica</button>
+                            <ModalHistoriaClinica isOpen={isOpenHistoriaClinica} closeModal={closeHistoriaClinica} >
+                                <div>
+                                    <div>
+                                        <span>HISTORIA CLINICA</span>
+                                        <div>
+                                            <span>CODIGO: {pacienteDetail[0]?.paciente.historiaClinica.id}</span>
+                                            <span>FECHA: {pacienteDetail[0]?.paciente.historiaClinica.creationDate}</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span>INFORMACION DEL PACIENTE</span>
+                                        <div>
+                                            <span>NOMBRE : {(pacienteDetail[0]?.name)}</span>
+                                            <span>APELLIDO : {(pacienteDetail[0]?.lastName)}</span>
+                                            <span>DNI : {pacienteDetail[0]?.dni}</span>
+                                            <span>FECHA DE NACIMIENTO : {pacienteDetail[0]?.birth}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </ModalHistoriaClinica>
                             <button onClick={handleMisTurnos}>Mis Turnos</button>
                         </>
 
@@ -380,7 +404,7 @@ export default function HomeSpecialist() {
                                 :
 
                                 <div id="edit-agenda-container">
-                     
+
                                     <div className="encabezado">
                                         <span className="title data">MIS TURNOS</span>
                                     </div>
@@ -417,7 +441,7 @@ export default function HomeSpecialist() {
                         }
 
                     </div>
-                    <div className='carro'><FontAwesomeIcon icon={faShoppingCart} onClick={openChangeTurno} className='carrito'/><span onClick={openChangeTurno} className='cantidad'>{carro.items.length}</span></div>
+                    <div className='carro'><FontAwesomeIcon icon={faShoppingCart} onClick={openChangeTurno} className='carrito' /><span onClick={openChangeTurno} className='cantidad'>{carro.items.length}</span></div>
                     <Modal isOpen={isOpenChangeTurno} closeModal={closeChangeTurno}>
                         <CarroCompras carro={carro} setCarro={setCarro} />
                     </Modal>
