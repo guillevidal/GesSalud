@@ -21,7 +21,7 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
     const handleSubmitEliminarTurno = (event) => {
         event.preventDefault();
         const fun = async () => {
-            dispatch(eliminarTurno(date.id))
+            dispatch(eliminarTurno(id))
 
             await swal({
                 icon: 'success',
