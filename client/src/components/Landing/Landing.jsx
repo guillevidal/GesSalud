@@ -6,7 +6,7 @@ import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { rol } from "../../actions";
 import axios from "axios";
-import { especialistaDetallado, pacienteDetallado } from "../../actions"
+import { especialistaDetallado, pacienteDetallado, obtenerPacientesRegistro} from "../../actions"
 import { Redirect, Link } from "react-router-dom";
 
 
@@ -35,11 +35,9 @@ export default function Landing() {
 
       if(res.data.dni){
         dispatch(pacienteDetallado(res.data.dni))
-        localStorage.setItem('user',res.data.dni)
       }
       if(res.data.id){
         dispatch(especialistaDetallado(res.data.especialistaId))
-        localStorage.setItem('user',res.data.especialistaId)
       }
 
     }
@@ -138,6 +136,10 @@ export default function Landing() {
 
   }
 
+  const handleSubmitLost = (e) =>{
+      e.preventDefault()
+  }
+
   return (
     <Fragment>
       {(roles === "1" || roles === "6") && <Redirect to="/patientPys" />}
@@ -204,7 +206,7 @@ export default function Landing() {
           </div>
           <div className='notengo'>
             <span className='text'>¿No tienes cuenta?</span>
-          <Link to="/registrar" className='link'>Registrarse</Link>
+          <Link to="/registrar" className='link' onClick={()=>dispatch(obtenerPacientesRegistro())}>Registrarse</Link>
           </div>
           </div>
         </form>}
@@ -227,7 +229,7 @@ export default function Landing() {
             </div>
             {inputLost.error && <span className='error-mail'>{inputLost.error}</span>}
           <div>
-          <button className="boton-login" onClick={(e) => handleSubmit(e)}>
+          <button className="boton-login" onClick={(e) => handleSubmitLost(e)}>
             Solicitar
           </button>
           </div>

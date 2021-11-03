@@ -30,6 +30,8 @@ const HomeRH = () => {
     const [busquedaAdministrativo2, setBusquedaAdministrativo2] = useState([])
     const handleEmpleados = (e) => {
         const { value } = e.target
+        dispatch(obtenerAdministrativos())
+        dispatch(obtenerEspecialistas())
         setEmpleados(value)
     }
     return (
@@ -50,13 +52,14 @@ const HomeRH = () => {
             {empleados === "administrativos" && !busquedaAdministrativo2.length && administrativos && administrativos.length > 6 ? <PaginadoAdmin busquedaAdministrativo2={busquedaAdministrativo2}/> : null}
 
             <div className='tarjetas'>
-
-                {empleados === "especialistas" && !busquedaEspecialista[0] ? !especialistas[0] ? <span className='empty'><FontAwesomeIcon icon={faTimesCircle} /> No se encontró especialista registrado</span> : especialistas.slice(valorPaginado, valorPaginado + 6).map(e => {
+                {(especialistas[0] && especialistas[0].length < 1) && <span className='empty'><FontAwesomeIcon icon={faTimesCircle} /> No se encontraron pacientes registrados</span>}          
+            
+                {empleados === "especialistas" && !busquedaEspecialista[0] ? especialistas[0] && especialistas.slice(valorPaginado, valorPaginado + 6).map(e => {
                     return (
                         <CardSpeciality e={e} key={e.id} />)
                 })
                     :
-                    typeof busquedaEspecialista[0] === "string" ? <h1>{busquedaEspecialista[0]}</h1> : busquedaEspecialista.slice(valorPaginado, valorPaginado + 6).map(e => {
+                    typeof busquedaEspecialista[0] === "string" ? <span className='empty'><FontAwesomeIcon icon={faTimesCircle} />{busquedaEspecialista[0]}</span> : busquedaEspecialista.slice(valorPaginado, valorPaginado + 6).map(e => {
                         return (
                             <CardSpeciality e={e} key={e.id + "busqueda"} />
                         )

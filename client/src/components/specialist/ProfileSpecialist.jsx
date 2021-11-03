@@ -13,7 +13,6 @@ import axios from "axios"
 
 export default  function ProfileSpecialist(){
  
-    const user = localStorage.getItem('user')
 
     const dispatch = useDispatch()
 
@@ -22,7 +21,7 @@ export default  function ProfileSpecialist(){
     let especialista =  useSelector(state => state.especialistaDetallado)
     const pacienteDetail  = useSelector(state => state.pacienteDetallado)
 
- 
+    let [imagenBD, setImagenBD] = useState(false);
 
     const newData = {...especialista[0]}
 
@@ -45,32 +44,12 @@ export default  function ProfileSpecialist(){
  
     useEffect(()=>{
 
-        let obtengoToken = localStorage.getItem('access-token')
-        axios.get('/whoami', { 
-         headers:  { 
-            authorization : obtengoToken
-          }
-      })
-      .then(res => {
-        console.log(res.data)
-        if(res.data.rol){
-            dispatch(rol(res.data.rol))
-    
-        }
-        else{
-          return
-        }
-      }) 
-
-
         if(roles === '3'){
-        dispatch(especialistaDetallado(user))
+        dispatch(especialistaDetallado(especialista[0].id))
         }
         else{
-            dispatch(pacienteDetallado(user))
-       
+            dispatch(pacienteDetallado(pacienteDetail[0].dni))
         }
-
 
     },[editar])
 
@@ -94,15 +73,20 @@ export default  function ProfileSpecialist(){
 
         e.preventDefault()
 
-            
-            setEditar({
-                ...editar,
-                [op] : true
-            })
-
+            console.log(imagenBD)
+          
            if(op === 'imagen'){
             document.getElementById('upload').click()
            }
+           if(op === 'imagenPac'){
+            document.getElementById('uploadPac').click()
+           }
+
+           setEditar({
+            ...editar,
+            [op] : true
+        })
+
         
 
     }
@@ -157,11 +141,10 @@ export default  function ProfileSpecialist(){
         let myNewFile = '';
         
         if(roles === '4'){
-         myNewFile = new File([image], datosPac.dni-datosPac.name-image.name, {type: image.type});
+         myNewFile = new File([image], `${datosPac.dni}-profile`, {type: image.type});
         }
         else{
-            myNewFile = new File([image], `${datosEsp.dni}-${datosEsp.name}`, {type: image.type});
-       
+            myNewFile = new File([image], `${datosEsp.dni}-profile`, {type: image.type});
         }
         
         dispatch(uploadAction(myNewFile))
@@ -248,7 +231,7 @@ export default  function ProfileSpecialist(){
                        {preview ?
                        <img src={URL.createObjectURL(image)} alt="" className='imagen'/>
                        :
-                       <img src={imagen} alt="" className='imagen'/>
+                       <img src={imagenBD} alt="" className='imagen'/>            
                        
                        }
                        
@@ -287,14 +270,23 @@ export default  function ProfileSpecialist(){
 
                 
 
-                 {(editar.imagen === true) || (editar.datos === true) || (editar.cuenta === true) ? <button onClick={e => handleSubmit(e)} name='saveImage' className='button-change'>Guardar cambios</button> : null} 
-                   
+                {(editar.imagen === true) || (editar.datos === true) || (editar.cuenta === true) ? <div className='buttons'><button onClick={e => handleSubmit(e)} name='save' className='button-change save'>Guardar cambios</button> 
+                   <button onClick={e => handleClear(e)} name='clean' className='button-change discard'>Descartar cambios</button></div> : null} 
+               
             </div>}
 
             {roles === '4' &&   <div className='card-profile'>
                 <div className='encabezado'>
-                   <div className='image-label'><img src="https://wpdicta-ha-staticfiles-media-v1.s3.amazonaws.com/wp-content/uploads/2019/06/01124533/leonardo-dicaprio-meme.jpg" alt="" className='imagen'/><div className='icon-label'><label onClick={e => handleClick(e,'imagen')} className='icon'><FontAwesomeIcon icon={faEdit} /></label></div></div> 
-                   <input className='file' type="file" name="imagen" id="upload" />
+                   <div className='image-label'>
+
+                   {preview ?
+                       <img src={URL.createObjectURL(image)} alt="" className='imagen'/>
+                       :
+                       <img src={imagen} alt="" className='imagen'/>
+                       
+                       }
+                       <div className='icon-label'><label onClick={e => handleClick(e,'imagenPac')} className='icon'><FontAwesomeIcon icon={faEdit} /></label></div></div> 
+                   <input className='file' type="file" name="imagen" id="uploadPac" onChange={(e) => handleImageUpload(e)}/>
                     <span className='nombre'>{mayus(pacienteDetail[0].name) + ' ' + mayus(pacienteDetail[0].lastName) }</span>
                  </div> 
 
@@ -320,8 +312,8 @@ export default  function ProfileSpecialist(){
 
                 
 
-                 {(editar.imagen === true) || (editar.datos === true) || (editar.cuenta === true) ? <button onClick={e => handleSubmit(e)} name='save' className='button-change'>Guardar cambios</button> : null} 
-                 {(editar.imagen === true) || (editar.datos === true) || (editar.cuenta === true) ? <button onClick={e => handleClear(e)} name='clean' className='button-change'>Descartar cambios</button> : null} 
+                 {(editar.imagenPac === true) || (editar.datos === true) || (editar.cuenta === true) ? <div className='buttons'><button onClick={e => handleSubmit(e)} name='save' className='button-change save'>Guardar cambios</button> 
+                   <button onClick={e => handleClear(e)} name='clean' className='button-change discard'>Descartar cambios</button></div> : null} 
                   
             </div>}
 

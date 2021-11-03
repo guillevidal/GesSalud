@@ -9,12 +9,13 @@ const turnos = require("./turno.js");
 const administrativos = require("./administrativos");
 const agendas = require("./agendas");
 const diagnosticos = require("./diagnosticos");
-// const images = require("./images");
+const images = require("./images");
 
 const autenticar = require("./autenticar.js");
 const whoami = require("./whoami.js");
 const mercadopago1 = require("./mercadopago");
 const registro = require("./registro");
+const historial_pagos = require("./historial_pagos.js");
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
@@ -26,10 +27,10 @@ router.use("/agendas", agendas);
 router.use("/diagnosticos", diagnosticos);
 router.use("/turnos", turnos);
 router.use("/pago", mercadopago1);
-// router.use("/images", images);
+router.use("/images", images);
 
 router.use("/autenticar", autenticar);
 router.use("/whoami", whoami);
 router.use("/registro", registro);
-
+router.use("/historialpagos", historial_pagos);
 module.exports = router;

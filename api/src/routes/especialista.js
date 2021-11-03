@@ -9,24 +9,6 @@ const {
 } = require("../db");
 const router = Router();
 
-//######################
-//-------MULTER---------
-
-const multer = require("multer");
-const path = require("path");
-const { Console } = require("console");
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads"); //en null se podria manejar el error
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-
-const uploads = multer({ storage });
-
 router.get("/", async function (req, res, next) {
   let especialistas = await Especialista_medico.findAll({
     include: [
@@ -58,62 +40,76 @@ module.exports = router;
 router.post("/", async function (req, res) {
   const data = req.body;
   try {
-    const creandoEspecialista = await Persona.create(
-      {
-        name: data.name,
-        lastName: data.lastName,
-        dni: data.dni,
-        email: data.email,
-        phone: data.phone,
-        adress: data.adress,
-        birth: data.birth,
-        user: data.user,
-        password: data.password,
-        gender: data.gender,
-        rol: "3",
-      },
-      {
-        fields: [
-          "name",
-          "lastName",
-          "dni",
-          "email",
-          "phone",
-          "adress",
-          "birth",
-          "user",
-          "password",
-          "gender",
-          "rol",
-        ],
-      }
-    );
-    const creandoMatriculaEspecialista = await Especialista_medico.create(
-      {
-        enrollment: data.enrollment,
-        specialty: data.specialty,
-      },
-      {
-        fields: ["enrollment", "specialty"],
-      }
-    );
-
-    await creandoEspecialista.setEspecialista_medico(
-      creandoMatriculaEspecialista
-    );
-    let obj = {
-      ...creandoEspecialista.dataValues,
-      ...creandoMatriculaEspecialista.dataValues,
-    };
-    if (obj.email && obj.name && obj.lastName && obj.user && obj.password) {
-      await transporter.sendMail({
-        from: '"GesSalud💉" <ges.salud.04@gmail.com>',
-        to: obj.email,
-        subject: "Creacion de cuenta exitosa ✔",
-        html: `<b> Hola ${obj.name} ${obj.lastName}🩺 , tu usuario es: ${obj.user} y tu contraseña: ${obj.password} </b>`,
+    const [yaExisteDni, yaExisteCorreo, yaExisteUsuario] = await Promise.all([
+      Persona.findOne({ where: { dni: data.dni } }),
+      Persona.findOne({ where: { email: data.email } }),
+      Persona.findOne({ where: { user: data.user } }),
+    ]);
+    if (yaExisteUsuario || yaExisteCorreo || yaExisteDni) {
+      res.status(400).send({
+        msg: `El dni, usuario o el email ingresado ya esta registrado`,
       });
+    } else {
+      const [creandoEspecialista, creandoMatriculaEspecialista] =
+        await Promise.all([
+          Persona.create(
+            {
+              name: data.name,
+              lastName: data.lastName,
+              dni: data.dni,
+              email: data.email,
+              phone: data.phone,
+              adress: data.adress,
+              birth: data.birth,
+              user: data.user,
+              password: data.password,
+              gender: data.gender,
+              rol: "3",
+            },
+            {
+              fields: [
+                "name",
+                "lastName",
+                "dni",
+                "email",
+                "phone",
+                "adress",
+                "birth",
+                "user",
+                "password",
+                "gender",
+                "rol",
+              ],
+            }
+          ),
+          Especialista_medico.create(
+            {
+              enrollment: data.enrollment,
+              specialty: data.specialty,
+            },
+            {
+              fields: ["enrollment", "specialty"],
+            }
+          ),
+        ]);
+
+      await creandoEspecialista.setEspecialista_medico(
+        creandoMatriculaEspecialista
+      );
+      let obj = {
+        ...creandoEspecialista.dataValues,
+        ...creandoMatriculaEspecialista.dataValues,
+      };
+      if (obj.email && obj.name && obj.lastName && obj.user && obj.password) {
+        await transporter.sendMail({
+          from: '"GesSalud💉" <ges.salud.04@gmail.com>',
+          to: obj.email,
+          subject: "Creacion de cuenta exitosa ✔",
+          html: `<b> Hola ${obj.name} ${obj.lastName}🩺 , tu usuario es: ${obj.user} y tu contraseña: ${obj.password} </b>`,
+        });
+      }
+      res.send(obj);
     }
-    res.send(obj);
   } catch (e) {
     res.status(400).send("no se puedo crear al especialista");
   }
@@ -214,69 +210,6 @@ router.put("/:id", async (req, res) => {
     res.status(200).send("Se actualizaron los datos correctamente");
   } catch (e) {
     res.status(400).send("No se pudieron actualizar los datos.");
-  }
-});
-
-// // ############
-// // PUT CON MULTER
-// router.put("/:id", uploads.single("image"), async (req, res) => {
-//   try {
-//     let id = req.params.id;
-//     let query = await Especialista_medico.findByPk(id);
-//     let { personaId } = query;
-//     let {
-//       name,
-//       lastName,
-//       dni,
-//       email,
-//       phone,
-//       adress,
-//       birth,
-//       user,
-//       password,
-//       specialty,
-//       gender,
-//       enrollment,
-//     } = req.body;
-
-//     let imgProfile = req.file.originalname;
-
-//     await Especialista_medico.update(
-//       { enrollment, specialty },
-//       { where: { id } }
-//     );
-//     await Persona.update(
-//       {
-//         name,
-//         lastName,
-//         dni,
-//         email,
-//         phone,
-//         adress,
-//         birth,
-//         user,
-//         password,
-//         gender,
-//         imgProfile,
-//       },
-//       { where: { id: personaId } }
-//     );
-
-//     res.status(200).send("Se actualizaron los datos correctamente");
-//   } catch (e) {
-//     res.status(400).send("No se pudieron actualizar los datos.");
-//   }
-// });
-
-//PARA EXTRAER LA IMAGEN DESDE EL DISKSTORAGE
-router.get("/uploads/:filename", (req, res) => {
-  const { filename } = req.params;
-  try {
-    const dirname = path.resolve();
-    const fullfilepath = path.join(dirname, "uploads/" + filename);
-    return res.sendFile(fullfilepath);
-  } catch (e) {
-    res.status(400).send({ error: e });
   }
 });
 

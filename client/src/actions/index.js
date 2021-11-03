@@ -48,7 +48,8 @@ import {
   EDITAR_DIAGNOSTICO,
   CREAR_MULTIPLE_AGENDA,
   CREAR_REGISTRO_PACIENTE,
-  OBTENER_PACIENTES_REGISTRO
+  OBTENER_PACIENTES_REGISTRO,
+  ENVIAR_PAGO
 } from "./valuesForActions.js";
 
 // const token = localStorage["access-token"];
@@ -224,7 +225,7 @@ export const resetearModificado = () => {
 export const crearAdministrativo = (administrativo) => {
   return async (dispatch) => {
     {
-      const result = await axios.put(`/administrativos`, administrativo);
+      const result = await axios.post(`/administrativos`, administrativo);
       const data = result.data;
       return dispatch({ type: CREAR_ADMINISTRATIVO, payload: data });
     }
@@ -454,3 +455,12 @@ export const obtenerPacientesRegistro = () => {
     return dispatch({ type: OBTENER_PACIENTES_REGISTRO, payload: data });
   };
 };
+
+//ENVIAR PAGO 
+export const enviarPago = (items) => { 
+  return async (dispatch) => {
+    const result = await axios.post("/pago/pago", items);
+    const data = result.data;
+    return dispatch({ type: ENVIAR_PAGO , payload: data });
+  };
+}

@@ -12,7 +12,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Agenda from '../Agenda/Agenda.jsx';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
-
+import Paginado from "./paginado.jsx";
 function InitialSpecialty() {
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
@@ -25,6 +25,7 @@ function InitialSpecialty() {
         dispatch(obtenerTurnos())
         dispatch(obtenerPacientes())
     }, [])
+    const valorPaginado = useSelector( state => state.paginado)
     const agenda = useSelector(state => state.agendas)
     const agendaSort = agenda.sort((a, b) => {
         if (a.date > b.date) return 1;
@@ -156,61 +157,67 @@ function InitialSpecialty() {
                         </div>
                     </div>
 
-                </div>
+
+            </div>
 
                 <div className='agenda'>
 
                     <label className='titulo'>Agendas Médicas</label>
+            {agendaFilter && agendaFilter.length > 10 ? <Paginado agendaFilter={agendaFilter}/> :null}
+            {!agendaFilter.length && agendaSort && agendaSort.length > 10 ? <Paginado agendaFilter={agendaFilter}/> :null}
 
                     <table className="agenda-header-container">
 
+                            
 
-                        {
-                            agendaFilter.length > 0
-                                ?
-                                typeof (agendaFilter[0]) === "string"
-                                    ?
-                                    <span className='empty'><FontAwesomeIcon icon={faTimesCircle} />{agendaFilter[0]}</span>
-                                    : <>
-                                        <tr className='encabezado'>
-                                            <th className='title'>Fecha</th>
-                                            <th className='title'>Especialista</th>
-                                            <th className='title'>Especialidad</th>
-                                            <th className='title'>Ver</th>
-                                        </tr>
-                                        {agendaFilter.map(agenda => {
-                                            return (
-                                                <Agenda
-                                                    date={agenda.date.split('T')[0]} specialist={capitalFirstLetter(agenda.especialista_medico.persona.name)
-                                                        + ' ' + capitalFirstLetter(agenda.especialista_medico.persona.lastName)}
-                                                    specialty={agenda.tipo_especialidad.name} id={agenda.id}
-                                                />
-                                            )
+                    {
+                        agendaFilter.length > 0
+                        ?
+                        typeof(agendaFilter[0]) === "string"
+                        ?
+                        <span className='empty'><FontAwesomeIcon icon={faTimesCircle} />{agendaFilter[0]}</span>
+                        :<>
+                        <tr className='encabezado'>
+                            <th className='title'>Fecha</th>
+                            <th className='title'>Especialista</th>
+                            <th className='title'>Especialidad</th>
+                            <th className='title'>Ver</th>
+                        </tr>
+                        {agendaFilter.slice(valorPaginado, valorPaginado+10).map(agenda => {
+                            return (
+                                    <Agenda
+                                        date={agenda.date.split('T')[0]} specialist={capitalFirstLetter(agenda.especialista_medico.persona.name)
+                                            + ' ' + capitalFirstLetter(agenda.especialista_medico.persona.lastName)}
+                                        specialty={agenda.tipo_especialidad.name} id={agenda.id} 
+                                        turnosPrecargados={agenda.turnosPrecargados} turnos={agenda.turnos}
+                                    />
+                            )
+                                   
+                        })} </>
+                        :
+                        agendaSort
+                        ? <>
+                        <tr className='encabezado'>
+                            <th className='title'>Fecha</th>
+                            <th className='title'>Especialista</th>
+                            <th className='title'>Especialidad</th>
+                            <th className='title'>Ver</th>
+                            </tr>
+                        {agendaSort.slice(valorPaginado, valorPaginado+10).map(agenda => {
+                                return (
+                                        <Agenda date={agenda.date.split('T')[0]} specialist={capitalFirstLetter(agenda.especialista_medico.persona.name)
+                                            + ' ' + capitalFirstLetter(agenda.especialista_medico.persona.lastName)}
+                                            specialty={agenda.tipo_especialidad.name} id={agenda.id}
+                                            turnosPrecargados={agenda.turnosPrecargados} turnos={agenda.turnos}
+                                        />
 
-                                        })} </>
-                                :
-                                agendaSort
-                                    ? <>
-                                        <tr className='encabezado'>
-                                            <th className='title'>Fecha</th>
-                                            <th className='title'>Especialista</th>
-                                            <th className='title'>Especialidad</th>
-                                            <th className='title'>Ver</th>
-                                        </tr>
-                                        {agendaSort.map(agenda => {
-                                            return (
-                                                <Agenda date={agenda.date.split('T')[0]} specialist={capitalFirstLetter(agenda.especialista_medico.persona.name)
-                                                    + ' ' + capitalFirstLetter(agenda.especialista_medico.persona.lastName)}
-                                                    specialty={agenda.tipo_especialidad.name} id={agenda.id}
+                                )
+                            })}</>
+                        : 
+                         <span className='empty'><FontAwesomeIcon icon={faTimesCircle} />No se han registrado agendas</span>
+                        
+                    }
 
-                                                />
-
-                                            )
-                                        })}</>
-                                    :
-                                    <span className='empty'><FontAwesomeIcon icon={faTimesCircle} />No se han registrado agendas</span>
-
-                        }
                     </table>
 
                 </div>

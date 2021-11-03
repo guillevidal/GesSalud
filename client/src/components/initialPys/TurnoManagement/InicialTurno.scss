@@ -70,7 +70,8 @@
         display: flex;
         width: 100%;
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: space-evenly;
+        max-width: 1200px;
 
         .error{
             font-size: 2em;
@@ -122,14 +123,32 @@
             padding: 5px;
             border-radius: 5px;
             border: none;
-            background-color: $color-principal;
+            background-color: white;
             color: white;
             cursor: pointer;
+            width: 60px;
+            height: 60px;
 
             &:hover{
-                background-color: $color-secundario;
+                background-color: rgb(255, 250, 219);
                 
             }
+
+            .icon{
+                font-size: 2em;
+                color: rgb(255, 189, 9);
+            }
+        }
+        .MP{
+            height: 100%;
+            &:hover{
+                background-color: rgb(229, 255, 212);
+                
+            }
+        }
+        .logoMP{
+            width: 50px;
+            height: 50px;
         }
     }
 

@@ -6,6 +6,14 @@
     flex-direction: column;
     align-items: center;
 
+    .division{
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
 
     .boton-regresar{
         display: flex;
@@ -22,14 +30,19 @@
     }
     .lista-detalles{
         display: flex;
+        flex-wrap: wrap;
         width: 100%;
-        max-width: 800px;
+        max-width: 500px;
         justify-content: center;
+        align-items: flex-start;
         background-color: $color-detalle;
         font-family: $fuente_principal;
-        border-radius: 20px;
         margin-top: 40px;
+        height: 100%;
 
+        @media (max-width: 1050px) {
+                height: auto;
+        }
 
         .detalles{
             display: flex;

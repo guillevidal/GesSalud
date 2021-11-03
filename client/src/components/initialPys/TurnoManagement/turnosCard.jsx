@@ -6,12 +6,13 @@ import Modal from '../../Modal/Modal.js';
 import swal from "sweetalert";
 import '../SpecialtyManagement/EditAgenda/modales.scss'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserPlus, faUserEdit, faUserTimes } from "@fortawesome/free-solid-svg-icons";
+import {  faUserEdit, faEdit} from "@fortawesome/free-solid-svg-icons";
 import {modificarTurno} from "../../../actions/index.js";
 import {useDispatch} from "react-redux";
 import '../SpecialtyManagement/EditAgenda/modales.scss';
+import ImagenMP from '../../Landing/images/mercadopago.png'
 
-const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos }) => {
+const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, carro, setCarro }) => {
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
@@ -28,6 +29,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos }) =
         hora: { value: `${fecha}T${horaI}&${horaF}`, error: null },
 
     })
+    const [estadoPago, setEstadoPago]= useState("Añadir Pago")
     const handleEditarTurnoPatient = (event) => {
 
         const { value } = event.target
@@ -153,6 +155,25 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos }) =
             return
         }
     }
+
+    const handleCarro=()=>{
+        
+        setCarro({items: [...carro.items, {id :paciente.id, 
+            title: agenda.tipo_especialidad.name,
+            category_id: id.toString(),
+            quantity: 1,
+            unit_price: 200}]});
+
+        setEstadoPago("Quitar")
+    }
+
+    const handleQuitar = () => {
+       
+        setCarro({items: carro.items.filter(element=>{
+            return element.category_id.toString()!==id.toString()
+        })})
+        setEstadoPago("Añadir Pago")
+    }
     return (
         <div className='container-info-turnos'>
             <div className='apartado'>
@@ -182,8 +203,10 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos }) =
 
             </div>
             <div className='botones'>
-                <button className='boton' onClick={openChangeTurno}>Modificar</button>
-                <button className='boton'>Realizar Pago</button>
+                <button className='boton' onClick={openChangeTurno}><FontAwesomeIcon icon={faEdit} className='icon'/></button>
+                {/* <button className='boton MP' onClick={estadoPago!=="Quitar"?handleCarro:handleQuitar}><img src={ImagenMP} alt="" className='logoMP'/></button> */}
+                <button  onClick={estadoPago!=="Quitar"?handleCarro:handleQuitar}>{estadoPago}</button>
+
             </div>
             <Modal isOpen={isOpenChangeTurno} closeModal={closeChangeTurno}>
                 <div className='cancelacion'>
@@ -212,6 +235,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos }) =
 
                 </div>
             </Modal>
+           
         </div>
     )
 }

@@ -1,54 +1,71 @@
-// const express = require("express");
-// const router = express.Router();
-// const path = require("path");
-// const fs = require("fs");
-// const multer = require("multer");
+const express = require("express");
+const router = express.Router();
+const path = require("path");
+const fs = require("fs");
+const multer = require("multer");
+const { Persona } = require("../db");
 
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, "uploads"); //en null se podria manejar el error
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname);
-//   },
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const dirname = path.resolve();
+    const dir = path.join(dirname, "uploads");
+    cb(null, dir); //en null se podria manejar el error
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname + ".jpg");
+  },
+});
+
+const uploads = multer({ storage });
+
+// router.get("/", (req, res) => {
+//   const uploadsDirectory = path.join("uploads");
+
+//   fs.readdir(uploadsDirectory, (err, files) => {
+//     if (err) {
+//       return res.json({ msg: err });
+//     }
+//     if (files.length === 0) {
+//       return res.json({ msg: "No images uploaded" });
+//     }
+
+//     return res.json({ files });
+//   });
 // });
 
-// const uploads = multer({ storage });
+router.post("/", uploads.single("image"), async (req, res) => {
+  const image = req.file.path;
 
-// //PARA EXTRAER LA IMAGEN DESDE EL DISKSTORAGE
-// router.get("/:filename", (req, res) => {
-//   const { filename } = req.params;
-//   const dirname = path.resolve();
-//   const fullfilepath = path.join(dirname, "uploads/" + filename);
-//   return res.sendFile(fullfilepath);
-// });
+  //ALMACENAMIENTO EN LA BD
+  const dni = req.file.originalname.split("-")[0];
+  const fileName = req.file.originalname + ".jpg";
 
-// // router.get("/", (req, res) => {
-// //   const uploadsDirectory = path.join("uploads");
+  await Persona.update(
+    {
+      imgProfile: fileName,
+    },
+    {
+      where: { dni: dni },
+    }
+  );
 
-// //   fs.readdir(uploadsDirectory, (err, files) => {
-// //     if (err) {
-// //       return res.json({ msg: err });
-// //     }
-// //     if (files.length === 0) {
-// //       return res.json({ msg: "No images uploaded" });
-// //     }
+  console.log("###### DNIIIIIII ######", dni);
+  console.log("req.file", req.file);
+  console.log("req.file original name", req.file.originalname);
+  console.log("image", image);
+  res.json({ msg: "Image successfully created" });
+});
 
-// //     return res.json({ files });
-// //   });
-// // });
+//PARA EXTRAER LA IMAGEN DESDE EL DISKSTORAGE
+router.get("/:filename", (req, res) => {
+  const { filename } = req.params;
+  try {
+    const dirname = path.resolve();
+    const fullfilepath = path.join(dirname, "uploads/" + filename);
+    return res.sendFile(fullfilepath);
+  } catch (e) {
+    res.status(400).send({ error: e });
+  }
+});
 
-// router.post("/", uploads.single("image"), (req, res) => {
-//   const image = req.file.path;
-
-//   //ALMACENAMIENTO EN LA BD
-//   const dni = req.file.originalname.split("-")[0];
-
-//   console.log("###### DNIIIIIII ######", dni);
-//   console.log("req.file", req.file);
-//   console.log("req.file original name", req.file.originalname);
-//   console.log("image", image);
-//   res.json({ msg: "Image successfully created" });
-// });
-
-// module.exports = router;
+module.exports = router;

@@ -23,7 +23,7 @@ import {
     ELIMINAR_TURNO, CREAR_DIAGNOSTICO,
     RESETEAR_DIAGNOSTICO, EDITAR_DIAGNOSTICO,
     CREAR_MULTIPLE_AGENDA, CREAR_REGISTRO_PACIENTE,
-    OBTENER_PACIENTES_REGISTRO
+    OBTENER_PACIENTES_REGISTRO, ENVIAR_PAGO
 } from "../actions/valuesForActions.js";
 
 const initialState = {
@@ -62,6 +62,7 @@ const Reducer = (state = initialState, action) => {
         case RESETEAR_DIAGNOSTICO:
         case CREAR_MULTIPLE_AGENDA:
         case CREAR_REGISTRO_PACIENTE:
+        case ENVIAR_PAGO:
             return { ...state, creado: action.payload };
 
 
@@ -124,7 +125,7 @@ const Reducer = (state = initialState, action) => {
             }
             if (!busquedaEs[0]) {
 
-                busquedaEs = ["No se encontro especalista"];
+                busquedaEs = ["No se encontro especialista"];
             }
             return { ...state, busquedaEspecialista: busquedaEs }
 

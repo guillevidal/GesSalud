@@ -61,7 +61,6 @@ export default function Nav(){
         dispatch(resetearModificado())
         dispatch(resetearAdministrativoDetallado())
         dispatch(resetearAdministrativoCreado())
-        dispatch(resetearAdministrativos())
         dispatch(resetearEspecialidades())
     }
 
@@ -105,7 +104,7 @@ export default function Nav(){
             }
             {(status === '3' || status === '4') &&
                 <div className='nav-link'>
-                    <Link to='/homeUser' className='nav-link-ok' >Home</Link>
+                    <Link to='/homeUser' className='nav-link-ok' onClick={()=>{dispatch(resetearPacienteDetallado())}}>Home</Link>
                     <Link to='/perfilUser' className='nav-link-ok' >Perfil</Link>
                </div>
             }
