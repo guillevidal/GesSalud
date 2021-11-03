@@ -13,7 +13,6 @@ import axios from "axios"
 
 export default  function ProfileSpecialist(){
  
-    const user = localStorage.getItem('user')
 
     const dispatch = useDispatch()
 
@@ -22,7 +21,7 @@ export default  function ProfileSpecialist(){
     let especialista =  useSelector(state => state.especialistaDetallado)
     const pacienteDetail  = useSelector(state => state.pacienteDetallado)
 
- 
+    let [imagenBD, setImagenBD] = useState(false);
 
     const newData = {...especialista[0]}
 
@@ -45,32 +44,12 @@ export default  function ProfileSpecialist(){
  
     useEffect(()=>{
 
-        let obtengoToken = localStorage.getItem('access-token')
-        axios.get('/whoami', { 
-         headers:  { 
-            authorization : obtengoToken
-          }
-      })
-      .then(res => {
-        console.log(res.data)
-        if(res.data.rol){
-            dispatch(rol(res.data.rol))
-    
-        }
-        else{
-          return
-        }
-      }) 
-
-
         if(roles === '3'){
-        dispatch(especialistaDetallado(user))
+        dispatch(especialistaDetallado(especialista[0].id))
         }
         else{
-            dispatch(pacienteDetallado(user))
-       
+            dispatch(pacienteDetallado(pacienteDetail[0].dni))
         }
-
 
     },[editar])
 
@@ -94,7 +73,7 @@ export default  function ProfileSpecialist(){
 
         e.preventDefault()
 
-            
+            console.log(imagenBD)
           
            if(op === 'imagen'){
             document.getElementById('upload').click()
@@ -162,10 +141,10 @@ export default  function ProfileSpecialist(){
         let myNewFile = '';
         
         if(roles === '4'){
-         myNewFile = new File([image], `${datosPac.dni}-${datosPac.name}`, {type: image.type});
+         myNewFile = new File([image], `${datosPac.dni}-profile`, {type: image.type});
         }
         else{
-            myNewFile = new File([image], `${datosEsp.dni}-${datosEsp.name}`, {type: image.type});
+            myNewFile = new File([image], `${datosEsp.dni}-profile`, {type: image.type});
         }
         
         dispatch(uploadAction(myNewFile))
@@ -252,7 +231,7 @@ export default  function ProfileSpecialist(){
                        {preview ?
                        <img src={URL.createObjectURL(image)} alt="" className='imagen'/>
                        :
-                       <img src={imagen} alt="" className='imagen'/>
+                       <img src={imagenBD} alt="" className='imagen'/>            
                        
                        }
                        

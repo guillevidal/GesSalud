@@ -3,6 +3,11 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {crearDiagnostico, pacienteDetallado} from '../../../../actions/index';
 import Nav from "../../../Layout/Nav"
+import './PatientHistory.scss'
+import swal from "sweetalert";
+import Diagnosticos from "./DiagnosticoCard";
+import Paginado from "./paginado";
+
 
 export default function PatientHistory() {
 
@@ -12,6 +17,7 @@ export default function PatientHistory() {
     const diagnosticos = paciente?.paciente.historiaClinica.diagnosticos;
     const hoy = new Date().toISOString();
     const short = hoy.slice(0,10)
+    const valorPaginado = useSelector(state => state.paginado)
 
     useEffect(() => {
         dispatch(pacienteDetallado(paciente?.dni))
@@ -76,70 +82,95 @@ export default function PatientHistory() {
             })
 
         }else{
-            alert('Complete los campos requeridos')
+            swal({
+                icon: 'warning',
+                title: 'Ups!',
+                text: 'Complete los campos requeridos'
+            })
         }
    
     }
 
 
     return (
-        <div>
+        <div className='historyContainer'>
             <Nav />
-            <div>
-                <p>Paciente:</p>
-                <span>{paciente?.name}</span>
-                <span>{paciente?.lastName}</span>
+            <div className='division'>
+                <div className='infoPaciente'>
+                    <div className='bloque'>
+                        <span className='title'>Paciente: <b className='data'>{paciente?.name + ' ' + paciente?.lastName}</b></span>
+                    </div>
+                    <div  className='bloque'>
+                        <span className='title'>Nacimiento: <b className='data'>{paciente?.birth}</b></span>
+                    </div>
+                    <div className='bloque'>
+                        <span className='title'>Género: <b className='data'>{paciente?.gender}</b></span>
+                    </div>
+                </div>
+
+            <div className='cargar'>
+                    <div className='form'>
+                        <div className='conjunto'>
+                        <textarea name='text' value={values.text.value} placeholder="Epicrisis *" onChange={handleEpicrisis} className='textarea'></textarea>
+                       {/*  <span>{values.text.error}</span>
+                        */} 
+                    <textarea name='diagnostic' value={values.diagnostic.value} placeholder="Diagnostico *" onChange={handleDiagnostic} className='textarea'></textarea>
+                 {/*    <span>{values.diagnostic.error}</span>
+                    */} </div>
+
+                    <div>
+                        <input className='input' type="text" name="derivation" value={values.derivation.value} placeholder="Derivacion *" onChange={handleDerivation} />
+                    </div>
+                        <span className='required'>(*) Campos requeridos</span>
+                    
+                        <button type="submit" onClick={handleOnClick} className='boton'>Generar historia clinica</button>
+
+                    </div>
+                
             </div>
-            <div>
-                <p>Fecha de nacimiento:</p>
-                <span>{paciente?.birth}</span>
-            </div>
-            <div>
-                <p>Genero:</p>
-                <span>{paciente?.gender}</span>
             </div>
 
-            <div>
-                <h3>Historia clínica</h3>
-                {
-                    diagnosticos? diagnosticos.map(e => {
+            <div className='historias'>
+                <span className='title'>Historia clínica</span>
+                    
+                {diagnosticos && diagnosticos.length > 2 ? <Paginado diag={diagnosticos}/> :null}
+       
+               
+                    
+                    <table className='tabla'> 
+                        <tr className='titles'>
+                        <th className='th'>Fecha</th>
+                        <th className='th'>Diagnóstico</th>
+                        <th className='th'>Ver</th>
+                        </tr>
+                    
+                    
+
+            {
+                    diagnosticos && 
+                    diagnosticos.slice(valorPaginado, valorPaginado+5).map(e => {
                         return (
-                            <div key={e.id}>
-                                <p>Fecha de atención:</p>
-                                <p>{e.date}</p>
-                                <h4>Diagnóstico:</h4>
-                                <p>{e.diagnostic}</p>
-                                <h4>Tratamiento:</h4>
-                                <p>{e.text}</p>
-                                <p>Derivación: <span>{e.derivation}</span></p>
-                            </div>
+                            <Diagnosticos key={e.id}
+                                fecha={e.date}
+                                diagnostico={e.diagnostic}
+                                tratamiento={e.text}
+                                derivacion={e.derivation}
+                            />
                             
                         )
                         
-                    })
-                    : <p>No hay diagnósticos previos</p>
+                    })       
                 }
+      
+      </table> 
+
+        
+
+      {!diagnosticos && <p>No hay diagnósticos previos</p>}
                 
             </div>
 
-            <div>
-                <textarea name='text' value={values.text.value} placeholder="epicrisis*" onChange={handleEpicrisis}></textarea>
-                <p>{values.text.error}</p>
-            </div>
-            <div>
-               <textarea name='diagnostic' value={values.diagnostic.value} placeholder="diagnostico*" onChange={handleDiagnostic}></textarea>
-               <p>{values.diagnostic.error}</p>
-            </div>
-            <div>
-                <input type="text" name="derivation" value={values.derivation.value} placeholder="derivation*" onChange={handleDerivation} />
-            </div>
-            <div>
-                <p>* campos requeridos</p>
-            </div>
-            <div>
-                <button type="submit" onClick={handleOnClick}>cargar</button>
-            </div>
-           
+            
             
         </div>
     )
