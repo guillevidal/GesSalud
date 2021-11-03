@@ -69,7 +69,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                     })
                 } else {
 
-                    
+
 
                     let newTurno = {
                         agendaId: parseInt(inputFormTurno.agendaId.value),
@@ -78,8 +78,8 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                         hour: inputFormTurno.hora.value,
                         modules: inputFormTurno.modules.value.toString(),
                     }
-                    const funct =  async() => {
-                         dispatch(crearTurno(newTurno))
+                    const funct = async () => {
+                        dispatch(crearTurno(newTurno))
 
                         await swal({
                             icon: 'success',
@@ -87,7 +87,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                             text: `El turno para ${capitalFirstLetter(pacienteDetail[0].persona.name)} ${capitalFirstLetter(pacienteDetail[0].persona.lastName)} se genero satisfactoriamente`
                         })
 
-                            location.reload()
+                        location.reload()
 
                     }
 
@@ -267,7 +267,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                 text: `El turno de ${namePaciente} se elimino satisfactoriamente`
             })
 
-                location.reload()
+            location.reload()
 
         }
         fun()
@@ -316,7 +316,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                                 }
 
                                 const ajuste = async () => {
-                                     dispatch(modificarTurno(editarTurno))
+                                    dispatch(modificarTurno(editarTurno))
 
                                     await swal({
                                         icon: 'success',
@@ -324,7 +324,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                                         text: `El turno de ${capitalFirstLetter(pacienteDetail[0].persona.name)} ${capitalFirstLetter(pacienteDetail[0].persona.lastName)} se modifico satisfactoriamente`
                                     })
 
-                                        location.reload()
+                                    location.reload()
 
                                 }
 
@@ -389,7 +389,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
         }
     }
 
-   
+
 
     const handleEditarTurnoPatient = (event) => {
 
@@ -408,7 +408,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
             } else if (paciente[0].persona.dni === turno[0].paciente.persona.dni) {
                 setInputEditarTurno({ ...inputEditarTurno, pacienteId: { value, error: "DNI de paciente igual al anterior" } })
             } else {
-                
+
                 setInputEditarTurno({ ...inputEditarTurno, pacienteId: { value, error: null } })
             }
         }
@@ -416,7 +416,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
 
 
     }
-   
+
 
     return (
 
@@ -443,28 +443,28 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
 
 
             <Modal isOpen={isOpenFormTurno} closeModal={closeFormTurno}>
-                    
+
                 <div className='asignacionTurno'>
-                    
-                <div className='icon'><FontAwesomeIcon className='more' icon={faUserPlus}></FontAwesomeIcon></div>
+
+                    <div className='icon'><FontAwesomeIcon className='more' icon={faUserPlus}></FontAwesomeIcon></div>
                     <div className='horario'>
-                    <span className='title'>Hora de turno</span>
-                    <span className='content'>{horaI}</span>
+                        <span className='title'>Hora de turno</span>
+                        <span className='content'>{horaI}</span>
                     </div>
                     <form className='busquedaConf'>
 
-                            <input
-                                type="text"
-                                onChange={handleChangeSearchPatient}
-                                value={inputFormTurno.pacienteId.value}
-                                placeholder="DNI Paciente..."
-                                className='input'
+                        <input
+                            type="text"
+                            onChange={handleChangeSearchPatient}
+                            value={inputFormTurno.pacienteId.value}
+                            placeholder="DNI Paciente..."
+                            className='input'
 
 
-                            />
-                            {inputFormTurno.pacienteId.error && <span className='error'>{inputFormTurno.pacienteId.error}</span>}
-                      
-                       <div className='confirmacionDiv'>
+                        />
+                        {inputFormTurno.pacienteId.error && <span className='error'>{inputFormTurno.pacienteId.error}</span>}
+
+                        <div className='confirmacionDiv'>
 
                             <button onClick={handleSubmitFormTurno} className='boton'>CREAR TURNO</button>
 
@@ -477,10 +477,10 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
             </Modal>
             <Modal isOpen={isOpenCancelarTurno} closeModal={closeCancelarTurno}>
                 <div className='eliminacion'>
-                <div className='icon'><FontAwesomeIcon className='delete' icon={faUserTimes}></FontAwesomeIcon></div>
+                    <div className='icon'><FontAwesomeIcon className='delete' icon={faUserTimes}></FontAwesomeIcon></div>
                     <div className='horario'>
-                    <label className='title'>Eliminar turno del paciente</label>
-                    <label className='content'>{confirmacionPaciente()}</label>
+                        <label className='title'>Eliminar turno del paciente</label>
+                        <label className='content'>{confirmacionPaciente()}</label>
                     </div>
                     <div>
 
@@ -496,8 +496,8 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
             </Modal>
             <Modal isOpen={isOpenChangeTurno} closeModal={closeChangeTurno}>
                 <div className='cancelacion'>
-                <div className='icon'><FontAwesomeIcon className='edit' icon={faUserEdit}></FontAwesomeIcon></div>
-                 
+                    <div className='icon'><FontAwesomeIcon className='edit' icon={faUserEdit}></FontAwesomeIcon></div>
+
                     <div className='cambioPac'>
                         <label className='title'>Cambiar paciente del turno</label>
 
@@ -512,8 +512,8 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
 
 
                         />
-                         {inputEditarTurno.pacienteId.error && <span className='error'>{inputEditarTurno.pacienteId.error}</span>}
-                           
+                        {inputEditarTurno.pacienteId.error && <span className='error'>{inputEditarTurno.pacienteId.error}</span>}
+
                         <div className='confirmacionDiv'>
                             <button className='boton' onClick={handleSubmitEditarTurno}>MODIFICAR</button>
                         </div>
