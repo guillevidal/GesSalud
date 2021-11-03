@@ -23,7 +23,9 @@ import {
     ELIMINAR_TURNO, CREAR_DIAGNOSTICO,
     RESETEAR_DIAGNOSTICO, EDITAR_DIAGNOSTICO,
     CREAR_MULTIPLE_AGENDA, CREAR_REGISTRO_PACIENTE,
-    OBTENER_PACIENTES_REGISTRO, ENVIAR_PAGO
+    OBTENER_PACIENTES_REGISTRO, ENVIAR_PAGO,
+    OBTENER_PAGOS, RESETEAR_ENLACE_PAGO,
+    RESETEAR_PAGOS
 } from "../actions/valuesForActions.js";
 
 const initialState = {
@@ -42,7 +44,9 @@ const initialState = {
     creado: [],
     modificado: "",
     rol: "",
-    paginado: ""
+    paginado: "",
+    enlace_de_pago: "",
+    pagos: []
 }
 
 const Reducer = (state = initialState, action) => {
@@ -62,9 +66,16 @@ const Reducer = (state = initialState, action) => {
         case RESETEAR_DIAGNOSTICO:
         case CREAR_MULTIPLE_AGENDA:
         case CREAR_REGISTRO_PACIENTE:
-        case ENVIAR_PAGO:
+        
             return { ...state, creado: action.payload };
 
+        case ENVIAR_PAGO:
+        case RESETEAR_ENLACE_PAGO:
+            return {...state, enlace_de_pago: action.payload}
+
+        case OBTENER_PAGOS:
+        case RESETEAR_PAGOS:
+            return {...state, pagos: action.payload}
 
         case OBTENER_ESPECIALIDADES:
         case RESETEAR_ESPECIALIDADES:

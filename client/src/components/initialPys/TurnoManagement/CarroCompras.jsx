@@ -1,6 +1,7 @@
-import React, { useState} from "react";
+import React, {useState, useEffect} from "react";
 import Checkout from "./SDK-MercadoPago.jsx"
 import {useDispatch, useSelector} from "react-redux"
+import {Redirect} from "react-router"
 import { enviarPago } from "../../../actions/index.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
@@ -10,14 +11,24 @@ import ImagenMP from '../../Landing/images/mercadopago.png'
 
 const CarroCompras = ({carro, setCarro})=> {
     const dispatch= useDispatch();
-    const li = useSelector( state => state.creado)
+    const li = useSelector( state => state.enlace_de_pago)
     const [x, setX]= useState(false)
     
+   
     const handleSubmit = async() => {   
         await dispatch(enviarPago(carro))
-        setX(true)
+        await setX(true)
+       
     }
-    
+    const handleRedirect = () => {
+        if(x){
+            setTimeout(() => {
+            window.location.href = li
+            setX(false)
+        }, 1000);
+        }
+    }
+    handleRedirect()
     return (
         <div className='containerMP'>
             <span className='titulo'>Carrito</span>
@@ -36,8 +47,8 @@ const CarroCompras = ({carro, setCarro})=> {
                 )
             })}
            </div>
-           {carro.items[0] && !x?<button onClick={()=>handleSubmit()} className='boton'><img src={ImagenMP} className='imgmp'/></button>: <a href={li}>Link habilitado</a>}
-
+           {carro.items[0] && !x?<button onClick={()=>handleSubmit()} className='boton'><img src={ImagenMP} className='imgmp'/></button>: <h6>En breve sera redireccionado</h6>}
+        
 
             
         </div>
