@@ -101,7 +101,7 @@ router.post("/", async function (req, res) {
 router.get("/:id", async function (req, res) {
   let { id } = req.params;
   try {
-    let busquedaPagoPorId = await Items_pagos.findOne(
+    let busquedaPagoPorId = await Items_pagos.findAll(
       { where: { patient_id: id } },
       { include: Historial_pagos }
     );
