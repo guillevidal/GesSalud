@@ -160,7 +160,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
         
         setCarro({items: [...carro.items, {id :paciente.id, 
             title: agenda.tipo_especialidad.name,
-            category_id: id,
+            category_id: id.toString(),
             quantity: 1,
             unit_price: 200}]});
 
@@ -170,7 +170,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
     const handleQuitar = () => {
        
         setCarro({items: carro.items.filter(element=>{
-            return element.category_id!==id
+            return element.category_id.toString()!==id.toString()
         })})
         setEstadoPago("Añadir Pago")
     }
