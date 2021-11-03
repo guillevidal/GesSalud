@@ -459,7 +459,7 @@ export const obtenerPacientesRegistro = () => {
 //ENVIAR PAGO 
 export const enviarPago = (items) => { 
   return async (dispatch) => {
-    const result = await axios.get("/pago", items);
+    const result = await axios.post("/pago/pago", items);
     const data = result.data;
     return dispatch({ type: ENVIAR_PAGO , payload: data });
   };
