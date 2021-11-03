@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState} from "react";
 import Checkout from "./SDK-MercadoPago.jsx"
 import {useDispatch, useSelector} from "react-redux"
 import { enviarPago } from "../../../actions/index.js";
+
 const CarroCompras = ({carro, setCarro})=> {
     const dispatch= useDispatch();
     const li = useSelector( state => state.creado)
-    const handleSubmit = async() => {
-        
+    const [x, setX]= useState(false)
+    
+    const handleSubmit = async() => {   
         await dispatch(enviarPago(carro))
-       
+        setX(true)
     }
     
     return (
@@ -26,7 +28,7 @@ const CarroCompras = ({carro, setCarro})=> {
                     </div>
                 )
             })}
-            {carro.items[0] && <button  onClick={()=>handleSubmit()}>Pagar</button>}
+            {carro.items[0] && !x?<button  onClick={()=>handleSubmit()}>Pagar</button>: <a href={li}>Link habilitado</a>}
             
             
         </div>
