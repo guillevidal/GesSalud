@@ -1,0 +1,56 @@
+@import '../../../scss/base/variables';
+
+.containerMP{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    height: 80%;
+
+    .titulo{
+        font-size: 3em;
+        color: $color-principal;
+    }
+    .vacio{
+        font-size: 1.5em;
+        color: red;
+        margin-top: 30px;
+    }
+    .listas{
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-evenly;
+        margin: 20px auto;
+        flex-wrap: wrap;
+
+    .lista{
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+        align-items: center;
+        margin: 5px auto;
+        background-color: $color-detalle;
+        border-radius: 10px;
+
+        .data{
+            margin: 5px AUTO;
+        }
+    }
+
+    }
+    .boton{
+        background-color: rgb(255, 244, 231);
+        border-radius: 10px;
+        border: 1px solid orange;
+        cursor: pointer;
+
+        &:hover{
+            
+        box-shadow: 3px 3px 3px rgb(255, 214, 138);
+        }
+    }
+    .imgmp{
+        width: 50px;
+    }
+}

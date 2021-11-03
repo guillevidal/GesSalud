@@ -7,6 +7,36 @@
     
     align-items: center;
 
+    .carro{
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        margin-right: 50px;
+
+        .carrito{
+            font-size: 2.2em;
+            color: $color-principal;
+            cursor: pointer;
+
+            &:hover{
+                color: $color-secundario;
+            }
+        }
+
+        .cantidad{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: -10px;
+            margin-top: -5px;
+            color: white;
+            background-color: rgb(255, 68, 68);
+            border-radius : 100%;
+            padding: 5px;
+            height: 22px;
+        }
+    }
+
     .buscador{
         display: flex;
         width: 100%;
@@ -72,6 +102,7 @@
         flex-wrap: wrap;
         justify-content: space-evenly;
         max-width: 1200px;
+        margin-top: -15px;
 
         .error{
             font-size: 2em;
@@ -124,10 +155,8 @@
             border-radius: 5px;
             border: none;
             background-color: white;
-            color: white;
             cursor: pointer;
             width: 60px;
-            height: 60px;
 
             &:hover{
                 background-color: rgb(255, 250, 219);
@@ -135,21 +164,22 @@
             }
 
             .icon{
-                font-size: 2em;
+                font-size: 1.5em;
                 color: rgb(255, 189, 9);
             }
         }
         .MP{
             height: 100%;
-            &:hover{
-                background-color: rgb(229, 255, 212);
-                
-            }
+            color: $color-secundario;
         }
-        .logoMP{
-            width: 50px;
-            height: 50px;
+        .quitar{
+            background-color: rgb(255, 217, 217);
+        }
+        .pagar{
+            background-color: rgb(232, 255, 209);
         }
     }
+
+ 
 
 }
