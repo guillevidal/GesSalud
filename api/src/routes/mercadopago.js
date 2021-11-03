@@ -36,7 +36,7 @@ router.post("/pago", function (req, res) {
         //console.log(mercadopago.preferences);
         //res.redirect(response.body.init_point);
         console.log(response.body.init_point);
-        res.redirect(response.body.init_point);
+        res.send(response.body.init_point);
       })
       .catch(function (error) {
         console.log(error);
