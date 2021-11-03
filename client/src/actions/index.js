@@ -49,7 +49,7 @@ import {
   CREAR_MULTIPLE_AGENDA,
   CREAR_REGISTRO_PACIENTE,
   OBTENER_PACIENTES_REGISTRO,
-  ENVIAR_PAGO,
+  ENVIAR_PAGO
 } from "./valuesForActions.js";
 
 // const token = localStorage["access-token"];
@@ -133,6 +133,7 @@ export const especialistaDetallado = (id) => {
   };
 };
 
+
 //OBTENER INFORMACION DETALLADA DE PACIENTE POR DNI
 export const pacienteDetallado = (dni) => {
   return async (dispatch) => {
@@ -151,6 +152,7 @@ export const rol = (rol) => {
 export const resetearBusquedaEspecialista = () => {
   return { type: RESETEAR_BUSQUEDA_ESPECIALISTA, payload: [] };
 };
+
 
 //PARA MANEJO DEL PAGINADO
 export const paginado = (valor) => {
@@ -273,6 +275,7 @@ export const administrativoDetallado = (id) => {
 export const resetearAdministrativoDetallado = () => {
   return { type: RESETEAR_ADMINISTRATIVO_DETALLADO, payload: [] };
 };
+
 
 //CREAR AGENDA
 export const crearAgenda = (agenda) => {
@@ -413,7 +416,8 @@ export const modificarDiagnostico = (diagnostico) => {
 };
 
 //SUBIR IMAGEN
-export const uploadAction = (image) => {
+export const uploadAction =  (image) => {
+
   const fd = new FormData();
   fd.append("image", image);
 
@@ -424,15 +428,15 @@ export const uploadAction = (image) => {
   };
 
   try {
-    return async function () {
-      const res = await axios.post("/images", fd, config);
-    };
+    return async function(){
+    const res = await axios.post("http://localhost:3001/images", fd, config);
+  }
   } catch (err) {
     console.log(err);
   }
 };
 
-//CREAR PACIENTES DESDE EL LANDING
+//CREAR PACIENTES DESDE EL LANDING 
 export const crearRegistroPaciente = (paciente) => {
   return async (dispatch) => {
     {
@@ -452,11 +456,11 @@ export const obtenerPacientesRegistro = () => {
   };
 };
 
-//ENVIAR PAGO
-export const enviarPago = (items) => {
+//ENVIAR PAGO 
+export const enviarPago = (items) => { 
   return async (dispatch) => {
     const result = await axios.post("/pago/pago", items);
     const data = result.data;
-    return dispatch({ type: ENVIAR_PAGO, payload: data });
+    return dispatch({ type: ENVIAR_PAGO , payload: data });
   };
-};
+}
