@@ -106,7 +106,7 @@ export default function HomeSpecialist() {
 
 
     const [turnos, setTurnos] = useState(turnosHoy);
-    
+
 
     const [inputSearchDay, setInputSearchDay] = useState({
         date: { value: '', error: 'Seleccione una fecha' }
@@ -134,19 +134,19 @@ export default function HomeSpecialist() {
 
 
     }
-    
-      if(turnos.length === 0 && turnosHoy.length > 0 && inputDia === ''){
+
+    if (turnos.length === 0 && turnosHoy.length > 0 && inputDia === '') {
         setTurnos(turnosHoy)
     }
-  
-
-                                            
 
 
 
 
 
-   
+
+
+
+
 
 
 
@@ -174,6 +174,7 @@ export default function HomeSpecialist() {
     const [carro, setCarro] = useState({ items: [] })
     const [isOpenChangeTurno, openChangeTurno, closeChangeTurno] = useModal(false)
     const [isOpenHistoriaClinica, openHistoriaClinica, closeHistoriaClinica] = useModal(false)
+    console.log(agendaFilter)
 
     const handleChange = (event) => {
         const { value } = event.target
@@ -214,14 +215,15 @@ export default function HomeSpecialist() {
             if (estado === "fecha") {
                 let filtroFecha = [];
                 agenda.forEach(element => {
-                    if (element.date.split('T')[0].startsWith(value)) {
+                    if (element.date.split('T')[0].includes(value)) {
                         filtroFecha.push(element)
                     }
-                    if (!filtroFecha.length > 0) {
-                        filtroFecha.push("No se encontró agenda en la fecha seleccionada")
-                    }
-                    setAgendaFilter(filtroFecha)
+
                 })
+                if (!filtroFecha.length > 0) {
+                    filtroFecha.push("No se encontró agenda en la fecha seleccionada")
+                }
+                setAgendaFilter(filtroFecha)
             }
         }
     }
@@ -232,15 +234,18 @@ export default function HomeSpecialist() {
             setInput("")
             setEstado(value)
             setPlaceHolder("Buscar por nombre...")
+            setAgendaFilter([])
         }
         if (value === "especialidad") {
             setInput("")
             setEstado(value)
             setPlaceHolder("Buscar por especialidad...")
+            setAgendaFilter([])
         }
         if (value === "fecha") {
             setInput("")
             setEstado(value)
+            setAgendaFilter([])
         }
     }
 
@@ -248,7 +253,7 @@ export default function HomeSpecialist() {
         event.preventDefault();
         setAgendaFilter([])
     }
-    
+
 
     return (
         <div className='homeSpecialist'>
@@ -275,10 +280,10 @@ export default function HomeSpecialist() {
 
 
                     <table className='tabla'>
+               
 
-
-                        {turnosRend.length < 1 && <h3 className='error'><FontAwesomeIcon icon={faTimesCircle} /> No hay turnos para esta fecha</h3>}
-                        {turnosRend?.length > 0 &&
+                        {turnos?.length < 1 && <h3 className='error'><FontAwesomeIcon icon={faTimesCircle} /> No hay turnos para esta fecha</h3>}
+                        {turnos?.length > 0 &&
                             <>
                                 <thead>
                                     <tr className='titles'>
@@ -291,7 +296,7 @@ export default function HomeSpecialist() {
 
                                 <tbody>
 
-                                    {turnosRend?.map((turno) => {
+                                    {turnos?.map((turno) => {
                                         return (
 
                                             <tr key={turno.idTurno} id={turno.idTurno} className='lista'>
@@ -384,7 +389,7 @@ export default function HomeSpecialist() {
                             <button onClick={handleMisTurnos}>Mis Turnos</button>
                         </>
                         {agendaFilter && agendaFilter.length > 10 ? <Paginado agendaFilter={agendaFilter} /> : null}
-                        
+
                         {
                             agendaFilter.length > 0
                                 ?
