@@ -2,6 +2,11 @@ import React, { useState} from "react";
 import Checkout from "./SDK-MercadoPago.jsx"
 import {useDispatch, useSelector} from "react-redux"
 import { enviarPago } from "../../../actions/index.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import './carro.scss'
+import ImagenMP from '../../Landing/images/mercadopago.png'
+
 
 const CarroCompras = ({carro, setCarro})=> {
     const dispatch= useDispatch();
@@ -14,22 +19,26 @@ const CarroCompras = ({carro, setCarro})=> {
     }
     
     return (
-        <div>
-            <h1>Carrito</h1>
+        <div className='containerMP'>
+            <span className='titulo'>Carrito</span>
+            <div className='listas'>
             {!carro.items[0]
             ?
-            <h3>No han añadido turnos para pagar</h3>:
+            <span className='vacio'><FontAwesomeIcon icon={faTimesCircle}/> No han añadido turnos para pagar</span>:
             carro.items.map(item => {
+              
                 return (
-                    <div>
-                        <h5>Especialidad: {item.title} </h5>
-                        <h5>Precio: {item.unit_price}</h5>
-                        <h5>Cantidad: {item.quantity}</h5>
+                    <div className='lista'>
+                        <span className='data'>Especialidad: {item.title} </span>
+                        <span className='data'>Precio: {item.unit_price}</span>
+                        <span className='data'>Cantidad: {item.quantity}</span>
                     </div>
                 )
             })}
-            {carro.items[0] && !x?<button  onClick={()=>handleSubmit()}>Pagar</button>: <a href={li}>Link habilitado</a>}
-            
+           </div>
+           {carro.items[0] && !x?<button onClick={()=>handleSubmit()} className='boton'><img src={ImagenMP} className='imgmp'/></button>: <a href={li}>Link habilitado</a>}
+
+
             
         </div>
     )

@@ -7,7 +7,7 @@ import { obtenerTurnos, paginado, obtenerPacientes } from "../../../actions/inde
 import Turnos from "./turnosCard.jsx";
 import SearchTurno from "./SearchTurno";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { faTimesCircle, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import Paginado from "./paginado.jsx";
 import { Link } from "react-router-dom";
 import CarroCompras from "./CarroCompras.jsx";
@@ -47,6 +47,8 @@ function InicialTurno() {
             </div>
             {busquedaTurnos && busquedaTurnos.length > 6 ? <Paginado busquedaTurnos={busquedaTurnos} /> : null}
             {!busquedaTurnos.length && turnos && turnos.length > 6 ? <Paginado busquedaTurnos={busquedaTurnos} /> : null}
+            <div className='carro'><FontAwesomeIcon icon={faShoppingCart} onClick={openChangeTurno} className='carrito'/><span onClick={openChangeTurno} className='cantidad'>{carro.items.length}</span></div>
+           
             <div className='turnos'>
 
                 {!busquedaTurnos[0]
@@ -91,10 +93,8 @@ function InicialTurno() {
                                 />)
                         })}
             </div>
-            <button onClick={openChangeTurno}>CARRO</button>
             <Modal isOpen={isOpenChangeTurno} closeModal={closeChangeTurno}>
                 <CarroCompras carro={carro} setCarro={setCarro} />
-                
             </Modal>
         </div>
     )
