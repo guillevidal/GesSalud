@@ -224,7 +224,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
 
 
                         />
-                        {inputEditarTurno.pacienteId.error && <span className='error'>{inputEditarTurno.pacienteId.error}</span>}
+                        {inputEditarTurno.pacienteId.error && <span className='err'>{inputEditarTurno.pacienteId.error}</span>}
 
                         <div className='confirmacionDiv'>
                             <button className='boton' onClick={handleSubmitEditarTurno}>MODIFICAR</button>
