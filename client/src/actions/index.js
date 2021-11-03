@@ -50,6 +50,10 @@ import {
   CREAR_REGISTRO_PACIENTE,
   OBTENER_PACIENTES_REGISTRO,
   ENVIAR_PAGO,
+  OBTENER_PAGOS,
+  RESETEAR_ENLACE_PAGO,
+  RESETEAR_PAGOS,
+
 } from "./valuesForActions.js";
 
 // const token = localStorage["access-token"];
@@ -460,3 +464,23 @@ export const enviarPago = (items) => {
     return dispatch({ type: ENVIAR_PAGO, payload: data });
   };
 };
+
+//OBTENER PAGOS RELACIONADOS 
+export const obtenerPagos = (id) => {
+  return async (dispatch) => {
+    const result = await axios.get(`/pago/${id}`);
+    const data = result.data;
+    return dispatch({ type: OBTENER_PAGOS, payload: data });
+  };
+};
+
+
+//RESETEAR PAGOS 
+export const resetearPagos = () => {
+  return {type: RESETEAR_PAGOS, payload: []}
+}
+
+//RESETEAR ENLACE DE PAGOS
+export const resetearEnlacePago = () => {
+  return {type: RESETEAR_ENLACE_PAGO, payload: []}
+}

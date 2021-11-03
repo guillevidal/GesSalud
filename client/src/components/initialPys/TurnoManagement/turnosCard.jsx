@@ -7,7 +7,7 @@ import swal from "sweetalert";
 import '../SpecialtyManagement/EditAgenda/modales.scss'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faUserEdit, faEdit, faShoppingCart} from "@fortawesome/free-solid-svg-icons";
-import {modificarTurno} from "../../../actions/index.js";
+import {modificarTurno, obtenerPagos} from "../../../actions/index.js";
 import {useDispatch} from "react-redux";
 import '../SpecialtyManagement/EditAgenda/modales.scss';
 
@@ -173,6 +173,11 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
         })})
         setEstadoPago("Pagar")
     }
+
+    const handleValidacionPago = () => {
+        dispatch(obtenerPagos(paciente.id))
+    }
+    handleValidacionPago()
     return (
         <div className='container-info-turnos'>
             <div className='apartado'>
