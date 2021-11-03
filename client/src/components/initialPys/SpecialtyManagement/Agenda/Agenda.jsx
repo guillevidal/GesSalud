@@ -11,7 +11,7 @@ function Agenda({specialist, date, specialty, id, turnosPrecargados, turnos}) {
     let especialidad="especialidad"
     const prueba = ()=>{
 
-        if(turnosPrecargados.length=turnos.length){
+        if(turnosPrecargados.length===turnos.length){
             
             fecha="fecha2"
             especialista="especialista2"
