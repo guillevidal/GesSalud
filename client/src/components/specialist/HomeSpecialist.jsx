@@ -12,15 +12,16 @@ import Nav from "../Layout/Nav"
 import './HomeSpecialist.scss'
 import '../initialPys/SpecialtyManagement/EditAgenda/EditAgenda.scss'
 import axios from "axios"
-import { rol, especialistaDetallado, pacienteDetallado } from "../../actions"
+import { rol, especialistaDetallado, pacienteDetallado, paginado } from "../../actions"
 import MisTurnosCard from './MisTurnosCard.jsx';
 import Agenda from './Agenda.jsx';
 import { useModal } from "../Modal/useModal.js";
 import Modal from '../Modal/Modal.js';
 import CarroCompras from "../initialPys/TurnoManagement/CarroCompras.jsx"
-
+import Paginado from "./Paginado.jsx"
 export default function HomeSpecialist() {
     const dispatch = useDispatch()
+    const valorPaginado = useSelector(state => state.paginado)
     useEffect(() => {
 
         let obtengoToken = localStorage.getItem('access-token')
@@ -56,7 +57,7 @@ export default function HomeSpecialist() {
     }, [])
 
     useEffect(() => {
-
+        dispatch(paginado(0))
         dispatch(obtenerAgendas())
         dispatch(obtenerTurnos())
 
@@ -346,7 +347,8 @@ export default function HomeSpecialist() {
                             <button>Consultar Historia Clínica</button>
                             <button onClick={handleMisTurnos}>Mis Turnos</button>
                         </>
-
+                        {agendaFilter && agendaFilter.length > 10 ? <Paginado agendaFilter={agendaFilter} /> : null}
+                        
                         {
                             agendaFilter.length > 0
                                 ?
@@ -361,7 +363,7 @@ export default function HomeSpecialist() {
                                             <th>Ver</th>
                                         </tr>
                                         {typeof agendaFilter[0] === "string" ?
-                                            <h1>{agendaFilter[0]}</h1> : agendaFilter.map(agenda => {
+                                            <h1>{agendaFilter[0]}</h1> : agendaFilter.slice(valorPaginado, valorPaginado + 10).map(agenda => {
                                                 return (
                                                     <Agenda
                                                         date={agenda.date.split('T')[0]} specialist={capitalFirstLetter(agenda.especialista_medico.persona.name)
@@ -380,7 +382,7 @@ export default function HomeSpecialist() {
                                 :
 
                                 <div id="edit-agenda-container">
-                     
+
                                     <div className="encabezado">
                                         <span className="title data">MIS TURNOS</span>
                                     </div>
@@ -417,7 +419,7 @@ export default function HomeSpecialist() {
                         }
 
                     </div>
-                    <div className='carro'><FontAwesomeIcon icon={faShoppingCart} onClick={openChangeTurno} className='carrito'/><span onClick={openChangeTurno} className='cantidad'>{carro.items.length}</span></div>
+                    <div className='carro'><FontAwesomeIcon icon={faShoppingCart} onClick={openChangeTurno} className='carrito' /><span onClick={openChangeTurno} className='cantidad'>{carro.items.length}</span></div>
                     <Modal isOpen={isOpenChangeTurno} closeModal={closeChangeTurno}>
                         <CarroCompras carro={carro} setCarro={setCarro} />
                     </Modal>
