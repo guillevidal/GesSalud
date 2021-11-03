@@ -89,7 +89,7 @@ function App() {
       <Route exact path="/perfilUser">
         {(rol === "3" || rol === "4") ? <ProfileSpecialist /> : <NotFound />}
       </Route>
-      <Route exact path="/homeUser/patientHistory/:dni">
+      <Route exact path="/patientHistory/:dni">
         {(rol === "3" || rol === "4") ? <PatientHistory /> : <NotFound />}
         
       </Route>
