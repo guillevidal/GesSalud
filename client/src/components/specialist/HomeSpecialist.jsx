@@ -305,7 +305,7 @@ export default function HomeSpecialist() {
             }
             {
                 roles === '4' &&
-                <div id="initialPatient-container">
+                <div className="rol-4-user">
                     <div className="agenda">
                         {
                             pacienteDetail.length > 0 ? pacienteDetail[0]?.gender === 'femenino' ?
