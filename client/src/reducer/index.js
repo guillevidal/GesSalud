@@ -25,7 +25,7 @@ import {
     CREAR_MULTIPLE_AGENDA, CREAR_REGISTRO_PACIENTE,
     OBTENER_PACIENTES_REGISTRO, ENVIAR_PAGO,
     OBTENER_PAGOS, RESETEAR_ENLACE_PAGO,
-    RESETEAR_PAGOS
+    RESETEAR_PAGOS, RECUPERAR_CONTRASEÑA
 } from "../actions/valuesForActions.js";
 
 const initialState = {
@@ -173,6 +173,7 @@ const Reducer = (state = initialState, action) => {
         case MODIFICAR_TURNO:
         case ELIMINAR_TURNO:
         case EDITAR_DIAGNOSTICO:
+        case RECUPERAR_CONTRASEÑA:
             return { ...state, modificado: action.payload }
 
         case OBTENER_ADMINISTRATIVOS:
