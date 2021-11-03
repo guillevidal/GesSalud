@@ -15,7 +15,9 @@ const autenticar = require("./autenticar.js");
 const whoami = require("./whoami.js");
 const mercadopago1 = require("./mercadopago");
 const registro = require("./registro");
-const historial_pagos = require("./historial_pagos.js");
+const historial_pagos = require("./historial_pagos");
+const conversaciones = require("./conversaciones");
+const mensajes = require("./mensajes");
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
@@ -28,9 +30,10 @@ router.use("/diagnosticos", diagnosticos);
 router.use("/turnos", turnos);
 router.use("/pago", mercadopago1);
 router.use("/images", images);
-
 router.use("/autenticar", autenticar);
 router.use("/whoami", whoami);
 router.use("/registro", registro);
 router.use("/historialpagos", historial_pagos);
+router.use("/conversaciones", conversaciones);
+router.use("/mensajes", mensajes);
 module.exports = router;
