@@ -1,11 +1,11 @@
 /* eslint-disable */
-import './EditAgenda.scss';
+import '../initialPys/SpecialtyManagement/EditAgenda/EditAgenda.scss';
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
-import Nav from "../../../Layout/Nav"
+import Nav from "../Layout/Nav.jsx"
 import TurnosAgendaCard from "./TurnosAgendaCard.jsx";
-import { obtenerAgendas, obtenerTurnos } from "../../../../actions/index.js"
+import { obtenerAgendas, obtenerTurnos } from "../../actions/index.js"
 
 
 function EditAgenda() {
@@ -56,7 +56,7 @@ function EditAgenda() {
                                     <th><span>Inicio</span></th>
                                     <th> <span>Fin</span></th>
 
-                                    <th><span>Paciente</span></th>
+                                    
 
                                 </tr>
                             </thead>

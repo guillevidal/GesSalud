@@ -6,72 +6,76 @@ const router = Router();
 router.post("/", async function (req, res) {
   const data = req.body;
   try {
-    const creandoPersona = await Persona.create(
-      {
-        name: data.name,
-        lastName: data.lastName,
-        dni: data.dni,
-        email: data.email,
-        phone: data.phone,
-        adress: data.adress,
-        birth: data.birth,
-        user: data.user,
-        password: data.password,
-        gender: data.gender,
-        rol: data.rol,
-      },
-      {
-        fields: [
-          "name",
-          "lastName",
-          "dni",
-          "email",
-          "phone",
-          "adress",
-          "birth",
-          "user",
-          "password",
-          "gender",
-          "rol",
-        ],
-      }
-    );
-    const creandoEstadoAdministrativo = await Personal_administrativo.create(
-      {
-        status: true,
-      },
-      {
-        fields: ["status"],
-      }
-    );
-
-    // let especialidadesPromise = await Promise.all(
-    //   data.specialty.map((el) =>
-    //   Tipo_especialidad.findOne({ where: { name: el } })
-    //   )
-    // );
-
-    // await creandoMatriculaEspecialista.setTipo_especialidads(
-    //   especialidadesPromise);
-
-    await creandoPersona.setPersonal_administrativo(
-      creandoEstadoAdministrativo
-    );
-
-    let obj = {
-      ...creandoEstadoAdministrativo.dataValues,
-      ...creandoPersona.dataValues,
-    };
-    if (obj.email && obj.name && obj.lastName && obj.user && obj.password) {
-      await transporter.sendMail({
-        from: '"GesSalud💉" <ges.salud.04@gmail.com>',
-        to: obj.email,
-        subject: "Creacion de cuenta exitosa ✔",
-        html: `<b> Hola ${obj.name} ${obj.lastName}🩺 , tu usuario es: ${obj.user} y tu contraseña: ${obj.password} </b>`,
+    const [yaExisteDni, yaExisteCorreo, yaExisteUsuario] = await Promise.all([
+      Persona.findOne({ where: { dni: data.dni } }),
+      Persona.findOne({ where: { email: data.email } }),
+      Persona.findOne({ where: { user: data.user } }),
+    ]);
+    if (yaExisteDni || yaExisteCorreo || yaExisteUsuario) {
+      res.status(400).send({
+        msg: `El dni, usuario o el email ingresado ya esta registrado`,
       });
-    }
+    } else {
+      const [creandoPersona, creandoEstadoAdministrativo] = await Promise.all([
+        Persona.create(
+          {
+            name: data.name,
+            lastName: data.lastName,
+            dni: data.dni,
+            email: data.email,
+            phone: data.phone,
+            adress: data.adress,
+            birth: data.birth,
+            user: data.user,
+            password: data.password,
+            gender: data.gender,
+            rol: data.rol,
+          },
+          {
+            fields: [
+              "name",
+              "lastName",
+              "dni",
+              "email",
+              "phone",
+              "adress",
+              "birth",
+              "user",
+              "password",
+              "gender",
+              "rol",
+            ],
+          }
+        ),
+        Personal_administrativo.create(
+          {
+            status: true,
+          },
+          {
+            fields: ["status"],
+          }
+        ),
+      ]);
 
-    res.status(201).send(obj);
+      await creandoPersona.setPersonal_administrativo(
+        creandoEstadoAdministrativo
+      );
+
+      let obj = {
+        ...creandoEstadoAdministrativo.dataValues,
+        ...creandoPersona.dataValues,
+      };
+      if (obj.email && obj.name && obj.lastName && obj.user && obj.password) {
+        await transporter.sendMail({
+          from: '"GesSalud💉" <ges.salud.04@gmail.com>',
+          to: obj.email,
+          subject: "Creacion de cuenta exitosa ✔",
+          html: `<b> Hola ${obj.name} ${obj.lastName}🩺 , tu usuario es: ${obj.user} y tu contraseña: ${obj.password} </b>`,
+        });
+      }
+
+      res.status(201).send({ msg: "la cuenta se creo correctamente" });
+    }
   } catch (e) {
     res.status(400).send("no se puedo crear al especialista");
   }

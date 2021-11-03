@@ -5,9 +5,11 @@ const fs = require("fs");
 const multer = require("multer");
 const { Persona } = require("../db");
 
-const storage = multer.diskStorage({
+const storage = multer.memoryStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads"); //en null se podria manejar el error
+    // const dirname = path.resolve();
+    // const dir = path.join(dirname, "uploads");
+    cb(null, ""); //en null se podria manejar el error
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname + ".jpg");
@@ -16,51 +18,38 @@ const storage = multer.diskStorage({
 
 const uploads = multer({ storage });
 
-// router.get("/", (req, res) => {
-//   const uploadsDirectory = path.join("uploads");
-
-//   fs.readdir(uploadsDirectory, (err, files) => {
-//     if (err) {
-//       return res.json({ msg: err });
-//     }
-//     if (files.length === 0) {
-//       return res.json({ msg: "No images uploaded" });
-//     }
-
-//     return res.json({ files });
-//   });
-// });
-
 router.post("/", uploads.single("image"), async (req, res) => {
-  const image = req.file.path;
+  // const image = req.file.path;
 
   //ALMACENAMIENTO EN LA BD
   const dni = req.file.originalname.split("-")[0];
-  const fileName = req.file.originalname + ".jpg";
-
-  await Persona.update(
-    {
-      imgProfile: fileName,
-    },
-    {
-      where: { dni: dni },
-    }
-  );
-
-  console.log("###### DNIIIIIII ######", dni);
-  console.log("req.file", req.file);
-  console.log("req.file original name", req.file.originalname);
-  console.log("image", image);
-  res.json({ msg: "Image successfully created" });
+  // const fileName = req.file.originalname + ".jpg";
+  let fileName = req.file.buffer;
+  try {
+    await Persona.update(
+      {
+        imgProfile: fileName,
+      },
+      {
+        where: { dni: dni },
+      }
+    );
+    res.json({ msg: "Successful upload" });
+  } catch (e) {
+    res.status(400).send({ error: e });
+  }
 });
 
 //PARA EXTRAER LA IMAGEN DESDE EL DISKSTORAGE
-router.get("/:filename", (req, res) => {
-  const { filename } = req.params;
+router.get("/profile/:dni", async (req, res) => {
+  const { dni } = req.params;
   try {
-    const dirname = path.resolve();
-    const fullfilepath = path.join(dirname, "uploads/" + filename);
-    return res.sendFile(fullfilepath);
+    let query = await Persona.findOne({
+      where: { dni: dni },
+      attributes: ["imgProfile"],
+    });
+    // res.contentType("image/jpeg");
+    return res.contentType("image/jpeg").send(query.dataValues.imgProfile);
   } catch (e) {
     res.status(400).send({ error: e });
   }

@@ -14,13 +14,13 @@ mercadopago.configure({
     "APP_USR-1036676948843093-103000-03b2fdd1a27093603c20d8ef93bd87bb-1009396366",
 });
 
-router.get("/", function (req, res) {
+router.post("/pago", function (req, res) {
   let servicios = req.body;
-
+  console.log(servicios)
   let preference = {
     ...servicios,
     back_urls: {
-      success: "https://ges-salud.vercel.app/patientPys",
+      success: "https://ges-salud.vercel.app/turnoPys",
       failure: "",
       pending: "",
     },
@@ -36,16 +36,13 @@ router.get("/", function (req, res) {
         //console.log(mercadopago.preferences);
         //res.redirect(response.body.init_point);
         console.log(response.body.init_point);
-        res.redirect(response.body.init_point);
+        res.send(response.body.init_point);
       })
       .catch(function (error) {
         console.log(error);
       });
   }
 });
-
-let arreglo = [];
-let arreglo2 = [];
 
 router.post("/", async function (req, res) {
   let { id, topic } = req.query;
@@ -72,17 +69,15 @@ router.post("/", async function (req, res) {
         fields: ["id", "status", "price"],
       }
     );
-    arreglo.push(historialPagos.dataValues);
-    arreglo2.push(info.data.id);
 
     let ItemsPagos = additional_info.items.map(async (e) => {
-      let itemPago = await Items_pagos.create(
+      let itemPagos = await Items_pagos.create(
         {
           title: e.title,
-          unit_price: e.unit_price,
-          patient_id: e.id,
-          turno_id: e.category_id,
-          historialPagoId: info.data.id,
+          unit_price: Number(e.unit_price),
+          patient_id: Number(e.id),
+          turno_id: Number(e.category_id),
+          historialPagoId: Number(info.data.id),
         },
         {
           fields: [
@@ -94,10 +89,8 @@ router.post("/", async function (req, res) {
           ],
         }
       );
-      await itemPago.setHistorial_pagos(historialPagos);
+      //itemPagos.setHistorial_pagos()
     });
-
-    arreglo2.push(additional_info.items);
 
     res.sendStatus(200);
   } catch (err) {
@@ -105,8 +98,18 @@ router.post("/", async function (req, res) {
   }
 });
 
-router.get("/array", function (req, res) {
-  res.status(200).send({ arreglo, arreglo2 });
+router.get("/:id", async function (req, res) {
+  let { id } = req.params;
+  try {
+    let busquedaPagoPorId = await Items_pagos.findAll(
+      { where: { patient_id: id } },
+      { include: Historial_pagos }
+    );
+    res.send(busquedaPagoPorId);
+  } catch (error) {
+    console.log(error);
+    res.status(404).send({ msg: "no pudimos encontrar la informacion" });
+  }
 });
 
 module.exports = router;

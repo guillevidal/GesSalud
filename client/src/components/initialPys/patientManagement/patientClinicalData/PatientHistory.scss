@@ -1,0 +1,167 @@
+@import '../../../../scss/base/variables';
+
+.historyContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+
+    .division{
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        margin: 20px;
+        flex-wrap: wrap;
+        border-bottom: 1px solid $color-principal;
+
+        .infoPaciente{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+
+            .bloque{
+                display: flex;
+                margin: 10px 0;
+                text-align: center;
+
+                .title{
+                    font-size: 1.4em;
+
+                    .data{
+                        color: $color-principal;
+                    }
+                }
+            }
+        }
+
+        .cargar{
+            display: flex;
+            flex-direction: column;
+            width: 600px;
+            align-items: center;
+
+            .form{
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                align-items: center;
+
+                .conjunto{
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    width: 100%;
+                    margin: 10px auto;
+
+                    .textarea{
+                        width: 280px;
+                        resize: none;
+                        height: 60px;
+                        margin: 0 10px;
+                        margin-bottom: 10px;
+                        padding: 3px;
+                    }
+    
+                }
+
+                .input{
+                    padding: 3px;
+                }
+
+                .required{
+                    font-size: 14px;
+                    color: $color-principal;
+                    margin: 10px auto;
+                }
+
+                .boton{
+                    @include boton-primario;
+                    margin-bottom: 15px;
+                }
+                
+            }
+        }
+    }
+
+    .historias{
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+
+        .title{
+            font-size: 2.5em;
+            font-family: $fuente-principal;
+        }
+
+        .tabla{
+            width: 100%;
+            max-width: 500px;
+            margin: 20px;
+            text-align: center;
+
+            .titles{
+                background-color: rgb(103, 56, 122);
+                color: white;
+
+                .th{
+                    padding: 5px;
+                }
+            }
+
+            .cardDiag{
+            
+                .data{
+                    padding: 5px;
+                }
+
+                .fecha{
+                    background-color: rgb(253, 238, 255);
+                }
+
+                .diag{
+                    background-color: rgb(227, 247, 255);
+                
+                }
+
+                .boton{
+                    background-color: rgb(255, 255, 227);
+                    font-size: 1.5em;
+                    .icon{
+                        color: $color-principal;
+                        cursor: pointer;
+
+                        &:hover{
+                            color: $color-terciario;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+.cardDiagDetail{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+
+    .datitos{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin: 10px;
+
+        .titulo{
+            font-size: 1.5em;
+            font-family: $fuente-principal;
+        }
+        .dataaa{
+            font-size: 1.1em;
+            color: $color-principal;
+        }
+    }
+}

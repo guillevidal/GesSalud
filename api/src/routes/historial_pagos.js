@@ -6,10 +6,8 @@ const router = Router();
 router.get("/", async function (req, res) {
   try {
     let historial = await Historial_pagos.findAll({
-      include: {
-        model: Items_pagos,
-        attributes: ["title"],
-      },
+      include: Items_pagos,
+
       // include: {
       //   // model: Paciente,
       //   // include: {
@@ -18,9 +16,13 @@ router.get("/", async function (req, res) {
       //   // },
       // },
     });
+
+    let items = await Items_pagos.findAll();
+
     let array = [];
-    array.push(historial);
-    res.status(200).send({ historial });
+
+    array.push(items);
+    res.status(200).send({ historial, items });
   } catch (error) {
     res.status(400).send({ msg: "No se encuentra el historial" });
   }

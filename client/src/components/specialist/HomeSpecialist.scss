@@ -5,4 +5,136 @@
     flex-direction: column;
     width: 100%;
 
+
+
+
+
+
+    .content{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    }
+
+    .encabezado{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+        flex-wrap: wrap;
+
+        .Titulo{
+            font-size: 2em;
+            font-family: $fuente-principal;
+            margin: 10px;
+            text-align: center;
+            .name{
+                color: $color-principal;
+            }
+        }
+
+        .filtro{
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+
+            .label-title-search{
+                margin-right: 5px;
+                font-size: 1.1em;
+                color: $color-terciario;
+
+            }
+            .input{
+                padding: 3px;
+            }
+            .boton{
+                @include boton-primario;
+                font-size: 15px;
+                margin: 10px;
+            }
+        }
+
+
+
+    }
+
+    .tabla{
+        width: 100%;
+        max-width: 1000px;
+        text-align: center;
+        margin-top: 30px;
+
+        .error{
+            text-align: center;
+            color: rgb(255, 100, 100);
+        }
+
+        .titles{
+            background-color: $color-terciario;
+            .text{
+                padding: 5px;
+                font-size: 1.3em;
+                color: $color-principal;
+            }
+
+        }
+        .lista{
+
+            
+            
+            .datos{
+                padding: 5px;
+                font-size: 1.1em;
+
+                .icono{
+                    font-size: 1.5em;
+                    color: rgb(182, 65, 228);
+                }
+            }
+
+            .fecha{
+                background-color: rgb(255, 242, 224);
+            }
+            .turno{
+                background-color: rgb(255, 254, 218);
+            }
+            .nombre{
+                background-color: rgb(224, 255, 246);
+            }
+            .ver{
+                background-color: rgb(252, 231, 255);
+ 
+            }
+        }
+    }
+
 }
+
+
+    .rol-4-user{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    
+        .agenda{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-top: 20px;
+            max-width: 800px;
+    
+            .titulo{
+                font-size: 2em;
+                margin-bottom: 20px;
+                font-family: $fuente-principal;
+                color: $color-principal;
+                font-weight: $bold;
+                align-self: flex-start;
+            }
+        }
+    }

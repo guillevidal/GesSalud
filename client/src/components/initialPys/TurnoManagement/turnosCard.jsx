@@ -6,11 +6,10 @@ import Modal from '../../Modal/Modal.js';
 import swal from "sweetalert";
 import '../SpecialtyManagement/EditAgenda/modales.scss'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  faUserEdit, faEdit} from "@fortawesome/free-solid-svg-icons";
+import {  faUserEdit, faEdit, faShoppingCart} from "@fortawesome/free-solid-svg-icons";
 import {modificarTurno} from "../../../actions/index.js";
 import {useDispatch} from "react-redux";
 import '../SpecialtyManagement/EditAgenda/modales.scss';
-import ImagenMP from '../../Landing/images/mercadopago.png'
 
 const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, carro, setCarro }) => {
     const capitalFirstLetter = (str) => {
@@ -29,7 +28,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
         hora: { value: `${fecha}T${horaI}&${horaF}`, error: null },
 
     })
-    const [estadoPago, setEstadoPago]= useState("Añadir Pago")
+    const [estadoPago, setEstadoPago]= useState("Pagar")
     const handleEditarTurnoPatient = (event) => {
 
         const { value } = event.target
@@ -157,69 +156,22 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
     }
 
     const handleCarro=()=>{
-        if(!carro.items[0]){
-            setCarro({items:
-                [{
-                    title: agenda.tipo_especialidad.name,
-                    unit_price: 200,
-                    quantity: 1
-                }]})
-        }else{
-            let filtros=[]
-            let contado=0
-            filtros=carro.items
-            carro.items.forEach((element, index) => {
-                
-                if(element.title.toLowerCase() === agenda.tipo_especialidad.name.toLowerCase()){
-                    filtros[index]={title: element.title, unit_price: element.unit_price, quantity: element.quantity+1}
-                    contado=contado+1
-                }
-            })
-            if(contado>0){
-                setCarro({items:filtros})
-            }else{
-                setCarro({items: [...filtros,{
-                    title: agenda.tipo_especialidad.name,
-                    unit_price: 200,
-                    quantity: 1
-                }]})
-            }
-            
-        }
+        
+        setCarro({items: [...carro.items, {id :paciente.id, 
+            title: agenda.tipo_especialidad.name,
+            category_id: id.toString(),
+            quantity: 1,
+            unit_price: 200}]});
+
         setEstadoPago("Quitar")
     }
 
     const handleQuitar = () => {
-        if(carro.items.length===1){
-            let filtros=carro.items
-            carro.items.forEach((element, index)=>{
-                
-                if(element.title.toLowerCase()=== agenda.tipo_especialidad.name.toLowerCase()){
-                    if(element.quantity>1){
-                        filtros[index]={title: element.title, unit_price: element.unit_price, quantity: element.quantity-1}
-                    }else{
-                        filtros=[] 
-                       
-                    }
-                }
-            })
-            setCarro({items: filtros})
-        }else{
-            let filtros=carro.items
-            carro.items.forEach((element, index)=>{
-                
-                if(element.title.toLowerCase()=== agenda.tipo_especialidad.name.toLowerCase()){
-                    if(element.quantity>1){
-                        filtros[index]={title: element.title, unit_price: element.unit_price, quantity: element.quantity-1}
-                    }else{
-                        filtros=filtros.splice(index, 1)
-                        
-                    }
-                }
-            })
-            setCarro({items: filtros})
-        }
-        setEstadoPago("Añadir Pago")
+       
+        setCarro({items: carro.items.filter(element=>{
+            return element.category_id.toString()!==id.toString()
+        })})
+        setEstadoPago("Pagar")
     }
     return (
         <div className='container-info-turnos'>
@@ -251,8 +203,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
             </div>
             <div className='botones'>
                 <button className='boton' onClick={openChangeTurno}><FontAwesomeIcon icon={faEdit} className='icon'/></button>
-                <button className='boton MP' onClick={estadoPago!=="Quitar"?handleCarro:handleQuitar}><img src={ImagenMP} alt="" className='logoMP'/></button>
-                
+                <button  className={estadoPago === 'Quitar' ? 'boton MP quitar' : 'boton MP pagar'} onClick={estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faShoppingCart} />{estadoPago}</button>
 
             </div>
             <Modal isOpen={isOpenChangeTurno} closeModal={closeChangeTurno}>
@@ -273,7 +224,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
 
 
                         />
-                        {inputEditarTurno.pacienteId.error && <span className='error'>{inputEditarTurno.pacienteId.error}</span>}
+                        {inputEditarTurno.pacienteId.error && <span className='err'>{inputEditarTurno.pacienteId.error}</span>}
 
                         <div className='confirmacionDiv'>
                             <button className='boton' onClick={handleSubmitEditarTurno}>MODIFICAR</button>

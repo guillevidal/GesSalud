@@ -243,8 +243,21 @@ const CreateRRHH = () => {
 
         }
 
-        alert(`El Administrativo ${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se creo correctamente `)
         dispatch(crearAdministrativo(newAdmin));
+        setInput({
+            name: { value: "", error: null },
+            lastName: { value: "", error: null },
+            dni: { value: "", error: null },
+            email: { value: "", error: null },
+            phone: { value: "", error: null },
+            adress: { value: "", error: null },
+            birth: { value: "", error: "Seleccione una fecha" },
+            user: { value: "", error: null },
+            password: { value: "", error: null },
+            gender: { value: "", error: "Seleccione un genero", ad: null },
+    
+        })
+        alert(`El Administrativo ${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se creo correctamente `)
         return
 
     }
