@@ -98,8 +98,18 @@ router.post("/", async function (req, res) {
   }
 });
 
-router.get("/array", function (req, res) {
-  res.status(200).send({ msg: "chupala" });
+router.get("/:id", async function (req, res) {
+  let { id } = req.params;
+  try {
+    let busquedaPagoPorId = await Items_pagos.findOne(
+      { where: { patient_id: id } },
+      { include: Historial_pagos }
+    );
+    res.send(busquedaPagoPorId);
+  } catch (error) {
+    console.log(error);
+    res.status(404).send({ msg: "no pudimos encontrar la informacion" });
+  }
 });
 
 module.exports = router;
