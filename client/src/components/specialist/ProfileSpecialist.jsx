@@ -282,7 +282,7 @@ export default  function ProfileSpecialist(){
                    {preview ?
                        <img src={URL.createObjectURL(image)} alt="" className='imagen'/>
                        :
-                       pacienteDetail[0].imgProfile ? 
+                       pacienteDetail[0] && pacienteDetail[0].imgProfile ? 
                        <img src={`https://gessalud.herokuapp.com/images/profile/${pacienteDetail[0].dni}`} alt="" className='imagen'/>
                        :
                        <img src={imagen} alt="" className='imagen'/>
