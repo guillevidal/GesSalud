@@ -19,7 +19,7 @@ const CarroCompras = ({carro, setCarro})=> {
                     </div>
                 )
             })}
-            {carro.items[0] && <button onClick={dispatch(enviarPago(carro))}>Pagar</button>}
+            {carro.items[0] && <button onClick={()=>dispatch(enviarPago(carro))}>Pagar</button>}
             
         </div>
     )
