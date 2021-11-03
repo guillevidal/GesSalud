@@ -50,8 +50,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
       },
       imgProfile: {
-        type: DataTypes.STRING,
-        defaultValue: "",
+        type: DataTypes.BLOB,
       },
     },
     { timestamps: false }
