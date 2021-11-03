@@ -24,7 +24,7 @@ import { useSelector } from "react-redux";
 import { Redirect, Switch } from "react-router-dom";
 import RegistroPatient from "./components/Landing/RegistroPatient.jsx";
 import NotFound from "./components/Landing/NotFound";
-
+import EditAgenda2 from "./components/specialist/EditAgenda.jsx"
 function App() {
   const rol = useSelector((state) => state.rol);
 
@@ -100,10 +100,13 @@ function App() {
       <Route exact path="/registrar">
         <RegistroPatient />
       </Route>
+        <Route exact path="/homeUser/agenda/:id">
+        {(rol === "4") ? <EditAgenda2 /> : <NotFound />}
+      </Route>
 
       <Route  path='/*'>
           <NotFound />
-        </Route> 
+      </Route> 
         </Switch>
 
     </div>
