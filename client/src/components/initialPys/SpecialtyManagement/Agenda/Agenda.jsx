@@ -9,6 +9,7 @@ function Agenda({specialist, date, specialty, id, turnosPrecargados, turnos}) {
     let fecha="fecha"
     let especialista="especialista"
     let especialidad="especialidad"
+    let ver='ver'
     const prueba = ()=>{
 
         if(turnosPrecargados.length===turnos.length){
@@ -16,18 +17,19 @@ function Agenda({specialist, date, specialty, id, turnosPrecargados, turnos}) {
             fecha="fecha2"
             especialista="especialista2"
             especialidad="especialidad2"
+            ver='ver2'
         }
     }
     prueba()
    
     return(
         
-        <tr className='datosAgenda'>
+        <tr className={`datosAgenda`}>
                 <td className={`bloque ${fecha}`}><span>{date}</span></td>
                 
                 <td className={`bloque ${especialista}`} ><span >{specialist}</span></td>
                 <td className={`bloque ${especialidad}`}><span >{specialty}</span></td>
-                <td className='bloque ver'>
+                <td className={`bloque ${ver}`}>
                 <Link to={`especialistaPys/agenda/${id}`}>
                 <FontAwesomeIcon icon={faEye} className='boton'/>
                 </Link>
