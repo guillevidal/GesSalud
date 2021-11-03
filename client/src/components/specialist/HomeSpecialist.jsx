@@ -105,13 +105,15 @@ export default function HomeSpecialist() {
     const turnosHoy = filtrarTurnos(short)
 
 
-    const [turnos, setTurnos] = useState(turnosDiaIndiv);
+    const [turnos, setTurnos] = useState(turnosHoy);
+    
 
     const [inputSearchDay, setInputSearchDay] = useState({
-        date: { value: short, error: 'Seleccione una fecha' }
-    });
-    const inputDia = inputSearchDay.date.value;
+        date: { value: '', error: 'Seleccione una fecha' }
 
+    });
+
+    const inputDia = inputSearchDay.date.value;
 
     const handleSearchDay = (event) => {
         const { value } = event.target
@@ -123,7 +125,7 @@ export default function HomeSpecialist() {
     const handleSubmitSearchDay = (event) => {
         event.preventDefault();
 
-        return setTurnos(filtrarTurnos(inputSearchDay.date.value))
+        setTurnos(filtrarTurnos(inputSearchDay.date.value))
 
     }
 
@@ -132,11 +134,19 @@ export default function HomeSpecialist() {
 
 
     }
+    
+      if(turnos.length === 0 && turnosHoy.length > 0 && inputDia === ''){
+        setTurnos(turnosHoy)
+    }
+  
+
+                                            
 
 
 
 
-    let turnosRend = turnosHoy[0]?.fechaTurno === inputDia ? turnosHoy : turnos;
+
+   
 
 
 
@@ -238,6 +248,7 @@ export default function HomeSpecialist() {
         event.preventDefault();
         setAgendaFilter([])
     }
+    
 
     return (
         <div className='homeSpecialist'>
@@ -354,6 +365,7 @@ export default function HomeSpecialist() {
                                         <div>
                                             <span>CODIGO: {pacienteDetail[0]?.paciente.historiaClinica.id}</span>
                                             <span>FECHA: {pacienteDetail[0]?.paciente.historiaClinica.creationDate}</span>
+
                                         </div>
                                     </div>
                                     <div>
