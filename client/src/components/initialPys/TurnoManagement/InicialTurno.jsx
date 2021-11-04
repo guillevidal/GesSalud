@@ -27,7 +27,6 @@ function InicialTurno() {
         dispatch(obtenerTurnos())
         dispatch(paginado(0))
         dispatch(obtenerPacientes())
-        console.log("golaaaaaaaa")
     }, [])
 
     useEffect(() => {
