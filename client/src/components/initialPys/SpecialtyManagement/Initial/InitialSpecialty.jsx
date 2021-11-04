@@ -19,22 +19,30 @@ function InitialSpecialty() {
     }
     const agenda = useSelector(state => state.agendas)
     const valorPaginado = useSelector( state => state.paginado)
-    let initalFecha= new Date ()
-    const [input, setInput] = useState(initalFecha.toISOString().slice(0, 10))
+    let initalFecha= new Date
+    let day=parseInt(initalFecha.getMonth())+1
+    let day2=parseInt(initalFecha.getDay())
+    if(day2<10){
+        day2="0"+day2.toString()
+    }
+    let initialF=initalFecha.getFullYear()+"-"+day+"-"+day2
+    console.log(initialF)
+    const [input, setInput] = useState(initialF)
     const [agendaFilter, setAgendaFilter] = useState(agenda.filter(element => {
         return element.date.slice(0, 10).includes(input)
     }));
     const dispatch = useDispatch()
-    useEffect(() => {
+    useEffect(async () => {
+        await dispatch(obtenerAgendas())
         dispatch(obtenerEspecialistas())
         dispatch(obtenerEspecialidades())
-        dispatch(obtenerAgendas())
         dispatch(obtenerTurnos())
         dispatch(obtenerPacientes())
         dispatch(paginado(0))
         setAgendaFilter(agenda.filter(element => {
             return element.date.slice(0, 10).includes(input)
         }))
+        
     }, [])
     
    
