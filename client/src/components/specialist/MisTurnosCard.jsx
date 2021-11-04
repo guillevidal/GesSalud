@@ -1,12 +1,12 @@
-import React, { useState} from "react";
-import { useDispatch } from "react-redux";
+import React, { useState,useEffect} from "react";
+import { useDispatch, useSelector} from "react-redux";
 import '../initialPys/SpecialtyManagement/EditAgenda/EditAgenda.scss'
 import '../initialPys/SpecialtyManagement/EditAgenda/modales.scss'
 import Modal from '../Modal/Modal'
 import { useModal } from '../Modal/useModal'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserTimes, faShoppingCart, faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
-import { eliminarTurno } from '../../actions/index.js';
+import { eliminarTurno, obtenerPagos, modificarTurno} from '../../actions/index.js';
 import swal from "sweetalert";
 
 function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastNameEspecialista, nameEspecialista, status}) {
@@ -18,6 +18,12 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
     const dispatch = useDispatch()
 
     const [isOpenCancelarTurno, openCancelarTurno, closeCancelarTurno] = useModal(false)
+    const [estadoStatus, setEStadoStatus]= useState(false)
+
+    useEffect(async () => {
+        await dispatch(obtenerPagos(paciente.id))
+    }, [])
+    const pagos=useSelector(state => state.pagos)
     
     const handleSubmitEliminarTurno = (event) => {
         event.preventDefault();
@@ -53,6 +59,29 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
         })})
         setEstadoPago("Pagar")
     }
+    const handleValidacionPago = () => {
+        pagos.forEach(async element => {
+            if(element.turno_id===id.toString()){
+
+                if(element.status!=="pagado"){
+
+                    let editarTurno = {
+                        id: id, // id del turno
+                        agendaId: agenda.id,
+                        pacienteId: paciente.id,
+                        status: "pagado"
+    
+                    }
+                    await dispatch(modificarTurno(editarTurno))
+                    setEStadoStatus(true)
+                }
+            }
+        })
+        
+    }
+    handleValidacionPago()
+
+
     return (
         <>
         
@@ -61,7 +90,7 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
               <td className="td horario">{date.split('T')[1].split('&')[0]}</td>
               <td className="td horarioFinal" >{`${capitalFirstLetter(nameEspecialista)} ${capitalFirstLetter(lastNameEspecialista)}`}</td>
               <td className="td paciente" >{especialidad}</td>
-              <td className="td paciente" >{status}</td>
+              <td className="td paciente" >{status.toUpperCase()}</td>
               <td className="td asignar" >
                   <div className='botones'>
                     <button className="button eliminar" onClick={openCancelarTurno} >Eliminar</button>
