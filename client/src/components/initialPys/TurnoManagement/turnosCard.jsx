@@ -7,7 +7,7 @@ import swal from "sweetalert";
 import '../SpecialtyManagement/EditAgenda/modales.scss'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faUserEdit, faEdit, faShoppingCart} from "@fortawesome/free-solid-svg-icons";
-import {modificarTurno, obtenerPagos} from "../../../actions/index.js";
+import {modificarTurno, obtenerPagos, obtenerTurnos} from "../../../actions/index.js";
 import {useDispatch, useSelector} from "react-redux";
 import '../SpecialtyManagement/EditAgenda/modales.scss';
 
@@ -181,7 +181,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
     }
 
     const handleValidacionPago = () => {
-        pagos.forEach(element => {
+        pagos.forEach(async element => {
             if(element.turno_id===id.toString()){
 
                 if(element.status!=="pagado"){
@@ -193,7 +193,8 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
                         status: "pagado"
     
                     }
-                    dispatch(modificarTurno(editarTurno))
+                    await dispatch(modificarTurno(editarTurno))
+                    await dispatch(obtenerTurnos())
                 }
             }
         })
