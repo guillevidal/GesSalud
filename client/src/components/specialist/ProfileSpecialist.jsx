@@ -51,7 +51,7 @@ export default  function ProfileSpecialist(){
             dispatch(pacienteDetallado(pacienteDetail[0].dni))
         }
 
-    },[editar])
+    },[])
 
     const [image, setImage] = useState('');
     const [preview, setPreview] = useState(false);

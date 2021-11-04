@@ -10,7 +10,6 @@ import { faTimesCircle, faShoppingCart } from "@fortawesome/free-solid-svg-icons
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import Nav from "../Layout/Nav"
 import './HomeSpecialist.scss'
-import '../initialPys/SpecialtyManagement/EditAgenda/EditAgenda.scss'
 import axios from "axios"
 import { rol, especialistaDetallado, pacienteDetallado, paginado } from "../../actions"
 import MisTurnosCard from './MisTurnosCard.jsx';
@@ -190,7 +189,7 @@ export default function HomeSpecialist() {
                     }
                 })
                 if (!filtroEspecialista.length > 0) {
-                    filtroEspecialista.push("No se encontró agenda con el especialista")
+                    filtroEspecialista.push("No se encontró disponibilidad de agenda con el especialista requerido")
                 }
                 setAgendaFilter(filtroEspecialista)
 
@@ -206,7 +205,7 @@ export default function HomeSpecialist() {
                     }
                 })
                 if (!filtroEspecialidad.length > 0) {
-                    filtroEspecialidad.push("No se encontró agenda con la especialidad")
+                    filtroEspecialidad.push("No se encontró disponibilidad de agenda con la especialidad requerida")
                 }
                 setAgendaFilter(filtroEspecialidad)
             }
@@ -320,18 +319,19 @@ export default function HomeSpecialist() {
             {
                 roles === '4' &&
                 <div className="rol-4-user">
-                    <div className="agenda">
+                    <div className="nombre-consulta">
+                        <div className='front'>
                         {
                             pacienteDetail.length > 0 ? pacienteDetail[0]?.gender === 'femenino' ?
                                 <span className="titulo">Bienvenida, {`${capitalFirstLetter(pacienteDetail[0].name)} ${capitalFirstLetter(pacienteDetail[0].lastName)}`}!</span>
                                 : <span className="titulo">Bienvenido, {`${capitalFirstLetter(pacienteDetail[0].name)} ${capitalFirstLetter(pacienteDetail[0].lastName)}`}</span> : null
                         }
-                    </div>
-
-                    <div>
-                        <>
-
-                            <div className="searchAgenda">
+                        <div className='botones'>
+                            <button onClick={handleMisTurnos} className='button'>Mis Turnos</button>
+                            <button onClick={openHistoriaClinica} className='button'>Mi historia clínica</button>
+                        </div>
+                        </div>
+                         <div className="searchAgenda">
                                 <label className="label-title-search">Consultar Agenda</label>
                                 <div>
                                     {
@@ -341,23 +341,36 @@ export default function HomeSpecialist() {
                                                 min={new Date()}
                                                 value={input}
                                                 onChange={(e) => handleChange(e)}
+                                                className='input'
                                             />
                                             :
                                             <input
                                                 value={input}
                                                 onChange={(e) => handleChange(e)}
                                                 placeholder={placeHolder}
-
+                                                className='input'
                                             />
                                     }
-                                    <select onChange={handleSelect}>
+                                    <select onChange={handleSelect} className='select'>
                                         <option value="especialidad">Especialidad</option>
                                         <option value="especialista">Especialista</option>
                                         <option value="fecha">Fecha</option>
                                     </select>
                                 </div>
+                                
+                            
                             </div>
-                            <button onClick={openHistoriaClinica}>Consultar Historia Clínica</button>
+
+                            
+
+                    </div>
+
+                    <div className='carro'><FontAwesomeIcon icon={faShoppingCart} onClick={openChangeTurno} className='carrito' /><span onClick={openChangeTurno} className='cantidad'>{carro.items.length}</span></div>
+                           
+
+                        <>
+
+                           
                             <ModalHistoriaClinica isOpen={isOpenHistoriaClinica} closeModal={closeHistoriaClinica} >
                                 <div>
                                     <div>
@@ -381,25 +394,28 @@ export default function HomeSpecialist() {
 
 
                             </ModalHistoriaClinica>
-                            <button onClick={handleMisTurnos}>Mis Turnos</button>
                         </>
                         {agendaFilter && agendaFilter.length > 10 ? <Paginado agendaFilter={agendaFilter} /> : null}
                         
                         {
                             agendaFilter.length > 0
                                 ?
-                                <div>
-                                    <label>Agendas Médicas</label>
-                                    <table>
-
-                                        <tr>
-                                            <th>Fecha</th>
-                                            <th>Especialista</th>
-                                            <th>Especialidad</th>
-                                            <th>Ver</th>
-                                        </tr>
+                                <div className='editagendacontainer'>
+                                    <div className='encabezado'>
+                                    <label className='title'>AGENDAS MÉDICAS</label>
+                                    </div>
                                         {typeof agendaFilter[0] === "string" ?
-                                            <h1>{agendaFilter[0]}</h1> : agendaFilter.slice(valorPaginado, valorPaginado + 10).map(agenda => {
+                                            <span className='error2'>{agendaFilter[0]}</span> : 
+                                            <div className='asignaciones'>
+                                            <table className='titles'>
+
+                                            <tr className='subtitle'>
+                                                <th className='th'>Fecha</th>
+                                                <th className='th'>Especialista</th>
+                                                <th className='th'>Especialidad</th>
+                                                <th className='th'>Ver</th>
+                                            </tr>
+                                            {agendaFilter.slice(valorPaginado, valorPaginado + 10).map(agenda => {
                                                 return (
                                                     <Agenda
                                                         date={agenda.date.split('T')[0]} specialist={capitalFirstLetter(agenda.especialista_medico.persona.name)
@@ -408,33 +424,38 @@ export default function HomeSpecialist() {
                                                         turnosPrecargados={agenda.turnosPrecargados} hora={agenda.date}
                                                     />
                                                 )
-                                            })}
+                                            }) }
+                                            </table></div>}
 
 
 
-                                    </table>
                                 </div>
 
                                 :
 
-                                <div id="edit-agenda-container">
+                                <div className="editagendacontainer">
 
                                     <div className="encabezado">
-                                        <span className="title data">MIS TURNOS</span>
+                                        <span className="title">MIS TURNOS</span>
                                     </div>
                                     <div className="asignaciones">
+                                            
+
+                                            {
+                                                turnosDelPacienteSort.length > 0 ? 
+                                                
                                         <table className="titles">
-                                            <thead>
+                                                <thead>
                                                 <tr className="subtitle">
-                                                    <th>FECHA</th>
-                                                    <th>HORA</th>
-                                                    <th>ESPECIALISTA</th>
-                                                    <th>ESPECIALIDAD</th>
+                                                    <th className='th'>Fecha</th>
+                                                    <th className='th'>Hora</th>
+                                                    <th className='th'>Especialista</th>
+                                                    <th className='th'>Especialidad</th>
+                                                    <th className='th'>Acciones</th>
                                                 </tr>
                                             </thead>
 
-                                            {
-                                                turnosDelPacienteSort.length > 0 ? turnosDelPacienteSort.map(turno => {
+                                                {turnosDelPacienteSort.map(turno => {
 
                                                     return (
 
@@ -446,16 +467,14 @@ export default function HomeSpecialist() {
                                                         />
 
                                                     )
-                                                }) : <span>No cuenta con turnos asignados</span>
+                                                })} 
+                                                </table>: <span className='error'>No cuenta con turnos asignados</span>
                                             }
 
-                                        </table>
                                     </div>
                                 </div>
                         }
-
-                    </div>
-                    <div className='carro'><FontAwesomeIcon icon={faShoppingCart} onClick={openChangeTurno} className='carrito' /><span onClick={openChangeTurno} className='cantidad'>{carro.items.length}</span></div>
+                    
                     <Modal isOpen={isOpenChangeTurno} closeModal={closeChangeTurno}>
                         <CarroCompras carro={carro} setCarro={setCarro} />
                     </Modal>
