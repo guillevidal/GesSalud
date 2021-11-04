@@ -136,6 +136,7 @@ router.get("/:id", async (req, res) => {
               "password",
               "gender",
               "rol",
+              "imgProfile",
             ],
           },
           // {
