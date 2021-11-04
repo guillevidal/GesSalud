@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { modificarAdministrativo, obtenerAdministrativos, resetearAdministrativoDetallado } from "../../../actions/index.js"
 import { Link } from "react-router-dom";
 import Nav from "../../Layout/Nav.jsx"
-import Person from "../../forms/Person/Person.jsx"
-
+import Person from "../../forms/Person/Person.jsx";
+import swal from "sweetalert";
+import { Redirect } from "react-router";
 const EditAdmin = () => {
     const administrativoDetallado = useSelector(state => state.administrativoDetallado)
     const administrativos = useSelector(state => state.administrativos)
@@ -24,7 +25,7 @@ const EditAdmin = () => {
         status: { value: administrativoDetallado[0]?.status, error: null },
         rol: {value: administrativoDetallado[0]?.persona.rol, error: null}
     })
-
+    const [volver, setVolver] = useState(false)
     const [validation, setValidation] = useState(true);
 
     useEffect(() => {
@@ -221,7 +222,10 @@ const EditAdmin = () => {
                         if (parseInt(filtro[index].persona.dni) === parseInt(input.dni.value)) {
                             
                             setValidation(false)
-                            alert("El DNI  que intenta modificar ya se encuentra registrado")
+                            swal({
+                                icon : 'warning',
+                                title : "El DNI  que intenta modificar ya se encuentra registrado"
+                            })
                             return
                         }
 
@@ -230,7 +234,10 @@ const EditAdmin = () => {
                     for (let index = 0; index < filtro2.length; index++){
                         if (filtro2[index].persona.email===input.email.value) {
                             setValidation(false)
-                            alert("El EMAIL  que intenta modificar ya se encuentra registrado")
+                            swal({
+                                icon : 'warning',
+                                title :"El EMAIL  que intenta modificar ya se encuentra registrado"
+                            })
                             return
                         }
                     }
@@ -239,7 +246,10 @@ const EditAdmin = () => {
                     for (let index = 0; index < filtro3.length; index++){
                         if (filtro3[index].persona.user===input.user.value) {
                             setValidation(false)
-                            alert("El Usuario  que intenta modificar ya se encuentra registrado")
+                            swal({
+                                icon : 'warning',
+                                title :"El USUARIO  que intenta modificar ya se encuentra registrado"
+                            })
                             return
                         }
                     }
@@ -273,9 +283,21 @@ const EditAdmin = () => {
 
         }
         
-        alert(`El Administrativo ${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se modificó correctamente `)
         dispatch(modificarAdministrativo(newAdmin));
-        dispatch(obtenerAdministrativos())
+        swal({
+            icon :'success',
+            title :`${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se modificó correctamente`,
+            text : `¿Desea continuar con la edicion?`,
+            
+            buttons: ['Volver', true],
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              return
+            } else {
+              setVolver(true)
+            }
+          });
         return
 
     }
@@ -286,6 +308,7 @@ const EditAdmin = () => {
 
     return (
         <div id="createSpecialist-container">
+        {volver && <Redirect to='homeRRHH' />}
             <Nav />
             <div>
                 <form className='form-container' onSubmit={handleSubmit}>

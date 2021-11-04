@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import Nav from '../../../Layout/Nav';
 import Person from '../../../forms/Person/Person.jsx';
 import {modificarPaciente, obtenerPacientes, resetearPacienteDetallado} from "../../../../actions/index.js"
+import swal from "sweetalert";
+import { Redirect } from "react-router";
+
 export default function PatientEdit() {
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
@@ -13,6 +16,8 @@ export default function PatientEdit() {
     const patientDetail = useSelector(state => state.pacienteDetallado)
     const pacientes = useSelector(state => state.pacientes)
     const dispatch = useDispatch()
+
+    const [volver, setVolver] = useState(false)
 
     const [input, setInput] = useState({
         name: {value: patientDetail[0]?.name, error: null},
@@ -235,7 +240,10 @@ export default function PatientEdit() {
                         if (filtro[index].persona.dni === parseInt(input.dni.value)) {
                             
                             setValidation(false)
-                            alert("El DNI  que intenta modificar ya se encuentra registrado")
+                            swal({
+                                icon : 'warning',
+                                title : "El DNI  que intenta modificar ya se encuentra registrado"
+                            })
                             return
                         }
 
@@ -246,7 +254,10 @@ export default function PatientEdit() {
                     for (let index = 0; index < filtro2.length; index++){
                         if (filtro2[index].persona.email===input.email.value) {
                             setValidation(false)
-                            alert("El EMAIL  que intenta modificar ya se encuentra registrado")
+                            swal({
+                                icon : 'warning',
+                                title : "El EMAIL  que intenta modificar ya se encuentra registrado"
+                            })
                             return
                         }
                     }
@@ -255,7 +266,10 @@ export default function PatientEdit() {
                     for (let index = 0; index < filtro3.length; index++){
                         if (filtro3[index].persona.user===input.user.value) {
                             setValidation(false)
-                            alert("El Usuario  que intenta modificar ya se encuentra registrado")
+                            swal({
+                                icon : 'warning',
+                                title : "El Usuario  que intenta modificar ya se encuentra registrado"
+                            })
                             return
                         }
                     }
@@ -286,16 +300,33 @@ export default function PatientEdit() {
             gender: input.gender.value,
             emergencyContact: parseInt(input.emergencyContact.value)
         }
-
-        alert(`El paciente ${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se modificó correctamente `)
+        
+        
         dispatch(modificarPaciente(newPatient));
-        dispatch(obtenerPacientes())
+
+        swal({
+            icon :'success',
+            title :`${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se modificó correctamente!`,
+            text : `¿Desea continuar con la edicion?`,
+            
+            buttons: ['Volver', true],
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              return
+            } else {
+              setVolver(true)
+            }
+          });
+
         return
 
     }
 
     return (
         <div id="createPatient-container">
+
+            {volver && <Redirect to='patientPys'/>}
             <Nav />
 
             <form className='createPatient-form' onSubmit={handleSubmit}>

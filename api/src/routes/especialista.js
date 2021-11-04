@@ -47,7 +47,7 @@ router.post("/", async function (req, res) {
       Persona.findOne({ where: { user: data.user } }),
     ]);
     if (yaExisteUsuario || yaExisteCorreo || yaExisteDni) {
-      res.status(400).send({
+      res.status(200).send({
         msg: `El dni, usuario o el email ingresado ya esta registrado`,
       });
     } else {

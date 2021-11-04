@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Person from '../../forms/Person/Person';
 import Nav from "../../Layout/Nav";
+import { Redirect } from "react-router";
+import swal from "sweetalert";
 
 import { obtenerEspecialidades, modificarEspecialistas, obtenerEspecialistas, resetearEspecialistaDetallado } from "../../../actions/index.js";
 
@@ -25,7 +27,7 @@ export default function EditSpecialty() {
     const especialistas = useSelector(state => state.especialistas)
     const typeSpecialties = useSelector((state) => state.especialidades)
     const [validation, setValidation] = useState(true);
-
+    const [volver, setVolver] = useState(false)
 
     const [input, setInput] = useState({
         name: { value: specialtyDetail[0]?.persona.name, error: null },
@@ -299,7 +301,10 @@ export default function EditSpecialty() {
                     for (let index = 0; index < filtro2.length; index++){
                         if (filtro2[index].persona.email===input.email.value) {
                             setValidation(false)
-                            alert("El EMAIL  que intenta modificar ya se encuentra registrado")
+                            swal({
+                                icon : 'warning',
+                                title : "El EMAIL  que intenta modificar ya se encuentra registrado"
+                            })
                             return
                         }
                     }
@@ -308,7 +313,10 @@ export default function EditSpecialty() {
                     for (let index = 0; index < filtro3.length; index++){
                         if (filtro3[index].persona.user===input.user.value) {
                             setValidation(false)
-                            alert("El Usuario  que intenta modificar ya se encuentra registrado")
+                            swal({
+                                icon : 'warning',
+                                title : "El USUARIO  que intenta modificar ya se encuentra registrado"
+                            })
                             return
                         }
                     }
@@ -324,7 +332,10 @@ export default function EditSpecialty() {
                 }
                 if(input.specialty.value.length===0){
                     setValidation(false)
-                            alert("Debe seleccionar por lo menos un tipo de especialidad")
+                    swal({
+                        icon : 'warning',
+                        title : "Debe seleccionar por lo menos un tipo de especialidad"
+                    })
                             return
                 }
             } 
@@ -355,9 +366,22 @@ export default function EditSpecialty() {
 
         }
         
-        alert(`El especialista médico ${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se modificó correctamente `)
         dispatch(modificarEspecialistas(newSpecialist));
-        dispatch(obtenerEspecialistas())
+        swal({
+            icon :'success',
+            title :`${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se modificó correctamente!`,
+            text : `¿Desea continuar con la edicion?`,
+            
+            buttons: ['Volver', true],
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              return
+            } else {
+              setVolver(true)
+            }
+          });
+
         return
 
     }
@@ -365,6 +389,7 @@ export default function EditSpecialty() {
 
     return (
         <div id="createSpecialist-container">
+            {volver && <Redirect to='/homeRRHH'/>}
             <Nav />
             <div>
                 <form className='form-container' onSubmit={handleSubmit}>

@@ -197,7 +197,11 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
     }
     handleValidacionPago()
     const handlePagado = () => {
-        alert("Ya fue pagado este item")
+       swal({
+           title : 'Ups!',
+           icon : 'warning',
+           text: 'Este turno ya fue abonado'
+       })
     }
     return (
         <div className='container-info-turnos'>

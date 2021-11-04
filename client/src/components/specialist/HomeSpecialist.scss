@@ -431,3 +431,19 @@
     padding: 0px 45px 0px 0px;
     font-size:smaller
 }
+
+.pagaddo{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .check{
+        font-size: 3em;
+        margin: 20px;
+        text-align: center;
+    }
+
+    .button{
+        @include boton-primario;
+    }
+}

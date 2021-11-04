@@ -231,7 +231,13 @@
             margin: 0px 30px;
             margin-top: -20px;
         }
-
+        .BOTONES{
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 400px;
+            flex-wrap: wrap;
+        }
         .vuelta{
             @include boton-primario;
             font-size: 1.5em;
@@ -239,3 +245,4 @@
         }
     }
 }
+
