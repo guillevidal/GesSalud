@@ -8,7 +8,7 @@ const persistConfig = {
     storage: iStorage,
     whitelist: ["especialidades","pacientes","especialistas","administrativos","agendas","turnos",
     "pacienteDetallado","especialistaDetallado","administrativoDetallado","turnoDetallado",
-    "busquedaEspecialista","creado","modificado","rol","paginado"] // which reducer want to store
+    "busquedaEspecialista","creado","modificado","rol","paginado", "enlace_de_pago", "pagos"] // which reducer want to store
   };
 
 const pReducer = persistReducer(persistConfig, reducer)

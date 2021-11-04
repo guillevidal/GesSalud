@@ -27,7 +27,6 @@ import NotFound from "./components/Landing/NotFound";
 import EditAgenda2 from "./components/specialist/EditAgenda.jsx"
 function App() {
   const rol = useSelector((state) => state.rol);
-
   return (
     <div className="App">
       {rol === "" && <Redirect to="/" />}

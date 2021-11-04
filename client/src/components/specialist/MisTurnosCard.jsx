@@ -1,10 +1,11 @@
 import React, { useState} from "react";
 import { useDispatch } from "react-redux";
 import '../initialPys/SpecialtyManagement/EditAgenda/EditAgenda.scss'
+import '../initialPys/SpecialtyManagement/EditAgenda/modales.scss'
 import Modal from '../Modal/Modal'
 import { useModal } from '../Modal/useModal'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserTimes, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { faUserTimes, faShoppingCart, faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { eliminarTurno } from '../../actions/index.js';
 import swal from "sweetalert";
 
@@ -61,15 +62,21 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
               <td className="td horarioFinal" >{`${capitalFirstLetter(nameEspecialista)} ${capitalFirstLetter(lastNameEspecialista)}`}</td>
               <td className="td paciente" >{especialidad}</td>
               <td className="td asignar" >
+                  <div className='botones'>
                     <button className="button eliminar" onClick={openCancelarTurno} >Eliminar</button>
-                    <button  className={estadoPago === 'Quitar' ? 'boton MP quitar' : 'boton MP pagar'} onClick={estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faShoppingCart} />{estadoPago}</button>
+                    {estadoPago === 'Quitar' ? 
+                     <button  className={"button eliminarcart"} onClick={estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faCartArrowDown} /></button>
+                        :
+                        <button  className={"button pagar"} onClick={estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faShoppingCart} /></button>
+                    }
+                   </div>
                 </td>
                 <Modal isOpen={isOpenCancelarTurno} closeModal={closeCancelarTurno} >
                        <div className="eliminacion">
                         <div className="icon"><FontAwesomeIcon className="delete" icon={faUserTimes}></FontAwesomeIcon></div>
-                        <div>
-                            <label>Eliminar turno del día {date.split('T')[0]} </label>
-                            <label>Horario {date.split('T')[1].split('&')[0]} hrs</label>
+                        <div className='busquedaConf'>
+                            <label className='text'>Eliminar turno del día {date.split('T')[0]} </label>
+                            <label className='text'>Horario {date.split('T')[1].split('&')[0]} hrs</label>
                         </div>
                         <div className="confirmacionDiv">
                             <button className="boton" onClick={handleSubmitEliminarTurno} >ACEPTAR</button>

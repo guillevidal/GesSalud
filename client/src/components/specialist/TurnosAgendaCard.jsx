@@ -8,7 +8,7 @@ import { crearTurno, eliminarTurno, modificarTurno } from '../../actions/index.j
 import swal from "sweetalert";
 import '../Modal/Modal.scss'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserPlus, faUserEdit, faUserTimes } from "@fortawesome/free-solid-svg-icons";
+import { faUserPlus, faTimes, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 
 const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, }) => {
@@ -24,7 +24,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
     
 
     const [isOpenFormTurno, openFormTurno, closeFormTurno] = useModal(false)
-    let boton = "Crear Turno"
+    let boton = "Solicitar"
     const confirmacionBoton = () => {
         turnos.forEach(element => {
             if (element.hour === `${date}T${horaI}&${horaF}`) {
@@ -68,7 +68,7 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                 <td className='td horario'><span >{horaI}</span></td>
                 <td className='td horarioFinal'><span>{horaF}</span></td>
 
-                <td className='td asignar'>{boton === "Crear Turno" ? <button onClick={openFormTurno}>{boton}</button> : <button disabled>{boton}</button>}</td>
+                <td className='td asignar'>{boton === "Solicitar" ? <button className='plusplus' onClick={openFormTurno}><FontAwesomeIcon icon={faPlus}/> {boton}</button> : <button className='timestimes' disabled><FontAwesomeIcon icon={faTimes}/> {boton}</button>}</td>
 
 
             </tr>

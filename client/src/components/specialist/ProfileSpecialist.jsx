@@ -109,6 +109,7 @@ export default  function ProfileSpecialist(){
 
 
         if(e.target.name === 'passwordActual'){
+            if(roles === '3'){
             if(e.target.value !== especialista[0].persona.password){
                 setValidaciones(true)
                 return
@@ -117,6 +118,17 @@ export default  function ProfileSpecialist(){
                 setValidaciones(false)
                 return
             }
+        }
+        else{
+            if(e.target.value !== pacienteDetail[0].password){
+                setValidaciones(true)
+                return
+            }
+            else{
+                setValidaciones(false)
+                return
+            }
+        }
 
         }   
 
@@ -136,6 +148,16 @@ export default  function ProfileSpecialist(){
 
     const handleSubmit =   (e) =>{
         e.preventDefault()
+
+        if(validaciones === true){
+            swal({
+                title: "Error!",
+                text: "Tus datos no han sido modificados, verifica que sean validos",
+                icon: "error"
+              })
+            return
+        }
+
     if(image !== ''){
         
         let myNewFile = '';

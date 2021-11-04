@@ -120,21 +120,264 @@
         align-items: center;
         width: 100%;
     
-        .agenda{
+        .nombre-consulta{
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
             width: 100%;
-            margin-top: 20px;
-            max-width: 800px;
-    
+            margin-top: 10px;
+            padding: 20px;
+
+            @media (max-width: 800px) {
+                justify-content: space-evenly;
+            }
+
+            .front{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 20px;
+
+                .botones{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    .button{
+                        margin: 0 20px;
+                        @include boton-primario;
+                        font-size: 15px;
+                    }
+                }
             .titulo{
                 font-size: 2em;
                 margin-bottom: 20px;
                 font-family: $fuente-principal;
                 color: $color-principal;
                 font-weight: $bold;
-                align-self: flex-start;
             }
         }
+
+        .searchAgenda{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            border-radius: 10px;
+
+            .input{
+                
+                padding: 3px;
+            }
+
+            .label-title-search{
+                font-size: 1.1em;
+                margin-bottom: 10px;
+                color: $color-principal;
+                background-color: $color-detalle;
+                padding: 5px;
+                border-radius: 5px;
+            }
+    
+            .select{
+                margin-left: 10px;
+                background-color: $color-principal;
+                color: white; 
+                padding: 3px;
+            }
+    
+    
+   /*          .error-label{
+                color: rgb(255, 86, 86);
+                text-align: center;
+                font-size:12px;
+            } */
+
+    
+        }     
+
+        }
+
+        .carro{
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+            margin-right: 50px;
+            margin-top: 10px;
+    
+            .carrito{
+                font-size: 2.2em;
+                color: $color-principal;
+                cursor: pointer;
+    
+                &:hover{
+                    color: $color-secundario;
+                }
+            }
+            .cantidad{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-left: -10px;
+                margin-top: -5px;
+                color: white;
+                background-color: rgb(255, 68, 68);
+                border-radius : 100%;
+                padding: 5px;
+                height: 22px;
+            }
+        }
+
+        .editagendacontainer{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            align-items: center;
+        
+            .encabezado{
+                display: flex;
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+        
+                .title{
+                    font-size: 2em;
+                    font-family: $fuente-principal;
+                    color: $color-principal;
+                }
+        
+            }
+        
+            .asignaciones{
+                display: flex;
+                width: 100%;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                max-width: 900px;
+                margin-top: 20px;
+        
+                .titles{
+                    width: 100%;
+                    max-width: 900px;
+                 }
+        
+                 .subtitle{
+                    color: $color-terciario;
+                    font-size: 1.3em;
+                    background-color: $color-principal;
+                    .th{
+                        padding: 5px;
+                    }
+                 }
+        
+                 
+        
+            }
+           
+        }
+        
+        .listasss{
+            width: 100%;
+            justify-content: center;
+            max-width: 900px;
+            margin-bottom: 20px;
+            text-align: center;
+        
+           
+        
+          
+        
+            .td{
+                padding: 5px;
+                &:hover{
+                    background-color: rgb(231, 231, 231);
+                }
+            }
+            
+            .numero{
+                
+                font-size: 1.4em;
+             background-color: rgb(210, 255, 255);
+            }
+            .horario{
+                
+                font-size: 1.4em;
+                background-color: rgb(226, 226, 255);
+            }
+            .horarioFinal{
+                
+                font-size: 1.4em;
+                background-color: rgb(223, 189, 255);
+            }
+            .paciente{
+                
+                font-size: 1.4em;
+                background-color: rgb(194, 215, 255);
+            }
+        
+            .asignar{
+                 background-color: rgb(184, 189, 255);
+                width: 20%;
+                }
+            .link{
+                text-decoration: none;
+                font-size: 15px;
+                color: white;
+                
+                
+            }
+        
+            .botones{
+                display: flex;
+                justify-content: space-around;
+                flex-wrap: wrap;
+                .button{
+                    border-radius: 5px;
+                    width: 80px;
+                }
+            }
+            .button{
+                font-size: 15px;
+                border-radius: 5px;
+                width: 100%;
+                cursor: pointer;
+                border: 1px solid $color-terciario; 
+                padding: 3px;
+                background-color: $color-principal;
+                color: white;
+                font-size: 1.1em;
+                margin: 5px auto;
+                
+            }
+            .eliminar:hover{
+                
+                background-color: rgb(184, 41, 41);
+            }
+            .eliminarcart{
+                background-color: rgb(184, 41, 41);
+            
+            }
+            .pagar{
+                background-color: rgb(73, 175, 60);
+            }
+        
+        
+            
+        }
+        .error{
+            font-size: 2.5em;
+            color: red;
+        }
+        .error2{
+            font-size: 2.5em;
+            color: red;
+            margin-top: 20px;
+        }
+        
+
+
     }
