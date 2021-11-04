@@ -6,7 +6,7 @@ import './InitialSpecialty.scss';
 import Nav from '../../../Layout/Nav';
 import {
     obtenerEspecialistas, obtenerEspecialidades, obtenerAgendas, obtenerTurnos,
-    obtenerPacientes, modificarTurno
+    obtenerPacientes, modificarTurno, paginado
 } from '../../../../actions/index';
 import "react-datepicker/dist/react-datepicker.css";
 import Agenda from '../Agenda/Agenda.jsx';
@@ -17,6 +17,13 @@ function InitialSpecialty() {
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
+    const agenda = useSelector(state => state.agendas)
+    const valorPaginado = useSelector( state => state.paginado)
+    let initalFecha= new Date ()
+    const [input, setInput] = useState(initalFecha.toISOString().slice(0, 10))
+    const [agendaFilter, setAgendaFilter] = useState(agenda.filter(element => {
+        return element.date.slice(0, 10).includes(input)
+    }));
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(obtenerEspecialistas())
@@ -24,18 +31,23 @@ function InitialSpecialty() {
         dispatch(obtenerAgendas())
         dispatch(obtenerTurnos())
         dispatch(obtenerPacientes())
+        dispatch(paginado(0))
+        setAgendaFilter(agenda.filter(element => {
+            return element.date.slice(0, 10).includes(input)
+        }))
     }, [])
-    const valorPaginado = useSelector( state => state.paginado)
-    const agenda = useSelector(state => state.agendas)
+    
+   
+   
     const agendaSort = agenda.sort((a, b) => {
         if (a.date > b.date) return 1;
         if (a.date < b.date) return -1;
         return 0;
     })
 
-    const [agendaFilter, setAgendaFilter] = useState([]);
-    const [estado, setEstado] = useState("especialista")
-    const [input, setInput] = useState("")
+    
+    
+    const [estado, setEstado] = useState("fecha")
     const [placeHolder, setPlaceHolder] = useState("Buscar por nombre")
     const handleChange = (event) => {
         const { value } = event.target
@@ -46,9 +58,17 @@ function InitialSpecialty() {
             if (estado === "especialista") {
                 let filtroE = []
                 agenda.forEach(element => {
-                    //console.log(element)
+                    let fullName= element.especialista_medico.persona.name+element.especialista_medico.persona.lastName
+                    let fullNameInver=element.especialista_medico.persona.lastName+element.especialista_medico.persona.name
                     if (element.especialista_medico.persona.name.toLowerCase().startsWith(value.toLowerCase()) ||
-                        element.especialista_medico.persona.lastName.toLowerCase().startsWith(value.toLowerCase())) {
+                        element.especialista_medico.persona.lastName.toLowerCase().startsWith(value.toLowerCase()
+                        )
+                        ) {
+                            filtroE.push(element)
+                        
+                        
+                    }else if (fullName.toLowerCase().startsWith(value.replace(" ", "").toLowerCase())||
+                    fullNameInver.toLowerCase().startsWith(value.replace(" ", "").toLowerCase())){
                         filtroE.push(element)
                     }
                 })
@@ -145,9 +165,9 @@ function InitialSpecialty() {
                                 />}
 
                             <select onChange={(e) => handleSelect(e)} className='select'>
+                                <option value="fecha">Fecha</option>
                                 <option value="especialista">Especialista</option>
                                 <option value="especialidad">Especialidad</option>
-                                <option value="fecha">Fecha</option>
                             </select>
 
                         </div>
