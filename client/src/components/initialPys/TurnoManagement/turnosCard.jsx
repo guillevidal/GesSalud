@@ -173,24 +173,26 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
         })})
         setEstadoPago("Pagar")
     }
-    //let estadoOO=false
     const handleValidacionPago = () => {
-        pagos.forEach(async element => {
-            if(element.turno_id===id.toString()){
-
-                if(element.status!=="pagado"){
-
-                    let editarTurno = {
-                        id: id, // id del turno
-                        agendaId: agenda.id,
-                        pacienteId: paciente.id,
-                        status: "pagado"
+        pagos.forEach(element => {
+            element.items_pago.forEach(async element => {
+                
+                if(element.turno_id===id.toString()){
     
+                    if(element.status!=="pagado"){
+    
+                        let editarTurno = {
+                            id: id, // id del turno
+                            agendaId: agenda.id,
+                            pacienteId: paciente.id,
+                            status: "pagado"
+        
+                        }
+                        await dispatch(modificarTurno(editarTurno))
+                        setEStadoStatus(true)
                     }
-                    await dispatch(modificarTurno(editarTurno))
-                    setEStadoStatus(true)
                 }
-            }
+            })
         })
         
     }
