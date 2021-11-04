@@ -16,7 +16,7 @@ mercadopago.configure({
 
 router.post("/pago", function (req, res) {
   let servicios = req.body;
-  console.log(servicios)
+  console.log(servicios);
   let preference = {
     ...servicios,
     back_urls: {
@@ -109,6 +109,16 @@ router.get("/:id", async function (req, res) {
   } catch (error) {
     console.log(error);
     res.status(404).send({ msg: "no pudimos encontrar la informacion" });
+  }
+});
+
+router.get("/", async function (req, res) {
+  try {
+    let pagos = await Historial_pagos.findAll({ include: Items_pagos });
+    res.status(200).send(pagos);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({ msg: "No pudimos obtener la informacion" });
   }
 });
 
