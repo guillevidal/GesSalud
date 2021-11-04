@@ -29,7 +29,7 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            max-width: 300px;
+            max-width: 350px;
             height: 25px;
             margin-top: 30px;
     }
@@ -43,17 +43,20 @@
             height: 25px;
             margin-top: 30px;
 
-            
-
-            .select-buscador{
-                display: flex;
-                color: $color-terciario;
-                padding: 3px;
-                background-color: $color-principal;
-            }
+ 
 
         }
 
 
+}
+
+           
+
+.select-buscador{
+    display: flex;
+    color: $color-terciario;
+    padding: 3px;
+    background-color: $color-principal;
+    margin-left: 20px;
 }
 

@@ -321,15 +321,14 @@ const EditAdmin = () => {
                             handleAdress={handleAdress} handleEmail={handleEmail} handleUser={handleUser}
                             handlePassword={handlePassword}
                         />
-                        {<div>
-                          <select onChange={(e) => handleStatus(e)}>
+                        {<div className='statuss'>
+                          <select onChange={(e) => handleStatus(e)} className='select'>
                               <option value={input.status.value?true:false}>{input.status.value?"Activo":"Inactivo"}</option>
                               <option value={!input.status.value?true:false}>{!input.status.value?"Activo":"Inactivo"}</option>
                           </select>
                              
-                        </div>}
-                        {<div>
-                            <select onChange={(e) => handleRol(e)}>
+                       
+                            <select onChange={(e) => handleRol(e)} className='select'>
                               <option>Rol...</option>
                               <option value="1">Rol PYS</option>
                               <option value="2">Rol RRHH</option>
