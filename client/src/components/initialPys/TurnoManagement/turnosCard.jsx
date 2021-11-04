@@ -29,7 +29,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
 
     })
     useEffect(async () => {
-        await dispatch(obtenerPagos(paciente.id))
+        await dispatch(obtenerPagos())
        
     }, [])
     const pagos=useSelector(state => state.pagos)
