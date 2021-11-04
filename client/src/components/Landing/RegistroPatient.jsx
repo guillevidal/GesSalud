@@ -337,17 +337,26 @@ const RegistroPatient = () => {
 
                         if (pacientes[index].persona.dni === newPatient.dni) {
 
-                            alert("El DNI ya esta registado")
+                            swal({
+                                icon: 'warning',
+                                title : "El DNI ya esta registado"
+                            })
                             setValidation(false)
                             return
                         }
                         if (pacientes[index].persona.email===newPatient.email){
-                            alert("El EMAIL ya esta registado")
+                            swal({
+                                icon: 'warning',
+                                title : "El EMAIL ya esta registado"
+                            })
                             setValidation(false)
                             return
                         }
                         if (pacientes[index].persona.user===newPatient.user){
-                            alert("El USUARIO ya esta registado")
+                            swal({
+                                icon: 'warning',
+                                title : "El USUARIO ya esta registado"
+                            })
                             setValidation(false)
                             return
                         }

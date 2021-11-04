@@ -250,10 +250,13 @@ export default  function ProfileSpecialist(){
                 <div className='encabezado'>
                    <div className='image-label'>
                        
-                       {preview ?
+                   {preview ?
                        <img src={URL.createObjectURL(image)} alt="" className='imagen'/>
                        :
-                       <img src={imagenBD} alt="" className='imagen'/>            
+                       especialista[0] && especialista[0].imgProfile ? 
+                       <img src={`https://gessalud.herokuapp.com/images/profile/${especialista[0].dni}`} alt="" className='imagen'/>
+                       :
+                       <img src={imagen} alt="" className='imagen'/>
                        
                        }
                        

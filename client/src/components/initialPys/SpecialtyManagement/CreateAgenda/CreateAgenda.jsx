@@ -6,6 +6,8 @@ import Nav from '../../../Layout/Nav';
 import './CreateAgenda.scss';
 import "react-datepicker/dist/react-datepicker.css";
 import { crearAgenda, crearMultipleAgenda } from '../../../../actions/index.js';
+import { Redirect } from "react-router";
+import swal from "sweetalert";
 
 function CreateAgenda() {
     const dispatch = useDispatch();
@@ -17,6 +19,7 @@ function CreateAgenda() {
     const specialities = useSelector(state => state.especialidades)
     const specialists = useSelector(state => state.especialistas)
     const agenda = useSelector(state => state.agendas)
+    const [volver, setVolver] = useState(false)
 
 
     const [validation, setValidation] = useState(true)
@@ -421,14 +424,6 @@ function CreateAgenda() {
 
                         dispatch(crearMultipleAgenda(newAgenda));
 
-                        swal({
-
-                            title: "Agenda médica creada",
-                            text: `La agenda del especialista se creó correctamente `,
-                            icon: "success",
-
-                        })
-
                         setInputCreateAgenda({
                             dateStart: { value: '', error: 'Seleccione una fecha y hora' },
                             dateEnd: { value: '', error: null },
@@ -437,6 +432,23 @@ function CreateAgenda() {
                             shiftsDay: { value: "", error: 'Seleccione los turnos por día' }, //Turnos por día
 
                         })
+
+                        swal({
+                            title: "Agenda médica creada",
+                            text: "¿Desea continuar creando agendas?",
+                            icon: "success",
+                            buttons: ['Volver', true],
+                          })
+                          .then((willDelete) => {
+                            if (willDelete) {
+                              return
+                            } else {
+                              setVolver(true)
+                            }
+                          });
+                    
+
+                       
                     }
 
 
@@ -518,6 +530,7 @@ function CreateAgenda() {
 
     return (
         <div id="createAgenda-container">
+            {volver && <Redirect to='/especialistaPys'/>}
             <Nav />
             <div className='volver'>
                 <Link to="/especialistaPys" >
