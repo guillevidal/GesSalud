@@ -183,14 +183,17 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
     const handleValidacionPago = () => {
         pagos.forEach(element => {
             if(element.turno_id===id.toString() && element.patient_id===paciente.id.toString()){
-                let editarTurno = {
-                    id: id, // id del turno
-                    agendaId: agenda.id,
-                    pacienteId: paciente.id,
-                    status: "pagado"
+                if(element.status!=="pagado"){
 
+                    let editarTurno = {
+                        id: id, // id del turno
+                        agendaId: agenda.id,
+                        pacienteId: paciente.id,
+                        status: "pagado"
+    
+                    }
+                    dispatch(modificarTurno(editarTurno))
                 }
-                dispatch(modificarTurno(editarTurno))
             }
         })
         
