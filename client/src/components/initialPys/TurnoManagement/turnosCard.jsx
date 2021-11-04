@@ -174,7 +174,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
         setEstadoPago("Pagar")
     }
     //let estadoOO=false
-    let setEStadoStatus=false
+    
     const handleValidacionPago = () => {
         pagos.forEach(async element => {
             if(element.turno_id===id.toString()){
