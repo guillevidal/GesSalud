@@ -9,13 +9,15 @@ import swal from 'sweetalert';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClinicMedical } from "@fortawesome/free-solid-svg-icons";
 import './Landing.scss'
+import { Redirect } from "react-router";
 
 const RegistroPatient = () => {
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
     const dispatch = useDispatch()
-    
+    const [redirigir, setRedirigir] = useState(false)
+
     const [input, setInput] = useState({
         name: { value: "", error: null },
         lastName: { value: "", error: null },
@@ -374,6 +376,8 @@ const RegistroPatient = () => {
                         derivation: { value: "", error: null },
                 
                     })
+                    setRedirigir(true)
+
                     return  
                 }
             }
@@ -401,6 +405,7 @@ const RegistroPatient = () => {
     return (
         
         <div id="createPatient-container">
+            {redirigir && <Redirect to='/' />}
 
     <div id="landing-header">
         <div id="landing-title">
