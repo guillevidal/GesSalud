@@ -146,7 +146,7 @@ export default  function ProfileSpecialist(){
         })
     }
 
-    const handleSubmit =   (e) =>{
+    const handleSubmit =   async (e) =>{
         e.preventDefault()
 
         if(validaciones === true){
@@ -215,17 +215,20 @@ export default  function ProfileSpecialist(){
         }
        
   
+        
         setEditar({
             imagen :false,
             datos : false,
             cuenta : false
         })
 
-        swal({
+
+       await swal({
             title: "Exito!",
             text: "Tus datos han sido modificados",
             icon: "success"
           })
+        location.reload()
 
     }
 
