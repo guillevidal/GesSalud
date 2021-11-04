@@ -234,7 +234,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
             </div>
             <div className='botones'>
                 <button className='boton' onClick={openChangeTurno}><FontAwesomeIcon icon={faEdit} className='icon'/></button>
-                <button  className={estadoPago === 'Quitar' ? 'boton MP quitar' : 'boton MP pagar'} onClick={estadoOO === false ? estadoPago!=="Quitar"?handleCarro:handleQuitar: handlePagado}><FontAwesomeIcon icon={faShoppingCart} />{estadoPago}</button>
+                <button  className={estadoPago === 'Quitar' ? 'boton MP quitar' : 'boton MP pagar'} onClick={estadoOO === false || status!=="pagado" ? estadoPago!=="Quitar"?handleCarro:handleQuitar: handlePagado}><FontAwesomeIcon icon={faShoppingCart} />{estadoPago}</button>
 
             </div>
             <Modal isOpen={isOpenChangeTurno} closeModal={closeChangeTurno}>
