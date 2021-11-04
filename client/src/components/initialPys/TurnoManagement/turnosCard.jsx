@@ -28,10 +28,32 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
         hora: { value: `${fecha}T${horaI}&${horaF}`, error: null },
 
     })
+    const pagos=useSelector(state => state.pagos)
     useEffect(async () => {
         await dispatch(obtenerPagos(paciente.id))
+
+        
     }, [])
-    const pagos=useSelector(state => state.pagos)
+    useEffect(()=>{
+
+        pagos.forEach(async element => {
+            if(element.turno_id===id.toString()){
+
+                if(element.status!=="pagado"){
+
+                    let editarTurno = {
+                        id: id, // id del turno
+                        agendaId: agenda.id,
+                        pacienteId: paciente.id,
+                        status: "pagado"
+    
+                    }
+                    await dispatch(modificarTurno(editarTurno))
+                    
+                }
+            }
+        })
+    }, [])
     const [estadoPago, setEstadoPago]= useState("Pagar")
 
     const handleEditarTurnoPatient = (event) => {
@@ -180,28 +202,8 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
         setEstadoPago("Pagar")
     }
 
-    const handleValidacionPago = () => {
-        pagos.forEach(async element => {
-            if(element.turno_id===id.toString()){
-
-                if(element.status!=="pagado"){
-
-                    let editarTurno = {
-                        id: id, // id del turno
-                        agendaId: agenda.id,
-                        pacienteId: paciente.id,
-                        status: "pagado"
+  
     
-                    }
-                    await dispatch(modificarTurno(editarTurno))
-                    
-                }
-            }
-        })
-        
-    }
-    handleValidacionPago()
-    dispatch(obtenerTurnos())
     return (
         <div className='container-info-turnos'>
             <div className='apartado'>
