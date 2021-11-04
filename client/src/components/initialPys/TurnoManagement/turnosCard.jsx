@@ -7,7 +7,7 @@ import swal from "sweetalert";
 import '../SpecialtyManagement/EditAgenda/modales.scss'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faUserEdit, faEdit, faShoppingCart} from "@fortawesome/free-solid-svg-icons";
-import {modificarTurno, obtenerPagos, } from "../../../actions/index.js";
+import {modificarTurno, obtenerPagos, obtenerTurnos } from "../../../actions/index.js";
 import {useDispatch, useSelector} from "react-redux";
 import '../SpecialtyManagement/EditAgenda/modales.scss';
 
@@ -30,11 +30,11 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
     })
     useEffect(async () => {
         await dispatch(obtenerPagos())
-       
+        dispatch(obtenerTurnos())
     }, [])
     const pagos=useSelector(state => state.pagos)
     const [estadoPago, setEstadoPago]= useState("Pagar")
-    const [estadoStatus, setEStadoStatus]= useState(false)
+    //const [estadoStatus, setEStadoStatus]= useState(false)
 
 
     const handleEditarTurnoPatient = (event) => {
@@ -174,6 +174,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
         setEstadoPago("Pagar")
     }
     //let estadoOO=false
+    let setEStadoStatus=false
     const handleValidacionPago = () => {
         pagos.forEach(async element => {
             if(element.turno_id===id.toString()){
@@ -188,7 +189,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
     
                     }
                     await dispatch(modificarTurno(editarTurno))
-                    setEStadoStatus(true)
+                    setEStadoStatus=true
                 }
             }
         })
@@ -228,7 +229,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
             </div>
             <div className='botones'>
                 <button className='boton' onClick={openChangeTurno}><FontAwesomeIcon icon={faEdit} className='icon'/></button>
-                <button  className={estadoPago === 'Quitar' ? 'boton MP quitar' : 'boton MP pagar'} onClick={estadoStatus ? handlePagado : estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faShoppingCart} />{estadoPago}</button>
+                <button  className={estadoPago === 'Quitar' ? 'boton MP quitar' : 'boton MP pagar'} onClick={setEStadoStatus ? handlePagado : estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faShoppingCart} />{estadoPago}</button>
 
             </div>
             <Modal isOpen={isOpenChangeTurno} closeModal={closeChangeTurno}>
