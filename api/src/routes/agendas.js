@@ -11,29 +11,29 @@ const {
   HistoriaClinica,
 } = require("../db");
 const router = Router();
+const rutasProtegidas = require("./Middleware/rutasProtegidas.js");
 
 router.post("/", async function (req, res) {
   let { date, amount, idSpecialist, idSpecialties } = req.body;
   try {
-    
-      let crearAgendas = await Agenda.create(
-        {
-          date,
-          amount,
-        },
-        {
-          fields: ["date", "amount"],
-        })
-      
-        
-      const asignandoMedico = await Especialista_medico.findByPk(idSpecialist);
+    let crearAgendas = await Agenda.create(
+      {
+        date,
+        amount,
+      },
+      {
+        fields: ["date", "amount"],
+      }
+    );
 
-      await crearAgendas.setEspecialista_medico(asignandoMedico);
+    const asignandoMedico = await Especialista_medico.findByPk(idSpecialist);
 
-      const asignandoEspecialidad = await Tipo_especialidad.findByPk(
-        idSpecialties
-      );
-      await crearAgendas.setTipo_especialidad(asignandoEspecialidad);
+    await crearAgendas.setEspecialista_medico(asignandoMedico);
+
+    const asignandoEspecialidad = await Tipo_especialidad.findByPk(
+      idSpecialties
+    );
+    await crearAgendas.setTipo_especialidad(asignandoEspecialidad);
     res.status(200).send({ msg: "Agendas creadas" });
   } catch (e) {
     res.status(400).send({ msg: "No se puedo crear el grupo de agendas" });
@@ -69,7 +69,7 @@ router.post("/grupoagendas", async function (req, res) {
   }
 });
 
-router.get("/", async function (req, res) {
+router.get("/", rutasProtegidas, async function (req, res) {
   try {
     let totalAgendas = await Agenda.findAll({
       attributes: { exclude: ["especialistaMedicoId", "tipoEspecialidadId"] },
@@ -119,7 +119,7 @@ router.get("/", async function (req, res) {
   }
 });
 
-router.get("/agendaId/:id", async function (req, res) {
+router.get("/agendaId/:id", rutasProtegidas, async function (req, res) {
   let id = req.params.id;
   try {
     let totalAgendas = await Agenda.findByPk(id, {

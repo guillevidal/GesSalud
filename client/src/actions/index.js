@@ -53,7 +53,7 @@ import {
   OBTENER_PAGOS,
   RESETEAR_ENLACE_PAGO,
   RESETEAR_PAGOS,
-  RECUPERAR_CONTRASEÑA
+  RECUPERAR_CONTRASEÑA,
 } from "./valuesForActions.js";
 
 // const token = localStorage["access-token"];
@@ -85,8 +85,11 @@ export const crearPaciente = (paciente) => {
 };
 //OBTENER TIPOS DE ESPECIALIDADES
 export const obtenerEspecialidades = () => {
+  const token = localStorage["access-token"];
   return async (dispatch) => {
-    const result = await axios.get("/especialidades");
+    const result = await axios.get("/especialidades", {
+      headers: { authorization: token },
+    });
     const data = result.data;
     return dispatch({ type: OBTENER_ESPECIALIDADES, payload: data });
   };
@@ -98,8 +101,11 @@ export const resetearEspecialidades = () => {
 };
 //OBTENER ESPECIALISTA
 export const obtenerEspecialistas = () => {
+  const token = localStorage["access-token"];
   return async (dispatch) => {
-    const result = await axios.get("/especialista");
+    const result = await axios.get("/especialista", {
+      headers: { authorization: token },
+    });
     const data = result.data;
     return dispatch({ type: OBTENER_ESPECIALISTAS, payload: data });
   };
@@ -130,8 +136,11 @@ export const obtenerEspecialistaPorEspecialidad = (especialidad) => {
 //OBTENER INFORMACION DETALLADA DEL ESPECIALISTA POR ID
 export const especialistaDetallado = (id) => {
   console.log(id);
+  const token = localStorage["access-token"];
   return async (dispatch) => {
-    const result = await axios.get(`/especialista/${id}`);
+    const result = await axios.get(`/especialista/${id}`, {
+      headers: { authorization: token },
+    });
     const data = result.data;
     return dispatch({ type: ESPECIALISTA_DETALLADO, payload: data });
   };
@@ -139,8 +148,11 @@ export const especialistaDetallado = (id) => {
 
 //OBTENER INFORMACION DETALLADA DE PACIENTE POR DNI
 export const pacienteDetallado = (dni) => {
+  const token = localStorage["access-token"];
   return async (dispatch) => {
-    const result = await axios.get(`/paciente/consulta/${dni}`);
+    const result = await axios.get(`/paciente/consulta/${dni}`, {
+      headers: { authorization: token },
+    });
     const data = result.data;
     return dispatch({ type: PACIENTE_DETALLADO, payload: data });
   };
@@ -241,8 +253,11 @@ export const resetearAdministrativoCreado = () => {
 
 //OBTENER ADMINISTRATIVOS
 export const obtenerAdministrativos = () => {
+  const token = localStorage["access-token"];
   return async (dispatch) => {
-    const result = await axios.get(`/administrativos`);
+    const result = await axios.get(`/administrativos`, {
+      headers: { authorization: token },
+    });
     const data = result.data;
     return dispatch({ type: OBTENER_ADMINISTRATIVOS, payload: data });
   };
@@ -305,8 +320,11 @@ export const resetearAgendaCreada = () => {
 
 //OBTENER AGENDAS
 export const obtenerAgendas = () => {
+  const token = localStorage["access-token"];
   return async (dispatch) => {
-    const result = await axios.get("/agendas");
+    const result = await axios.get("/agendas", {
+      headers: { authorization: token },
+    });
     const data = result.data;
     return dispatch({ type: OBTENER_AGENDAS, payload: data });
   };
@@ -328,8 +346,11 @@ export const modificarAgenda = (agenda) => {
 
 //OBTENER TURNOS
 export const obtenerTurnos = () => {
+  const token = localStorage["access-token"];
   return async (dispatch) => {
-    const result = await axios.get("/turnos");
+    const result = await axios.get("/turnos", {
+      headers: { authorization: token },
+    });
     const data = result.data;
     return dispatch({ type: OBTENER_TURNOS, payload: data });
   };
@@ -356,8 +377,11 @@ export const resetearTurnoCreado = () => {
 
 //OBTENER TURNO DETALLADO
 export const turnoDetallado = (id) => {
+  const token = localStorage["access-token"];
   return async (dispatch) => {
-    const result = await axios.get(`/turnos/${id}`);
+    const result = await axios.get(`/turnos/${id}`, {
+      headers: { authorization: token },
+    });
     const data = result.data;
     return dispatch({ type: OBTENER_TURNO_DETALLADO, payload: data });
   };
@@ -379,8 +403,11 @@ export const modificarTurno = (turno) => {
 
 //ELIMINAR UN TURNO
 export const eliminarTurno = (id) => {
+  const token = localStorage["access-token"];
   return async (dispatch) => {
-    const result = await axios.get(`/turnos/borrarturno/${id}`);
+    const result = await axios.get(`/turnos/borrarturno/${id}`, {
+      headers: { authorization: token },
+    });
     const data = result.data;
     return dispatch({ type: ELIMINAR_TURNO, payload: data });
   };
@@ -465,7 +492,7 @@ export const enviarPago = (items) => {
   };
 };
 
-//OBTENER PAGOS RELACIONADOS 
+//OBTENER PAGOS RELACIONADOS
 export const obtenerPagos = () => {
   return async (dispatch) => {
     const result = await axios.get(`/pago`);
@@ -474,18 +501,17 @@ export const obtenerPagos = () => {
   };
 };
 
-
-//RESETEAR PAGOS 
+//RESETEAR PAGOS
 export const resetearPagos = () => {
-  return {type: RESETEAR_PAGOS, payload: []}
-}
+  return { type: RESETEAR_PAGOS, payload: [] };
+};
 
 //RESETEAR ENLACE DE PAGOS
 export const resetearEnlacePago = () => {
-  return {type: RESETEAR_ENLACE_PAGO, payload: ""}
-}
+  return { type: RESETEAR_ENLACE_PAGO, payload: "" };
+};
 
-//RECUPERAR_CONTRASEÑA 
+//RECUPERAR_CONTRASEÑA
 export const recuperarContraseña = (email) => {
   return async (dispatch) => {
     {

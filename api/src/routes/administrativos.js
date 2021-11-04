@@ -2,6 +2,7 @@ const { Router } = require("express");
 const { transporter } = require("../configs/nodemailer");
 const { Persona, Personal_administrativo } = require("../db");
 const router = Router();
+const rutasProtegidas = require("./Middleware/rutasProtegidas.js");
 
 router.post("/", async function (req, res) {
   const data = req.body;
@@ -81,7 +82,7 @@ router.post("/", async function (req, res) {
   }
 });
 
-router.get("/", async function (req, res) {
+router.get("/", rutasProtegidas, async function (req, res) {
   try {
     const administrativos = await Personal_administrativo.findAll({
       include: [

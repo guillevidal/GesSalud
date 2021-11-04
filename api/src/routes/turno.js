@@ -10,6 +10,7 @@ const {
   HistoriaClinica,
 } = require("../db");
 const router = Router();
+const rutasProtegidas = require("./Middleware/rutasProtegidas.js");
 
 router.post("/", async function (req, res) {
   let { pacienteId, agendaId, modules, status, hour } = req.body;
@@ -66,7 +67,7 @@ router.post("/", async function (req, res) {
   }
 });
 
-router.get("/", async function (req, res, next) {
+router.get("/", rutasProtegidas, async function (req, res, next) {
   try {
     let turnosAll = await Turno.findAll({
       attributes: ["id", "hour", "status"],
@@ -111,7 +112,7 @@ router.get("/", async function (req, res, next) {
   }
 });
 
-router.get("/:id", async function (req, res, next) {
+router.get("/:id", rutasProtegidas, async function (req, res, next) {
   let { id } = req.params;
   console.log(id);
   try {
@@ -163,17 +164,20 @@ router.put("/:id", async function (req, res) {
     let id = req.params.id;
     let query = await Turno.findByPk(id);
     let { pacienteId, agendaId, status, hour } = req.body;
-    if(!status){
-      status="pendiente"
+    if (!status) {
+      status = "pendiente";
     }
-    await Turno.update({ hour, pacienteId, agendaId, status}, { where: { id } });
+    await Turno.update(
+      { hour, pacienteId, agendaId, status },
+      { where: { id } }
+    );
     res.status(200).send({ msg: "Se actualizaron los datos correctamente" });
   } catch (e) {
     res.status(400).send({ msg: "No se pudo modificar la agenda" });
   }
 });
 
-router.get("/borrarturno/:id", async function (req, res) {
+router.get("/borrarturno/:id", rutasProtegidas, async function (req, res) {
   try {
     let id = req.params.id;
     await Turno.destroy({ where: { id } });
