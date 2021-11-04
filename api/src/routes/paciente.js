@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { Persona, Paciente, HistoriaClinica, Diagnostico } = require("../db");
+const { transporter } = require("../configs/nodemailer");
 const router = Router();
 const rutasProtegidas = require("./Middleware/rutasProtegidas.js");
 const jwt = require("jsonwebtoken");
@@ -109,8 +110,22 @@ router.post("/", rutasProtegidas, async function (req, res) {
       await creandoDatosPaciente.setHistoriaClinica(
         creandoDatosHistoriaClinica
       );
+      let obj = {
 
-      res.send({ msg: "Se creo correctamente" });
+        ...creandoPersona.dataValues,
+        ...creandoDatosPaciente.dataValues,
+        ...creandoDatosHistoriaClinica.dataValues,
+      };
+      if (obj.email && obj.name && obj.lastName && obj.user && obj.password) {
+        await transporter.sendMail({
+          from: '"GesSalud💉" <ges.salud.04@gmail.com>',
+          to: obj.email,
+          subject: "Creacion de cuenta exitosa ✔",
+          html: `<b> Hola ${obj.name} ${obj.lastName}👋 , tu usuario es: ${obj.user} y tu contraseña: ${obj.password} </b>`,
+        });
+      }
+
+      res.status(201).send({ msg: "El usuario se creo correctamente" });
     }
   } catch (e) {
     res.status(400).send("no se puedo crear al Paciente");

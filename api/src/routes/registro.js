@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { Persona, Paciente, HistoriaClinica } = require("../db");
+const { transporter } = require("../configs/nodemailer");
 const router = Router();
 
 router.post("/", async function (req, res) {
@@ -76,6 +77,21 @@ router.post("/", async function (req, res) {
       await creandoDatosPaciente.setHistoriaClinica(
         creandoDatosHistoriaClinica
       );
+
+
+      let obj = {
+        ...creandoPersona.dataValues,
+        ...creandoDatosPaciente.dataValues,
+        ...creandoDatosHistoriaClinica.dataValues,
+      };
+      if (obj.email && obj.name && obj.lastName && obj.user && obj.password) {
+        await transporter.sendMail({
+          from: '"GesSalud💉" <ges.salud.04@gmail.com>',
+          to: obj.email,
+          subject: "Creacion de cuenta exitosa ✔",
+          html: `<b> Hola ${obj.name} ${obj.lastName}🩺 , tu usuario es: ${obj.user} y tu contraseña: ${obj.password} </b>`,
+        });
+      }
 
       res.send({ msg: "Registro creado correctamente" });
     }
