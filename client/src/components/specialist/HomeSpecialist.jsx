@@ -328,8 +328,8 @@ export default function HomeSpecialist() {
                         <div className='front'>
                         {
                             pacienteDetail.length > 0 ? pacienteDetail[0]?.gender === 'femenino' ?
-                                <span className="titulo">Bienvenida, {`${capitalFirstLetter(pacienteDetail[0].name)} ${capitalFirstLetter(pacienteDetail[0].lastName)}`}!</span>
-                                : <span className="titulo">Bienvenido, {`${capitalFirstLetter(pacienteDetail[0].name)} ${capitalFirstLetter(pacienteDetail[0].lastName)}`}</span> : null
+                                <span className="titulo">Bienvenida, {`${(pacienteDetail[0].name)} ${(pacienteDetail[0].lastName)}`}!</span>
+                                : <span className="titulo">Bienvenido, {`${(pacienteDetail[0].name)} ${(pacienteDetail[0].lastName)}`}</span> : null
                         }
                         <div className='botones'>
                             <button onClick={handleMisTurnos} className='button'>Mis Turnos</button>
@@ -358,7 +358,7 @@ export default function HomeSpecialist() {
                                     }
                                     <select onChange={handleSelect} className='select'>
                                         <option value="especialidad">Especialidad</option>
-                                        <option value="especialista">Especialista</option>
+                                        <option value="especialista">Especialista</option> 
                                         <option value="fecha">Fecha</option>
                                     </select>
                                 </div>
