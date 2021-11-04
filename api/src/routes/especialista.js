@@ -10,7 +10,7 @@ const {
 const router = Router();
 const rutasProtegidas = require("./Middleware/rutasProtegidas.js");
 
-router.get("/", rutasProtegidas, async function (req, res, next) {
+router.get("/", async function (req, res, next) {
   let especialistas = await Especialista_medico.findAll({
     include: [
       {
