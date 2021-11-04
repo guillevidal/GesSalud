@@ -149,3 +149,18 @@
 
 
 }   
+
+.statuss{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    margin: 20px auto;
+
+    .select{
+        width: 150px;
+        padding: 5px;
+        background-color: $color-detalle;
+        color: $color-principal;
+        border-radius: 5px;
+    }
+}

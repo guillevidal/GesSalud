@@ -11,7 +11,7 @@ const PagoRealizado = () => {
         <div className='pagaddo'>
             <Nav/>
             <span className='check'><FontAwesomeIcon icon={faShoppingCart}/> Su pago fue realizado con exito</span>
-            {rol === "1" || rol === "6" && <Link to="/turnoPys"><button className='button'>Regresar</button></Link>}
+            {(rol === "1" || rol === "6") && <Link to="/turnoPys"><button className='button'>Regresar</button></Link>}
             {rol === "4" && <Link to="/homeUser"><button className='button'>Regresar</button></Link>}
         </div>
     )

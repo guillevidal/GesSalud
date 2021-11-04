@@ -98,7 +98,7 @@ const handleSelect = (event)=>{
            
             <input className='input-buscador' type="text" placeholder="Buscar Administrativo" onChange={(e)=>handleChange(e)} value={input}/>
             
-            <select onChange={(e)=>handleSelect(e)}>
+            <select onChange={(e)=>handleSelect(e)} className='select-buscador'>
                 <option value="todos">Todos</option>
                 <option value="pys">PyS</option>
                 <option value="rrhh">RRHH</option>
