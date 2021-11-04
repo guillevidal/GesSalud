@@ -21,7 +21,7 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
     const [estadoStatus, setEStadoStatus]= useState(false)
 
     useEffect(async () => {
-        await dispatch(obtenerPagos(paciente.id))
+        await dispatch(obtenerPagos())
     }, [])
     const pagos=useSelector(state => state.pagos)
 

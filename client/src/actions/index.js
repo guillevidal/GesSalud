@@ -466,9 +466,9 @@ export const enviarPago = (items) => {
 };
 
 //OBTENER PAGOS RELACIONADOS 
-export const obtenerPagos = (id) => {
+export const obtenerPagos = () => {
   return async (dispatch) => {
-    const result = await axios.get(`/pago/${id}`);
+    const result = await axios.get(`/pago`);
     const data = result.data;
     return dispatch({ type: OBTENER_PAGOS, payload: data });
   };
