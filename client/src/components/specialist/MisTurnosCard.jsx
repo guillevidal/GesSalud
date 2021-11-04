@@ -80,7 +80,9 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
         
     }
     handleValidacionPago()
-
+    const handlePagado = () => {
+        alert("Ya fue pagado este item")
+    }
 
     return (
         <>
@@ -95,9 +97,9 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
                   <div className='botones'>
                     <button className="button eliminar" onClick={openCancelarTurno} >Eliminar</button>
                     {estadoPago === 'Quitar' ? 
-                     <button  className={"button eliminarcart"} onClick={estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faCartArrowDown} /></button>
+                     <button  className={"button eliminarcart"} onClick={estadoStatus ? handlePagado :estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faCartArrowDown} /></button>
                         :
-                        <button  className={"button pagar"} onClick={estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faShoppingCart} /></button>
+                        <button  className={"button pagar"} onClick={estadoStatus ? handlePagado : estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faShoppingCart} /></button>
                     }
                    </div>
                 </td>

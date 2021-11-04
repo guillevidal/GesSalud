@@ -95,7 +95,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
                                     agendaId: inputEditarTurno.agendaId.value,
                                     pacienteId: pacienteDetail[0].id,
                                     hour: inputEditarTurno.hora.value,
-
+                                    status: estadoStatus?"pagado":"pendiente"
                                 }
 
                                 const ajuste = async () => {
@@ -131,7 +131,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
                             agendaId: inputEditarTurno.agendaId.value,
                             pacienteId: pacienteDetail[0].id,
                             hour: inputEditarTurno.hora.value,
-
+                            status: estadoStatus?"pagado":"pendiente"
                         }
 
                         const ajuste = async () => {
