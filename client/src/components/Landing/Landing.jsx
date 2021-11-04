@@ -4,17 +4,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClinicMedical, faUserMd, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { rol } from "../../actions";
+import { recuperarContraseña, rol } from "../../actions";
 import axios from "axios";
 import { especialistaDetallado, pacienteDetallado, obtenerPacientesRegistro} from "../../actions"
 import { Redirect, Link } from "react-router-dom";
+import swal from "sweetalert";
 
 
 export default function Landing() {
   const dispatch = useDispatch();
   const roles = useSelector((state) => state.rol);
   
-
+  const mensaje = useSelector(state => state.modificado)
   
   const [error, setError] = useState(false)
   const [olvidado, setOlvidado] = useState(false)
@@ -45,11 +46,9 @@ export default function Landing() {
       return
     }
   }) 
-    
- 
 
    },[])   
- 
+
   const [input, setInput] = useState({
     user: "",
     pass: "",
@@ -68,6 +67,7 @@ export default function Landing() {
       [e.target.name]: e.target.value,
     });
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -136,8 +136,34 @@ export default function Landing() {
 
   }
 
-  const handleSubmitLost = (e) =>{
+  const capitalFirstLetter = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+  const handleSubmitLost =  async (e) =>{
       e.preventDefault()
+
+      dispatch(recuperarContraseña({email : inputLost.value,
+      user : inputLost.value})).then(res => {
+        
+          if(res.payload.msg === 'se envio el email exitosamente'){
+          swal({
+            title : capitalFirstLetter(res.payload.msg),
+            icon : 'success'
+          })
+          setOlvidado(false)
+        }
+         if(res.payload.msg === 'Los datos aportados no son correctos'){
+                    swal({
+            title : capitalFirstLetter(res.payload.msg),
+            icon : 'warning'
+          })
+          }
+
+        })
+    
+
+
   }
 
   return (
