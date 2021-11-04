@@ -8,8 +8,9 @@ const {
   AgendaTotal,
 } = require("../db");
 const router = Router();
+const rutasProtegidas = require("./Middleware/rutasProtegidas.js");
 
-router.get("/", async function (req, res, next) {
+router.get("/", rutasProtegidas, async function (req, res, next) {
   let especialistas = await Especialista_medico.findAll({
     include: [
       {
