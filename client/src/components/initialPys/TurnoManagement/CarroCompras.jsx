@@ -47,7 +47,7 @@ const CarroCompras = ({carro, setCarro})=> {
                 )
             })}
            </div>
-           {carro.items[0] && !x?<button onClick={()=>handleSubmit()} className='boton'><img src={ImagenMP} className='imgmp'/></button>: <h6>En breve sera redireccionado</h6>}
+           {carro.items[0] && !x?<button onClick={()=>handleSubmit()} className='boton'><img src={ImagenMP} className='imgmp'/></button>: <h5>En breve sera redireccionado</h5>}
         
 
             
