@@ -114,7 +114,7 @@ router.get("/:id", async function (req, res) {
 
 router.get("/", async function (req, res) {
   try {
-    let pagos = await Historial_pagos.findAll({ include: Items_pagos });
+    let pagos = await Items_pagos.findAll();
     res.status(200).send(pagos);
   } catch (error) {
     console.log(error);
