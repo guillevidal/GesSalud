@@ -194,13 +194,14 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
     
                     }
                     await dispatch(modificarTurno(editarTurno))
-                    await dispatch(obtenerTurnos())
+                    
                 }
             }
         })
         
     }
     handleValidacionPago()
+    dispatch(obtenerTurnos())
     return (
         <div className='container-info-turnos'>
             <div className='apartado'>
