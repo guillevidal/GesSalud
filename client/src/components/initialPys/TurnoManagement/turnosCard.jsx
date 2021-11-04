@@ -224,7 +224,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
             </div>
             <div className='apartado'>
                 <span className='subtitle'>Estado </span>
-                <span className='data'>{estadoStatus ? "PAGADO": status.toUpperCase()}</span>
+                <span className='data'>{setEstadoStatus ? "PAGADO": status.toUpperCase()}</span>
 
             </div>
             <div className='botones'>
