@@ -201,7 +201,9 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
         
     }
     handleValidacionPago()
-    
+    const handlePagado = () => {
+        alert("Ya fue pagado este item")
+    }
     return (
         <div className='container-info-turnos'>
             <div className='apartado'>
@@ -232,7 +234,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
             </div>
             <div className='botones'>
                 <button className='boton' onClick={openChangeTurno}><FontAwesomeIcon icon={faEdit} className='icon'/></button>
-                {estadoOO === false && <button  className={estadoPago === 'Quitar' ? 'boton MP quitar' : 'boton MP pagar'} onClick={estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faShoppingCart} />{estadoPago}</button>}
+                <button  className={estadoPago === 'Quitar' ? 'boton MP quitar' : 'boton MP pagar'} onClick={estadoOO === false ? estadoPago!=="Quitar"?handleCarro:handleQuitar: handlePagado}><FontAwesomeIcon icon={faShoppingCart} />{estadoPago}</button>
 
             </div>
             <Modal isOpen={isOpenChangeTurno} closeModal={closeChangeTurno}>
