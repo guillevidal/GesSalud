@@ -194,7 +194,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
     
                     }
                     await dispatch(modificarTurno(editarTurno))
-                    let estadoOO=true
+                    estadoOO=true
                 }
             }
         })
