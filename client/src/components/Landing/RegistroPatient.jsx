@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector} from "react-redux";
-import {Link} from "react-router-dom"
+import {Link, useHistory} from "react-router-dom"
 import Person from "../forms/Person/Person.jsx";
 import { crearRegistroPaciente, obtenerPacientesRegistro, resetearPacientes } from '../../actions/index.js'
 import '../forms/CreatePatient/CreatePatient.scss'
@@ -15,7 +15,8 @@ const RegistroPatient = () => {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
     const dispatch = useDispatch()
-    
+
+    const history = useHistory()
     const [input, setInput] = useState({
         name: { value: "", error: null },
         lastName: { value: "", error: null },
@@ -255,7 +256,7 @@ const RegistroPatient = () => {
             setInput({ ...input, emergencyContact: { value, error: null } })
         }
     }
-    const handleSubmit =  (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
 
         let creationDate = new Date();
@@ -297,8 +298,8 @@ const RegistroPatient = () => {
                 }
                 if(!pacientes[0]){
                      dispatch(crearRegistroPaciente(newPatient))
-                    
-                    swal({
+                     
+                    await swal({
                         title: "Paciente creado",
                         text: `El paciente ${capitalFirstLetter(input.name.value) + ' '}  ${capitalFirstLetter(input.lastName.value)} se creó correctamente `,
                         icon: "success",
@@ -324,6 +325,7 @@ const RegistroPatient = () => {
                         derivation: { value: "", error: null },
                 
                     })
+                    history.push('/')
                     return
                 }else{
                     for (let index = 0; index < pacientes.length; index++) {
@@ -348,7 +350,8 @@ const RegistroPatient = () => {
                     } 
 
                      dispatch(crearRegistroPaciente(newPatient))
-                    swal({
+
+                    await swal({
                         title: "Paciente creado",
                         text: `El paciente ${capitalFirstLetter(input.name.value) + ' '}  ${capitalFirstLetter(input.lastName.value)} se creó correctamente `,
                         icon: "success",
@@ -374,6 +377,7 @@ const RegistroPatient = () => {
                         derivation: { value: "", error: null },
                 
                     })
+                    history.push('/')
                     return  
                 }
             }
@@ -391,11 +395,13 @@ const RegistroPatient = () => {
 
     }
 
-
+   
     
     const handleBack = () =>{
         dispatch(resetearPacientes())
     }
+
+    
 
 
     return (
