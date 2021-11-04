@@ -24,7 +24,7 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
         await dispatch(obtenerPagos(paciente.id))
     }, [])
     const pagos=useSelector(state => state.pagos)
-    
+
     const handleSubmitEliminarTurno = (event) => {
         event.preventDefault();
         const fun = async () => {
@@ -90,7 +90,7 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
               <td className="td horario">{date.split('T')[1].split('&')[0]}</td>
               <td className="td horarioFinal" >{`${capitalFirstLetter(nameEspecialista)} ${capitalFirstLetter(lastNameEspecialista)}`}</td>
               <td className="td paciente" >{especialidad}</td>
-              <td className="td paciente" >{status.toUpperCase()}</td>
+              <td className="td paciente" >{estadoStatus ? "PAGADO": status.toUpperCase()}</td>
               <td className="td asignar" >
                   <div className='botones'>
                     <button className="button eliminar" onClick={openCancelarTurno} >Eliminar</button>
