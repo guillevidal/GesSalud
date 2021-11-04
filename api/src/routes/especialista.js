@@ -109,7 +109,9 @@ router.post("/", async function (req, res) {
           html: `<b> Hola ${obj.name} ${obj.lastName}🩺 , tu usuario es: ${obj.user} y tu contraseña: ${obj.password} </b>`,
         });
       }
-      res.send(obj);
+      res
+        .status(201)
+        .send({ msg: "Se ha creado el usuario de manera exitosa" });
     }
   } catch (e) {
     res.status(400).send("no se puedo crear al especialista");
