@@ -101,7 +101,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
                                 }
 
                                 const ajuste = async () => {
-                                    dispatch(modificarTurno(editarTurno))
+                                    await dispatch(modificarTurno(editarTurno))
 
                                     await swal({
                                         icon: 'success',
@@ -131,7 +131,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
                         const ajuste = async () => {
                             await dispatch(modificarTurno(editarTurno))
 
-                            swal({
+                            await swal({
                                 icon: 'success',
                                 title: 'Turno modificado',
                                 text: `El turno se modificó para ${capitalFirstLetter(pacienteDetail[0].persona.name)} ${capitalFirstLetter(pacienteDetail[0].persona.lastName)} satisfactoriamente`
