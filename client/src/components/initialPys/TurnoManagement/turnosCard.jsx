@@ -33,7 +33,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
     }, [])
     const pagos=useSelector(state => state.pagos)
     const [estadoPago, setEstadoPago]= useState("Pagar")
-
+    const [estadoStatus, setEStadoStatus]= useState(false)
     const handleEditarTurnoPatient = (event) => {
     
 
@@ -179,7 +179,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
         })})
         setEstadoPago("Pagar")
     }
-    let estadoOO=false
+    //let estadoOO=false
     const handleValidacionPago = () => {
         pagos.forEach(async element => {
             if(element.turno_id===id.toString()){
@@ -194,7 +194,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
     
                     }
                     await dispatch(modificarTurno(editarTurno))
-                    estadoOO=true
+                    setEStadoStatus(true)
                 }
             }
         })
@@ -229,12 +229,12 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
             </div>
             <div className='apartado'>
                 <span className='subtitle'>Estado </span>
-                <span className='data'>{estadoOO ? "PAGADO": status.toUpperCase()}</span>
+                <span className='data'>{estadoStatus ? "PAGADO": status.toUpperCase()}</span>
 
             </div>
             <div className='botones'>
                 <button className='boton' onClick={openChangeTurno}><FontAwesomeIcon icon={faEdit} className='icon'/></button>
-                <button  className={estadoPago === 'Quitar' ? 'boton MP quitar' : 'boton MP pagar'} onClick={estadoOO === false || status!=="pagado" ? estadoPago!=="Quitar"?handleCarro:handleQuitar: handlePagado}><FontAwesomeIcon icon={faShoppingCart} />{estadoPago}</button>
+                <button  className={estadoPago === 'Quitar' ? 'boton MP quitar' : 'boton MP pagar'} onClick={estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faShoppingCart} />{estadoPago}</button>
 
             </div>
             <Modal isOpen={isOpenChangeTurno} closeModal={closeChangeTurno}>
