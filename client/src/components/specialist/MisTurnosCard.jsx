@@ -61,11 +61,11 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
     }
     const handleValidacionPago = () => {
         pagos.forEach(element => {
-            element.items_pago.forEach(async element => {
+            element.items_pago.forEach(async element2 => {
                 
-                if(element.turno_id===id.toString()){
+                if(element2.turno_id===id.toString()){
     
-                    if(element.status!=="pagado"){
+                    if(element2.status!=="pagado"){
     
                         let editarTurno = {
                             id: id, // id del turno
