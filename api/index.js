@@ -6,7 +6,7 @@ const axios = require("axios");
 const { especialidades } = require("./src/configs/specialties.js");
 const { tokenAuth } = require("./src/configs/tokenAuth.js");
 
-conn.sync({ force: false }).then(async () => {
+conn.sync({ force: true }).then(async () => {
   server.listen(process.env.PORT, async () => {
     console.log(process.env.PORT);
     let url;
