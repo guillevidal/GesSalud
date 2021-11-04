@@ -482,7 +482,7 @@ export const resetearPagos = () => {
 
 //RESETEAR ENLACE DE PAGOS
 export const resetearEnlacePago = () => {
-  return {type: RESETEAR_ENLACE_PAGO, payload: []}
+  return {type: RESETEAR_ENLACE_PAGO, payload: ""}
 }
 
 //RECUPERAR_CONTRASEÑA 

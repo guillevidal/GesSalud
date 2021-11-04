@@ -11,7 +11,8 @@ import { rol, resetearPacienteCreado, resetearEspecialistaCreado,
     resetearAdministrativos, resetearAdministrativoCreado, resetearAdministrativoDetallado, 
     resetearAgendaCreada, resetearAgendas, resetearTurnos, 
     resetearTurnoCreado, resetearEspecialidades,
-    resetearTurnoDetallado, resetearDiagnostico} from "../../actions"
+    resetearTurnoDetallado, resetearDiagnostico,
+    resetearPagos, resetearEnlacePago} from "../../actions"
 import { Redirect } from "react-router"
 import { useState } from "react"
 
@@ -46,6 +47,8 @@ export default function Nav(){
         dispatch(resetearTurnoDetallado())
         dispatch(resetearDiagnostico())
         dispatch(resetearEspecialidades())
+        dispatch(resetearEnlacePago())
+        dispatch(resetearPagos())
     }
 
     const handleResetActionsRol1 = () => {
