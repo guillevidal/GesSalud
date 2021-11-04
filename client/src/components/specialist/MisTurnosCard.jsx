@@ -9,7 +9,7 @@ import { faUserTimes, faShoppingCart, faCartArrowDown } from "@fortawesome/free-
 import { eliminarTurno } from '../../actions/index.js';
 import swal from "sweetalert";
 
-function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastNameEspecialista, nameEspecialista}) {
+function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastNameEspecialista, nameEspecialista, status}) {
   
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
@@ -61,6 +61,7 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
               <td className="td horario">{date.split('T')[1].split('&')[0]}</td>
               <td className="td horarioFinal" >{`${capitalFirstLetter(nameEspecialista)} ${capitalFirstLetter(lastNameEspecialista)}`}</td>
               <td className="td paciente" >{especialidad}</td>
+              <td className="td paciente" >{status}</td>
               <td className="td asignar" >
                   <div className='botones'>
                     <button className="button eliminar" onClick={openCancelarTurno} >Eliminar</button>

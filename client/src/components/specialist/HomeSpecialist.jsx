@@ -502,6 +502,7 @@ export default function HomeSpecialist() {
                                                         <th className='th'>Hora</th>
                                                         <th className='th'>Especialista</th>
                                                         <th className='th'>Especialidad</th>
+                                                        <th className='th'>Estado</th>
                                                         <th className='th'>Acciones</th>
                                                     </tr>
                                                 </thead>
@@ -514,7 +515,7 @@ export default function HomeSpecialist() {
                                                             date={turno.hour} nameEspecialista={turno.agenda.especialista_medico.persona.name}
                                                             lastNameEspecialista={turno.agenda.especialista_medico.persona.lastName}
                                                             especialidad={turno.agenda.tipo_especialidad.name} id={turno.id} paciente={turno.paciente}
-                                                            carro={carro} setCarro={setCarro}
+                                                            carro={carro} setCarro={setCarro} status={turno.status}
                                                         />
 
                                                     )
