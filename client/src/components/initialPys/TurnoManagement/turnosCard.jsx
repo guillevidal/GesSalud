@@ -7,7 +7,7 @@ import swal from "sweetalert";
 import '../SpecialtyManagement/EditAgenda/modales.scss'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faUserEdit, faEdit, faShoppingCart} from "@fortawesome/free-solid-svg-icons";
-import {modificarTurno, obtenerPagos, obtenerTurnos} from "../../../actions/index.js";
+import {modificarTurno, obtenerPagos, } from "../../../actions/index.js";
 import {useDispatch, useSelector} from "react-redux";
 import '../SpecialtyManagement/EditAgenda/modales.scss';
 
@@ -30,11 +30,13 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
     })
     useEffect(async () => {
         await dispatch(obtenerPagos(paciente.id))
-        dispatch(obtenerTurnos())
+       
     }, [])
     const pagos=useSelector(state => state.pagos)
     const [estadoPago, setEstadoPago]= useState("Pagar")
     const [estadoStatus, setEStadoStatus]= useState(false)
+
+
     const handleEditarTurnoPatient = (event) => {
     
 
@@ -44,13 +46,13 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
         };
         if (value > 0) {
 
-            let paciente = pacientes.length > 0 && pacientes.filter(paciente => {
+            let pacient = pacientes.length > 0 && pacientes.filter(paciente => {
                 return paciente.persona.dni === parseInt(value)
             })
 
-            if (paciente.length === 0) {
+            if (pacient.length === 0) {
                 setInputEditarTurno({ ...inputEditarTurno, pacienteId: { value, error: "Paciente no encontrado" } })
-            } else if (paciente[0].persona.dni === paciente.dni) {
+            } else if (pacient[0].persona.dni === paciente.persona.dni) {
                 setInputEditarTurno({ ...inputEditarTurno, pacienteId: { value, error: "DNI de paciente igual al anterior" } })
             } else {
 
@@ -62,13 +64,12 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
 
     const handleSubmitEditarTurno = (event) => {
         event.preventDefault();
-
-        if (!inputEditarTurno.agendaId.error && !inputEditarTurno.pacienteId.error
-            && !inputEditarTurno.hora.error) {
-            if (inputEditarTurno.agendaId.value || inputEditarTurno.pacienteId.value.length === 0
+        if (!inputEditarTurno.agendaId.error || !inputEditarTurno.pacienteId.error || !inputEditarTurno.hora.error) {
+            if (inputEditarTurno.agendaId.value.length===0 || inputEditarTurno.pacienteId.value.length===0
                 || inputEditarTurno.hora.value.length === 0) {
-                setValidation(false)
-            } else {
+                        
+                        setValidation(false)
+                    } else {
                 let pacienteDetail = pacientes.filter(paciente => {
                     return paciente.persona.dni === parseInt(inputEditarTurno.pacienteId.value)
                 })
@@ -96,7 +97,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
                                     agendaId: inputEditarTurno.agendaId.value,
                                     pacienteId: pacienteDetail[0].id,
                                     hour: inputEditarTurno.hora.value,
-                                    status: status
+                                    status: estadoStatus?"pagado":"pendiente"
                                 }
 
                                 const ajuste = async () => {
@@ -115,14 +116,6 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
                                 ajuste()
 
 
-                                setInputEditarTurno({
-
-                                    turnoId: { value: idTurnoEliminar, error: null },
-                                    agendaId: { value: idAgenda, error: null },
-                                    pacienteId: { value: '', error: 'Campo requerido' },
-                                    hora: { value: `${date}T${horaI}&${horaF}`, error: null },
-
-                                })
                             }
                         })
 
@@ -132,7 +125,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
                             agendaId: inputEditarTurno.agendaId.value,
                             pacienteId: pacienteDetail[0].id,
                             hour: inputEditarTurno.hora.value,
-                            status: status
+                            status: estadoStatus?"pagado":"pendiente"
                         }
 
                         const ajuste = async () => {
