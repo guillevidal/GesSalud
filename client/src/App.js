@@ -104,7 +104,7 @@ function App() {
         {(rol === "4") ? <EditAgenda2 /> : <NotFound />}
       </Route>
       <Route exact path="/PagoCorrecto">
-         {(rol === "4" || rol === "1" || rol=== "6" )? <PagoRealizado/> : <NotFound />}
+         <PagoRealizado/>
       </Route>
       <Route  path='/*'>
           <NotFound />
