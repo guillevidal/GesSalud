@@ -379,20 +379,55 @@ export default function HomeSpecialist() {
                             <ModalHistoriaClinica isOpen={isOpenHistoriaClinica} closeModal={closeHistoriaClinica} >
                                 <div>
                                     <div>
-                                        <span>HISTORIA CLINICA</span>
+                                        <span>HISTORIA CLÍNICA</span>
                                         <div>
-                                            <span>CODIGO: {pacienteDetail[0]?.paciente.historiaClinica.id}</span>
+                                            <span>CÓDIGO: {pacienteDetail[0]?.paciente.historiaClinica.id}</span>
                                             <span>FECHA: {pacienteDetail[0]?.paciente.historiaClinica.creationDate}</span>
 
                                         </div>
                                     </div>
                                     <div>
-                                        <span>INFORMACION DEL PACIENTE</span>
+                                        <span>INFORMACIÓN DEL PACIENTE</span>
                                         <div>
                                             <span>NOMBRE : {(pacienteDetail[0]?.name)}</span>
                                             <span>APELLIDO : {(pacienteDetail[0]?.lastName)}</span>
                                             <span>DNI : {pacienteDetail[0]?.dni}</span>
                                             <span>FECHA DE NACIMIENTO : {pacienteDetail[0]?.birth}</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span>INFORMACIÓN DE CONTACTO</span>
+                                        <div>
+                                            <span>TELÉFONO: {pacienteDetail[0]?.phone}</span>
+                                            <span>DIRECCIÓN: {pacienteDetail[0]?.adress}</span>
+                                            <span>EMAIL: {pacienteDetail[0]?.email}</span>
+                                            <span>CONTACTO DE EMERGENCIA: {pacienteDetail[0]?.paciente.emergencyContact}</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span>CONDICIÓN MÉDICA PREVIA</span>
+                                        <div>
+                                            <span>ENFERMEDADES: {pacienteDetail[0]?.paciente.disease}</span>
+                                            <span>MEDICACIÓN: {pacienteDetail[0]?.paciente.medication}</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span>DIAGNÓSTICOS</span>
+                                        {
+                                            pacienteDetail[0].paciente.historiaClinica.diagnosticos.length > 0 ? 
+                                            pacienteDetail[0].paciente.historiaClinica.diagnosticos.map(diagnostico => {
+                                                return (
+                                                    <>
+                                                    <span>FECHA: {diagnostico.date}</span>
+                                                    <span>DIAGNOSTICO:</span>
+                                                    <span>{diagnostico.diagnostic}</span>
+                                                    <span>DERIVACION: {diagnostico.derivation}</span>
+                                                    </>
+                                                )
+                                            }) : <span>EL PACIENTE NO CUENTA CON DIAGNOSTICOS</span>
+                                        }
+                                        <div>
+
                                         </div>
                                     </div>
                                 </div>
