@@ -174,7 +174,7 @@ export default function HomeSpecialist() {
     const [carro, setCarro] = useState({ items: [] })
     const [isOpenChangeTurno, openChangeTurno, closeChangeTurno] = useModal(false)
     const [isOpenHistoriaClinica, openHistoriaClinica, closeHistoriaClinica] = useModal(false)
-    console.log(agendaFilter)
+    
 
     const handleChange = (event) => {
         const { value } = event.target
