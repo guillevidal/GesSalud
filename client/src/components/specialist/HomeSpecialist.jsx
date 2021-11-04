@@ -1,8 +1,9 @@
 /* eslint-disable */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom";
+import { useReactToPrint } from 'react-to-print';
 import { obtenerAgendas, obtenerTurnos } from '../../actions/index.js';
 import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,7 +17,7 @@ import MisTurnosCard from './MisTurnosCard.jsx';
 import Agenda from './Agenda.jsx';
 import { useModal } from "../Modal/useModal.js";
 import Modal from '../Modal/Modal.js';
-import ModalHistoriaClinica from '../Modal/ModalHistoriaClínica.js'
+import ModalHistoriaClinica from '../Modal/ModalHistoriaClinica.js'
 import CarroCompras from "../initialPys/TurnoManagement/CarroCompras.jsx"
 import Paginado from "./Paginado.jsx"
 export default function HomeSpecialist() {
@@ -253,6 +254,13 @@ export default function HomeSpecialist() {
         setAgendaFilter([])
     }
 
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        
+        content: () => componentRef.current,
+        documentTitle: "MiHistoriaClinica",
+    });
+
 
     return (
         <div className='homeSpecialist'>
@@ -279,7 +287,7 @@ export default function HomeSpecialist() {
 
 
                     <table className='tabla'>
-               
+
 
                         {turnos?.length < 1 && <h3 className='error'><FontAwesomeIcon icon={faTimesCircle} /> No hay turnos para esta fecha</h3>}
                         {turnos?.length > 0 &&
@@ -326,128 +334,128 @@ export default function HomeSpecialist() {
                 <div className="rol-4-user">
                     <div className="nombre-consulta">
                         <div className='front'>
-                        {
-                            pacienteDetail.length > 0 ? pacienteDetail[0]?.gender === 'femenino' ?
-                                <span className="titulo">Bienvenida, {`${capitalFirstLetter(pacienteDetail[0].name)} ${capitalFirstLetter(pacienteDetail[0].lastName)}`}!</span>
-                                : <span className="titulo">Bienvenido, {`${capitalFirstLetter(pacienteDetail[0].name)} ${capitalFirstLetter(pacienteDetail[0].lastName)}`}</span> : null
-                        }
-                        <div className='botones'>
-                            <button onClick={handleMisTurnos} className='button'>Mis Turnos</button>
-                            <button onClick={openHistoriaClinica} className='button'>Mi historia clínica</button>
+                            {
+                                pacienteDetail.length > 0 ? pacienteDetail[0]?.gender === 'femenino' ?
+                                    <span className="titulo">Bienvenida, {`${capitalFirstLetter(pacienteDetail[0].name)} ${capitalFirstLetter(pacienteDetail[0].lastName)}`}!</span>
+                                    : <span className="titulo">Bienvenido, {`${capitalFirstLetter(pacienteDetail[0].name)} ${capitalFirstLetter(pacienteDetail[0].lastName)}`}</span> : null
+                            }
+                            <div className='botones'>
+                                <button onClick={handleMisTurnos} className='button'>Mis Turnos</button>
+                                <button onClick={openHistoriaClinica} className='button'>Mi historia clínica</button>
+                            </div>
                         </div>
-                        </div>
-                         <div className="searchAgenda">
-                                <label className="label-title-search">Consultar Agenda</label>
-                                <div>
-                                    {
-                                        estado === "fecha" ?
-                                            <input
-                                                type="date"
-                                                min={new Date()}
-                                                value={input}
-                                                onChange={(e) => handleChange(e)}
-                                                className='input'
-                                            />
-                                            :
-                                            <input
-                                                value={input}
-                                                onChange={(e) => handleChange(e)}
-                                                placeholder={placeHolder}
-                                                className='input'
-                                            />
-                                    }
-                                    <select onChange={handleSelect} className='select'>
-                                        <option value="especialidad">Especialidad</option>
-                                        <option value="especialista">Especialista</option>
-                                        <option value="fecha">Fecha</option>
-                                    </select>
-                                </div>
-                                
-                            
+                        <div className="searchAgenda">
+                            <label className="label-title-search">Consultar Agenda</label>
+                            <div>
+                                {
+                                    estado === "fecha" ?
+                                        <input
+                                            type="date"
+                                            min={new Date()}
+                                            value={input}
+                                            onChange={(e) => handleChange(e)}
+                                            className='input'
+                                        />
+                                        :
+                                        <input
+                                            value={input}
+                                            onChange={(e) => handleChange(e)}
+                                            placeholder={placeHolder}
+                                            className='input'
+                                        />
+                                }
+                                <select onChange={handleSelect} className='select'>
+                                    <option value="especialidad">Especialidad</option>
+                                    <option value="especialista">Especialista</option>
+                                    <option value="fecha">Fecha</option>
+                                </select>
                             </div>
 
-                            
+
+                        </div>
+
+
 
                     </div>
 
                     <div className='carro'><FontAwesomeIcon icon={faShoppingCart} onClick={openChangeTurno} className='carrito' /><span onClick={openChangeTurno} className='cantidad'>{carro.items.length}</span></div>
-                           
 
-                        <>
 
-                           
-                            <ModalHistoriaClinica isOpen={isOpenHistoriaClinica} closeModal={closeHistoriaClinica} >
-                                <div>
-                                    <div>
-                                        <span>HISTORIA CLÍNICA</span>
-                                        <div>
-                                            <span>CÓDIGO: {pacienteDetail[0]?.paciente.historiaClinica.id}</span>
-                                            <span>FECHA: {pacienteDetail[0]?.paciente.historiaClinica.creationDate}</span>
+                    <>
+
+
+                        <ModalHistoriaClinica isOpen={isOpenHistoriaClinica} closeModal={closeHistoriaClinica} >
+                            <>
+
+                                <div className="rol-4-user" ref={componentRef}>
+
+                                    <div className="contenido" >
+                                        <label className="sub-title">HISTORIA CLÍNICA</label>
+                                        <div className="">
+                                            <span className="items-historia-clinica">CÓDIGO: {pacienteDetail[0]?.paciente.historiaClinica.id}</span>
+                                            <span className="items-historia-clinica">FECHA: {pacienteDetail[0]?.paciente.historiaClinica.creationDate}</span>
 
                                         </div>
                                     </div>
-                                    <div>
-                                        <span>INFORMACIÓN DEL PACIENTE</span>
-                                        <div>
-                                            <span>NOMBRE : {(pacienteDetail[0]?.name)}</span>
-                                            <span>APELLIDO : {(pacienteDetail[0]?.lastName)}</span>
-                                            <span>DNI : {pacienteDetail[0]?.dni}</span>
-                                            <span>FECHA DE NACIMIENTO : {pacienteDetail[0]?.birth}</span>
+                                    <div className="informacion">
+                                        <span className="label-title-search">INFORMACIÓN DEL PACIENTE</span>
+                                        <div className="contenido">
+                                            <span className="items">NOMBRE : {(pacienteDetail[0]?.name)}</span>
+                                            <span className="items">APELLIDO : {(pacienteDetail[0]?.lastName)}</span>
+                                            <span className="items">DNI : {pacienteDetail[0]?.dni}</span>
+                                            <span className="items">FECHA DE NACIMIENTO : {pacienteDetail[0]?.birth}</span>
                                         </div>
                                     </div>
-                                    <div>
-                                        <span>INFORMACIÓN DE CONTACTO</span>
-                                        <div>
-                                            <span>TELÉFONO: {pacienteDetail[0]?.phone}</span>
-                                            <span>DIRECCIÓN: {pacienteDetail[0]?.adress}</span>
-                                            <span>EMAIL: {pacienteDetail[0]?.email}</span>
-                                            <span>CONTACTO DE EMERGENCIA: {pacienteDetail[0]?.paciente.emergencyContact}</span>
+                                    <div className="informacion">
+                                        <span className="label-title-search">INFORMACIÓN DE CONTACTO</span>
+                                        <div className="contenido">
+                                            <span className="items">TELÉFONO: {pacienteDetail[0]?.phone}</span>
+                                            <span className="items">DIRECCIÓN: {pacienteDetail[0]?.adress}</span>
+                                            <span className="items">EMAIL: {pacienteDetail[0]?.email}</span>
+                                            <span className="items">CONTACTO DE EMERGENCIA: {pacienteDetail[0]?.paciente.emergencyContact}</span>
                                         </div>
                                     </div>
-                                    <div>
-                                        <span>CONDICIÓN MÉDICA PREVIA</span>
-                                        <div>
-                                            <span>ENFERMEDADES: {pacienteDetail[0]?.paciente.disease}</span>
-                                            <span>MEDICACIÓN: {pacienteDetail[0]?.paciente.medication}</span>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <span>DIAGNÓSTICOS</span>
+                                   
+                                    <div className="informacion">
+                                        <span className="label-title-search">DIAGNÓSTICOS</span>
                                         {
-                                            pacienteDetail[0].paciente.historiaClinica.diagnosticos.length > 0 ? 
-                                            pacienteDetail[0].paciente.historiaClinica.diagnosticos.map(diagnostico => {
-                                                return (
-                                                    <>
-                                                    <span>FECHA: {diagnostico.date}</span>
-                                                    <span>DIAGNOSTICO:</span>
-                                                    <span>{diagnostico.diagnostic}</span>
-                                                    <span>DERIVACION: {diagnostico.derivation}</span>
-                                                    </>
-                                                )
-                                            }) : <span>EL PACIENTE NO CUENTA CON DIAGNOSTICOS</span>
+                                            pacienteDetail[0]?.paciente.historiaClinica.diagnosticos.length > 0 ?
+                                                pacienteDetail[0]?.paciente.historiaClinica.diagnosticos.map(diagnostico => {
+                                                    return (
+                                                        <div className="contenido">
+                                                            <span className="items">FECHA: {diagnostico.date}</span>
+                                                            <span className="items">DIAGNOSTICO:</span>
+                                                            <span className="items">{diagnostico.diagnostic}</span>
+                                                            <span className="items">DERIVACION: {diagnostico.derivation}</span>
+                                                        </div>
+                                                    )
+                                                }) : <span className="items-historia-clinica">EL PACIENTE NO CUENTA CON DIAGNOSTICOS</span>
                                         }
                                         <div>
 
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <button className='button-pdf' onClick={handlePrint}>Generar PDF</button>
+                                
+                            </>
 
+                        </ModalHistoriaClinica>
+                    </>
+                    {agendaFilter && agendaFilter.length > 10 ? <Paginado agendaFilter={agendaFilter} /> : null}
 
-                            </ModalHistoriaClinica>
-                        </>
-                        {agendaFilter && agendaFilter.length > 10 ? <Paginado agendaFilter={agendaFilter} /> : null}
-
-                        {
-                            agendaFilter.length > 0
-                                ?
-                                <div className='editagendacontainer'>
-                                    <div className='encabezado'>
+                    {
+                        agendaFilter.length > 0
+                            ?
+                            <div className='editagendacontainer'>
+                                <div className='encabezado'>
                                     <label className='title'>AGENDAS MÉDICAS</label>
-                                    </div>
-                                        {typeof agendaFilter[0] === "string" ?
-                                            <span className='error2'>{agendaFilter[0]}</span> : 
-                                            <div className='asignaciones'>
-                                            <table className='titles'>
+                                </div>
+                                {typeof agendaFilter[0] === "string" ?
+                                    <span className='error2'>{agendaFilter[0]}</span> :
+                                    <div className='asignaciones'>
+                                        <table className='titles'>
 
                                             <tr className='subtitle'>
                                                 <th className='th'>Fecha</th>
@@ -464,36 +472,36 @@ export default function HomeSpecialist() {
                                                         turnosPrecargados={agenda.turnosPrecargados} hora={agenda.date}
                                                     />
                                                 )
-                                            }) }
-                                            </table></div>}
+                                            })}
+                                        </table></div>}
 
 
 
+                            </div>
+
+                            :
+
+                            <div className="editagendacontainer">
+
+                                <div className="encabezado">
+                                    <span className="title">MIS TURNOS</span>
                                 </div>
+                                <div className="asignaciones">
 
-                                :
 
-                                <div className="editagendacontainer">
+                                    {
+                                        turnosDelPacienteSort.length > 0 ?
 
-                                    <div className="encabezado">
-                                        <span className="title">MIS TURNOS</span>
-                                    </div>
-                                    <div className="asignaciones">
-                                            
-
-                                            {
-                                                turnosDelPacienteSort.length > 0 ? 
-                                                
-                                        <table className="titles">
+                                            <table className="titles">
                                                 <thead>
-                                                <tr className="subtitle">
-                                                    <th className='th'>Fecha</th>
-                                                    <th className='th'>Hora</th>
-                                                    <th className='th'>Especialista</th>
-                                                    <th className='th'>Especialidad</th>
-                                                    <th className='th'>Acciones</th>
-                                                </tr>
-                                            </thead>
+                                                    <tr className="subtitle">
+                                                        <th className='th'>Fecha</th>
+                                                        <th className='th'>Hora</th>
+                                                        <th className='th'>Especialista</th>
+                                                        <th className='th'>Especialidad</th>
+                                                        <th className='th'>Acciones</th>
+                                                    </tr>
+                                                </thead>
 
                                                 {turnosDelPacienteSort.map(turno => {
 
@@ -507,14 +515,14 @@ export default function HomeSpecialist() {
                                                         />
 
                                                     )
-                                                })} 
-                                                </table>: <span className='error'>No cuenta con turnos asignados</span>
-                                            }
+                                                })}
+                                            </table> : <span className='error'>No cuenta con turnos asignados</span>
+                                    }
 
-                                    </div>
                                 </div>
-                        }
-                    
+                            </div>
+                    }
+
                     <Modal isOpen={isOpenChangeTurno} closeModal={closeChangeTurno}>
                         <CarroCompras carro={carro} setCarro={setCarro} />
                     </Modal>

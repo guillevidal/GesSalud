@@ -119,6 +119,45 @@
         flex-direction: column;
         align-items: center;
         width: 100%;
+
+        
+
+        .sub-title{
+            font-size: 2em;
+            font-family: $fuente-principal;
+            color: $color-principal;
+        }
+
+        .informacion{
+            display: flex;
+            //justify-content: center;
+            flex-direction: column;
+            //align-items: center;
+            padding: 10px;
+            border-radius: 10px;
+
+            .label-title-search{
+                font-size: 1.1em;
+                margin-bottom: 10px;
+                color: $color-principal;
+                background-color: $color-detalle;
+                padding: 5px;
+                border-radius: 5px;
+            }
+
+            .contenido{
+                display: flex;
+                min-width: 800px;
+
+                .items{
+                    padding: 0px 45px 0px 0px;
+                    font-size:smaller
+                    
+                }
+    
+            }
+
+        }
     
         .nombre-consulta{
             display: flex;
@@ -381,3 +420,14 @@
 
 
     }
+
+.button-pdf{
+    margin: 20px 20px;
+    @include boton-primario;
+    font-size: 15px;
+}
+
+.items-historia-clinica{
+    padding: 0px 45px 0px 0px;
+    font-size:smaller
+}
