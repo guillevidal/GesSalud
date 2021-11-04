@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Person from "../Person/Person.jsx";
 import { crearAdministrativo, resetearAdministrativoCreado } from "../../../actions/index.js"
 import './CreatePys.scss'
+import swal from "sweetalert";
+
 const CreatePyS = () => {
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
@@ -200,19 +202,31 @@ const CreatePyS = () => {
                         if (parseInt(administrativos[index].persona.dni) === parseInt(input.dni.value)) {
 
                             setValidation(false)
-                            alert("El DNI  que intenta crear ya se encuentra registrado")
+                            swal({
+                                icon: 'warning',
+                                title: 'Error',
+                                text: "El DNI  que intenta crear ya se encuentra registrado"
+                            })
                             return
                         }
 
                         if (administrativos[index].persona.email === input.email.value) {
                             setValidation(false)
-                            alert("El EMAIL  que intenta crear ya se encuentra registrado")
+                            swal({
+                                icon: 'warning',
+                                title: 'Error',
+                                text: "El EMAIL  que intenta crear ya se encuentra registrado"
+                            })
                             return
                         }
 
                         if (administrativos[index].persona.user === input.user.value) {
                             setValidation(false)
-                            alert("El Usuario  que intenta crear ya se encuentra registrado")
+                            swal({
+                                icon: 'warning',
+                                title: 'Error',
+                                text: "El Usuario  que intenta crear ya se encuentra registrado"
+                            })
                             return
                         }
 
@@ -243,22 +257,47 @@ const CreatePyS = () => {
 
         }
 
-        dispatch(crearAdministrativo(newAdmin));
-        setInput({
-            name: { value: "", error: null },
-            lastName: { value: "", error: null },
-            dni: { value: "", error: null },
-            email: { value: "", error: null },
-            phone: { value: "", error: null },
-            adress: { value: "", error: null },
-            birth: { value: "", error: "Seleccione una fecha" },
-            user: { value: "", error: null },
-            password: { value: "", error: null },
-            gender: { value: "", error: "Seleccione un genero", ad: null },
-    
+        
+
+        dispatch(crearAdministrativo(newAdmin)).then(res => {
+            if(res.payload.msg === 'El dni, usuario o el email ingresado ya esta registrado'){
+                swal({
+
+                    title: "Error",
+                    text: `El dni, usuario o el email ingresado ya esta registrado`,
+                    icon: "error",
+
+                })
+
+                return
+            }
+            else{
+                swal({
+
+                    title: "Administrativo Creado!",
+                    text: `El Administrativo ${capitalFirstLetter(input.name.value) + ' '}  ${capitalFirstLetter(input.lastName.value)} se creó correctamente `,
+                    icon: "success",
+
+                })
+
+                setInput({
+                    name: { value: "", error: null },
+                    lastName: { value: "", error: null },
+                    dni: { value: "", error: null },
+                    email: { value: "", error: null },
+                    phone: { value: "", error: null },
+                    adress: { value: "", error: null },
+                    birth: { value: "", error: "Seleccione una fecha" },
+                    user: { value: "", error: null },
+                    password: { value: "", error: null },
+                    gender: { value: "", error: "Seleccione un genero" },
+                    enrollment: { value: "", error: null },
+                    specialty: { value: [], error: null }
+                })
+            }
         })
-        alert(`El Administrativo ${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se creo correctamente `)
-        return
+
+      return
 
     }
 

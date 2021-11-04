@@ -286,33 +286,52 @@ export default function CreateSpecialist() {
 
                 if (!especialistas[0]) {
                     if (!newSpecialist.specialty[0]) {
-                        alert("Seleccione algun tipo de especialidad")
+                        swal({
+                            icon : 'error',
+                            title : 'Seleccione algun tipo de especialidad'
+                        })
                         setValidation(false)
                         return
                     } else {
 
-                        dispatch(crearEspecialista(newSpecialist))
+                        dispatch(crearEspecialista(newSpecialist)).then(res => {
+                            if(res.payload.msg === 'El dni, usuario o el email ingresado ya esta registrado'){
+                                swal({
 
-                        swal({
-                            title: "Especialista médico creado",
-                            text: `El especialista ${capitalFirstLetter(input.name.value) + ' '}  ${capitalFirstLetter(input.lastName.value)} se creó correctamente `,
-                            icon: "success",
+                                    title: "Error",
+                                    text: `El dni, usuario o el email ingresado ya esta registrado`,
+                                    icon: "error",
+        
+                                })
 
+                                return
+                            }
+                            else{
+                                swal({
+
+                                    title: "Especialista Creado!",
+                                    text: `El especialista ${capitalFirstLetter(input.name.value) + ' '}  ${capitalFirstLetter(input.lastName.value)} se creó correctamente `,
+                                    icon: "success",
+        
+                                })
+
+                                setInput({
+                                    name: { value: "", error: null },
+                                    lastName: { value: "", error: null },
+                                    dni: { value: "", error: null },
+                                    email: { value: "", error: null },
+                                    phone: { value: "", error: null },
+                                    adress: { value: "", error: null },
+                                    birth: { value: "", error: "Seleccione una fecha" },
+                                    user: { value: "", error: null },
+                                    password: { value: "", error: null },
+                                    gender: { value: "", error: "Seleccione un genero" },
+                                    enrollment: { value: "", error: null },
+                                    specialty: { value: [], error: null }
+                                })
+                            }
                         })
-                        setInput({
-                            name: { value: "", error: null },
-                            lastName: { value: "", error: null },
-                            dni: { value: "", error: null },
-                            email: { value: "", error: null },
-                            phone: { value: "", error: null },
-                            adress: { value: "", error: null },
-                            birth: { value: "", error: "Seleccione una fecha" },
-                            user: { value: "", error: null },
-                            password: { value: "", error: null },
-                            gender: { value: "", error: "Seleccione un genero" },
-                            enrollment: { value: "", error: null },
-                            specialty: { value: [], error: null }
-                        })
+                        
                         return
                     }
                 } else {
@@ -361,33 +380,56 @@ export default function CreateSpecialist() {
                         }
                     }
                     if (!newSpecialist.specialty[0]) {
-                        alert("Seleccione algun tipo de especialidad")
+                        swal({
+
+                            title: "Error",
+                            text: `"Seleccione algun tipo de especialidad" `,
+                            icon: "error",
+
+                        })
                         setValidation(false)
                         return
                     } else {
 
-                        dispatch(crearEspecialista(newSpecialist))
-                        swal({
+                        dispatch(crearEspecialista(newSpecialist)).then(res => {
+                            if(res.payload.msg === 'El dni, usuario o el email ingresado ya esta registrado'){
+                                swal({
 
-                            title: "Especialista médico creado",
-                            text: `El especialista ${capitalFirstLetter(input.name.value) + ' '}  ${capitalFirstLetter(input.lastName.value)} se creó correctamente `,
-                            icon: "success",
+                                    title: "Error",
+                                    text: `El dni, usuario o el email ingresado ya esta registrado`,
+                                    icon: "error",
+        
+                                })
 
+                                return
+                            }
+                            else{
+                                swal({
+
+                                    title: "Especialista Creado!",
+                                    text: `El especialista ${capitalFirstLetter(input.name.value) + ' '}  ${capitalFirstLetter(input.lastName.value)} se creó correctamente `,
+                                    icon: "success",
+        
+                                })
+
+                                setInput({
+                                    name: { value: "", error: null },
+                                    lastName: { value: "", error: null },
+                                    dni: { value: "", error: null },
+                                    email: { value: "", error: null },
+                                    phone: { value: "", error: null },
+                                    adress: { value: "", error: null },
+                                    birth: { value: "", error: "Seleccione una fecha" },
+                                    user: { value: "", error: null },
+                                    password: { value: "", error: null },
+                                    gender: { value: "", error: "Seleccione un genero" },
+                                    enrollment: { value: "", error: null },
+                                    specialty: { value: [], error: null }
+                                })
+                            }
                         })
-                        setInput({
-                            name: { value: "", error: null },
-                            lastName: { value: "", error: null },
-                            dni: { value: "", error: null },
-                            email: { value: "", error: null },
-                            phone: { value: "", error: null },
-                            adress: { value: "", error: null },
-                            birth: { value: "", error: "Seleccione una fecha" },
-                            user: { value: "", error: null },
-                            password: { value: "", error: null },
-                            gender: { value: "", error: "Seleccione un genero" },
-                            enrollment: { value: "", error: null },
-                            specialty: { value: [], error: null }
-                        })
+                       
+                       
 
                         return
                     }
