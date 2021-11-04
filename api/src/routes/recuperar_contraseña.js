@@ -10,7 +10,7 @@ router.put("/", async function (req, res) {
   ]);
   try {
     if (!yaExisteCorreo) {
-      res.status(400).send({ msg: "Los datos aportados no son correctos" });
+      res.status(200).send({ msg: "Los datos aportados no son correctos" });
     } else {
       let numeroAleatorio = Math.floor(Math.random() * 100000);
       let correoCortado = req.body.user.split("@")[0];
@@ -24,7 +24,7 @@ router.put("/", async function (req, res) {
           from: '"GesSalud💉" <ges.salud.04@gmail.com> - no reply',
           to: req.body.email,
           subject: "Recuperacion de contraseña 📝",
-          html: `<b> Estimado  ${req.body.email}, tu nueva contraseña temporal es: ${nuevaContraseña}, segui los pasos indicados en la pagina para crear la contraseña nueva </b>`,
+          html: `<b> Estimado  ${req.body.email}, tu nueva contraseña es: ${nuevaContraseña}, ingresa al sitio con los datos actualizados</b>`,
         });
       }
 
