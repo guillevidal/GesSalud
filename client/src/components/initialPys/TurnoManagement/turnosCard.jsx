@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState} from "react"
+import React, { useState, useEffect} from "react"
 import './InicialTurno.scss';
 import { useModal } from "../../Modal/useModal.js";
 import Modal from '../../Modal/Modal.js';
@@ -8,7 +8,7 @@ import '../SpecialtyManagement/EditAgenda/modales.scss'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faUserEdit, faEdit, faShoppingCart} from "@fortawesome/free-solid-svg-icons";
 import {modificarTurno, obtenerPagos} from "../../../actions/index.js";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import '../SpecialtyManagement/EditAgenda/modales.scss';
 
 const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, carro, setCarro }) => {
@@ -28,8 +28,14 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
         hora: { value: `${fecha}T${horaI}&${horaF}`, error: null },
 
     })
+    useEffect(async () => {
+        await dispatch(obtenerPagos(paciente.id))
+    }, [])
+    const pagos=useSelector(state => state.pagos)
     const [estadoPago, setEstadoPago]= useState("Pagar")
+
     const handleEditarTurnoPatient = (event) => {
+    
 
         const { value } = event.target
         if (value === "") {
@@ -175,7 +181,19 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
     }
 
     const handleValidacionPago = () => {
-        dispatch(obtenerPagos(paciente.id))
+        pagos.forEach(element => {
+            if(element.turno_id===id.toString() && element.patient_id===paciente.id.toString()){
+                let editarTurno = {
+                    id: id, // id del turno
+                    agendaId: agenda.id,
+                    pacienteId: paciente.id,
+                    status: "pagado"
+
+                }
+                dispatch(modificarTurno(editarTurno))
+            }
+        })
+        
     }
     handleValidacionPago()
     return (
