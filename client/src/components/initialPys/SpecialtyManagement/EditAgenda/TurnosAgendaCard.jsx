@@ -310,9 +310,8 @@ const TurnosAgendaCard = ({ numeroTurno, horaI, horaF, idAgenda, date, modules, 
                                 let editarTurno = {
                                     id: inputEditarTurno.turnoId.value, // id del turno
                                     agendaId: inputEditarTurno.agendaId.value,
-                                    pacienteId: pacienteDetail[0].id,
-                                    hour: inputEditarTurno.hora.value,
-
+                                    pacienteId: pacienteDetail[0].id,                                 
+                                    
                                 }
 
                                 const ajuste = async () => {

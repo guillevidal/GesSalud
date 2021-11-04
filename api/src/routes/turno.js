@@ -73,7 +73,7 @@ router.get("/", async function (req, res, next) {
       include: [
         {
           model: Agenda,
-          attributes: ["date"],
+          attributes: ["date", "id"],
           include: [
             {
               model: Tipo_especialidad,
@@ -162,9 +162,11 @@ router.put("/:id", async function (req, res) {
   try {
     let id = req.params.id;
     let query = await Turno.findByPk(id);
-    let { pacienteId, agendaId, hour } = req.body;
-
-    await Turno.update({ hour, pacienteId, agendaId }, { where: { id } });
+    let { pacienteId, agendaId, status, hour } = req.body;
+    if(!status){
+      status="pendiente"
+    }
+    await Turno.update({ hour, pacienteId, agendaId, status}, { where: { id } });
     res.status(200).send({ msg: "Se actualizaron los datos correctamente" });
   } catch (e) {
     res.status(400).send({ msg: "No se pudo modificar la agenda" });
