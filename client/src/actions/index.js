@@ -489,7 +489,7 @@ export const resetearEnlacePago = () => {
 export const recuperarContraseña = (email) => {
   return async (dispatch) => {
     {
-      const result = await axios.put(`/recuperar`, {email});
+      const result = await axios.put(`/recuperar`, email);
       const data = result.data;
       return dispatch({ type: RECUPERAR_CONTRASEÑA, payload: data });
     }

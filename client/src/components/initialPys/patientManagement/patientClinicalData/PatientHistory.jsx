@@ -111,7 +111,7 @@ export default function PatientHistory() {
             <div className='cargar'>
                     <div className='form'>
                         <div className='conjunto'>
-                        <textarea name='text' value={values.text.value} placeholder="Epicrisis *" onChange={handleEpicrisis} className='textarea'></textarea>
+                        <textarea name='text' value={values.text.value} placeholder="Tratamiento *" onChange={handleEpicrisis} className='textarea'></textarea>
                        {/*  <span>{values.text.error}</span>
                         */} 
                     <textarea name='diagnostic' value={values.diagnostic.value} placeholder="Diagnostico *" onChange={handleDiagnostic} className='textarea'></textarea>

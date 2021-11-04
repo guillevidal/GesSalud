@@ -334,6 +334,7 @@ export default function HomeSpecialist() {
                 <div className="rol-4-user">
                     <div className="nombre-consulta">
                         <div className='front'>
+
                             {
                                 pacienteDetail.length > 0 ? pacienteDetail[0]?.gender === 'femenino' ?
                                     <span className="titulo">Bienvenida, {`${capitalFirstLetter(pacienteDetail[0].name)} ${capitalFirstLetter(pacienteDetail[0].lastName)}`}!</span>
@@ -369,6 +370,8 @@ export default function HomeSpecialist() {
                                     <option value="especialista">Especialista</option>
                                     <option value="fecha">Fecha</option>
                                 </select>
+
+                        
                             </div>
 
 
