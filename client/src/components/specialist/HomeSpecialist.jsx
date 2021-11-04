@@ -515,7 +515,7 @@ export default function HomeSpecialist() {
                                                             date={turno.hour} nameEspecialista={turno.agenda.especialista_medico.persona.name}
                                                             lastNameEspecialista={turno.agenda.especialista_medico.persona.lastName}
                                                             especialidad={turno.agenda.tipo_especialidad.name} id={turno.id} paciente={turno.paciente}
-                                                            carro={carro} setCarro={setCarro} status={turno.status}
+                                                            carro={carro} setCarro={setCarro} status={turno.status} agenda={turno.agenda}
                                                         />
 
                                                     )

@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "../Layout/Nav/Nav.jsx"
+import Nav from "../Layout/Nav.jsx"
 import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom";
 const PagoRealizado = () => {
