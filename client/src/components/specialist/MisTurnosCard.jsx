@@ -6,10 +6,10 @@ import Modal from '../Modal/Modal'
 import { useModal } from '../Modal/useModal'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserTimes, faShoppingCart, faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
-import { eliminarTurno, obtenerPagos, modificarTurno} from '../../actions/index.js';
+import { eliminarTurno, obtenerPagos, modificarTurno, } from '../../actions/index.js';
 import swal from "sweetalert";
 
-function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastNameEspecialista, nameEspecialista, status}) {
+function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastNameEspecialista, nameEspecialista, status, agenda}) {
   
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
