@@ -1,4 +1,4 @@
-/* eslint-disable */
+    /* eslint-disable */
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -521,7 +521,7 @@ function CreateAgenda() {
             <Nav />
             <div className='volver'>
                 <Link to="/especialistaPys" >
-                    <button className='elbotonazo'>VOLVER</button>
+                    <button className='elbotonazo' >VOLVER</button>
                 </Link>
             </div>
             <form className='formulario'>
