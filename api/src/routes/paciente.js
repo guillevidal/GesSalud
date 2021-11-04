@@ -111,7 +111,6 @@ router.post("/", rutasProtegidas, async function (req, res) {
         creandoDatosHistoriaClinica
       );
       let obj = {
-
         ...creandoPersona.dataValues,
         ...creandoDatosPaciente.dataValues,
         ...creandoDatosHistoriaClinica.dataValues,
@@ -133,7 +132,7 @@ router.post("/", rutasProtegidas, async function (req, res) {
 });
 
 //BÚSQUEDA DE PACIENTE POR "DNI"
-router.get("/consulta/:dni", async (req, res) => {
+router.get("/consulta/:dni", rutasProtegidas, async (req, res) => {
   const { dni } = req.params;
   try {
     if (dni) {

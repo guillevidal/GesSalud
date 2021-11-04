@@ -10,7 +10,7 @@ const {
 const router = Router();
 const rutasProtegidas = require("./Middleware/rutasProtegidas.js");
 
-router.get("/", async function (req, res, next) {
+router.get("/", rutasProtegidas, async function (req, res, next) {
   let especialistas = await Especialista_medico.findAll({
     include: [
       {
@@ -118,7 +118,7 @@ router.post("/", async function (req, res) {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", rutasProtegidas, async (req, res) => {
   const { id } = req.params;
   try {
     if (id) {
