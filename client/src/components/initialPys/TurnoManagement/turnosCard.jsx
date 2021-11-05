@@ -7,7 +7,7 @@ import swal from "sweetalert";
 import '../SpecialtyManagement/EditAgenda/modales.scss'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserEdit, faEdit, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { modificarTurno, obtenerPagos, obtenerTurnos } from "../../../actions/index.js";
+import { modificarTurno } from "../../../actions/index.js";
 import { useDispatch, useSelector } from "react-redux";
 import '../SpecialtyManagement/EditAgenda/modales.scss';
 
@@ -30,6 +30,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
 
     })
     const [estadoStatus, setEStadoStatus]= useState(false)
+
     useEffect(() => {
         
             pagos?.forEach(async (element) => {
@@ -234,7 +235,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
             </div>
             <div className='botones'>
                 <button className='boton' onClick={openChangeTurno}><FontAwesomeIcon icon={faEdit} className='icon' /></button>
-                {estadoStatus === false && <button className={estadoPago === 'Quitar' ? 'boton MP quitar' : 'boton MP pagar'} onClick={estadoStatus ? handlePagado : estadoPago !== "Quitar" ? handleCarro : handleQuitar}><FontAwesomeIcon icon={faShoppingCart} />{estadoPago}</button>}
+                <button className={estadoPago === 'Quitar' ? 'boton MP quitar' : 'boton MP pagar'} onClick={estadoStatus ? handlePagado : estadoPago !== "Quitar" ? handleCarro : handleQuitar}><FontAwesomeIcon icon={faShoppingCart} />{estadoPago}</button>
 
             </div>
             <Modal isOpen={isOpenChangeTurno} closeModal={closeChangeTurno}>
