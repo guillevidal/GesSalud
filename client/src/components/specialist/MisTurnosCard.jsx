@@ -83,7 +83,6 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
     handleValidacionPago()
     return (
         <>
-        
           <tr className="listasss">
               <td className="td numero">{date.split('T')[0]}</td>
               <td className="td horario">{date.split('T')[1].split('&')[0]}</td>
