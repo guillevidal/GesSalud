@@ -87,6 +87,8 @@ const CreateRRHH = () => {
             setInput({ ...input, dni: { value, error: "No debe contener caracteres especiales" } })
         } else if (/\D/.test(value)) {
             setInput({ ...input, dni: { value, error: "No debe contener letras" } })
+        } else if(value.length < 7 || value.length > 11) {
+            setInput({ ...input, dni: { value, error: "El número ingresado no es valido" } })
         } else {
             setInput({ ...input, dni: { value, error: null } })
         }
@@ -122,8 +124,10 @@ const CreateRRHH = () => {
             setInput({ ...input, phone: { value, error: "No debe contener caracteres especiales" } })
         } else if (/\D/.test(value)) {
             setInput({ ...input, phone: { value, error: "No debe contener letras" } })
-        } else {
-            setInput({ ...input, phone: { value, error: null } })
+        } else if(/^\d{0,9}$/.test(value) || value.length > 13) {
+            setInput({ ...input, phone: { value, error: "El número ingresado no es valido" } })
+        }else{
+            setInput({ ...input, phone: { value, error: null }})
         }
     }
 

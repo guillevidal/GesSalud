@@ -62,7 +62,7 @@ handleUser, handlePassword}) {
                     <label htmlFor="phone" className='label-person'>Teléfono</label>
 
                     <input
-                        id="phone" type="text" name="phone"
+                        id="phone" type="tel" name="phone"
                         value={phone.value} onChange={(e)=>{handlePhone(e)}}
                         className='input-person'
                     />
