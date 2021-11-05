@@ -59,7 +59,11 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
     }
  
     const handlePagado = () => {
-        alert("Ya fue pagado este item")
+        swal({
+            title: 'Ups!',
+            icon: 'warning',
+            text: 'Este turno ya fue abonado'
+        })
     }
 
     let estadoStatus = false;
