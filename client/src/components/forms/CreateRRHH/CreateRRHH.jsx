@@ -182,20 +182,7 @@ const CreateRRHH = () => {
     }
     const handleSubmit = (event) => {
         event.preventDefault()
-        let newAdmin = {
-            name: input.name.value.toLowerCase(),
-            lastName: input.lastName.value.toLowerCase(),
-            dni: parseInt(input.dni.value),
-            email: input.email.value,
-            phone: input.phone.value,
-            adress: input.adress.value.toLowerCase(),
-            birth: input.birth.value,
-            user: input.user.value,
-            password: input.password.value,
-            gender: input.gender.value,
-            rol: "2"
-
-        }
+    
         if (!input.name.error && !input.lastName.error && !input.password.error && !input.email.error && !input.phone.error
             && !input.user.error && !input.birth.error && !input.dni.error
             && !input.adress.error) {
@@ -255,41 +242,41 @@ const CreateRRHH = () => {
                     }
 
                 }
-                let access = false
-                pacientes.forEach(element => {
-                    if(parseInt(input.dni.value)===element.persona.dni || 
-                    input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
-                    input.user.value.toLowerCase() === element.persona.user.toLowerCase()){
-                        swal({
-
-                            title: "Error",
-                            text: `El dni, usuario, o email ingresado ya esta registrado en un paciente`,
-                            icon: "error",
-
-                        })
-
-                        access=true
-                        return
-                    }
-                })
                 
-                especialistas.forEach(element => {
-                    if(parseInt(input.dni.value)===element.persona.dni || 
-                    input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
-                    input.user.value.toLowerCase() === element.persona.user.toLowerCase()){
-                        swal({
-
-                            title: "Error",
-                            text: `El dni, usuario, o email ingresado ya esta registrado en un especialista`,
-                            icon: "error",
-
-                        })
-                        access=true
-                        return
-                    }
-                })
-               
             }
+            let access = false
+            pacientes.forEach(element => {
+                if(parseInt(input.dni.value)===element.persona.dni || 
+                input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
+                input.user.value.toLowerCase() === element.persona.user.toLowerCase()){
+                    swal({
+
+                        title: "Error",
+                        text: `El dni, usuario, o email ingresado ya esta registrado en un paciente`,
+                        icon: "error",
+
+                    })
+
+                    access=true
+                    return
+                }
+            })
+            
+            especialistas.forEach(element => {
+                if(parseInt(input.dni.value)===element.persona.dni || 
+                input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
+                input.user.value.toLowerCase() === element.persona.user.toLowerCase()){
+                    swal({
+
+                        title: "Error",
+                        text: `El dni, usuario, o email ingresado ya esta registrado en un especialista`,
+                        icon: "error",
+
+                    })
+                    access=true
+                    return
+                }
+            })
         } else {
             setValidation(false)
             return
@@ -297,6 +284,20 @@ const CreateRRHH = () => {
 
 
         if(!access){
+            let newAdmin = {
+                name: input.name.value.toLowerCase(),
+                lastName: input.lastName.value.toLowerCase(),
+                dni: parseInt(input.dni.value),
+                email: input.email.value,
+                phone: input.phone.value,
+                adress: input.adress.value.toLowerCase(),
+                birth: input.birth.value,
+                user: input.user.value,
+                password: input.password.value,
+                gender: input.gender.value,
+                rol: "2"
+    
+            }
 
             dispatch(crearAdministrativo(newAdmin));
             setInput({
