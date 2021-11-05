@@ -179,18 +179,18 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
         pagos.forEach(async element => {
             if(element.turno_id===id.toString()){
 
-                setEStadoStatus(true)
                 if(status!=="pagado"){
-
+                    
                     let editarTurno = {
                         id: id, // id del turno
                         agendaId: agenda.id,
                         pacienteId: paciente.id,
                         status: "pagado"
-    
+                        
                     }
                     await dispatch(modificarTurno(editarTurno))
                 }
+                setEStadoStatus(true)
             }
         })
         
@@ -233,7 +233,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
             </div>
             <div className='botones'>
                 <button className='boton' onClick={openChangeTurno}><FontAwesomeIcon icon={faEdit} className='icon'/></button>
-                {status === 'pendiente' && <button  className={estadoPago === 'Quitar' ? 'boton MP quitar' : 'boton MP pagar'} onClick={estadoStatus ? handlePagado : estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faShoppingCart} />{estadoPago}</button>}
+                {estadoStatus === false && <button  className={estadoPago === 'Quitar' ? 'boton MP quitar' : 'boton MP pagar'} onClick={estadoStatus ? handlePagado : estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faShoppingCart} />{estadoPago}</button>}
 
             </div>
             <Modal isOpen={isOpenChangeTurno} closeModal={closeChangeTurno}>
