@@ -1,14 +1,14 @@
 /* eslint-disable */
-import React, { useState, useEffect} from "react"
+import React, { useState, useEffect } from "react"
 import './InicialTurno.scss';
 import { useModal } from "../../Modal/useModal.js";
 import Modal from '../../Modal/Modal.js';
 import swal from "sweetalert";
 import '../SpecialtyManagement/EditAgenda/modales.scss'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  faUserEdit, faEdit, faShoppingCart} from "@fortawesome/free-solid-svg-icons";
-import {modificarTurno, obtenerPagos, obtenerTurnos } from "../../../actions/index.js";
-import {useDispatch, useSelector} from "react-redux";
+import { faUserEdit, faEdit, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { modificarTurno, obtenerPagos, obtenerTurnos } from "../../../actions/index.js";
+import { useDispatch, useSelector } from "react-redux";
 import '../SpecialtyManagement/EditAgenda/modales.scss';
 
 const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, carro, setCarro }) => {
@@ -21,7 +21,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
     let horaF = hour.slice(17, hour.length)
     const [validation, setValidation] = useState(true)
     const [isOpenChangeTurno, openChangeTurno, closeChangeTurno] = useModal(false)
-    const pagos=useSelector(state => state.pagos)
+    const pagos = useSelector(state => state.pagos)
     const [inputEditarTurno, setInputEditarTurno] = useState({
         turnoId: { value: id, error: null },
         agendaId: { value: agenda.id, error: null },
@@ -29,36 +29,33 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
         hora: { value: `${fecha}T${horaI}&${horaF}`, error: null },
 
     })
-    let setEStadoStatus=false
+    let setEStadoStatus = false
     useEffect(() => {
-        const handleValidacionPago = () => {
-            pagos.forEach(async element => {
-                if(element.turno_id===id.toString()){
-    
-                    if(status!=="pagado"){
-                        
+        
+            pagos?.forEach(async (element) => {
+                if (element.turno_id === id.toString()) {
+
+                    if (status !== "pagado") {
+
                         let editarTurno = {
                             id: id, // id del turno
                             agendaId: agenda.id,
                             pacienteId: paciente.id,
                             status: "pagado"
-                            
+
                         }
                         await dispatch(modificarTurno(editarTurno))
                     }
-                    setEStadoStatus=true
+                    setEStadoStatus = true
                 }
             })
-            
-        }
-        handleValidacionPago()
     }, [])
-    const [estadoPago, setEstadoPago]= useState("Pagar")
-   // const [estadoStatus, setEStadoStatus]= useState(false)
+    const [estadoPago, setEstadoPago] = useState("Pagar")
+    // const [estadoStatus, setEStadoStatus]= useState(false)
 
 
     const handleEditarTurnoPatient = (event) => {
-    
+
 
         const { value } = event.target
         if (value === "") {
@@ -79,17 +76,17 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
                 setInputEditarTurno({ ...inputEditarTurno, pacienteId: { value, error: null } })
             }
         }
-   
+
     }
 
     const handleSubmitEditarTurno = (event) => {
         event.preventDefault();
         if (!inputEditarTurno.agendaId.error || !inputEditarTurno.pacienteId.error || !inputEditarTurno.hora.error) {
-            if (inputEditarTurno.agendaId.value.length===0 || inputEditarTurno.pacienteId.value.length===0
+            if (inputEditarTurno.agendaId.value.length === 0 || inputEditarTurno.pacienteId.value.length === 0
                 || inputEditarTurno.hora.value.length === 0) {
-                        
-                        setValidation(false)
-                    } else {
+
+                setValidation(false)
+            } else {
                 let pacienteDetail = pacientes.filter(paciente => {
                     return paciente.persona.dni === parseInt(inputEditarTurno.pacienteId.value)
                 })
@@ -117,7 +114,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
                                     agendaId: inputEditarTurno.agendaId.value,
                                     pacienteId: pacienteDetail[0].id,
                                     hour: inputEditarTurno.hora.value,
-                                    status: estadoStatus?"pagado":"pendiente"
+                                    status: estadoStatus ? "pagado" : "pendiente"
                                 }
 
                                 const ajuste = async () => {
@@ -145,7 +142,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
                             agendaId: inputEditarTurno.agendaId.value,
                             pacienteId: pacienteDetail[0].id,
                             hour: inputEditarTurno.hora.value,
-                            status: estadoStatus?"pagado":"pendiente"
+                            status: estadoStatus ? "pagado" : "pendiente"
                         }
 
                         const ajuste = async () => {
@@ -175,31 +172,37 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
         }
     }
 
-    const handleCarro=()=>{
-        
-        setCarro({items: [...carro.items, {id :paciente.id, 
-            title: agenda.tipo_especialidad.name,
-            category_id: id.toString(),
-            quantity: 1,
-            unit_price: 200}]});
+    const handleCarro = () => {
+
+        setCarro({
+            items: [...carro.items, {
+                id: paciente.id,
+                title: agenda.tipo_especialidad.name,
+                category_id: id.toString(),
+                quantity: 1,
+                unit_price: 200
+            }]
+        });
 
         setEstadoPago("Quitar")
     }
 
     const handleQuitar = () => {
-       
-        setCarro({items: carro.items.filter(element=>{
-            return element.category_id.toString()!==id.toString()
-        })})
+
+        setCarro({
+            items: carro.items.filter(element => {
+                return element.category_id.toString() !== id.toString()
+            })
+        })
         setEstadoPago("Pagar")
     }
- 
+
     const handlePagado = () => {
-       swal({
-           title : 'Ups!',
-           icon : 'warning',
-           text: 'Este turno ya fue abonado'
-       })
+        swal({
+            title: 'Ups!',
+            icon: 'warning',
+            text: 'Este turno ya fue abonado'
+        })
     }
     return (
         <div className='container-info-turnos'>
@@ -226,12 +229,12 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
             </div>
             <div className='apartado'>
                 <span className='subtitle'>Estado </span>
-                <span className='data'>{setEStadoStatus ? "PAGADO": status.toUpperCase()}</span>
+                <span className='data'>{setEStadoStatus ? "PAGADO" : status.toUpperCase()}</span>
 
             </div>
             <div className='botones'>
-                <button className='boton' onClick={openChangeTurno}><FontAwesomeIcon icon={faEdit} className='icon'/></button>
-                {setEStadoStatus === false && <button  className={estadoPago === 'Quitar' ? 'boton MP quitar' : 'boton MP pagar'} onClick={setEStadoStatus ? handlePagado : estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faShoppingCart} />{estadoPago}</button>}
+                <button className='boton' onClick={openChangeTurno}><FontAwesomeIcon icon={faEdit} className='icon' /></button>
+                {setEStadoStatus === false && <button className={estadoPago === 'Quitar' ? 'boton MP quitar' : 'boton MP pagar'} onClick={setEStadoStatus ? handlePagado : estadoPago !== "Quitar" ? handleCarro : handleQuitar}><FontAwesomeIcon icon={faShoppingCart} />{estadoPago}</button>}
 
             </div>
             <Modal isOpen={isOpenChangeTurno} closeModal={closeChangeTurno}>
@@ -261,7 +264,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
 
                 </div>
             </Modal>
-           
+
         </div>
     )
 }
