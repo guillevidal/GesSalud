@@ -5,11 +5,12 @@ import {Link} from "react-router-dom";
 import './HomeSpecialist.scss'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import {obtenerTurnos} from "../../actions/index.js";
+import {obtenerPagos, obtenerTurnos} from "../../actions/index.js";
 const PagoRealizado = () => {
     const dispatch = useDispatch()
     const rol = useSelector(state => state.rol)
-    const actualizarTurnos = () => {
+    const actualizarTurnos = async() => {
+        await dispatch(obtenerPagos())
         dispatch(obtenerTurnos())
     }
     actualizarTurnos()

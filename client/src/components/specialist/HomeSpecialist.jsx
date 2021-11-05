@@ -39,7 +39,7 @@ export default function HomeSpecialist() {
                     dispatch(rol(res.data.rol))
 
                     if (res.data.dni) {
-                        dispatch(obtenerPagos())
+                        
                         dispatch(pacienteDetallado(res.data.dni))
                     }
                     if (res.data.especialistaId) {
@@ -57,7 +57,8 @@ export default function HomeSpecialist() {
 
     }, [])
 
-    useEffect(() => {
+    useEffect(async () => {
+        await dispatch(obtenerPagos())
         dispatch(paginado(0))
         dispatch(obtenerAgendas())
         dispatch(obtenerTurnos())
