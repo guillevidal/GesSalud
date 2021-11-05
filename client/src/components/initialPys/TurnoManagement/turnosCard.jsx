@@ -30,7 +30,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
     })
     useEffect(async () => {
         await dispatch(obtenerPagos())
-        dispatch(obtenerTurnos())
+        
     }, [])
     const pagos=useSelector(state => state.pagos)
     const [estadoPago, setEstadoPago]= useState("Pagar")
@@ -189,8 +189,8 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
     
                     }
                     await dispatch(modificarTurno(editarTurno))
-                    setEStadoStatus(true)
                 }
+                setEStadoStatus(true)
             }
         })
         
