@@ -29,7 +29,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
         hora: { value: `${fecha}T${horaI}&${horaF}`, error: null },
 
     })
-    const [estadoStatus, setEStadoStatus]= useState(false)
+    //const [estadoStatus, setEStadoStatus]= useState(false)
 
     const [estadoPago, setEstadoPago] = useState("Pagar")
     
@@ -185,6 +185,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
             text: 'Este turno ya fue abonado'
         })
     }
+    let estadoStatus=false;
     const handleValidacionPago = () => {
         pagos?.forEach(async (element) => {
             if (element.turno_id === id.toString()) {
@@ -200,7 +201,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
                     }
                     await dispatch(modificarTurno(editarTurno))
                 }
-                setEStadoStatus(true)
+                estadoStatus=true;
             }
         })
     }
