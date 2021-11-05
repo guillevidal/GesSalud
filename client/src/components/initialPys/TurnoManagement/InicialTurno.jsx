@@ -30,9 +30,7 @@ function InicialTurno() {
         dispatch(obtenerPacientes())
     }, [])
 
-    useEffect(() => {
-
-    }, [busquedaTurnos])
+  
     return (
         <div class="container-turnospys">
             <Nav />
