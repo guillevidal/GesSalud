@@ -9,6 +9,7 @@ import HistoriaClinica from "./historiaClinica.jsx";
 import ModalHistoriaClinica from '../../../Modal/ModalHistoriaClinica.js';
 import { useModal } from "../../../Modal/useModal.js";
 import { useReactToPrint } from 'react-to-print';
+import imagen from '../../../specialist/images/user.png'
 
 const PatientCardDetails = () => {
     const dispatch = useDispatch()
@@ -42,6 +43,12 @@ const PatientCardDetails = () => {
 
                     <div className='detalles'>
                         <div className='encabezado'>
+                        {patientDetails[0] && patientDetails[0].imgProfile ? 
+                       <img src={`https://gessalud.herokuapp.com/images/profile/${patientDetails[0].dni}`} alt="" className='imagen'/>
+                       :
+                       <img src={imagen} alt="" className='imagen'/>
+                       
+                       }
                             <span className='nombre-apellido'>{capitalFirstLetter(name) + ' ' + capitalFirstLetter(lastName)}</span>
                         </div>
                         <div className='data'>

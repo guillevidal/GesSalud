@@ -53,11 +53,20 @@
 
             .encabezado{
                 display: flex;
+                flex-direction: column;
                 width: 100%;
-                max-width: 400px;
+                max-width: 600px;
                 justify-content: center;
                 flex-direction: column;
                 align-items: center;
+
+                .imagen{
+                    width: 100%;
+                    height: 100%;
+                    max-width: 150px;
+                    max-height: 150px;
+                    margin: 10px;
+                }
 
                 .nombre-apellido{
                     font-size: 2em;
