@@ -57,15 +57,18 @@ export default function HomeSpecialist() {
 
     }, [])
 
-    useEffect(async () => {
-        await dispatch(obtenerPagos())
+    useEffect( () => {
+        
         dispatch(paginado(0))
         dispatch(obtenerAgendas())
         dispatch(obtenerTurnos())
 
     }, [])
 
-
+    const obtenerP = async() => {
+        await dispatch(obtenerPagos())
+    }
+    obtenerP()
     // CODIGO VISTA DE ESPECIALISTA LOGEADO
     const roles = useSelector(state => state.rol)
 
