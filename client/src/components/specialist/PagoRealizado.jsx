@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import Nav from "../Layout/Nav.jsx"
 import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom";
@@ -9,9 +9,10 @@ import {obtenerTurnos} from "../../actions/index.js";
 const PagoRealizado = () => {
     const dispatch = useDispatch()
     const rol = useSelector(state => state.rol)
-    useEffect(()=>{
+    const actualizarTurnos = () => {
         dispatch(obtenerTurnos())
-    }, [])
+    }
+    actualizarTurnos()
     return (
         <div className='pagaddo'>
             <Nav/>

@@ -63,6 +63,7 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
         pagos.forEach(async element => {
             if(element.turno_id===id.toString()){
 
+                setEStadoStatus(true)
                 if(status!=="pagado"){
 
                     let editarTurno = {
@@ -74,7 +75,6 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
                     }
                     await dispatch(modificarTurno(editarTurno))
                 }
-                setEStadoStatus(true)
             }
         })
         
