@@ -62,13 +62,10 @@ export default function HomeSpecialist() {
         dispatch(paginado(0))
         dispatch(obtenerAgendas())
         dispatch(obtenerTurnos())
-
+        dispatch(obtenerPagos())
     }, [])
 
-    const obtenerP = async() => {
-        await dispatch(obtenerPagos())
-    }
-    obtenerP()
+    
     // CODIGO VISTA DE ESPECIALISTA LOGEADO
     const roles = useSelector(state => state.rol)
 

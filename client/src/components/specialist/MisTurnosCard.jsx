@@ -10,7 +10,9 @@ import { eliminarTurno, modificarTurno, obtenerPagos} from '../../actions/index.
 import swal from "sweetalert";
 
 function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastNameEspecialista, nameEspecialista, status, agenda}) {
-    
+    useEffect(async()=>{
+        await dispatch(obtenerPagos())
+    }, [])
     
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
