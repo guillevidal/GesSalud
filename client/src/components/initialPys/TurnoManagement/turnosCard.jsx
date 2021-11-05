@@ -179,6 +179,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
         pagos.forEach(async element => {
             if(element.turno_id===id.toString()){
 
+                setEStadoStatus(true)
                 if(status!=="pagado"){
 
                     let editarTurno = {
@@ -190,7 +191,6 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
                     }
                     await dispatch(modificarTurno(editarTurno))
                 }
-                setEStadoStatus(true)
             }
         })
         
