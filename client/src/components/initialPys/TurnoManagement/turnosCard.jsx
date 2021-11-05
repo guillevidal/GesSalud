@@ -21,6 +21,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
     let horaF = hour.slice(17, hour.length)
     const [validation, setValidation] = useState(true)
     const [isOpenChangeTurno, openChangeTurno, closeChangeTurno] = useModal(false)
+    const pagos=useSelector(state => state.pagos)
     const [inputEditarTurno, setInputEditarTurno] = useState({
         turnoId: { value: id, error: null },
         agendaId: { value: agenda.id, error: null },
@@ -28,11 +29,30 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
         hora: { value: `${fecha}T${horaI}&${horaF}`, error: null },
 
     })
-    useEffect(async () => {
-        await dispatch(obtenerPagos())
-        
+    let setEStadoStatus=false
+    useEffect(() => {
+        const handleValidacionPago = () => {
+            pagos.forEach(async element => {
+                if(element.turno_id===id.toString()){
+    
+                    if(status!=="pagado"){
+                        
+                        let editarTurno = {
+                            id: id, // id del turno
+                            agendaId: agenda.id,
+                            pacienteId: paciente.id,
+                            status: "pagado"
+                            
+                        }
+                        await dispatch(modificarTurno(editarTurno))
+                    }
+                    setEStadoStatus=true
+                }
+            })
+            
+        }
+        handleValidacionPago()
     }, [])
-    const pagos=useSelector(state => state.pagos)
     const [estadoPago, setEstadoPago]= useState("Pagar")
    // const [estadoStatus, setEStadoStatus]= useState(false)
 
@@ -173,29 +193,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
         })})
         setEstadoPago("Pagar")
     }
-    let setEStadoStatus=false
-    
-    const handleValidacionPago = () => {
-        pagos.forEach(async element => {
-            if(element.turno_id===id.toString()){
-
-                if(status!=="pagado"){
-                    
-                    let editarTurno = {
-                        id: id, // id del turno
-                        agendaId: agenda.id,
-                        pacienteId: paciente.id,
-                        status: "pagado"
-                        
-                    }
-                    await dispatch(modificarTurno(editarTurno))
-                }
-                setEStadoStatus=true
-            }
-        })
-        
-    }
-    handleValidacionPago()
+ 
     const handlePagado = () => {
        swal({
            title : 'Ups!',

@@ -6,7 +6,7 @@ import Modal from '../Modal/Modal'
 import { useModal } from '../Modal/useModal'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserTimes, faShoppingCart, faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
-import { eliminarTurno, obtenerPagos, modificarTurno} from '../../actions/index.js';
+import { eliminarTurno, modificarTurno} from '../../actions/index.js';
 import swal from "sweetalert";
 
 function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastNameEspecialista, nameEspecialista, status, agenda}) {
@@ -19,11 +19,32 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
 
     const [isOpenCancelarTurno, openCancelarTurno, closeCancelarTurno] = useModal(false)
     //const [estadoStatus, setEStadoStatus]= useState(false)
-
-    useEffect(async () => {
-        await dispatch(obtenerPagos())
-    }, [])
     const pagos=useSelector(state => state.pagos)
+
+    let setEStadoStatus=false
+    useEffect(() => {
+        const handleValidacionPago = () => {
+            pagos.forEach(async element => {
+                if(element.turno_id===id.toString()){
+    
+                    if(status!=="pagado"){
+                        
+                        let editarTurno = {
+                            id: id, // id del turno
+                            agendaId: agenda.id,
+                            pacienteId: paciente.id,
+                            status: "pagado"
+                            
+                        }
+                        await dispatch(modificarTurno(editarTurno))
+                    }
+                    setEStadoStatus=true
+                }
+            })
+            
+        }
+        handleValidacionPago()
+    }, [])
 
     const handleSubmitEliminarTurno = (event) => {
         event.preventDefault();
@@ -59,28 +80,7 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
         })})
         setEstadoPago("Pagar")
     }
-    let setEStadoStatus=false
-    const handleValidacionPago = () => {
-        pagos.forEach(async element => {
-            if(element.turno_id===id.toString()){
-
-                if(status!=="pagado"){
-                    
-                    let editarTurno = {
-                        id: id, // id del turno
-                        agendaId: agenda.id,
-                        pacienteId: paciente.id,
-                        status: "pagado"
-                        
-                    }
-                    await dispatch(modificarTurno(editarTurno))
-                }
-                setEStadoStatus=true
-            }
-        })
-        
-    }
-    handleValidacionPago()
+ 
     const handlePagado = () => {
         alert("Ya fue pagado este item")
     }

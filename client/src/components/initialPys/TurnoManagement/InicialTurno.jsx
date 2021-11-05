@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Nav from "../../Layout/Nav"
 import "./InicialTurno.scss"
-import { obtenerTurnos, paginado, obtenerPacientes } from "../../../actions/index.js"
+import { obtenerTurnos, paginado, obtenerPacientes, obtenerPagos} from "../../../actions/index.js"
 import Turnos from "./turnosCard.jsx";
 import SearchTurno from "./SearchTurno";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,7 +23,8 @@ function InicialTurno() {
     const [busquedaTurnos, setBusquedaTurnos] = useState([])
     const [carro, setCarro] = useState({ items: [] })
     const [isOpenChangeTurno, openChangeTurno, closeChangeTurno] = useModal(false)
-    useEffect(() => {
+    useEffect(async() => {
+        await dispatch(obtenerPagos())
         dispatch(obtenerTurnos())
         dispatch(paginado(0))
         dispatch(obtenerPacientes())
