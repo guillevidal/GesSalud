@@ -97,7 +97,7 @@ export default function CreatePatient() {
             setInput({ ...input, dni: { value, error: "No debe contener caracteres especiales" } })
         } else if (/\D/.test(value)) {
             setInput({ ...input, dni: { value, error: "No debe contener letras" } })
-        } else if(value.length < 8 || value.length > 11) {
+        } else if(value.length < 7 || value.length > 11) {
             setInput({ ...input, dni: { value, error: "El número ingresado no es valido" } })
         } else {
             setInput({ ...input, dni: { value, error: null } })
