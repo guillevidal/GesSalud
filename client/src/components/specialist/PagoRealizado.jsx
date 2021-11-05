@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import {obtenerTurnos} from "../../actions/index.js";
 const PagoRealizado = () => {
+    const dispatch = useDispatch()
     const rol = useSelector(state => state.rol)
     useEffect(()=>{
         dispatch(obtenerTurnos())
