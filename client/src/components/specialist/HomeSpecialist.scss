@@ -298,6 +298,10 @@
                 align-items: center;
                 max-width: 900px;
                 margin-top: 20px;
+
+                @media (max-width:620px) {
+                    overflow:scroll;
+                }
         
                 .titles{
                     width: 100%;
@@ -410,11 +414,14 @@
         .error{
             font-size: 2.5em;
             color: red;
+            
+            text-align: center;
         }
         .error2{
             font-size: 2.5em;
             color: red;
             margin-top: 20px;
+            text-align: center;
         }
         
 
