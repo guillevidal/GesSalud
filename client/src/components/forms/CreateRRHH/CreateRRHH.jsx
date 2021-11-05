@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Person from "../Person/Person.jsx";
 import { crearAdministrativo, resetearAdministrativoCreado } from "../../../actions/index.js"
 import '../CreatePys/CreatePys.scss'
+import swal from 'sweetalert';
 const CreateRRHH = () => {
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
@@ -25,7 +26,8 @@ const CreateRRHH = () => {
     })
 
     const administrativos = useSelector(state => state.administrativos)
-
+    const especialistas = useSelector(state => state.especialistas)
+    const pacientes = useSelector(state => state.pacientes)
     useEffect(() => {
         setTimeout(() => { setValidation(true) }, 2500)
     }, [validation])
@@ -184,7 +186,20 @@ const CreateRRHH = () => {
     }
     const handleSubmit = (event) => {
         event.preventDefault()
+        let newAdmin = {
+            name: input.name.value.toLowerCase(),
+            lastName: input.lastName.value.toLowerCase(),
+            dni: parseInt(input.dni.value),
+            email: input.email.value,
+            phone: input.phone.value,
+            adress: input.adress.value.toLowerCase(),
+            birth: input.birth.value,
+            user: input.user.value,
+            password: input.password.value,
+            gender: input.gender.value,
+            rol: "2"
 
+        }
         if (!input.name.error && !input.lastName.error && !input.password.error && !input.email.error && !input.phone.error
             && !input.user.error && !input.birth.error && !input.dni.error
             && !input.adress.error) {
@@ -204,27 +219,80 @@ const CreateRRHH = () => {
                         if (parseInt(administrativos[index].persona.dni) === parseInt(input.dni.value)) {
 
                             setValidation(false)
-                            alert("El DNI  que intenta crear ya se encuentra registrado")
+                            swal({
+
+                                title: "Error",
+                                text: `El DNI  que intenta crear ya se encuentra registrado`,
+                                icon: "error",
+    
+                            })
+                            
                             return
                         }
 
                         if (administrativos[index].persona.email === input.email.value) {
                             setValidation(false)
-                            alert("El EMAIL  que intenta crear ya se encuentra registrado")
+                            swal({
+
+                                title: "Error",
+                                text: `El EMAIL  que intenta crear ya se encuentra registrado`,
+                                icon: "error",
+    
+                            })
+                            
                             return
                         }
 
                         if (administrativos[index].persona.user === input.user.value) {
                             setValidation(false)
-                            alert("El Usuario  que intenta crear ya se encuentra registrado")
+                            swal({
+
+                                title: "Error",
+                                text: `El Usuario  que intenta crear ya se encuentra registrado`,
+                                icon: "error",
+    
+                            })
+                            
                             return
                         }
 
                     }
 
                 }
+                let access = false
+                pacientes.forEach(element => {
+                    if(parseInt(input.dni.value)===element.persona.dni || 
+                    input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
+                    input.user.value.toLowerCase() === element.persona.user.toLowerCase()){
+                        swal({
 
+                            title: "Error",
+                            text: `El dni, usuario, o email ingresado ya esta registrado en un paciente`,
+                            icon: "error",
 
+                        })
+
+                        access=true
+                        return
+                    }
+                })
+                
+                especialistas.forEach(element => {
+                    if(parseInt(input.dni.value)===element.persona.dni || 
+                    input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
+                    input.user.value.toLowerCase() === element.persona.user.toLowerCase()){
+                        swal({
+
+                            title: "Error",
+                            text: `El dni, usuario, o email ingresado ya esta registrado en un especialista`,
+                            icon: "error",
+
+                        })
+                        access=true
+                        return
+                    }
+                })
+               
             }
         } else {
             setValidation(false)
@@ -232,37 +300,26 @@ const CreateRRHH = () => {
         }
 
 
-        let newAdmin = {
-            name: input.name.value.toLowerCase(),
-            lastName: input.lastName.value.toLowerCase(),
-            dni: parseInt(input.dni.value),
-            email: input.email.value,
-            phone: input.phone.value,
-            adress: input.adress.value.toLowerCase(),
-            birth: input.birth.value,
-            user: input.user.value,
-            password: input.password.value,
-            gender: input.gender.value,
-            rol: "2"
+        if(!access){
 
+            dispatch(crearAdministrativo(newAdmin));
+            setInput({
+                name: { value: "", error: null },
+                lastName: { value: "", error: null },
+                dni: { value: "", error: null },
+                email: { value: "", error: null },
+                phone: { value: "", error: null },
+                adress: { value: "", error: null },
+                birth: { value: "", error: "Seleccione una fecha" },
+                user: { value: "", error: null },
+                password: { value: "", error: null },
+                gender: { value: "", error: "Seleccione un genero", ad: null },
+        
+            })
+            alert(`El Administrativo ${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se creo correctamente `)
+            return
         }
 
-        dispatch(crearAdministrativo(newAdmin));
-        setInput({
-            name: { value: "", error: null },
-            lastName: { value: "", error: null },
-            dni: { value: "", error: null },
-            email: { value: "", error: null },
-            phone: { value: "", error: null },
-            adress: { value: "", error: null },
-            birth: { value: "", error: "Seleccione una fecha" },
-            user: { value: "", error: null },
-            password: { value: "", error: null },
-            gender: { value: "", error: "Seleccione un genero", ad: null },
-    
-        })
-        alert(`El Administrativo ${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se creo correctamente `)
-        return
 
     }
 

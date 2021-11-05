@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Person from "../Person/Person";
 import Nav from '../../Layout/Nav'
 import { crearPaciente } from '../../../actions/index'
@@ -13,7 +13,7 @@ export default function CreatePatient() {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
     const dispatch = useDispatch()
-    
+
     const [input, setInput] = useState({
         name: { value: "", error: null },
         lastName: { value: "", error: null },
@@ -36,6 +36,8 @@ export default function CreatePatient() {
     })
 
     const pacientes = useSelector(state => state.pacientes)
+    const especialistas = useSelector(state => state.especialistas)
+    const administrativos = useSelector(state => state.administrativos)
     const [validation, setValidation] = useState(true)
 
     useEffect(() => {
@@ -254,7 +256,7 @@ export default function CreatePatient() {
             setInput({ ...input, emergencyContact: { value, error: null } })
         }
     }
-    const handleSubmit =  (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault()
 
         let creationDate = new Date();
@@ -262,19 +264,19 @@ export default function CreatePatient() {
 
         console.log(typeof input.birth.value)
         if (!input.name.error && !input.lastName.error && !input.password.error && !input.email.error && !input.phone.error
-            && !input.user.error  && !input.birth.error && !input.gender.error && !input.dni.error
-            && !input.adress.error && !input.medication.error && !input.emergencyContact.error 
+            && !input.user.error && !input.birth.error && !input.gender.error && !input.dni.error
+            && !input.adress.error && !input.medication.error && !input.emergencyContact.error
             && !input.disease.error) {
 
             if (input.name.value.length === 0 || input.lastName.value.length === 0 || input.password.value.length === 0 || input.email.value.length === 0 || input.phone.value.length === 0
                 || input.user.value.length === 0 || input.birth.value.length === 0 || input.gender.value.length === 0 || input.dni.value.length === 0
-                || input.adress.value.length === 0 || input.medication.value.length === 0 || input.emergencyContact.value.length === 0 
+                || input.adress.value.length === 0 || input.medication.value.length === 0 || input.emergencyContact.value.length === 0
                 || input.disease.value.length === 0) {
                 setValidation(false)
                 return
 
 
-            }else{
+            } else {
                 let newPatient = {
                     name: input.name.value.toLowerCase(),
                     lastName: input.lastName.value.toLowerCase(),
@@ -294,104 +296,190 @@ export default function CreatePatient() {
                     date: "",
                     derivation: ""
                 }
-                if(!pacientes[0]){
-                     dispatch(crearPaciente(newPatient))
-                    
-                    swal({
-                        title: "Paciente creado",
-                        text: `El paciente ${capitalFirstLetter(input.name.value) + ' '}  ${capitalFirstLetter(input.lastName.value)} se creó correctamente `,
-                        icon: "success",
-            
+                if (!pacientes[0]) {
+                    let access = false
+                    especialistas.forEach(element => {
+                        if (parseInt(input.dni.value) === element.persona.dni ||
+                            input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
+                            input.user.value.toLowerCase() === element.persona.user.toLowerCase()) {
+                            access = true
+                            return alert(
+
+
+                                `El dni, usuario, o email ingresado ya esta registrado en un especialista`
+
+
+                            )
+                        }
                     })
-                    setInput({
-                        name: { value: "", error: null },
-                        lastName: { value: "", error: null },
-                        dni: { value: "", error: null },
-                        email: { value: "", error: null },
-                        phone: { value: "", error: null },
-                        adress: { value: "", error: null },
-                        birth: { value: "", error: "Seleccione una fecha" },
-                        user: { value: "", error: null },
-                        password: { value: "", error: null },
-                        gender: { value: "", error: "Seleccione un genero", ad: null },
-                        medication: { value: "", error: null },
-                        emergencyContact: { value: "", error: null },
-                        disease: { value: "", error: null },
-                        creationDate: { value: "", error: null },
-                        diagnostic: { value: "", error: null },
-                        date: { value: "", error: null },
-                        derivation: { value: "", error: null },
-                
+
+                    administrativos.forEach(element => {
+                        if (parseInt(input.dni.value) === element.persona.dni ||
+                            input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
+                            input.user.value.toLowerCase() === element.persona.user.toLowerCase()) {
+                            access = true
+                            return alert(
+
+
+                                `El dni, usuario, o email ingresado ya esta registrado en un administrativo`
+
+
+                            )
+                        }
                     })
-                    return
-                }else{
+                    if(!access){
+
+                        dispatch(crearPaciente(newPatient))
+    
+                        swal({
+                            title: "Paciente creado",
+                            text: `El paciente ${capitalFirstLetter(input.name.value) + ' '}  ${capitalFirstLetter(input.lastName.value)} se creó correctamente `,
+                            icon: "success",
+    
+                        })
+                        setInput({
+                            name: { value: "", error: null },
+                            lastName: { value: "", error: null },
+                            dni: { value: "", error: null },
+                            email: { value: "", error: null },
+                            phone: { value: "", error: null },
+                            adress: { value: "", error: null },
+                            birth: { value: "", error: "Seleccione una fecha" },
+                            user: { value: "", error: null },
+                            password: { value: "", error: null },
+                            gender: { value: "", error: "Seleccione un genero", ad: null },
+                            medication: { value: "", error: null },
+                            emergencyContact: { value: "", error: null },
+                            disease: { value: "", error: null },
+                            creationDate: { value: "", error: null },
+                            diagnostic: { value: "", error: null },
+                            date: { value: "", error: null },
+                            derivation: { value: "", error: null },
+    
+                        })
+                        return
+                    }
+                } else {
                     for (let index = 0; index < pacientes.length; index++) {
 
                         if (pacientes[index].persona.dni === newPatient.dni) {
 
-                            alert("El DNI ya esta registado")
-                            setValidation(false)
-                            return
-                        }
-                        if (pacientes[index].persona.email===newPatient.email){
-                            alert("El EMAIL ya esta registado")
-                            setValidation(false)
-                            return
-                        }
-                        if (pacientes[index].persona.user===newPatient.user){
-                            alert("El USUARIO ya esta registado")
-                            setValidation(false)
-                            return
-                        }
- 
-                    } 
+                           
+                            swal({
 
-                     dispatch(crearPaciente(newPatient))
-                    swal({
-                        title: "Paciente creado",
-                        text: `El paciente ${capitalFirstLetter(input.name.value) + ' '}  ${capitalFirstLetter(input.lastName.value)} se creó correctamente `,
-                        icon: "success",
-            
+                                title: "Error",
+                                text: `El DNI ya esta registado`,
+                                icon: "error",
+    
+                            })
+                            setValidation(false)
+                            return
+                        }
+                        if (pacientes[index].persona.email === newPatient.email) {
+                       
+                            swal({
+
+                                title: "Error",
+                                text: `El EMAIL ya esta registado`,
+                                icon: "error",
+    
+                            })
+                            setValidation(false)
+                            return
+                        }
+                        if (pacientes[index].persona.user === newPatient.user) {
+                            
+                            swal({
+
+                                title: "Error",
+                                text: `El USUARIO ya esta registado`,
+                                icon: "error",
+    
+                            })
+                            setValidation(false)
+                            return
+                        }
+
+                    }
+                    let access = false
+                    especialistas.forEach(element => {
+                        if (parseInt(input.dni.value) === element.persona.dni ||
+                            input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
+                            input.user.value.toLowerCase() === element.persona.user.toLowerCase()) {
+                            access = true
+                            swal({
+
+                                title: "Error",
+                                text: `El dni, usuario, o email ingresado ya esta registrado en un especialista`,
+                                icon: "error",
+    
+                            })
+                        }
                     })
-                    setInput({
-                        name: { value: "", error: null },
-                        lastName: { value: "", error: null },
-                        dni: { value: "", error: null },
-                        email: { value: "", error: null },
-                        phone: { value: "", error: null },
-                        adress: { value: "", error: null },
-                        birth: { value: "", error: "Seleccione una fecha" },
-                        user: { value: "", error: null },
-                        password: { value: "", error: null },
-                        gender: { value: "", error: "Seleccione un genero", ad: null },
-                        medication: { value: "", error: null },
-                        emergencyContact: { value: "", error: null },
-                        disease: { value: "", error: null },
-                        creationDate: { value: "", error: null },
-                        diagnostic: { value: "", error: null },
-                        date: { value: "", error: null },
-                        derivation: { value: "", error: null },
-                
+
+                    administrativos.forEach(element => {
+                        if (parseInt(input.dni.value) === element.persona.dni ||
+                            input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
+                            input.user.value.toLowerCase() === element.persona.user.toLowerCase()) {
+                            access = true
+                            swal({
+
+                                title: "Error",
+                                text: `El dni, usuario, o email ingresado ya esta registrado en un administrativo`,
+                                icon: "error",
+    
+                            })
+                        }
                     })
-                    return  
+                    if(!access){
+
+                        dispatch(crearPaciente(newPatient))
+                        swal({
+                            title: "Paciente creado",
+                            text: `El paciente ${capitalFirstLetter(input.name.value) + ' '}  ${capitalFirstLetter(input.lastName.value)} se creó correctamente `,
+                            icon: "success",
+    
+                        })
+                        setInput({
+                            name: { value: "", error: null },
+                            lastName: { value: "", error: null },
+                            dni: { value: "", error: null },
+                            email: { value: "", error: null },
+                            phone: { value: "", error: null },
+                            adress: { value: "", error: null },
+                            birth: { value: "", error: "Seleccione una fecha" },
+                            user: { value: "", error: null },
+                            password: { value: "", error: null },
+                            gender: { value: "", error: "Seleccione un genero", ad: null },
+                            medication: { value: "", error: null },
+                            emergencyContact: { value: "", error: null },
+                            disease: { value: "", error: null },
+                            creationDate: { value: "", error: null },
+                            diagnostic: { value: "", error: null },
+                            date: { value: "", error: null },
+                            derivation: { value: "", error: null },
+    
+                        })
+                        return
+                    }
                 }
             }
-            
-        }else{
+
+        } else {
             setValidation(false)
-                return 
+            return
         }
 
 
 
 
 
-       
+
 
     }
 
 
-    
+
 
 
 
@@ -425,31 +513,31 @@ export default function CreatePatient() {
                             className='inputs' />
                         {input.medication.error && <span className='error-label'>{input.medication.error}</span>}
                     </div>
-                    <div className='label-textarea'>    
+                    <div className='label-textarea'>
                         <label htmlFor="disease" className='label-interno'>Enfermedades: </label>
                         <textarea
                             id="disease" type="text" name="disease"
                             value={input.disease.value} onChange={(e) => handleDisease(e)}
                             className='inputs' />
                         {input.disease.error && <span className='error-label'>{input.disease.error}</span>}
-                        </div>
-                        <div className='label-textarea'>
-                            <label htmlFor="emergencyContact" className='label-interno'>Contacto de emergencia: </label>
+                    </div>
+                    <div className='label-textarea'>
+                        <label htmlFor="emergencyContact" className='label-interno'>Contacto de emergencia: </label>
 
-                            <input
-                                id="emergencyContact" type="text" name="emergencyContact"
-                                value={input.emergencyContact.value} onChange={(e) => handleContactEmergy(e)}
-                                className='input-emergencia'
-                            />
-                            {input.emergencyContact.error && <span className='error-label'>{input.emergencyContact.error}</span>}
-                        </div>
-                    
+                        <input
+                            id="emergencyContact" type="text" name="emergencyContact"
+                            value={input.emergencyContact.value} onChange={(e) => handleContactEmergy(e)}
+                            className='input-emergencia'
+                        />
+                        {input.emergencyContact.error && <span className='error-label'>{input.emergencyContact.error}</span>}
+                    </div>
+
                 </div>
-              
+
                 <div className='boton-crear-paciente'>
-                <div className='errors'>       
+                    <div className='errors'>
                         {!validation && <span className='error-label'>Completa correctamente el formulario</span>}
-                    </div>  
+                    </div>
 
                     <button onClick={(e) => handleSubmit(e)} className='boton-crear'>CREAR</button>
                 </div>
