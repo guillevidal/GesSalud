@@ -21,30 +21,6 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
     const [estadoStatus, setEStadoStatus]= useState(false)
     const pagos=useSelector(state => state.pagos)
 
-    
-    useEffect(() => {
-        
-            pagos.forEach(async (element) => {
-                if(element.turno_id===id.toString()){
-    
-                    if(status!=="pagado"){
-                        
-                        let editarTurno = {
-                            id: id, // id del turno
-                            agendaId: agenda.id,
-                            pacienteId: paciente.id,
-                            status: "pagado"
-                            
-                        }
-                        await dispatch(modificarTurno(editarTurno))
-                    }
-                    setEStadoStatus(true)
-                }
-            })
-            
-        
-        
-    }, [])
 
     const handleSubmitEliminarTurno = (event) => {
         event.preventDefault();
@@ -85,6 +61,26 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
         alert("Ya fue pagado este item")
     }
 
+    const handleValidacionPago = () => {
+        pagos?.forEach(async (element) => {
+            if (element.turno_id === id.toString()) {
+
+                if (status !== "pagado") {
+
+                    let editarTurno = {
+                        id: id, // id del turno
+                        agendaId: agenda.id,
+                        pacienteId: paciente.id,
+                        status: "pagado"
+
+                    }
+                    await dispatch(modificarTurno(editarTurno))
+                }
+                setEStadoStatus(true)
+            }
+        })
+    }
+    handleValidacionPago()
     return (
         <>
         
