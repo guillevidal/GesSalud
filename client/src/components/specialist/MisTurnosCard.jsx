@@ -6,7 +6,7 @@ import Modal from '../Modal/Modal'
 import { useModal } from '../Modal/useModal'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserTimes, faShoppingCart, faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
-import { eliminarTurno, obtenerPagos, modificarTurno} from '../../actions/index.js';
+import { eliminarTurno, modificarTurno} from '../../actions/index.js';
 import swal from "sweetalert";
 
 function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastNameEspecialista, nameEspecialista, status, agenda}) {
@@ -18,12 +18,33 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
     const dispatch = useDispatch()
 
     const [isOpenCancelarTurno, openCancelarTurno, closeCancelarTurno] = useModal(false)
-    //const [estadoStatus, setEStadoStatus]= useState(false)
-
-    useEffect(async () => {
-        await dispatch(obtenerPagos())
-    }, [])
+    const [estadoStatus, setEStadoStatus]= useState(false)
     const pagos=useSelector(state => state.pagos)
+
+    
+    useEffect(() => {
+        
+            pagos.forEach(async (element) => {
+                if(element.turno_id===id.toString()){
+    
+                    if(status!=="pagado"){
+                        
+                        let editarTurno = {
+                            id: id, // id del turno
+                            agendaId: agenda.id,
+                            pacienteId: paciente.id,
+                            status: "pagado"
+                            
+                        }
+                        await dispatch(modificarTurno(editarTurno))
+                    }
+                    setEStadoStatus(true)
+                }
+            })
+            
+        
+        
+    }, [])
 
     const handleSubmitEliminarTurno = (event) => {
         event.preventDefault();
@@ -59,28 +80,7 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
         })})
         setEstadoPago("Pagar")
     }
-    let setEStadoStatus=false
-    const handleValidacionPago = () => {
-        pagos.forEach(async element => {
-            if(element.turno_id===id.toString()){
-
-                if(status!=="pagado"){
-                    
-                    let editarTurno = {
-                        id: id, // id del turno
-                        agendaId: agenda.id,
-                        pacienteId: paciente.id,
-                        status: "pagado"
-                        
-                    }
-                    await dispatch(modificarTurno(editarTurno))
-                }
-                setEStadoStatus=true
-            }
-        })
-        
-    }
-    handleValidacionPago()
+ 
     const handlePagado = () => {
         alert("Ya fue pagado este item")
     }
@@ -93,14 +93,14 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
               <td className="td horario">{date.split('T')[1].split('&')[0]}</td>
               <td className="td horarioFinal" >{`${capitalFirstLetter(nameEspecialista)} ${capitalFirstLetter(lastNameEspecialista)}`}</td>
               <td className="td paciente" >{especialidad}</td>
-              <td className="td paciente" >{setEStadoStatus ? "PAGADO": status.toUpperCase()}</td>
+              <td className="td paciente" >{estadoStatus ? "PAGADO": status.toUpperCase()}</td>
               <td className="td asignar" >
                  <div className='botones'>
                     <button className="button eliminar" onClick={openCancelarTurno} >Eliminar</button>
                     {estadoPago === 'Quitar' ? 
-                     <button  className={"button eliminarcart"} onClick={setEStadoStatus ? handlePagado :estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faCartArrowDown} /></button>
+                     <button  className={"button eliminarcart"} onClick={estadoStatus ? handlePagado :estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faCartArrowDown} /></button>
                         :
-                        <button  className={"button pagar"} onClick={setEStadoStatus ? handlePagado : estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faShoppingCart} /></button>
+                        <button  className={"button pagar"} onClick={estadoStatus ? handlePagado : estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faShoppingCart} /></button>
                     }
                    </div>
                 </td>
