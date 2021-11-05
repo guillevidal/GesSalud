@@ -96,7 +96,9 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
               <td className="td asignar" >
                   <div className='botones'>
                     <button className="button eliminar" onClick={openCancelarTurno} >Eliminar</button>
-                    {estadoPago === 'Quitar' ? 
+                   
+                    {(status === 'pendiente') && 
+                    estadoPago === 'Quitar' ? 
                      <button  className={"button eliminarcart"} onClick={estadoStatus ? handlePagado :estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faCartArrowDown} /></button>
                         :
                         <button  className={"button pagar"} onClick={estadoStatus ? handlePagado : estadoPago!=="Quitar"?handleCarro:handleQuitar}><FontAwesomeIcon icon={faShoppingCart} /></button>
