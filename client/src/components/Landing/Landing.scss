@@ -28,18 +28,19 @@
         background-color: $color-principal;
         border-radius: 10px;
         padding: 5px;
-        animation-duration: 1s;
+        animation-duration: 0.6s;
         animation-name: slidein;
           
           
           @keyframes slidein {
-            from {
-              opacity: 0%;
+            0% {
+              opacity: 50%;
             }
           
-            to {
-              opacity: 100%;
-            }
+            100% {
+                opacity: 100%;
+              }
+
           }
 
         .nombres{
