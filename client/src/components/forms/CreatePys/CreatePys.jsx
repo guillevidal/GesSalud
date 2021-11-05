@@ -27,7 +27,8 @@ const CreatePyS = () => {
     })
 
     const administrativos = useSelector(state => state.administrativos)
-
+    const especialistas = useSelector(state => state.especialistas)
+    const pacientes = useSelector(state => state.pacientes)
     useEffect(() => {
         setTimeout(() => { setValidation(true) }, 2500)
     }, [validation])
@@ -233,8 +234,8 @@ const CreatePyS = () => {
                     }
 
                 }
-
-
+     
+                
             }
         } else {
             setValidation(false)

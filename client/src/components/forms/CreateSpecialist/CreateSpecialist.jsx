@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Person from '../Person/Person';
 import {
-    crearEspecialista,
+    crearEspecialista, obtenerPacientesRegistro
 } from '../../../actions/index.js'
 
 import swal from 'sweetalert';
@@ -34,8 +34,11 @@ export default function CreateSpecialist() {
     const dispatch = useDispatch()
     const typeSpecialties = useSelector((state) => state.especialidades)
     const especialistas = useSelector(state => state.especialistas)
-
-
+    const pacientes= useSelector(state => state.pacientes)
+    const administrativos = useSelector(state => state.administrativos)
+    useEffect(() => {
+        dispatch(obtenerPacientesRegistro())
+    }, [])
     useEffect(() => {
         if (input.specialty.error) {
             setTimeout(() => { setInput({ ...input, specialty: { value: [...input.specialty.value], error: null } }) }, 2500)
@@ -299,14 +302,44 @@ export default function CreateSpecialist() {
                                 swal({
 
                                     title: "Error",
-                                    text: `El dni, usuario o el email ingresado ya esta registrado`,
+                                    text: `El dni, usuario, email o tarjeta prof. ingresado ya esta registrado`,
                                     icon: "error",
         
                                 })
-
+                            
                                 return
                             }
                             else{
+                                pacientes.forEach(element => {
+                                    if(parseInt(input.dni.value)===element.persona.dn1 || 
+                                    input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
+                                    input.user.value.toLowerCase() === element.persona.user.toLowerCase()){
+                                        swal({
+                
+                                            title: "Error",
+                                            text: `El dni, usuario, o email ingresado ya esta registrado en un paciente`,
+                                            icon: "error",
+                
+                                        })
+                                        return
+                                    }
+                                })
+                                
+                                administrativos.forEach(element => {
+                                    if(parseInt(input.dni.value)===element.persona.dn1 || 
+                                    input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
+                                    input.user.value.toLowerCase() === element.persona.user.toLowerCase()){
+                                        swal({
+                
+                                            title: "Error",
+                                            text: `El dni, usuario, o email ingresado ya esta registrado en un especialista`,
+                                            icon: "error",
+                
+                                        })
+                                        return
+                                    }
+                                })
+                                
                                 swal({
 
                                     title: "Especialista Creado!",
@@ -404,6 +437,36 @@ export default function CreateSpecialist() {
                                 return
                             }
                             else{
+                                pacientes.forEach(element => {
+                                    if(parseInt(input.dni.value)===element.persona.dni || 
+                                    input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
+                                    input.user.value.toLowerCase() === element.persona.user.toLowerCase()){
+                                        swal({
+                
+                                            title: "Error",
+                                            text: `El dni, usuario, o email ingresado ya esta registrado en un paciente`,
+                                            icon: "error",
+                
+                                        })
+                                        return
+                                    }
+                                })
+                                
+                                administrativos.forEach(element => {
+                                    if(parseInt(input.dni.value)===element.persona.dni || 
+                                    input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
+                                    input.user.value.toLowerCase() === element.persona.user.toLowerCase()){
+                                        swal({
+                
+                                            title: "Error",
+                                            text: `El dni, usuario, o email ingresado ya esta registrado en un especialista`,
+                                            icon: "error",
+                
+                                        })
+                                        return
+                                    }
+                                })
+                                
                                 swal({
 
                                     title: "Especialista Creado!",

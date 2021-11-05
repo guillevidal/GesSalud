@@ -15,6 +15,8 @@ export default function PatientEdit() {
     }
     const patientDetail = useSelector(state => state.pacienteDetallado)
     const pacientes = useSelector(state => state.pacientes)
+    const especialistas = useSelector(state => state.especialistas)
+    const administrativos = useSelector(state => state.administrativos)
     const dispatch = useDispatch()
 
     const [volver, setVolver] = useState(false)
@@ -283,43 +285,75 @@ export default function PatientEdit() {
 
 
 
+        let access = false
+        especialistas.forEach(element => {
+            if (parseInt(input.dni.value) === element.persona.dni ||
+                input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
+                input.user.value.toLowerCase() === element.persona.user.toLowerCase()) {
+                access = true
+                swal({
 
+                    title: "Error",
+                    text: `El dni, usuario, o email ingresado ya esta registrado en un especialista`,
+                    icon: "error",
 
-        let newPatient = {
-            personaId: patientDetail[0]?.paciente.personaId,
-            id: patientDetail[0]?.paciente.id,
-            name: input.name.value.toLowerCase(),
-            lastName: input.lastName.value.toLowerCase(),
-            dni: parseInt(input.dni.value),
-            email: input.email.value,
-            phone: input.phone.value,
-            adress: input.adress.value.toLowerCase(),
-            birth: input.birth.value,
-            user: input.user.value,
-            password: input.password.value,
-            gender: input.gender.value,
-            emergencyContact: parseInt(input.emergencyContact.value)
-        }
-        
-        
-        dispatch(modificarPaciente(newPatient));
-
-        swal({
-            icon :'success',
-            title :`${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se modificó correctamente!`,
-            text : `¿Desea continuar con la edicion?`,
-            
-            buttons: ['Volver', true],
-          })
-          .then((willDelete) => {
-            if (willDelete) {
-              return
-            } else {
-              setVolver(true)
+                })
             }
-          });
+        })
 
-        return
+        administrativos.forEach(element => {
+            if (parseInt(input.dni.value) === element.persona.dni ||
+                input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
+                input.user.value.toLowerCase() === element.persona.user.toLowerCase()) {
+                access = true
+                swal({
+
+                    title: "Error",
+                    text: `El dni, usuario, o email ingresado ya esta registrado en un administrativo`,
+                    icon: "error",
+
+                })
+            }
+        })
+        if(!access){
+            let newPatient = {
+                personaId: patientDetail[0]?.paciente.personaId,
+                id: patientDetail[0]?.paciente.id,
+                name: input.name.value.toLowerCase(),
+                lastName: input.lastName.value.toLowerCase(),
+                dni: parseInt(input.dni.value),
+                email: input.email.value,
+                phone: input.phone.value,
+                adress: input.adress.value.toLowerCase(),
+                birth: input.birth.value,
+                user: input.user.value,
+                password: input.password.value,
+                gender: input.gender.value,
+                emergencyContact: parseInt(input.emergencyContact.value)
+            }
+            
+            
+            dispatch(modificarPaciente(newPatient));
+    
+            swal({
+                icon :'success',
+                title :`${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se modificó correctamente!`,
+                text : `¿Desea continuar con la edicion?`,
+                
+                buttons: ['Volver', true],
+              })
+              .then((willDelete) => {
+                if (willDelete) {
+                  return
+                } else {
+                  setVolver(true)
+                }
+              });
+    
+            return
+
+        }
+
 
     }
 

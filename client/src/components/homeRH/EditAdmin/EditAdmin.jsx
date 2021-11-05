@@ -35,6 +35,8 @@ const EditAdmin = () => {
     const capitalFirstLetter = (str) => {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
+    const especialistas = useSelector(state => state.especialistas)
+    const pacientes = useSelector(state => state.pacientes)
     const handleName = (event) => {
         const { value } = event.target
         if (value === "") {
@@ -257,48 +259,80 @@ const EditAdmin = () => {
  
             } 
      
-                
+       
+           
             }
         }else{
             setValidation(false)
             return
         }
+        let access = false
+        pacientes.forEach(element => {
+            if(parseInt(input.dni.value)===element.persona.dni || 
+            input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
+            input.user.value.toLowerCase() === element.persona.user.toLowerCase()){
+                access=true
+                swal({
 
-       
-        let newAdmin = {
-            
-            id: administrativoDetallado[0].id,
-            name: input.name.value.toLowerCase(),
-            lastName: input.lastName.value.toLowerCase(),
-            dni: parseInt(input.dni.value),
-            email: input.email.value,
-            phone: input.phone.value,
-            adress: input.adress.value.toLowerCase(),
-            birth: input.birth.value,
-            user: input.user.value,
-            password: input.password.value,
-            gender: input.gender.value,
-            status: input.status.value,
-            rol: input.rol.value
+                    title: "Error",
+                    text: `El dni, usuario, o email ingresado ya esta registrado en un paciente`,
+                    icon: "error",
 
-        }
-        
-        dispatch(modificarAdministrativo(newAdmin));
-        swal({
-            icon :'success',
-            title :`${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se modificó correctamente`,
-            text : `¿Desea continuar con la edicion?`,
-            
-            buttons: ['Volver', true],
-          })
-          .then((willDelete) => {
-            if (willDelete) {
-              return
-            } else {
-              setVolver(true)
+                })
             }
-          });
-        return
+        })
+       
+        especialistas.forEach(element => {
+            if(parseInt(input.dni.value)===element.persona.dni || 
+            input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
+            input.user.value.toLowerCase() === element.persona.user.toLowerCase()){
+                access=true
+                swal({
+
+                    title: "Error",
+                    text: `El dni, usuario, o email ingresado ya esta registrado en un especialista`,
+                    icon: "error",
+
+                })
+            }
+        }) 
+       if(!access){
+           let newAdmin = {
+               
+               id: administrativoDetallado[0].id,
+               name: input.name.value.toLowerCase(),
+               lastName: input.lastName.value.toLowerCase(),
+               dni: parseInt(input.dni.value),
+               email: input.email.value,
+               phone: input.phone.value,
+               adress: input.adress.value.toLowerCase(),
+               birth: input.birth.value,
+               user: input.user.value,
+               password: input.password.value,
+               gender: input.gender.value,
+               status: input.status.value,
+               rol: input.rol.value
+   
+           }
+           
+           dispatch(modificarAdministrativo(newAdmin));
+           swal({
+               icon :'success',
+               title :`${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se modificó correctamente`,
+               text : `¿Desea continuar con la edicion?`,
+               
+               buttons: ['Volver', true],
+             })
+             .then((willDelete) => {
+               if (willDelete) {
+                 return
+               } else {
+                 setVolver(true)
+               }
+             });
+           return
+
+       }
 
     }
 

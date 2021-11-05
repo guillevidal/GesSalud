@@ -52,7 +52,8 @@ export default function EditSpecialty() {
     useEffect(() => {
         setTimeout(() => { setValidation(true) }, 2500)
     }, [validation])
-
+    const administrativos = useSelector(state => state.administrativos)
+    const pacientes = useSelector(state => state.pacientes)
     const handleName = (event) => {
         const { value } = event.target
         if (value === "") {
@@ -292,10 +293,14 @@ export default function EditSpecialty() {
                         if (parseInt(filtro[index].persona.dni) === parseInt(input.dni.value)) {
                             
                             setValidation(false)
-                            alert("El DNI  que intenta modificar ya se encuentra registrado")
+                          
+                            swal({
+                                icon : 'warning',
+                                title : "El DNI  que intenta modificar ya se encuentra registrado"
+                            })
                             return
                         }
-
+       
                 }
                 if(filtro2.length> 0){
                     for (let index = 0; index < filtro2.length; index++){
@@ -325,7 +330,10 @@ export default function EditSpecialty() {
                     for (let index = 0; index < filtro4.length; index++){
                         if (filtro4[index].enrollment===parseInt(input.enrollment.value)) {
                             setValidation(false)
-                            alert("La identificacion profesional que intenta modificar ya se encuentra registrado")
+                            swal({
+                                icon : 'warning',
+                                title : "La tarjeta profesional que intenta modificar ya se encuentra registrado"
+                            })
                             return
                         }
                     }
@@ -347,42 +355,75 @@ export default function EditSpecialty() {
             return
         }
 
-       
-        let newSpecialist = {
-            personaId: specialtyDetail[0].personaId,
-            id: specialtyDetail[0].id,
-            name: input.name.value.toLowerCase(),
-            lastName: input.lastName.value.toLowerCase(),
-            dni: parseInt(input.dni.value),
-            email: input.email.value,
-            phone: input.phone.value,
-            adress: input.adress.value.toLowerCase(),
-            birth: input.birth.value,
-            user: input.user.value,
-            password: input.password.value,
-            gender: input.gender.value,
-            enrollment: parseInt(input.enrollment.value),
-            specialty: input.specialty.value.join(', '),
+        let access = false
+        pacientes.forEach(element => {
+            if(parseInt(input.dni.value)===element.persona.dni || 
+            input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
+            input.user.value.toLowerCase() === element.persona.user.toLowerCase()){
+                access=true
+                swal({
 
-        }
-        
-        dispatch(modificarEspecialistas(newSpecialist));
-        swal({
-            icon :'success',
-            title :`${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se modificó correctamente!`,
-            text : `¿Desea continuar con la edicion?`,
-            
-            buttons: ['Volver', true],
-          })
-          .then((willDelete) => {
-            if (willDelete) {
-              return
-            } else {
-              setVolver(true)
+                    title: "Error",
+                    text: `El dni, usuario, o email ingresado ya esta registrado en un paciente`,
+                    icon: "error",
+
+                })
             }
-          });
+        })
+       
+        administrativos.forEach(element => {
+            if(parseInt(input.dni.value)===element.persona.dni || 
+            input.email.value.toLowerCase() === element.persona.email.toLowerCase() ||
+            input.user.value.toLowerCase() === element.persona.user.toLowerCase()){
+                access=true
+                swal({
 
-        return
+                    title: "Error",
+                    text: `El dni, usuario, o email ingresado ya esta registrado en un administrativo`,
+                    icon: "error",
+
+                })
+            }
+        }) 
+
+        if(!access){
+
+            let newSpecialist = {
+                personaId: specialtyDetail[0].personaId,
+                id: specialtyDetail[0].id,
+                name: input.name.value.toLowerCase(),
+                lastName: input.lastName.value.toLowerCase(),
+                dni: parseInt(input.dni.value),
+                email: input.email.value,
+                phone: input.phone.value,
+                adress: input.adress.value.toLowerCase(),
+                birth: input.birth.value,
+                user: input.user.value,
+                password: input.password.value,
+                gender: input.gender.value,
+                enrollment: parseInt(input.enrollment.value),
+                specialty: input.specialty.value.join(', '),
+    
+            }
+            
+            dispatch(modificarEspecialistas(newSpecialist));
+            swal({
+                icon :'success',
+                title :`${capitalFirstLetter(input.name?.value)} ${capitalFirstLetter(input.lastName?.value)} se modificó correctamente!`,
+                text : `¿Desea continuar con la edicion?`,
+                
+                buttons: ['Volver', true],
+              })
+              .then((willDelete) => {
+                if (willDelete) {
+                  return
+                } else {
+                  setVolver(true)
+                }
+              });
+    
+            return
+        }
 
     }
 
