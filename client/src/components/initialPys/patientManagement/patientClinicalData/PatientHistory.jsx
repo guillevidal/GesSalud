@@ -123,7 +123,7 @@ export default function PatientHistory() {
                     </div>
                         <span className='required'>(*) Campos requeridos</span>
                     
-                        <button type="submit" onClick={handleOnClick} className='boton'>Generar historia clinica</button>
+                        <button type="submit" onClick={handleOnClick} className='boton'>Cargar Diagnóstico</button>
 
                     </div>
                 
