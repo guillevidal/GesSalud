@@ -12,7 +12,7 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import Nav from "../Layout/Nav"
 import './HomeSpecialist.scss'
 import axios from "axios"
-import { rol, especialistaDetallado, pacienteDetallado, paginado } from "../../actions"
+import { rol, especialistaDetallado, pacienteDetallado, paginado, obtenerPagos} from "../../actions"
 import MisTurnosCard from './MisTurnosCard.jsx';
 import Agenda from './Agenda.jsx';
 import { useModal } from "../Modal/useModal.js";
@@ -39,7 +39,7 @@ export default function HomeSpecialist() {
                     dispatch(rol(res.data.rol))
 
                     if (res.data.dni) {
-
+                        dispatch(obtenerPagos())
                         dispatch(pacienteDetallado(res.data.dni))
                     }
                     if (res.data.especialistaId) {

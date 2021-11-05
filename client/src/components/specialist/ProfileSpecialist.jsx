@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEdit } from "@fortawesome/free-solid-svg-icons"
-import {obtenerPagos, rol, modificarEspecialistas, especialistaDetallado, modificarPaciente, pacienteDetallado, uploadAction } from "../../actions/index.js"
+import { modificarEspecialistas, especialistaDetallado, modificarPaciente, pacienteDetallado, uploadAction } from "../../actions/index.js"
 import { useEffect } from "react"
 import swal from 'sweetalert';
 import imagen from './images/user.png'
@@ -48,8 +48,8 @@ export default  function ProfileSpecialist(){
         dispatch(especialistaDetallado(especialista[0].id))
         }
         else{
-            dispatch(obtenerPagos())
             dispatch(pacienteDetallado(pacienteDetail[0].dni))
+           
 
         }
 
