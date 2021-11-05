@@ -185,6 +185,7 @@ const TurnosCard = ({ id, paciente, agenda, hour, status, pacientes, turnos, car
             text: 'Este turno ya fue abonado'
         })
     }
+    
     let estadoStatus=false;
     const handleValidacionPago = () => {
         pagos?.forEach(async (element) => {
