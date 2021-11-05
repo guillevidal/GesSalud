@@ -19,7 +19,7 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
     const dispatch = useDispatch()
 
     const [isOpenCancelarTurno, openCancelarTurno, closeCancelarTurno] = useModal(false)
-    const [estadoStatus, setEStadoStatus]= useState(false)
+    //const [estadoStatus, setEStadoStatus]= useState(false)
     const pagos=useSelector(state => state.pagos)
 
 
@@ -62,6 +62,7 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
         alert("Ya fue pagado este item")
     }
 
+    let estadoStatus = false;
     const handleValidacionPago = () => {
         pagos?.forEach(async (element) => {
             if (element.turno_id === id.toString()) {
@@ -77,7 +78,7 @@ function MisTurnosCard({date, especialidad, id, paciente, carro, setCarro, lastN
                     }
                     await dispatch(modificarTurno(editarTurno))
                 }
-                setEStadoStatus(true)
+                estadoStatus=true;
             }
         })
     }
